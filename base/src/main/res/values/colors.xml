@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--theme-->
+    <color name="colorPrimary">#fcb815</color>
+    <color name="colorPrimaryDark">#fcb815</color>
+    <color name="colorAccent">#3399ff</color>
+
+    <color name="primary">#fcb815</color>
+
+    <color name="white">#ffffff</color>
+
+    <color name="defualt_image_bg_color">#dddddd</color>
+
+
+    <!--base toolbar-->
+    <color name="base_toolbar_item_text_color">#ffffff</color>
+    <color name="base_toolbar_item_bg_pre_color">#55333333</color>
+    <color name="base_toolbar_item_bg_nor_color">#00ffffff</color>
+
+    <color name="base_toolbar_progress_nor_color">#00ffffff</color>
+    <color name="base_toolbar_progress_pro_color">#90ffffff</color>
+    <color name="base_toolbar_progress_secondary_color">#90ffffff</color>
+
+</resources>

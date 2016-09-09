@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/default_toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/base_toolbar_height"
+        android:background="@color/primary">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <com.liangmayong.base.weight.IconView
+                android:id="@+id/default_toolbar_left_one"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/base_toolbar_item_selector"
+                android:gravity="center"
+                android:minWidth="@dimen/base_toolbar_height"
+                android:paddingLeft="@dimen/base_toolbar_item_padding"
+                android:paddingRight="@dimen/base_toolbar_item_padding"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/base_toolbar_item_text_color"
+                android:textSize="@dimen/base_toolbar_item_text_size" />
+
+            <com.liangmayong.base.weight.IconView
+                android:id="@+id/default_toolbar_left_two"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/base_toolbar_item_selector"
+                android:gravity="center"
+                android:minWidth="@dimen/base_toolbar_height"
+                android:paddingLeft="@dimen/base_toolbar_item_padding"
+                android:paddingRight="@dimen/base_toolbar_item_padding"
+                android:singleLine="true"
+                android:textColor="@color/base_toolbar_item_text_color"
+                android:textSize="@dimen/base_toolbar_item_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal">
+
+            <com.liangmayong.base.weight.IconView
+                android:id="@+id/default_toolbar_right_two"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/base_toolbar_item_selector"
+                android:gravity="center"
+                android:minWidth="@dimen/base_toolbar_height"
+                android:paddingLeft="@dimen/base_toolbar_item_padding"
+                android:paddingRight="@dimen/base_toolbar_item_padding"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/base_toolbar_item_text_color"
+                android:textSize="@dimen/base_toolbar_item_text_size" />
+
+
+            <com.liangmayong.base.weight.IconView
+                android:id="@+id/default_toolbar_right_one"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/base_toolbar_item_selector"
+                android:gravity="center"
+                android:minWidth="@dimen/base_toolbar_height"
+                android:paddingLeft="@dimen/base_toolbar_item_padding"
+                android:paddingRight="@dimen/base_toolbar_item_padding"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/base_toolbar_item_text_color"
+                android:textSize="@dimen/base_toolbar_item_text_size" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/default_toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical">
+
+            <ProgressBar
+                android:id="@+id/default_toolbar_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:progressDrawable="@drawable/base_toolbar_progressbar"
+                android:visibility="visible"></ProgressBar>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>
