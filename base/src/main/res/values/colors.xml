@@ -22,4 +22,7 @@
     <color name="base_toolbar_progress_pro_color">#90ffffff</color>
     <color name="base_toolbar_progress_secondary_color">#90ffffff</color>
 
+    <!--base defualt-->
+    <color name="base_defualt_item_bg_pre_color">#dddddd</color>
+    <color name="base_defualt_item_bg_nor_color">#ffffff</color>
 </resources>
