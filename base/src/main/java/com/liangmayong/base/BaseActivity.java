@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 
 /**
- * Created by Administrator on 2016/8/22.
+ * Created by LiangMaYong on 2016/8/22.
  */
 @BindPresenter({BasePresenter.class})
 public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IView {

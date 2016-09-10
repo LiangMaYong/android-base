@@ -1,20 +1,25 @@
 package com.liangmayong.base.bind;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.liangmayong.base.bind.annotations.ColorId;
 import com.liangmayong.base.bind.annotations.Layout;
 import com.liangmayong.base.bind.annotations.OnClick;
 import com.liangmayong.base.bind.annotations.OnLongClick;
+import com.liangmayong.base.bind.annotations.StringId;
 import com.liangmayong.base.bind.annotations.ViewId;
+import com.liangmayong.base.utils.ResourceUtils;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * BindView
@@ -40,8 +45,8 @@ public final class BindView {
             act.setContentView(root);
         }
         View decorView = act.getWindow().getDecorView();
-        initViews(cl.getDeclaredFields(), decorView, act);
-        initMethod(cl.getDeclaredMethods(), decorView, act);
+        initFields(cl.getDeclaredFields(), decorView, act);
+        initMethods(cl.getDeclaredMethods(), decorView, act);
         return root;
     }
 
@@ -55,8 +60,8 @@ public final class BindView {
         if (null == obj || null == root)
             return;
         Class<?> cl = obj.getClass();
-        initViews(cl.getDeclaredFields(), root, obj);
-        initMethod(cl.getDeclaredMethods(), root, obj);
+        initFields(cl.getDeclaredFields(), root, obj);
+        initMethods(cl.getDeclaredMethods(), root, obj);
     }
 
     /**
@@ -74,8 +79,8 @@ public final class BindView {
             Layout layout = cl.getAnnotation(Layout.class);
             root = LayoutInflater.from(context).inflate(layout.value(), null);
         }
-        initViews(cl.getDeclaredFields(), root, obj);
-        initMethod(cl.getDeclaredMethods(), root, obj);
+        initFields(cl.getDeclaredFields(), root, obj);
+        initMethods(cl.getDeclaredMethods(), root, obj);
         return root;
     }
 
@@ -94,8 +99,8 @@ public final class BindView {
             view = fragment.getActivity().getLayoutInflater().inflate(layout.value(), group, false);
         }
         if (null != view) {
-            initViews(cl.getDeclaredFields(), view, fragment);
-            initMethod(cl.getDeclaredMethods(), view, fragment);
+            initFields(cl.getDeclaredFields(), view, fragment);
+            initMethods(cl.getDeclaredMethods(), view, fragment);
         }
         return view;
     }
@@ -107,24 +112,24 @@ public final class BindView {
      */
     public static void parserView(View view) {
         Class<?> cl = view.getClass();
-        initViews(cl.getDeclaredFields(), view, view);
-        initMethod(cl.getDeclaredMethods(), view, view);
+        initFields(cl.getDeclaredFields(), view, view);
+        initMethods(cl.getDeclaredMethods(), view, view);
     }
 
     /**
-     * initViews
+     * initFields
      *
      * @param allField allField
      * @param root     root
      * @param object   object
      */
-    private static void initViews(Field[] allField, View root, Object object) {
-        View v;
+    @TargetApi(Build.VERSION_CODES.M)
+    private static void initFields(Field[] allField, View root, Object object) {
         for (Field field : allField) {
             // View
             if (isView(field)) {
                 ViewId xkView = field.getAnnotation(ViewId.class);
-                v = root.findViewById(xkView.value());
+                View v = root.findViewById(xkView.value());
                 if (null != v) {
                     try {
                         field.setAccessible(true);
@@ -136,17 +141,56 @@ public final class BindView {
                     }
                 }
             }
+            // String
+            if (isString(field)) {
+                StringId xkString = field.getAnnotation(StringId.class);
+                String s;
+                if (xkString.value() == -1) {
+                    s = ResourceUtils.getString(root.getContext(), field.getName());
+                } else {
+                    s = root.getContext().getString(xkString.value());
+                }
+                if (null != s) {
+                    try {
+                        field.setAccessible(true);
+                        field.set(object, s);
+                    } catch (IllegalArgumentException e) {
+                        e.printStackTrace();
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            // Color
+            if (isColor(field)) {
+                ColorId xkColor = field.getAnnotation(ColorId.class);
+                try {
+                    int color;
+                    if (xkColor.value() == -1) {
+                        color = ResourceUtils.getColor(root.getContext(), field.getName());
+                    } else {
+                        color = root.getContext().getColor(xkColor.value());
+                    }
+                    field.setAccessible(true);
+                    field.set(object, color);
+                } catch (IllegalArgumentException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     /**
-     * initMethod
+     * initMethods
      *
      * @param allMethod
      * @param root
      * @param object
      */
-    private static void initMethod(Method[] allMethod, View root, Object object) {
+    private static void initMethods(Method[] allMethod, View root, Object object) {
         for (Method method : allMethod) {
             if (isOnClick(method)) {
                 OnClick onClick = method.getAnnotation(OnClick.class);
@@ -185,6 +229,26 @@ public final class BindView {
      */
     private static boolean isView(Field field) {
         return field.isAnnotationPresent(ViewId.class);
+    }
+
+    /**
+     * isString
+     *
+     * @param field field
+     * @return true or false
+     */
+    private static boolean isString(Field field) {
+        return field.isAnnotationPresent(StringId.class);
+    }
+
+    /**
+     * isColor
+     *
+     * @param field field
+     * @return true or false
+     */
+    private static boolean isColor(Field field) {
+        return field.isAnnotationPresent(ColorId.class);
     }
 
     /**

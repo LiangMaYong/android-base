@@ -10,8 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.weight.iconfont.IconValue;
 import com.liangmayong.base.weight.IconView;
+import com.liangmayong.base.weight.iconfont.IconValue;
 
 
 /**
@@ -21,9 +21,9 @@ public class DefualtToolbar {
 
     private Context context;
     private RelativeLayout toolbar_layout;
-    private TextView toolbar_title;
-    private ToolbarItem toolbar_right_one, toolbar_right_two;
-    private ToolbarItem toolbar_left_one, toolbar_left_two;
+    private TextView toolbar_title, toolbar_subtitle;
+    private ToolbarItem toolbar_right_one, toolbar_right_two, toolbar_right_three;
+    private ToolbarItem toolbar_left_one, toolbar_left_two, toolbar_left_three;
     private ProgressBar toolbar_progress;
 
     public DefualtToolbar(View view) throws Exception {
@@ -33,14 +33,19 @@ public class DefualtToolbar {
         }
         context = view.getContext();
         toolbar_title = (TextView) view.findViewById(R.id.default_toolbar_title);
+        toolbar_subtitle = (TextView) view.findViewById(R.id.default_toolbar_subtitle);
         IconView right_one = (IconView) view.findViewById(R.id.default_toolbar_right_one);
         IconView right_two = (IconView) view.findViewById(R.id.default_toolbar_right_two);
+        IconView right_three = (IconView) view.findViewById(R.id.default_toolbar_right_three);
         IconView left_one = (IconView) view.findViewById(R.id.default_toolbar_left_one);
         IconView left_two = (IconView) view.findViewById(R.id.default_toolbar_left_two);
+        IconView left_three = (IconView) view.findViewById(R.id.default_toolbar_left_three);
         toolbar_right_one = new ToolbarItem(right_one);
         toolbar_right_two = new ToolbarItem(right_two);
+        toolbar_right_three = new ToolbarItem(right_three);
         toolbar_left_one = new ToolbarItem(left_one);
         toolbar_left_two = new ToolbarItem(left_two);
+        toolbar_left_three = new ToolbarItem(left_three);
         toolbar_progress = (ProgressBar) view.findViewById(R.id.default_toolbar_progress);
     }
 
@@ -51,51 +56,143 @@ public class DefualtToolbar {
         }
         context = activity;
         toolbar_title = (TextView) activity.findViewById(R.id.default_toolbar_title);
+        toolbar_subtitle = (TextView) activity.findViewById(R.id.default_toolbar_subtitle);
         IconView right_one = (IconView) activity.findViewById(R.id.default_toolbar_right_one);
         IconView right_two = (IconView) activity.findViewById(R.id.default_toolbar_right_two);
+        IconView right_three = (IconView) activity.findViewById(R.id.default_toolbar_right_three);
         IconView left_one = (IconView) activity.findViewById(R.id.default_toolbar_left_one);
         IconView left_two = (IconView) activity.findViewById(R.id.default_toolbar_left_two);
+        IconView left_three = (IconView) activity.findViewById(R.id.default_toolbar_left_three);
         toolbar_right_one = new ToolbarItem(right_one);
         toolbar_right_two = new ToolbarItem(right_two);
+        toolbar_right_three = new ToolbarItem(right_three);
         toolbar_left_one = new ToolbarItem(left_one);
         toolbar_left_two = new ToolbarItem(left_two);
+        toolbar_left_three = new ToolbarItem(left_three);
         toolbar_progress = (ProgressBar) activity.findViewById(R.id.default_toolbar_progress);
     }
 
+    /**
+     * setTitle
+     *
+     * @param title title
+     */
     public void setTitle(String title) {
         if (toolbar_title != null) {
-            toolbar_title.setText(title);
+            if ("".equals(title) || title == null) {
+                toolbar_title.setVisibility(View.GONE);
+            } else {
+                toolbar_title.setVisibility(View.VISIBLE);
+                toolbar_title.setText(title);
+            }
         }
     }
 
+    /**
+     * setTitle
+     *
+     * @param resId resId
+     */
     public void setTitle(int resId) {
-        if (toolbar_title != null) {
-            toolbar_title.setText(context.getString(resId));
+        setTitle(context.getString(resId));
+    }
+
+
+    /**
+     * setSubTitle
+     *
+     * @param subtitle subtitle
+     */
+    public void setSubTitle(String subtitle) {
+        if (toolbar_subtitle != null) {
+            if ("".equals(subtitle) || subtitle == null) {
+                toolbar_subtitle.setVisibility(View.GONE);
+            } else {
+                toolbar_subtitle.setVisibility(View.VISIBLE);
+                toolbar_subtitle.setText(subtitle);
+            }
         }
     }
 
+    /**
+     * setSubTitle
+     *
+     * @param resId resId
+     */
+    public void setSubTitle(int resId) {
+        setSubTitle(context.getString(resId));
+    }
+
+    /**
+     * setProgress
+     *
+     * @param progress progress
+     */
     public void setProgress(int progress) {
         if (toolbar_progress != null) {
             toolbar_progress.setProgress(progress);
         }
     }
 
+    /**
+     * leftOne
+     *
+     * @return leftOne
+     */
     public ToolbarItem leftOne() {
         return toolbar_left_one;
     }
 
+    /**
+     * leftTwo
+     *
+     * @return leftTwo
+     */
     public ToolbarItem leftTwo() {
         return toolbar_left_two;
     }
 
+    /**
+     * leftThree
+     *
+     * @return leftThree
+     */
+    public ToolbarItem leftThree() {
+        return toolbar_left_three;
+    }
+
+    /**
+     * rightOne
+     *
+     * @return rightOne
+     */
     public ToolbarItem rightOne() {
         return toolbar_right_one;
     }
 
+    /**
+     * rightTwo
+     *
+     * @return rightTwo
+     */
     public ToolbarItem rightTwo() {
         return toolbar_right_two;
     }
 
+    /**
+     * rightThree
+     *
+     * @return rightThree
+     */
+    public ToolbarItem rightThree() {
+        return toolbar_right_three;
+    }
+
+    /**
+     * refreshThemeColor
+     *
+     * @param color color
+     */
     public void refreshThemeColor(int color) {
         if (toolbar_layout != null) {
             toolbar_layout.setBackgroundColor(color);
@@ -206,7 +303,26 @@ public class DefualtToolbar {
             return this;
         }
 
-        private IconView getIconView() {
+        /**
+         * toolbar
+         *
+         * @return toolbar
+         */
+        public DefualtToolbar toolbar() {
+            return DefualtToolbar.this;
+        }
+
+        public ToolbarItem nullBackground() {
+            getIconView().setBackgroundColor(0x00ffffff);
+            return this;
+        }
+
+        /**
+         * getIconView
+         *
+         * @return iconview
+         */
+        public IconView getIconView() {
             return actionView;
         }
 

@@ -8,7 +8,7 @@
         android:id="@+id/default_toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_toolbar_height"
-        android:background="@color/primary">
+        android:background="@color/colorPrimary">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -41,6 +41,19 @@
                 android:singleLine="true"
                 android:textColor="@color/base_toolbar_item_text_color"
                 android:textSize="@dimen/base_toolbar_item_text_size" />
+
+            <com.liangmayong.base.weight.IconView
+                android:id="@+id/default_toolbar_left_three"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/base_toolbar_item_selector"
+                android:gravity="center"
+                android:minWidth="@dimen/base_toolbar_height"
+                android:paddingLeft="@dimen/base_toolbar_item_padding"
+                android:paddingRight="@dimen/base_toolbar_item_padding"
+                android:singleLine="true"
+                android:textColor="@color/base_toolbar_item_text_color"
+                android:textSize="@dimen/base_toolbar_item_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -48,6 +61,20 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:orientation="horizontal">
+
+            <com.liangmayong.base.weight.IconView
+                android:id="@+id/default_toolbar_right_three"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/base_toolbar_item_selector"
+                android:gravity="center"
+                android:minWidth="@dimen/base_toolbar_height"
+                android:paddingLeft="@dimen/base_toolbar_item_padding"
+                android:paddingRight="@dimen/base_toolbar_item_padding"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/base_toolbar_item_text_color"
+                android:textSize="@dimen/base_toolbar_item_text_size" />
 
             <com.liangmayong.base.weight.IconView
                 android:id="@+id/default_toolbar_right_two"
@@ -80,15 +107,34 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/default_toolbar_title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:gravity="center_vertical"
-            android:text=""
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/default_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/base_toolbar_title_size"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/default_toolbar_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="@dimen/base_toolbar_subtitle_size"
+                android:visibility="gone" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
