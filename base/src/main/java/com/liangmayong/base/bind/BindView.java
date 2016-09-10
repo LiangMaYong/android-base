@@ -14,7 +14,10 @@ import com.liangmayong.base.bind.annotations.Layout;
 import com.liangmayong.base.bind.annotations.OnClick;
 import com.liangmayong.base.bind.annotations.OnLongClick;
 import com.liangmayong.base.bind.annotations.StringId;
+import com.liangmayong.base.bind.annotations.Title;
+import com.liangmayong.base.bind.annotations.TitleId;
 import com.liangmayong.base.bind.annotations.ViewId;
+import com.liangmayong.base.interfaces.AnotationTitle;
 import com.liangmayong.base.utils.ResourceUtils;
 
 import java.lang.reflect.Field;
@@ -44,6 +47,13 @@ public final class BindView {
             root = LayoutInflater.from(act).inflate(layout.value(), null);
             act.setContentView(root);
         }
+        if (isTitle(cl)) {
+            Title title = cl.getAnnotation(Title.class);
+            ((AnotationTitle) act).setAnotationTitle(title.value());
+        } else if (isTitleId(cl)) {
+            TitleId title = cl.getAnnotation(TitleId.class);
+            ((AnotationTitle) act).setAnotationTitle(act.getString(title.value()));
+        }
         View decorView = act.getWindow().getDecorView();
         initFields(cl.getDeclaredFields(), decorView, act);
         initMethods(cl.getDeclaredMethods(), decorView, act);
@@ -60,6 +70,13 @@ public final class BindView {
         if (null == obj || null == root)
             return;
         Class<?> cl = obj.getClass();
+        if (isTitle(cl)) {
+            Title title = cl.getAnnotation(Title.class);
+            ((AnotationTitle) obj).setAnotationTitle(title.value());
+        } else if (isTitleId(cl)) {
+            TitleId title = cl.getAnnotation(TitleId.class);
+            ((AnotationTitle) obj).setAnotationTitle(root.getContext().getString(title.value()));
+        }
         initFields(cl.getDeclaredFields(), root, obj);
         initMethods(cl.getDeclaredMethods(), root, obj);
     }
@@ -78,6 +95,13 @@ public final class BindView {
         if (isLayout(cl)) {
             Layout layout = cl.getAnnotation(Layout.class);
             root = LayoutInflater.from(context).inflate(layout.value(), null);
+        }
+        if (isTitle(cl)) {
+            Title title = cl.getAnnotation(Title.class);
+            ((AnotationTitle) obj).setAnotationTitle(title.value());
+        } else if (isTitleId(cl)) {
+            TitleId title = cl.getAnnotation(TitleId.class);
+            ((AnotationTitle) obj).setAnotationTitle(context.getString(title.value()));
         }
         initFields(cl.getDeclaredFields(), root, obj);
         initMethods(cl.getDeclaredMethods(), root, obj);
@@ -98,6 +122,14 @@ public final class BindView {
             Layout layout = cl.getAnnotation(Layout.class);
             view = fragment.getActivity().getLayoutInflater().inflate(layout.value(), group, false);
         }
+        if (isTitle(cl)) {
+            Title title = cl.getAnnotation(Title.class);
+            ((AnotationTitle) fragment).setAnotationTitle(title.value());
+        } else if (isTitleId(cl)) {
+            TitleId title = cl.getAnnotation(TitleId.class);
+            ((AnotationTitle) fragment).setAnotationTitle(fragment.getActivity().getString(title.value()));
+        }
+
         if (null != view) {
             initFields(cl.getDeclaredFields(), view, fragment);
             initMethods(cl.getDeclaredMethods(), view, fragment);
@@ -222,6 +254,26 @@ public final class BindView {
     }
 
     /**
+     * isTitle
+     *
+     * @param cls cls
+     * @return true or false
+     */
+    private static boolean isTitle(Class<?> cls) {
+        return cls.isAnnotationPresent(Title.class) && isClassGeneric(cls, AnotationTitle.class.getName());
+    }
+
+    /**
+     * isTitleId
+     *
+     * @param cls cls
+     * @return true or false
+     */
+    private static boolean isTitleId(Class<?> cls) {
+        return cls.isAnnotationPresent(TitleId.class) && isClassGeneric(cls, AnotationTitle.class.getName());
+    }
+
+    /**
      * isView
      *
      * @param field field
@@ -343,5 +395,28 @@ public final class BindView {
             return false;
         }
 
+    }
+
+
+    /**
+     * isClassGeneric
+     *
+     * @param clazz clazz
+     * @param name  name
+     * @return true or false
+     */
+    private static boolean isClassGeneric(Class<?> clazz, String name) {
+        for (; clazz != Object.class; clazz = clazz.getSuperclass()) {
+            if (name.equals(clazz.getName())) {
+                return true;
+            }
+            Class<?>[] classes = clazz.getInterfaces();
+            for (int i = 0; i < classes.length; i++) {
+                if (name.equals(classes[i].getName())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

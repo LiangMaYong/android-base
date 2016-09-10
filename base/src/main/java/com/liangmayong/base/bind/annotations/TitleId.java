@@ -6,13 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * ColorId
+ * TitleId
  *
  * @author LiangMaYong
  * @version 1.0
  */
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ColorId {
-    int value() default -1;
+public @interface TitleId {
+    int value();
 }

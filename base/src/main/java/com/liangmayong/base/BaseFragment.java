@@ -14,9 +14,12 @@ import com.liangmayong.base.bind.BindMVP;
 import com.liangmayong.base.bind.BindView;
 import com.liangmayong.base.bind.Presenter;
 import com.liangmayong.base.bind.annotations.BindPresenter;
+import com.liangmayong.base.interfaces.AnotationTitle;
+import com.liangmayong.base.interfaces.HandleBridge;
 import com.liangmayong.base.presenters.BasePresenter;
 import com.liangmayong.base.presenters.interfaces.BaseInterfaces;
 import com.liangmayong.base.weight.toolbar.DefualtToolbar;
+import com.liangmayong.preferences.Preferences;
 
 import java.util.HashMap;
 
@@ -24,7 +27,7 @@ import java.util.HashMap;
  * Created by LiangMaYong on 2016/8/22.
  */
 @BindPresenter({BasePresenter.class})
-public abstract class BaseFragment extends Fragment implements BaseInterfaces.IView {
+public abstract class BaseFragment extends Fragment implements BaseInterfaces.IView, AnotationTitle {
 
     //holder
     private Presenter.PresenterHolder holder = null;
@@ -34,6 +37,27 @@ public abstract class BaseFragment extends Fragment implements BaseInterfaces.IV
     private Handler handler = new Handler();
     //rootView
     private View rootView = null;
+    //activity handler
+    private Handler activityHandler = null;
+    //title
+    private String title = "";
+
+    /**
+     * getActivityHandler
+     *
+     * @return activityHandler
+     */
+    public Handler getActivityHandler() {
+        return activityHandler;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        if (activity instanceof HandleBridge) {
+            activityHandler = ((HandleBridge) activity).getHandler();
+        }
+    }
 
     /**
      * postDelayed
@@ -102,6 +126,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterfaces.IV
     @Nullable
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Preferences.bind(this);
         rootView = null;
         if (getContainerViewId() > 0) {
             rootView = inflater.inflate(getContainerViewId(), null);
@@ -111,6 +136,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterfaces.IV
         }
         try {
             defualtToolbar = new DefualtToolbar(rootView);
+            defualtToolbar.setTitle(getAnotationTitle());
         } catch (Exception e) {
             defualtToolbar = null;
         }
@@ -221,5 +247,15 @@ public abstract class BaseFragment extends Fragment implements BaseInterfaces.IV
     @Override
     public void addPresenter(Class<? extends Presenter>... presenterType) {
         BindMVP.addPresenter(getPresenterHolder(), presenterType);
+    }
+
+    @Override
+    public void setAnotationTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String getAnotationTitle() {
+        return title;
     }
 }

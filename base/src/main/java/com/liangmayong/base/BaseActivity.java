@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
@@ -15,10 +16,13 @@ import com.liangmayong.base.bind.BindMVP;
 import com.liangmayong.base.bind.BindView;
 import com.liangmayong.base.bind.Presenter;
 import com.liangmayong.base.bind.annotations.BindPresenter;
+import com.liangmayong.base.interfaces.AnotationTitle;
+import com.liangmayong.base.interfaces.HandleBridge;
 import com.liangmayong.base.presenters.BasePresenter;
 import com.liangmayong.base.presenters.interfaces.BaseInterfaces;
 import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.weight.toolbar.DefualtToolbar;
+import com.liangmayong.preferences.Preferences;
 
 import java.util.HashMap;
 
@@ -27,14 +31,48 @@ import java.util.HashMap;
  * Created by LiangMaYong on 2016/8/22.
  */
 @BindPresenter({BasePresenter.class})
-public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IView {
+public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IView, HandleBridge, AnotationTitle {
 
     //holder
     private Presenter.PresenterHolder holder = null;
     //defualtToolbar
     private DefualtToolbar defualtToolbar = null;
+    //title
+    private String title = "";
     //handler
-    private Handler handler = new Handler();
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            BaseActivity.this.handleActivityMessage(msg);
+        }
+    };
+
+    @Override
+    public void setTitle(CharSequence title) {
+        super.setTitle(title);
+        if (title != null || getDefualtToolbar() != null) {
+            getDefualtToolbar().setTitle(title.toString());
+        }
+    }
+
+    @Override
+    public void setTitle(int titleId) {
+        super.setTitle(titleId);
+        if (title != null || getDefualtToolbar() != null) {
+            getDefualtToolbar().setTitle(titleId);
+        }
+    }
+
+    /**
+     * getHandler
+     *
+     * @return handler
+     */
+    @Override
+    public Handler getHandler() {
+        return handler;
+    }
 
     /**
      * postDelayed
@@ -83,10 +121,12 @@ public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IV
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Preferences.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         BindView.parserActivity(this);
         try {
             defualtToolbar = new DefualtToolbar(this);
+            defualtToolbar.setTitle(getAnotationTitle());
         } catch (Exception e) {
             defualtToolbar = null;
         }
@@ -212,5 +252,23 @@ public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IV
     protected void onDestroy() {
         super.onDestroy();
         getPresenterHolder().onDettach();
+    }
+
+    /**
+     * handleActivityMessage
+     *
+     * @param message message
+     */
+    protected void handleActivityMessage(Message message) {
+    }
+
+    @Override
+    public void setAnotationTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String getAnotationTitle() {
+        return title;
     }
 }
