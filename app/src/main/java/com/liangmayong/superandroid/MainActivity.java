@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity {
         getDefualtToolbar().setSubTitle("expo.com");
 
 
-        getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).text("关于我们").nullBackground().clicked(new View.OnClickListener() {
+        getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).text("关于我们").hideBackground().clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();

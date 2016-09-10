@@ -313,8 +313,23 @@ public class DefualtToolbar {
             return DefualtToolbar.this;
         }
 
-        public ToolbarItem nullBackground() {
+        /**
+         * hideBackground
+         *
+         * @return toolbar
+         */
+        public ToolbarItem hideBackground() {
             getIconView().setBackgroundColor(0x00ffffff);
+            return this;
+        }
+
+        /**
+         * showBackground
+         *
+         * @return toolbar
+         */
+        public ToolbarItem showBackground() {
+            getIconView().setBackgroundResource(R.drawable.base_defualt_item_selector);
             return this;
         }
 
