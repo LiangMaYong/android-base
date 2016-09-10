@@ -5,7 +5,7 @@ android {
     buildToolsVersion "24.0.1"
 
     defaultConfig {
-        applicationId "com.liangmayong.superandroid5"
+        applicationId "com.liangmayong.superandroid"
         minSdkVersion 9
         targetSdkVersion 24
         versionCode 1
