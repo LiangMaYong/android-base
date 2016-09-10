@@ -1,4 +1,4 @@
-package com.liangmayong.base.weight.recycler.decortions;
+package com.liangmayong.base.widget.recycler.decortions;
 
 import android.graphics.Rect;
 import android.support.v7.widget.LinearLayoutManager;

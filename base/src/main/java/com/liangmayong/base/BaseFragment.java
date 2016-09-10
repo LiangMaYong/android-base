@@ -18,7 +18,7 @@ import com.liangmayong.base.interfaces.AnotationTitle;
 import com.liangmayong.base.interfaces.HandleBridge;
 import com.liangmayong.base.presenters.BasePresenter;
 import com.liangmayong.base.presenters.interfaces.BaseInterfaces;
-import com.liangmayong.base.weight.toolbar.DefualtToolbar;
+import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 import com.liangmayong.preferences.Preferences;
 
 import java.util.HashMap;

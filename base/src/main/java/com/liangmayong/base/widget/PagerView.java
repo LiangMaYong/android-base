@@ -1,4 +1,4 @@
-package com.liangmayong.base.weight;
+package com.liangmayong.base.widget;
 
 import android.content.Context;
 import android.os.Build;

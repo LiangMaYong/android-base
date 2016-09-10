@@ -1,4 +1,4 @@
-package com.liangmayong.base.weight;
+package com.liangmayong.base.widget;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -9,8 +9,8 @@ import android.util.AttributeSet;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.liangmayong.base.weight.iconfont.IconFont;
-import com.liangmayong.base.weight.iconfont.IconValue;
+import com.liangmayong.base.widget.iconfont.IconFont;
+import com.liangmayong.base.widget.iconfont.IconValue;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.liangmayong.base.weight;
+package com.liangmayong.base.widget;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.liangmayong.base.weight.toolbar;
+package com.liangmayong.base.widget.toolbar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,8 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.weight.IconView;
-import com.liangmayong.base.weight.iconfont.IconValue;
+import com.liangmayong.base.widget.IconView;
+import com.liangmayong.base.widget.iconfont.IconValue;
 
 
 /**

@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <com.liangmayong.base.weight.IconView
+            <com.liangmayong.base.widget.IconView
                 android:id="@+id/default_toolbar_left_one"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -29,7 +29,7 @@
                 android:textColor="@color/base_toolbar_item_text_color"
                 android:textSize="@dimen/base_toolbar_item_text_size" />
 
-            <com.liangmayong.base.weight.IconView
+            <com.liangmayong.base.widget.IconView
                 android:id="@+id/default_toolbar_left_two"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -42,7 +42,7 @@
                 android:textColor="@color/base_toolbar_item_text_color"
                 android:textSize="@dimen/base_toolbar_item_text_size" />
 
-            <com.liangmayong.base.weight.IconView
+            <com.liangmayong.base.widget.IconView
                 android:id="@+id/default_toolbar_left_three"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -62,7 +62,7 @@
             android:layout_alignParentRight="true"
             android:orientation="horizontal">
 
-            <com.liangmayong.base.weight.IconView
+            <com.liangmayong.base.widget.IconView
                 android:id="@+id/default_toolbar_right_three"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -76,7 +76,7 @@
                 android:textColor="@color/base_toolbar_item_text_color"
                 android:textSize="@dimen/base_toolbar_item_text_size" />
 
-            <com.liangmayong.base.weight.IconView
+            <com.liangmayong.base.widget.IconView
                 android:id="@+id/default_toolbar_right_two"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -91,7 +91,7 @@
                 android:textSize="@dimen/base_toolbar_item_text_size" />
 
 
-            <com.liangmayong.base.weight.IconView
+            <com.liangmayong.base.widget.IconView
                 android:id="@+id/default_toolbar_right_one"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

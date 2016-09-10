@@ -1,4 +1,4 @@
-package com.liangmayong.base.weight.layouts;
+package com.liangmayong.base.widget.layouts;
 
 import android.content.Context;
 import android.util.AttributeSet;

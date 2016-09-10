@@ -1,4 +1,4 @@
-package com.liangmayong.base.weight.iconfont;
+package com.liangmayong.base.widget.iconfont;
 
 /**
  * IconValue

@@ -1,4 +1,4 @@
-package com.liangmayong.base.weight.recycler;
+package com.liangmayong.base.widget.recycler;
 
 import android.content.Context;
 import android.os.Build;

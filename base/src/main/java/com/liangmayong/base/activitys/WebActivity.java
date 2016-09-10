@@ -17,7 +17,7 @@ import com.liangmayong.base.bind.annotations.BindPresenter;
 import com.liangmayong.base.presenters.WebPresenter;
 import com.liangmayong.base.presenters.interfaces.BaseInterfaces;
 import com.liangmayong.base.presenters.interfaces.WebInterfaces;
-import com.liangmayong.base.weight.iconfont.Icon;
+import com.liangmayong.base.widget.iconfont.Icon;
 
 import java.util.HashMap;
 import java.util.Map;

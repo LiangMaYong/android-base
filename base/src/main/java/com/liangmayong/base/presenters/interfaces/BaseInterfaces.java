@@ -1,12 +1,11 @@
 package com.liangmayong.base.presenters.interfaces;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.widget.EditText;
 
 import com.liangmayong.base.bind.Presenter;
-import com.liangmayong.base.weight.toolbar.DefualtToolbar;
+import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 
 import java.util.HashMap;
 
