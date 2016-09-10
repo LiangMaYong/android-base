@@ -63,7 +63,8 @@ public class FrescoUtils {
     /**
      * getCacheFile
      *
-     * @param url
+     * @param url url
+     * @return file
      */
     public static File getCacheFile(String url) {
         FileBinaryResource resource = (FileBinaryResource) Fresco.getImagePipelineFactory().getMainDiskStorageCache().getResource(new SimpleCacheKey(Uri.parse(url).toString()));
@@ -73,7 +74,8 @@ public class FrescoUtils {
     /**
      * getCacheBitmap
      *
-     * @param url
+     * @param url url
+     * @return bitmap
      */
     public static Bitmap getCacheBitmap(String url) {
         FileBinaryResource resource = (FileBinaryResource) Fresco.getImagePipelineFactory().getMainDiskStorageCache().getResource(new SimpleCacheKey(Uri.parse(url).toString()));

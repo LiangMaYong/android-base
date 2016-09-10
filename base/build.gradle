@@ -34,3 +34,7 @@ dependencies {
     //Loading对话框
     compile files('libs/android-loading-src.jar')
 }
+
+apply from: 'https://raw.githubusercontent.com/LiangMaYong/android-gradlepublish/master/library.gradle'
+apply from: 'https://raw.githubusercontent.com/LiangMaYong/android-gradlepublish/master/bintray.gradle'
+apply from: 'https://raw.githubusercontent.com/LiangMaYong/android-gradlepublish/master/install.gradle'

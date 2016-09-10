@@ -439,7 +439,7 @@ public class ScrollLayout extends FrameLayout implements OnTouchListener {
 		 */
 
 		/*
-		 * Shortcut the most recurring case: the user is in the dragging state
+         * Shortcut the most recurring case: the user is in the dragging state
 		 * and he is moving his finger. We want to intercept this motion.
 		 */
         final int action = ev.getAction();
@@ -1229,7 +1229,7 @@ public class ScrollLayout extends FrameLayout implements OnTouchListener {
     /**
      * When looking for focus in children of a scroll view, need to be a little
      * more careful not to give focus to something that is scrolled off screen.
-     * <p>
+     * <p/>
      * This is more expensive than the default {@link ViewGroup}
      * implementation, otherwise this behavior might have been made the default.
      */
@@ -1384,9 +1384,8 @@ public class ScrollLayout extends FrameLayout implements OnTouchListener {
 
     /**
      * {@inheritDoc}
-     * <p>
-     * <p>
-     * This version also clamps the scrolling to the bounds of our child.
+     * <p>This version also clamps the scrolling to the bounds of our child.
+     * <p/>
      */
     @Override
     public void scrollTo(int x, int y) {

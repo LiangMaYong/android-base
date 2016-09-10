@@ -158,7 +158,7 @@ public class IconView extends TextView {
     /**
      * start animation
      *
-     * @param animRes
+     * @param animRes animRes
      */
     public void startAnimation(int animRes) {
         if (!isAnim) {

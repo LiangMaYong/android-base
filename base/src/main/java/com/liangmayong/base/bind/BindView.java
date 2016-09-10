@@ -36,6 +36,7 @@ public final class BindView {
      * parserActivity
      *
      * @param act Activity
+     * @return view
      */
     public static View parserActivity(Activity act) {
         if (null == act)
@@ -86,6 +87,7 @@ public final class BindView {
      *
      * @param obj     obj
      * @param context context
+     * @return view
      */
     public static View parserClass(Object obj, Context context) {
         if (null == obj || null == context)

@@ -214,6 +214,8 @@ public class DefualtDrawable extends RefreshDrawable implements Animatable {
     /**
      * Set the overall size for the progress spinner. This updates the radius
      * and stroke width of the ring.
+     *
+     * @param size size
      */
     public void updateSizes(@ProgressDrawableSize int size) {
         if (size == LARGE) {
@@ -261,6 +263,8 @@ public class DefualtDrawable extends RefreshDrawable implements Animatable {
 
     /**
      * Update the background color of the circle image view.
+     *
+     * @param color color
      */
     public void setBackgroundColor(int color) {
         mRing.setBackgroundColor(color);

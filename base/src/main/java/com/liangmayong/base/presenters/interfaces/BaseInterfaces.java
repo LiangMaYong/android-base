@@ -55,14 +55,14 @@ public class BaseInterfaces {
         void showToast(CharSequence text, int duration);
 
         /**
-         * 跳转到制定页面
+         * goTo
          *
          * @param cls cls
          */
         void goTo(Class<? extends Activity> cls);
 
         /**
-         * 跳转到制定页面
+         * goTo
          *
          * @param cls    cls
          * @param extras extras
@@ -70,7 +70,7 @@ public class BaseInterfaces {
         void goTo(Class<? extends Activity> cls, Bundle extras);
 
         /**
-         * 跳转到制定WEB页面
+         * goTo
          *
          * @param title title
          * @param url   url
@@ -78,7 +78,7 @@ public class BaseInterfaces {
         void goTo(String title, String url);
 
         /**
-         * 跳转到制定WEB页面
+         * goTo
          *
          * @param title   title
          * @param url     url
@@ -87,7 +87,7 @@ public class BaseInterfaces {
         void goTo(String title, String url, HashMap<String, String> headers);
 
         /**
-         * 跳转到制定页面
+         * goToForResult
          *
          * @param cls         cls
          * @param requestCode requestCode
@@ -95,7 +95,7 @@ public class BaseInterfaces {
         void goToForResult(Class<? extends Activity> cls, int requestCode);
 
         /**
-         * 跳转到制定页面
+         * goToForResult
          *
          * @param cls         cls
          * @param extras      extras
@@ -155,14 +155,14 @@ public class BaseInterfaces {
         void showToast(CharSequence text, int duration);
 
         /**
-         * 跳转到制定页面
+         * goTo
          *
          * @param cls cls
          */
         void goTo(Class<? extends Activity> cls);
 
         /**
-         * 跳转到制定页面
+         * goTo
          *
          * @param cls    cls
          * @param extras extras
@@ -170,7 +170,7 @@ public class BaseInterfaces {
         void goTo(Class<? extends Activity> cls, Bundle extras);
 
         /**
-         * 跳转到制定WEB页面
+         * goTo
          *
          * @param title title
          * @param url   url
@@ -178,7 +178,7 @@ public class BaseInterfaces {
         void goTo(String title, String url);
 
         /**
-         * 跳转到制定WEB页面
+         * goTo
          *
          * @param title   title
          * @param url     url
@@ -187,7 +187,7 @@ public class BaseInterfaces {
         void goTo(String title, String url, HashMap<String, String> headers);
 
         /**
-         * 跳转到制定页面
+         * goToForResult
          *
          * @param cls         cls
          * @param requestCode requestCode
@@ -195,7 +195,7 @@ public class BaseInterfaces {
         void goToForResult(Class<? extends Activity> cls, int requestCode);
 
         /**
-         * 跳转到制定页面
+         * goToForResult
          *
          * @param cls         cls
          * @param extras      extras

@@ -262,6 +262,7 @@ public class DefualtToolbar {
         /**
          * bold
          *
+         * @param bold bold
          * @return ToolbarItem
          */
         public ToolbarItem bold(boolean bold) {
