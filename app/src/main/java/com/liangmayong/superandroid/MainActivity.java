@@ -11,6 +11,7 @@ import com.liangmayong.base.bind.annotations.Title;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.pullrefresh.PullRefreshLayout;
 import com.liangmayong.base.widget.pullrefresh.drawables.PictureDrawable;
+import com.liangmayong.loading.Loading;
 import com.liangmayong.preferences.annotations.PreferenceValue;
 
 @Layout(R.layout.activity_main)
@@ -46,10 +47,12 @@ public class MainActivity extends BaseActivity {
         pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                Loading.showLoading(MainActivity.this,"开始加载数据");
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         pullRefreshLayout.setRefreshing(false);
+                        Loading.cancelLoading(MainActivity.this);
                     }
                 }, 5000);
             }
