@@ -18,26 +18,37 @@ public class Skin {
     /**
      * registerSkinRefresh
      *
-     * @param object object
+     * @param refreshListener refreshListener
      */
-    public static void registerSkinRefresh(Object object) {
-        if (isClassGeneric(object.getClass(), OnSkinRefreshListener.class.getName())) {
-            Airing.getDefault().observer(object).register(SKIN_AIRING_EVENT_NAME, new OnAiringListener() {
-                @Override
-                public void onAiring(AiringContent airingContent) {
-                    ((OnSkinRefreshListener) airingContent.getTarget()).onRefreshSkin(Skin.get());
-                }
-            });
+    public static void registerSkinRefresh(OnSkinRefreshListener refreshListener) {
+        Airing.getDefault().observer(refreshListener).register(SKIN_AIRING_EVENT_NAME, new SkinAiringListener(refreshListener));
+    }
+
+    /**
+     * SkinAiringListener
+     */
+    private static class SkinAiringListener implements OnAiringListener {
+        OnSkinRefreshListener refreshListener;
+
+        public SkinAiringListener(OnSkinRefreshListener refreshListener) {
+
+            this.refreshListener = refreshListener;
+        }
+
+        @Override
+        public void onAiring(AiringContent airingContent) {
+            refreshListener.onRefreshSkin(Skin.get());
         }
     }
+
 
     /**
      * unregisterSkinRefresh
      *
-     * @param object object
+     * @param refreshListener refreshListener
      */
-    public static void unregisterSkinRefresh(Object object) {
-        Airing.getDefault().observer(object).unregister(SKIN_AIRING_EVENT_NAME);
+    public static void unregisterSkinRefresh(OnSkinRefreshListener refreshListener) {
+        Airing.getDefault().observer(refreshListener).unregister(SKIN_AIRING_EVENT_NAME);
     }
 
     /**

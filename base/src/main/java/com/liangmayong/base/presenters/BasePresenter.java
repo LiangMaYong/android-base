@@ -37,8 +37,8 @@ public class BasePresenter extends Presenter<BaseInterfaces.IView> implements Ba
 
     @Override
     protected void onDettach() {
-        super.onDettach();
         Skin.unregisterSkinRefresh(this);
+        super.onDettach();
     }
 
     @Override
