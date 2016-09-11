@@ -8,11 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.liangmayong.base.R;
 import com.liangmayong.base.bind.BindView;
 
 import java.util.ArrayList;
@@ -41,6 +45,26 @@ public class RecyclerListView extends RelativeLayout {
     private LinearLayout footLayout = null;
     //emptyLayout
     private RelativeLayout emptyLayout = null;
+    //emptyView
+    private View emptyView = null;
+    //is empty
+    private boolean isEmpty = false;
+    //emptyView
+    private OnTouchListener emptyViewTouchListener = new OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            return true;
+        }
+    };
+
+    /**
+     * getEmptyView
+     *
+     * @return emptyView
+     */
+    public View getEmptyView() {
+        return emptyView;
+    }
 
     /**
      * setEmptyLayout
@@ -50,7 +74,33 @@ public class RecyclerListView extends RelativeLayout {
     public void setEmptyLayout(int resLayoutId) {
         if (emptyLayout != null) {
             emptyLayout.removeAllViews();
-            emptyLayout.addView(LayoutInflater.from(getContext()).inflate(resLayoutId, null));
+            emptyView = LayoutInflater.from(getContext()).inflate(resLayoutId, null);
+            emptyView.setOnTouchListener(emptyViewTouchListener);
+            emptyView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            emptyLayout.addView(emptyView);
+        }
+    }
+
+
+    /**
+     * setDefualtEmpty
+     *
+     * @param text       text
+     * @param imageResId imageResId
+     */
+    public void setDefualtEmpty(String text, int imageResId) {
+        if (emptyLayout != null) {
+            emptyLayout.removeAllViews();
+            emptyView = LayoutInflater.from(getContext()).inflate(R.layout.base_defualt_retry_layout, null);
+            emptyView.setOnTouchListener(emptyViewTouchListener);
+            emptyView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            if (text != null) {
+                ((TextView) emptyView.findViewById(R.id.base_defualt_retry_text)).setText(text);
+            }
+            if (imageResId != 0) {
+                ((ImageView) emptyView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
+            }
+            emptyLayout.addView(emptyView);
         }
     }
 
@@ -60,6 +110,7 @@ public class RecyclerListView extends RelativeLayout {
     public void showEmpty() {
         emptyLayout.setVisibility(VISIBLE);
         contentLayout.setVisibility(GONE);
+        isEmpty = true;
     }
 
     /**
@@ -68,6 +119,16 @@ public class RecyclerListView extends RelativeLayout {
     public void showContent() {
         emptyLayout.setVisibility(GONE);
         contentLayout.setVisibility(VISIBLE);
+        isEmpty = false;
+    }
+
+    /**
+     * isEmpty
+     *
+     * @return isEmpty
+     */
+    public boolean isEmpty() {
+        return isEmpty;
     }
 
     /**
@@ -193,10 +254,16 @@ public class RecyclerListView extends RelativeLayout {
         contentLayout.addView(footLayout);
         super.addView(contentLayout);
         //add empty
-        emptyLayout = new RelativeLayout(getContext());
+        emptyLayout = new RelativeLayout(getContext()) {
+            @Override
+            public boolean canScrollVertically(int direction) {
+                return false;
+            }
+        };
         emptyLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         super.addView(emptyLayout);
         emptyLayout.setVisibility(GONE);
+        setDefualtEmpty("", 0);
     }
 
     /**

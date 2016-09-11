@@ -5,4 +5,5 @@
     <dimen name="base_toolbar_item_text_size">18sp</dimen>
     <dimen name="base_toolbar_title_size">18sp</dimen>
     <dimen name="base_toolbar_subtitle_size">14sp</dimen>
+    <dimen name="base_retry_text_size">18sp</dimen>
 </resources>
