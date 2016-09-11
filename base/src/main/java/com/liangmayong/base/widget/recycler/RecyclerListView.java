@@ -54,18 +54,27 @@ public class RecyclerListView extends RelativeLayout {
     private RelativeLayout emptyLayout = null;
     //errorLayout
     private RelativeLayout errorLayout = null;
+    //loadingLayout
+    private RelativeLayout loadingLayout = null;
     //emptyView
     private View emptyView = null;
     //errorView
     private View errorView = null;
+    //loadingView
+    private View loadingView = null;
     //is empty
     private boolean isEmpty = false;
     //is error
     private boolean isError = false;
+    //is loading
+    private boolean isLoading = false;
+
     //errorListViewRetryListener
     private OnRecyclerListViewRetryListener errorListViewRetryListener;
     //emptyListViewRetryListener
     private OnRecyclerListViewRetryListener emptyListViewRetryListener;
+    //loadingListViewRetryListener
+    private OnRecyclerListViewRetryListener loadingListViewRetryListener;
     //emptyView
     private OnTouchListener layoutTouchListener = new OnTouchListener() {
         @Override
@@ -81,6 +90,16 @@ public class RecyclerListView extends RelativeLayout {
      */
     public void setEmptyRetryListener(OnRecyclerListViewRetryListener emptyListViewRetryListener) {
         this.emptyListViewRetryListener = emptyListViewRetryListener;
+    }
+
+
+    /**
+     * setLoadingRetryListener
+     *
+     * @param loadingListViewRetryListener loadingListViewRetryListener
+     */
+    public void setLoadingRetryListener(OnRecyclerListViewRetryListener loadingListViewRetryListener) {
+        this.loadingListViewRetryListener = loadingListViewRetryListener;
     }
 
     /**
@@ -101,7 +120,6 @@ public class RecyclerListView extends RelativeLayout {
         return emptyView;
     }
 
-
     /**
      * getErrorView
      *
@@ -109,6 +127,15 @@ public class RecyclerListView extends RelativeLayout {
      */
     public View getErrorView() {
         return errorView;
+    }
+
+    /**
+     * getLoadingView
+     *
+     * @return loadingView
+     */
+    public View getLoadingView() {
+        return loadingView;
     }
 
     /**
@@ -144,6 +171,24 @@ public class RecyclerListView extends RelativeLayout {
                 errorListViewRetryListener.setRetryView(errorView);
             }
             errorLayout.addView(errorView);
+        }
+    }
+
+    /**
+     * setErrorLayout
+     *
+     * @param resLayoutId resLayoutId
+     */
+    public void setLoadingLayout(int resLayoutId) {
+        if (loadingLayout != null) {
+            loadingLayout.removeAllViews();
+            loadingView = LayoutInflater.from(getContext()).inflate(resLayoutId, null);
+            loadingView.setOnTouchListener(layoutTouchListener);
+            loadingView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            if (loadingListViewRetryListener != null) {
+                loadingListViewRetryListener.setRetryView(loadingView);
+            }
+            loadingLayout.addView(loadingView);
         }
     }
 
@@ -198,14 +243,41 @@ public class RecyclerListView extends RelativeLayout {
     }
 
     /**
+     * setDefualtError
+     *
+     * @param text       text
+     * @param imageResId imageResId
+     */
+    public void setDefualtLoading(String text, int imageResId) {
+        if (loadingLayout != null) {
+            loadingLayout.removeAllViews();
+            loadingView = LayoutInflater.from(getContext()).inflate(R.layout.base_defualt_retry_layout, null);
+            loadingView.setOnTouchListener(layoutTouchListener);
+            loadingView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            if (text != null) {
+                ((TextView) loadingView.findViewById(R.id.base_defualt_retry_text)).setText(text);
+            }
+            if (imageResId != 0) {
+                ((ImageView) loadingView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
+            }
+            if (loadingListViewRetryListener != null) {
+                loadingListViewRetryListener.setRetryView(loadingView);
+            }
+            loadingLayout.addView(errorView);
+        }
+    }
+
+    /**
      * showEmpty
      */
     public void showEmpty() {
         emptyLayout.setVisibility(VISIBLE);
         errorLayout.setVisibility(GONE);
+        loadingLayout.setVisibility(GONE);
         contentLayout.setVisibility(GONE);
         isEmpty = true;
         isError = false;
+        isLoading = false;
     }
 
     /**
@@ -214,9 +286,24 @@ public class RecyclerListView extends RelativeLayout {
     public void showContent() {
         emptyLayout.setVisibility(GONE);
         errorLayout.setVisibility(GONE);
+        loadingLayout.setVisibility(GONE);
         contentLayout.setVisibility(VISIBLE);
         isEmpty = false;
         isError = false;
+        isLoading = false;
+    }
+
+    /**
+     * showEmpty
+     */
+    public void showLoading() {
+        emptyLayout.setVisibility(GONE);
+        errorLayout.setVisibility(GONE);
+        loadingLayout.setVisibility(VISIBLE);
+        contentLayout.setVisibility(GONE);
+        isEmpty = false;
+        isError = false;
+        isLoading = true;
     }
 
     /**
@@ -225,9 +312,11 @@ public class RecyclerListView extends RelativeLayout {
     public void showError() {
         emptyLayout.setVisibility(GONE);
         errorLayout.setVisibility(VISIBLE);
+        loadingLayout.setVisibility(GONE);
         contentLayout.setVisibility(GONE);
         isError = true;
         isEmpty = false;
+        isLoading = false;
     }
 
     /**
@@ -246,6 +335,15 @@ public class RecyclerListView extends RelativeLayout {
      */
     public boolean isError() {
         return isError;
+    }
+
+    /**
+     * isLoading
+     *
+     * @return isLoading
+     */
+    public boolean isLoading() {
+        return isLoading;
     }
 
     /**
@@ -383,6 +481,18 @@ public class RecyclerListView extends RelativeLayout {
         super.addView(emptyLayout);
         emptyLayout.setVisibility(GONE);
         setDefualtEmpty("", 0);
+
+        //add loadingLayout
+        loadingLayout = new RelativeLayout(getContext()) {
+            @Override
+            public boolean canScrollVertically(int direction) {
+                return false;
+            }
+        };
+        loadingLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        super.addView(loadingLayout);
+        loadingLayout.setVisibility(GONE);
+        setDefualtLoading("", 0);
 
         //add errorLayout
         errorLayout = new RelativeLayout(getContext()) {
