@@ -30,15 +30,19 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setThemeColor(colorPrimary);
         // getDefualtToolbar().setTitle(app_name);
-        getDefualtToolbar().setSubTitle("expo.com");
 
 
-        getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).text("关于我们").hideBackground().clicked(new View.OnClickListener() {
+        getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        getDefualtToolbar().leftTwo().iconToRight(Icon.icon_filter);
+        getDefualtToolbar().leftThree().iconToRight(Icon.icon_message);
+        getDefualtToolbar().rightOne().iconToRight(Icon.icon_menu);
+        getDefualtToolbar().rightTwo().iconToRight(Icon.icon_edit);
+        getDefualtToolbar().rightThree().iconToRight(Icon.icon_location);
 //        goTo("百度一下", "http://www.baidu.com");
 
         final PullRefreshLayout pullRefreshLayout = (PullRefreshLayout) findViewById(R.id.pull);
@@ -47,7 +51,7 @@ public class MainActivity extends BaseActivity {
         pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Loading.showLoading(MainActivity.this,"开始加载数据");
+                Loading.showLoading(MainActivity.this, "开始加载数据");
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
