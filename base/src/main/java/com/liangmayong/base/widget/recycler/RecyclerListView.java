@@ -68,6 +68,8 @@ public class RecyclerListView extends RelativeLayout {
     private boolean isError = false;
     //is loading
     private boolean isLoading = false;
+    //is content
+    private boolean isContent = true;
 
     //errorListViewRetryListener
     private OnRecyclerListViewRetryListener errorListViewRetryListener;
@@ -209,6 +211,8 @@ public class RecyclerListView extends RelativeLayout {
             }
             if (imageResId != 0) {
                 ((ImageView) emptyView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
+            } else {
+                ((ImageView) emptyView.findViewById(R.id.base_defualt_retry_img)).setImageResource(R.mipmap.base_defualt_empty_img);
             }
             if (emptyListViewRetryListener != null) {
                 emptyListViewRetryListener.setRetryView(emptyView);
@@ -259,11 +263,13 @@ public class RecyclerListView extends RelativeLayout {
             }
             if (imageResId != 0) {
                 ((ImageView) loadingView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
+            } else {
+                ((ImageView) loadingView.findViewById(R.id.base_defualt_retry_img)).setImageResource(R.mipmap.base_defualt_loading_img);
             }
             if (loadingListViewRetryListener != null) {
                 loadingListViewRetryListener.setRetryView(loadingView);
             }
-            loadingLayout.addView(errorView);
+            loadingLayout.addView(loadingView);
         }
     }
 
@@ -278,6 +284,7 @@ public class RecyclerListView extends RelativeLayout {
         isEmpty = true;
         isError = false;
         isLoading = false;
+        isContent = false;
     }
 
     /**
@@ -291,6 +298,7 @@ public class RecyclerListView extends RelativeLayout {
         isEmpty = false;
         isError = false;
         isLoading = false;
+        isContent = true;
     }
 
     /**
@@ -304,6 +312,7 @@ public class RecyclerListView extends RelativeLayout {
         isEmpty = false;
         isError = false;
         isLoading = true;
+        isContent = false;
     }
 
     /**
@@ -317,6 +326,7 @@ public class RecyclerListView extends RelativeLayout {
         isError = true;
         isEmpty = false;
         isLoading = false;
+        isContent = false;
     }
 
     /**
@@ -324,7 +334,7 @@ public class RecyclerListView extends RelativeLayout {
      *
      * @return isEmpty
      */
-    public boolean isEmpty() {
+    public boolean isShowEmpty() {
         return isEmpty;
     }
 
@@ -333,7 +343,7 @@ public class RecyclerListView extends RelativeLayout {
      *
      * @return isError
      */
-    public boolean isError() {
+    public boolean isShowError() {
         return isError;
     }
 
@@ -342,8 +352,17 @@ public class RecyclerListView extends RelativeLayout {
      *
      * @return isLoading
      */
-    public boolean isLoading() {
+    public boolean isShowLoading() {
         return isLoading;
+    }
+
+    /**
+     * isContent
+     *
+     * @return isContent
+     */
+    public boolean isShowContent() {
+        return isContent;
     }
 
     /**
