@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.liangmayong.base.R;
 import com.liangmayong.base.widget.IconView;
 import com.liangmayong.base.widget.iconfont.IconValue;
+import com.liangmayong.base.widget.themeskin.Skin;
 
 
 /**
@@ -217,11 +218,11 @@ public class DefualtToolbar {
     /**
      * refreshThemeColor
      *
-     * @param color color
+     * @param skin skin
      */
-    public void refreshThemeColor(int color) {
+    public void refreshThemeSkin(Skin skin) {
         if (toolbar_layout != null) {
-            toolbar_layout.setBackgroundColor(color);
+            toolbar_layout.setBackgroundColor(skin.getThemeColor());
         }
     }
 

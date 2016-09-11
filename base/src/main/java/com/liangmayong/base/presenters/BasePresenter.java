@@ -7,14 +7,12 @@ import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.liangmayong.airing.Airing;
-import com.liangmayong.airing.AiringContent;
-import com.liangmayong.airing.OnAiringListener;
 import com.liangmayong.base.activitys.WebActivity;
 import com.liangmayong.base.bind.Presenter;
 import com.liangmayong.base.presenters.interfaces.BaseInterfaces;
 import com.liangmayong.base.utils.ToastUtils;
-import com.liangmayong.preferences.Preferences;
+import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
+import com.liangmayong.base.widget.themeskin.Skin;
 
 import java.util.HashMap;
 
@@ -22,7 +20,7 @@ import java.util.HashMap;
 /**
  * Created by LiangMaYong on 2016/8/22.
  */
-public class BasePresenter extends Presenter<BaseInterfaces.IView> implements BaseInterfaces.IPresenter {
+public class BasePresenter extends Presenter<BaseInterfaces.IView> implements BaseInterfaces.IPresenter, OnSkinRefreshListener {
 
     //inputManager
     private InputMethodManager inputManager = null;
@@ -31,34 +29,21 @@ public class BasePresenter extends Presenter<BaseInterfaces.IView> implements Ba
     protected void onAttach(BaseInterfaces.IView view) {
         super.onAttach(view);
         inputManager = (InputMethodManager) view.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        handleRefreshThemeColor();
-        Airing.getDefault().observer(this).register(BaseInterfaces.REFRESH_THEME_COLOR_EVENT_NAME, new OnAiringListener() {
-            @Override
-            public void onAiring(AiringContent airingContent) {
-                handleRefreshThemeColor();
-            }
-        });
-    }
-
-    private void handleRefreshThemeColor() {
-        if (Preferences.getDefaultPreferences().contains(BaseInterfaces.PREFERENCES_THEME_COLOR)) {
-            int color = Preferences.getDefaultPreferences().getInt(BaseInterfaces.PREFERENCES_THEME_COLOR, 0);
-            if (color != 0) {
-                getViewInstance().refreshThemeColor(color);
-            }
+        if (Skin.hasThemeColor()) {
+            getViewInstance().refreshThemeSkin(Skin.get());
         }
+        Skin.registerSkinRefresh(this);
     }
 
     @Override
     protected void onDettach() {
         super.onDettach();
-        Airing.unregister(this);
+        Skin.unregisterSkinRefresh(this);
     }
 
     @Override
     public void setThemeColor(int color) {
-        Preferences.getDefaultPreferences().setInt(BaseInterfaces.PREFERENCES_THEME_COLOR, color);
-        Airing.getDefault().sender(BaseInterfaces.REFRESH_THEME_COLOR_EVENT_NAME).sendEmpty();
+        Skin.setSkinColor(color);
     }
 
     @Override
@@ -137,6 +122,11 @@ public class BasePresenter extends Presenter<BaseInterfaces.IView> implements Ba
 
     @Override
     public boolean hasSetThemeColor() {
-        return Preferences.getDefaultPreferences().contains(BaseInterfaces.PREFERENCES_THEME_COLOR);
+        return Skin.hasThemeColor();
+    }
+
+    @Override
+    public void onRefreshSkin(Skin skin) {
+        getViewInstance().refreshThemeSkin(skin);
     }
 }

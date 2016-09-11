@@ -28,7 +28,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setThemeColor(colorPrimary);
         // getDefualtToolbar().setTitle(app_name);
 
         getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
@@ -56,8 +55,9 @@ public class MainActivity extends BaseActivity {
                     public void run() {
                         pullRefreshLayout.setRefreshing(false);
                         Loading.cancelLoading(MainActivity.this);
+                        setThemeColor(colorPrimary);
                     }
-                }, 5000);
+                }, 1000);
             }
         });
 

@@ -21,6 +21,7 @@ import com.liangmayong.base.interfaces.HandleBridge;
 import com.liangmayong.base.presenters.BasePresenter;
 import com.liangmayong.base.presenters.interfaces.BaseInterfaces;
 import com.liangmayong.base.utils.ToastUtils;
+import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 import com.liangmayong.preferences.Preferences;
 
@@ -39,6 +40,8 @@ public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IV
     private DefualtToolbar defualtToolbar = null;
     //title
     private String title = "";
+    //basePresenter
+    private BasePresenter basePresenter = null;
     //handler
     private Handler handler = new Handler() {
         @Override
@@ -147,17 +150,36 @@ public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IV
         return false;
     }
 
+    /**
+     * getPresenterHolder
+     *
+     * @return holder
+     */
     public Presenter.PresenterHolder getPresenterHolder() {
         return holder;
     }
 
+    /**
+     * getBasePresenter
+     *
+     * @return basePresenter
+     */
     protected BasePresenter getBasePresenter() {
-        if (getPresenterHolder() != null) {
-            return getPresenterHolder().getPresenter(BasePresenter.class);
+        if (basePresenter == null) {
+            if (getPresenterHolder() != null) {
+                basePresenter = getPresenterHolder().getPresenter(BasePresenter.class);
+            }
         }
-        return null;
+        return basePresenter;
     }
 
+    /**
+     * getPresenter
+     *
+     * @param cls cls
+     * @param <T> type
+     * @return presenter
+     */
     protected <T extends Presenter> T getPresenter(Class<T> cls) {
         if (getPresenterHolder() != null) {
             return getPresenterHolder().getPresenter(cls);
@@ -229,17 +251,17 @@ public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IV
     }
 
     @Override
-    public void refreshThemeColor(int color) {
+    public void refreshThemeSkin(Skin skin) {
         if (isTranslucentStatus() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
-                window.setStatusBarColor(color);
+                window.setStatusBarColor(skin.getThemeColor());
             }
         }
         if (getDefualtToolbar() != null) {
-            getDefualtToolbar().refreshThemeColor(color);
+            getDefualtToolbar().refreshThemeSkin(skin);
         }
     }
 

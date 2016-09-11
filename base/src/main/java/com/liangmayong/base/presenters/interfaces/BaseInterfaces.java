@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.liangmayong.base.bind.Presenter;
+import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 
 import java.util.HashMap;
@@ -13,9 +14,6 @@ import java.util.HashMap;
  * Created by LiangMaYong on 2016/8/22.
  */
 public class BaseInterfaces {
-
-    public static final String PREFERENCES_THEME_COLOR = "base_thmem_color";
-    public static final String REFRESH_THEME_COLOR_EVENT_NAME = "event_refresh_theme_color";
 
     public static final String WEB_EXTRA_URL = "url";
     public static final String WEB_EXTRA_TITLE = "title";
@@ -206,9 +204,9 @@ public class BaseInterfaces {
         /**
          * refreshThemeColor
          *
-         * @param color color
+         * @param skin skin
          */
-        void refreshThemeColor(int color);
+        void refreshThemeSkin(Skin skin);
 
         /**
          * setThemeColor

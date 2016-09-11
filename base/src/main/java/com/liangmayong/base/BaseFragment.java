@@ -18,6 +18,7 @@ import com.liangmayong.base.interfaces.AnotationTitle;
 import com.liangmayong.base.interfaces.HandleBridge;
 import com.liangmayong.base.presenters.BasePresenter;
 import com.liangmayong.base.presenters.interfaces.BaseInterfaces;
+import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 import com.liangmayong.preferences.Preferences;
 
@@ -41,6 +42,8 @@ public abstract class BaseFragment extends Fragment implements BaseInterfaces.IV
     private Handler activityHandler = null;
     //title
     private String title = "";
+    //basePresenter
+    private BasePresenter basePresenter = null;
 
     /**
      * getActivityHandler
@@ -103,10 +106,12 @@ public abstract class BaseFragment extends Fragment implements BaseInterfaces.IV
      * @return base presenter
      */
     protected BasePresenter getBasePresenter() {
-        if (getPresenterHolder() != null) {
-            return getPresenterHolder().getPresenter(BasePresenter.class);
+        if (basePresenter == null) {
+            if (getPresenterHolder() != null) {
+                basePresenter = getPresenterHolder().getPresenter(BasePresenter.class);
+            }
         }
-        return null;
+        return basePresenter;
     }
 
     /**
@@ -216,9 +221,9 @@ public abstract class BaseFragment extends Fragment implements BaseInterfaces.IV
     }
 
     @Override
-    public void refreshThemeColor(int color) {
+    public void refreshThemeSkin(Skin skin) {
         if (getDefualtToolbar() != null) {
-            getDefualtToolbar().refreshThemeColor(color);
+            getDefualtToolbar().refreshThemeSkin(skin);
         }
     }
 
