@@ -2,6 +2,7 @@ package com.liangmayong.base.utils;
 
 import android.app.Application;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 
 /**
@@ -13,15 +14,15 @@ public class ContextUtils {
     }
 
     // application
-    private static Application application = null;
+    private static WeakReference<Application> application = null;
 
     /**
      * getApplication
      *
      * @return application
      */
-    public static Application getApplication() {
-        if (application == null) {
+    private static Application getApplication() {
+        if (application == null || application.get() == null) {
             synchronized (ContextUtils.class) {
                 if (application == null) {
                     try {
@@ -32,7 +33,7 @@ public class ContextUtils {
                             if (object != null) {
                                 Method getApplication = object.getClass().getDeclaredMethod("getApplication");
                                 if (getApplication != null) {
-                                    application = (Application) getApplication.invoke(object);
+                                    application = new WeakReference<Application>((Application) getApplication.invoke(object));
                                 }
                             }
                         }
@@ -41,6 +42,6 @@ public class ContextUtils {
                 }
             }
         }
-        return application;
+        return application.get();
     }
 }

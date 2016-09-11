@@ -143,7 +143,7 @@ public class LogUtils {
      */
     private static Application getApplication() {
         if (application == null || application.get() == null) {
-            synchronized (ContextUtils.class) {
+            synchronized (LogUtils.class) {
                 if (application == null) {
                     try {
                         Class<?> clazz = Class.forName("android.app.ActivityThread");
