@@ -45,12 +45,18 @@ public class RecyclerListView extends RelativeLayout {
     private LinearLayout footLayout = null;
     //emptyLayout
     private RelativeLayout emptyLayout = null;
+    //errorLayout
+    private RelativeLayout errorLayout = null;
     //emptyView
     private View emptyView = null;
+    //errorView
+    private View errorView = null;
     //is empty
     private boolean isEmpty = false;
+    //is error
+    private boolean isError = false;
     //emptyView
-    private OnTouchListener emptyViewTouchListener = new OnTouchListener() {
+    private OnTouchListener layoutTouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             return true;
@@ -75,12 +81,26 @@ public class RecyclerListView extends RelativeLayout {
         if (emptyLayout != null) {
             emptyLayout.removeAllViews();
             emptyView = LayoutInflater.from(getContext()).inflate(resLayoutId, null);
-            emptyView.setOnTouchListener(emptyViewTouchListener);
+            emptyView.setOnTouchListener(layoutTouchListener);
             emptyView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             emptyLayout.addView(emptyView);
         }
     }
 
+    /**
+     * setErrorLayout
+     *
+     * @param resLayoutId resLayoutId
+     */
+    public void setErrorLayout(int resLayoutId) {
+        if (errorLayout != null) {
+            errorLayout.removeAllViews();
+            errorView = LayoutInflater.from(getContext()).inflate(resLayoutId, null);
+            errorView.setOnTouchListener(layoutTouchListener);
+            errorView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            errorLayout.addView(errorView);
+        }
+    }
 
     /**
      * setDefualtEmpty
@@ -92,7 +112,7 @@ public class RecyclerListView extends RelativeLayout {
         if (emptyLayout != null) {
             emptyLayout.removeAllViews();
             emptyView = LayoutInflater.from(getContext()).inflate(R.layout.base_defualt_retry_layout, null);
-            emptyView.setOnTouchListener(emptyViewTouchListener);
+            emptyView.setOnTouchListener(layoutTouchListener);
             emptyView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             if (text != null) {
                 ((TextView) emptyView.findViewById(R.id.base_defualt_retry_text)).setText(text);
@@ -105,12 +125,36 @@ public class RecyclerListView extends RelativeLayout {
     }
 
     /**
+     * setDefualtError
+     *
+     * @param text       text
+     * @param imageResId imageResId
+     */
+    public void setDefualtError(String text, int imageResId) {
+        if (errorLayout != null) {
+            errorLayout.removeAllViews();
+            errorView = LayoutInflater.from(getContext()).inflate(R.layout.base_defualt_retry_layout, null);
+            errorView.setOnTouchListener(layoutTouchListener);
+            errorView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            if (text != null) {
+                ((TextView) errorView.findViewById(R.id.base_defualt_retry_text)).setText(text);
+            }
+            if (imageResId != 0) {
+                ((ImageView) errorView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
+            }
+            errorLayout.addView(errorView);
+        }
+    }
+
+    /**
      * showEmpty
      */
     public void showEmpty() {
         emptyLayout.setVisibility(VISIBLE);
+        errorLayout.setVisibility(GONE);
         contentLayout.setVisibility(GONE);
         isEmpty = true;
+        isError = false;
     }
 
     /**
@@ -118,7 +162,20 @@ public class RecyclerListView extends RelativeLayout {
      */
     public void showContent() {
         emptyLayout.setVisibility(GONE);
+        errorLayout.setVisibility(GONE);
         contentLayout.setVisibility(VISIBLE);
+        isEmpty = false;
+        isError = false;
+    }
+
+    /**
+     * showContent
+     */
+    public void showError() {
+        emptyLayout.setVisibility(GONE);
+        errorLayout.setVisibility(VISIBLE);
+        contentLayout.setVisibility(GONE);
+        isError = true;
         isEmpty = false;
     }
 
@@ -129,6 +186,15 @@ public class RecyclerListView extends RelativeLayout {
      */
     public boolean isEmpty() {
         return isEmpty;
+    }
+
+    /**
+     * isError
+     *
+     * @return isError
+     */
+    public boolean isError() {
+        return isError;
     }
 
     /**
@@ -230,10 +296,11 @@ public class RecyclerListView extends RelativeLayout {
      * initView
      */
     private void initView() {
-        //add recyclerView and layout
+        //add contentLayout
         contentLayout = new LinearLayout(getContext());
         contentLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         contentLayout.setOrientation(LinearLayout.VERTICAL);
+        //add headLayout
         headLayout = new LinearLayout(getContext());
         headLayout.setOrientation(LinearLayout.VERTICAL);
         headLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -246,14 +313,15 @@ public class RecyclerListView extends RelativeLayout {
         recyclerView.addOnScrollListener(scrollListener);
         itemPool = new ItemPool();
         itemPool.attachTo(recyclerView);
-
         contentLayout.addView(recyclerView);
+
+        //add footLayout
         footLayout = new LinearLayout(getContext());
         footLayout.setOrientation(LinearLayout.VERTICAL);
         footLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contentLayout.addView(footLayout);
         super.addView(contentLayout);
-        //add empty
+        //add emptyLayout
         emptyLayout = new RelativeLayout(getContext()) {
             @Override
             public boolean canScrollVertically(int direction) {
@@ -264,6 +332,18 @@ public class RecyclerListView extends RelativeLayout {
         super.addView(emptyLayout);
         emptyLayout.setVisibility(GONE);
         setDefualtEmpty("", 0);
+
+        //add errorLayout
+        errorLayout = new RelativeLayout(getContext()) {
+            @Override
+            public boolean canScrollVertically(int direction) {
+                return false;
+            }
+        };
+        errorLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        super.addView(errorLayout);
+        errorLayout.setVisibility(GONE);
+        setDefualtError("", 0);
     }
 
     /**
