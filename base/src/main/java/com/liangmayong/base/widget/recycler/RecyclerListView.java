@@ -27,6 +27,13 @@ import java.util.List;
  */
 public class RecyclerListView extends RelativeLayout {
 
+    /**
+     * OnRecyclerListViewRetryListener
+     */
+    public interface OnRecyclerListViewRetryListener {
+        void setRetryView(View retryView);
+    }
+
     //itemPool
     private ItemPool itemPool = null;
     //itemDecoration
@@ -115,6 +122,9 @@ public class RecyclerListView extends RelativeLayout {
             emptyView = LayoutInflater.from(getContext()).inflate(resLayoutId, null);
             emptyView.setOnTouchListener(layoutTouchListener);
             emptyView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            if (emptyListViewRetryListener != null) {
+                emptyListViewRetryListener.setRetryView(emptyView);
+            }
             emptyLayout.addView(emptyView);
         }
     }
@@ -130,6 +140,9 @@ public class RecyclerListView extends RelativeLayout {
             errorView = LayoutInflater.from(getContext()).inflate(resLayoutId, null);
             errorView.setOnTouchListener(layoutTouchListener);
             errorView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            if (errorListViewRetryListener != null) {
+                errorListViewRetryListener.setRetryView(errorView);
+            }
             errorLayout.addView(errorView);
         }
     }
@@ -151,6 +164,9 @@ public class RecyclerListView extends RelativeLayout {
             }
             if (imageResId != 0) {
                 ((ImageView) emptyView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
+            }
+            if (emptyListViewRetryListener != null) {
+                emptyListViewRetryListener.setRetryView(emptyView);
             }
             emptyLayout.addView(emptyView);
         }
@@ -174,6 +190,9 @@ public class RecyclerListView extends RelativeLayout {
             if (imageResId != 0) {
                 ((ImageView) errorView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
             }
+            if (errorListViewRetryListener != null) {
+                errorListViewRetryListener.setRetryView(errorView);
+            }
             errorLayout.addView(errorView);
         }
     }
@@ -187,9 +206,6 @@ public class RecyclerListView extends RelativeLayout {
         contentLayout.setVisibility(GONE);
         isEmpty = true;
         isError = false;
-        if (emptyListViewRetryListener != null) {
-            emptyListViewRetryListener.setRetryEvent(getEmptyView());
-        }
     }
 
     /**
@@ -212,9 +228,6 @@ public class RecyclerListView extends RelativeLayout {
         contentLayout.setVisibility(GONE);
         isError = true;
         isEmpty = false;
-        if (errorListViewRetryListener != null) {
-            errorListViewRetryListener.setRetryEvent(getErrorView());
-        }
     }
 
     /**
