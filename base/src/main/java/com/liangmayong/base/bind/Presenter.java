@@ -54,6 +54,7 @@ public abstract class Presenter<V> {
      */
     protected void onDettach() {
         isAttached = false;
+        view = null;
     }
 
     /**

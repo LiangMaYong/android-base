@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.util.Log;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 
 /**
@@ -133,7 +134,7 @@ public class LogUtils {
 
 
     // application
-    private static Application application = null;
+    private static WeakReference<Application> application = null;
 
     /**
      * getApplication
@@ -141,7 +142,7 @@ public class LogUtils {
      * @return application
      */
     private static Application getApplication() {
-        if (application == null) {
+        if (application == null || application.get() == null) {
             synchronized (ContextUtils.class) {
                 if (application == null) {
                     try {
@@ -152,7 +153,7 @@ public class LogUtils {
                             if (object != null) {
                                 Method getApplication = object.getClass().getDeclaredMethod("getApplication");
                                 if (getApplication != null) {
-                                    application = (Application) getApplication.invoke(object);
+                                    application = new WeakReference<Application>((Application) getApplication.invoke(object));
                                 }
                             }
                         }
@@ -161,7 +162,7 @@ public class LogUtils {
                 }
             }
         }
-        return application;
+        return application.get();
     }
 
     /**
