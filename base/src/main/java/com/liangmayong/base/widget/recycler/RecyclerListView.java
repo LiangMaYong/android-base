@@ -141,6 +141,15 @@ public class RecyclerListView extends RelativeLayout {
     }
 
     /**
+     * getRecyclerView
+     *
+     * @return recyclerView
+     */
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
+    /**
      * setEmptyLayout
      *
      * @param resLayoutId resLayoutId
@@ -280,7 +289,7 @@ public class RecyclerListView extends RelativeLayout {
         emptyLayout.setVisibility(VISIBLE);
         errorLayout.setVisibility(GONE);
         loadingLayout.setVisibility(GONE);
-        contentLayout.setVisibility(GONE);
+        contentLayout.setVisibility(INVISIBLE);
         isEmpty = true;
         isError = false;
         isLoading = false;
@@ -308,7 +317,7 @@ public class RecyclerListView extends RelativeLayout {
         emptyLayout.setVisibility(GONE);
         errorLayout.setVisibility(GONE);
         loadingLayout.setVisibility(VISIBLE);
-        contentLayout.setVisibility(GONE);
+        contentLayout.setVisibility(INVISIBLE);
         isEmpty = false;
         isError = false;
         isLoading = true;
@@ -322,7 +331,7 @@ public class RecyclerListView extends RelativeLayout {
         emptyLayout.setVisibility(GONE);
         errorLayout.setVisibility(VISIBLE);
         loadingLayout.setVisibility(GONE);
-        contentLayout.setVisibility(GONE);
+        contentLayout.setVisibility(INVISIBLE);
         isError = true;
         isEmpty = false;
         isLoading = false;
