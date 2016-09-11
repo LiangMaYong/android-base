@@ -30,17 +30,43 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // getDefualtToolbar().setTitle(app_name);
 
+        setThemeColor(colorPrimary);
         getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        getDefualtToolbar().leftTwo().iconToRight(Icon.icon_filter);
-        getDefualtToolbar().leftThree().iconToRight(Icon.icon_message);
-        getDefualtToolbar().rightOne().iconToRight(Icon.icon_menu);
-        getDefualtToolbar().rightTwo().iconToRight(Icon.icon_edit);
-        getDefualtToolbar().rightThree().iconToRight(Icon.icon_location);
+        getDefualtToolbar().leftTwo().iconToRight(Icon.icon_filter).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setThemeColor(0xff336666);
+            }
+        });
+        getDefualtToolbar().leftThree().iconToRight(Icon.icon_message).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setThemeColor(0xff663366);
+            }
+        });
+        getDefualtToolbar().rightOne().iconToRight(Icon.icon_menu).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setThemeColor(0xffff6585);
+            }
+        });
+        getDefualtToolbar().rightTwo().iconToRight(Icon.icon_edit).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setThemeColor(0xff3399ff);
+            }
+        });
+        getDefualtToolbar().rightThree().iconToRight(Icon.icon_location).clicked(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setThemeColor(0xff18a28b);
+            }
+        });
 //        goTo("百度一下", "http://www.baidu.com");
 
         final PullRefreshLayout pullRefreshLayout = (PullRefreshLayout) findViewById(R.id.pull);
@@ -55,7 +81,6 @@ public class MainActivity extends BaseActivity {
                     public void run() {
                         pullRefreshLayout.setRefreshing(false);
                         Loading.cancelLoading(MainActivity.this);
-                        setThemeColor(colorPrimary);
                     }
                 }, 1000);
             }
