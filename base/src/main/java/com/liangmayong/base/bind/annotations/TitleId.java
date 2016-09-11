@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * TitleId
+ * Layout
  *
  * @author LiangMaYong
  * @version 1.0
@@ -15,4 +15,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TitleId {
     int value();
+
+    String note() default "";
 }

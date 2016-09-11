@@ -18,4 +18,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface BindPresenter {
     @SuppressWarnings("rawtypes") Class<? extends Presenter>[] value();
+
+    String note() default "";
 }

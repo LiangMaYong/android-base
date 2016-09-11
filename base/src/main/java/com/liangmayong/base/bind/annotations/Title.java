@@ -14,5 +14,19 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Title {
+    /**
+     * value
+     *
+     * @return title
+     */
     String value();
+
+    /**
+     * id
+     *
+     * @return titleId
+     */
+    int id() default 0;
+
+    String note() default "";
 }

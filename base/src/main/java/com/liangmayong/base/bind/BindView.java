@@ -48,7 +48,11 @@ public final class BindView {
         }
         if (isTitle(cl)) {
             Title title = cl.getAnnotation(Title.class);
-            ((AnotationTitle) act).setAnotationTitle(title.value());
+            if (title.id() != 0) {
+                ((AnotationTitle) act).setAnotationTitle(act.getString(title.id()));
+            } else {
+                ((AnotationTitle) act).setAnotationTitle(title.value());
+            }
         } else if (isTitleId(cl)) {
             TitleId title = cl.getAnnotation(TitleId.class);
             ((AnotationTitle) act).setAnotationTitle(act.getString(title.value()));
@@ -71,7 +75,11 @@ public final class BindView {
         Class<?> cl = obj.getClass();
         if (isTitle(cl)) {
             Title title = cl.getAnnotation(Title.class);
-            ((AnotationTitle) obj).setAnotationTitle(title.value());
+            if (title.id() != 0) {
+                ((AnotationTitle) obj).setAnotationTitle(root.getContext().getString(title.id()));
+            } else {
+                ((AnotationTitle) obj).setAnotationTitle(title.value());
+            }
         } else if (isTitleId(cl)) {
             TitleId title = cl.getAnnotation(TitleId.class);
             ((AnotationTitle) obj).setAnotationTitle(root.getContext().getString(title.value()));
@@ -97,7 +105,11 @@ public final class BindView {
         }
         if (isTitle(cl)) {
             Title title = cl.getAnnotation(Title.class);
-            ((AnotationTitle) obj).setAnotationTitle(title.value());
+            if (title.id() != 0) {
+                ((AnotationTitle) obj).setAnotationTitle(root.getContext().getString(title.id()));
+            } else {
+                ((AnotationTitle) obj).setAnotationTitle(title.value());
+            }
         } else if (isTitleId(cl)) {
             TitleId title = cl.getAnnotation(TitleId.class);
             ((AnotationTitle) obj).setAnotationTitle(context.getString(title.value()));
@@ -123,7 +135,11 @@ public final class BindView {
         }
         if (isTitle(cl)) {
             Title title = cl.getAnnotation(Title.class);
-            ((AnotationTitle) fragment).setAnotationTitle(title.value());
+            if (title.id() != 0) {
+                ((AnotationTitle) fragment).setAnotationTitle(fragment.getActivity().getString(title.id()));
+            } else {
+                ((AnotationTitle) fragment).setAnotationTitle(title.value());
+            }
         } else if (isTitleId(cl)) {
             TitleId title = cl.getAnnotation(TitleId.class);
             ((AnotationTitle) fragment).setAnotationTitle(fragment.getActivity().getString(title.value()));
@@ -143,6 +159,17 @@ public final class BindView {
      */
     public static void parserView(View view) {
         Class<?> cl = view.getClass();
+        if (isTitle(cl)) {
+            Title title = cl.getAnnotation(Title.class);
+            if (title.id() != 0) {
+                ((AnotationTitle) view).setAnotationTitle(view.getContext().getString(title.id()));
+            } else {
+                ((AnotationTitle) view).setAnotationTitle(title.value());
+            }
+        } else if (isTitleId(cl)) {
+            TitleId title = cl.getAnnotation(TitleId.class);
+            ((AnotationTitle) view).setAnotationTitle(view.getContext().getString(title.value()));
+        }
         initFields(cl.getDeclaredFields(), view, view);
         initMethods(cl.getDeclaredMethods(), view, view);
     }
@@ -357,7 +384,35 @@ public final class BindView {
                             setView = true;
                             objects[i] = v;
                         } else {
-                            objects[i] = null;
+                            if (mMethod.getParameterTypes()[i] == int.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == Integer.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == float.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == Float.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == long.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == Long.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == double.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == Double.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == Boolean.class) {
+                                objects[i] = false;
+                            } else if (mMethod.getParameterTypes()[i] == boolean.class) {
+                                objects[i] = false;
+                            } else if (mMethod.getParameterTypes()[i] == char.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == char.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == Character.class) {
+                                objects[i] = 0;
+                            } else {
+                                objects[i] = null;
+                            }
                         }
                     }
                     mMethod.invoke(mReceiver, objects);
@@ -398,7 +453,35 @@ public final class BindView {
                             setView = true;
                             objects[i] = v;
                         } else {
-                            objects[i] = null;
+                            if (mMethod.getParameterTypes()[i] == int.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == Integer.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == float.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == Float.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == long.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == Long.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == double.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == Double.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == Boolean.class) {
+                                objects[i] = false;
+                            } else if (mMethod.getParameterTypes()[i] == boolean.class) {
+                                objects[i] = false;
+                            } else if (mMethod.getParameterTypes()[i] == char.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == char.class) {
+                                objects[i] = 0;
+                            } else if (mMethod.getParameterTypes()[i] == Character.class) {
+                                objects[i] = 0;
+                            } else {
+                                objects[i] = null;
+                            }
                         }
                     }
                     object = mMethod.invoke(mReceiver, objects);
