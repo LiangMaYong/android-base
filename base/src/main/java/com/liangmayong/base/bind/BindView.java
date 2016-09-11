@@ -21,7 +21,6 @@ import com.liangmayong.base.interfaces.AnotationTitle;
 import com.liangmayong.base.utils.ResourceUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -36,7 +35,6 @@ public final class BindView {
      * parserActivity
      *
      * @param act Activity
-     * @return view
      */
     public static View parserActivity(Activity act) {
         if (null == act)
@@ -87,7 +85,6 @@ public final class BindView {
      *
      * @param obj     obj
      * @param context context
-     * @return view
      */
     public static View parserClass(Object obj, Context context) {
         if (null == obj || null == context)
@@ -220,9 +217,9 @@ public final class BindView {
     /**
      * initMethods
      *
-     * @param allMethod
-     * @param root
-     * @param object
+     * @param allMethod allMethod
+     * @param root      root
+     * @param object    object
      */
     private static void initMethods(Method[] allMethod, View root, Object object) {
         for (Method method : allMethod) {
@@ -231,7 +228,10 @@ public final class BindView {
                 ProxyClick click = new ProxyClick(method, object);
                 int[] ids = onClick.value();
                 for (int id : ids) {
-                    root.findViewById(id).setOnClickListener(click);
+                    View view = root.findViewById(id);
+                    if (view != null) {
+                        view.setOnClickListener(click);
+                    }
                 }
             }
             if (isOnLongClick(method)) {
@@ -239,7 +239,10 @@ public final class BindView {
                 ProxyLongClick longClick = new ProxyLongClick(method, object);
                 int[] ids = onLongClick.value();
                 for (int id : ids) {
-                    root.findViewById(id).setOnLongClickListener(longClick);
+                    View view = root.findViewById(id);
+                    if (view != null) {
+                        view.setOnLongClickListener(longClick);
+                    }
                 }
             }
         }
@@ -344,14 +347,22 @@ public final class BindView {
                 mMethod.setAccessible(true);
                 if (mMethod.getParameterTypes().length == 0) {
                     mMethod.invoke(mReceiver);
-                } else {
+                } else if (mMethod.getParameterTypes().length == 1 || mMethod.getParameterTypes()[0] == View.class) {
                     mMethod.invoke(mReceiver, v);
+                } else {
+                    Object[] objects = new Object[mMethod.getParameterTypes().length];
+                    boolean setView = false;
+                    for (int i = 0; i < mMethod.getParameterTypes().length; i++) {
+                        if (!setView && mMethod.getParameterTypes()[i] == View.class) {
+                            setView = true;
+                            objects[i] = v;
+                        } else {
+                            objects[i] = null;
+                        }
+                    }
+                    mMethod.invoke(mReceiver, null);
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -374,31 +385,34 @@ public final class BindView {
         public boolean onLongClick(View v) {
             try {
                 mMethod.setAccessible(true);
+                Object object = null;
                 if (mMethod.getParameterTypes().length == 0) {
-                    if (mMethod.getReturnType() == Boolean.class || mMethod.getReturnType() == boolean.class) {
-                        return (Boolean) mMethod.invoke(mReceiver);
-                    } else {
-                        mMethod.invoke(mReceiver);
-                    }
+                    object = mMethod.invoke(mReceiver);
+                } else if (mMethod.getParameterTypes().length == 1 || mMethod.getParameterTypes()[0] == View.class) {
+                    object = mMethod.invoke(mReceiver, v);
                 } else {
-                    if (mMethod.getReturnType() == Boolean.class || mMethod.getReturnType() == boolean.class) {
-                        return (Boolean) mMethod.invoke(mReceiver, v);
-                    } else {
-                        mMethod.invoke(mReceiver, v);
+                    Object[] objects = new Object[mMethod.getParameterTypes().length];
+                    boolean setView = false;
+                    for (int i = 0; i < mMethod.getParameterTypes().length; i++) {
+                        if (!setView && mMethod.getParameterTypes()[i] == View.class) {
+                            setView = true;
+                            objects[i] = v;
+                        } else {
+                            objects[i] = null;
+                        }
                     }
+                    object = mMethod.invoke(mReceiver, null);
                 }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
+                if (mMethod.getReturnType() == Boolean.class || mMethod.getReturnType() == boolean.class) {
+                    return (boolean) object;
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return false;
         }
 
     }
-
 
     /**
      * isClassGeneric
