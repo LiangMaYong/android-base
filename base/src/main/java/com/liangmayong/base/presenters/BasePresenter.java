@@ -127,6 +127,8 @@ public class BasePresenter extends Presenter<BaseInterfaces.IView> implements Ba
 
     @Override
     public void onRefreshSkin(Skin skin) {
-        getViewInstance().refreshThemeSkin(skin);
+        if (getViewInstance() != null) {
+            getViewInstance().refreshThemeSkin(skin);
+        }
     }
 }
