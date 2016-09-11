@@ -147,7 +147,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center_vertical"
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/base_toolbar_item_text_color"
                 android:textSize="@dimen/base_toolbar_title_size"
                 android:visibility="gone" />
 
@@ -158,7 +158,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center_vertical"
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/base_toolbar_item_text_color"
                 android:textSize="@dimen/base_toolbar_subtitle_size"
                 android:visibility="gone" />
         </LinearLayout>

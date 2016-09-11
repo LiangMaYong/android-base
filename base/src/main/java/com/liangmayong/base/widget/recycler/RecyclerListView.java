@@ -55,6 +55,10 @@ public class RecyclerListView extends RelativeLayout {
     private boolean isEmpty = false;
     //is error
     private boolean isError = false;
+    //errorListViewRetryListener
+    private OnRecyclerListViewRetryListener errorListViewRetryListener;
+    //emptyListViewRetryListener
+    private OnRecyclerListViewRetryListener emptyListViewRetryListener;
     //emptyView
     private OnTouchListener layoutTouchListener = new OnTouchListener() {
         @Override
@@ -64,12 +68,40 @@ public class RecyclerListView extends RelativeLayout {
     };
 
     /**
+     * setEmptyRetryListener
+     *
+     * @param emptyListViewRetryListener emptyListViewRetryListener
+     */
+    public void setEmptyRetryListener(OnRecyclerListViewRetryListener emptyListViewRetryListener) {
+        this.emptyListViewRetryListener = emptyListViewRetryListener;
+    }
+
+    /**
+     * setErrorRetryListener
+     *
+     * @param errorListViewRetryListener errorListViewRetryListener
+     */
+    public void setErrorRetryListener(OnRecyclerListViewRetryListener errorListViewRetryListener) {
+        this.errorListViewRetryListener = errorListViewRetryListener;
+    }
+
+    /**
      * getEmptyView
      *
      * @return emptyView
      */
     public View getEmptyView() {
         return emptyView;
+    }
+
+
+    /**
+     * getErrorView
+     *
+     * @return errorView
+     */
+    public View getErrorView() {
+        return errorView;
     }
 
     /**
@@ -155,6 +187,9 @@ public class RecyclerListView extends RelativeLayout {
         contentLayout.setVisibility(GONE);
         isEmpty = true;
         isError = false;
+        if (emptyListViewRetryListener != null) {
+            emptyListViewRetryListener.setRetryEvent(getEmptyView());
+        }
     }
 
     /**
@@ -177,6 +212,9 @@ public class RecyclerListView extends RelativeLayout {
         contentLayout.setVisibility(GONE);
         isError = true;
         isEmpty = false;
+        if (errorListViewRetryListener != null) {
+            errorListViewRetryListener.setRetryEvent(getErrorView());
+        }
     }
 
     /**

@@ -8,6 +8,8 @@ import com.liangmayong.base.BaseActivity;
 import com.liangmayong.base.bind.annotations.ColorId;
 import com.liangmayong.base.bind.annotations.Layout;
 import com.liangmayong.base.bind.annotations.Title;
+import com.liangmayong.base.widget.anyretry.AnyRetryManager;
+import com.liangmayong.base.widget.anyretry.OnAnyRetryListener;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.pullrefresh.PullRefreshLayout;
 import com.liangmayong.base.widget.pullrefresh.drawables.PictureDrawable;
@@ -30,7 +32,17 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setThemeColor(colorPrimary);
         // getDefualtToolbar().setTitle(app_name);
+        AnyRetryManager.BASE_EMPTY_LAYOUT_ID = R.layout.base_defualt_retry_layout;
+        AnyRetryManager.BASE_LOADING_LAYOUT_ID = R.layout.base_defualt_retry_layout;
+        AnyRetryManager.BASE_RETRY_LAYOUT_ID = R.layout.base_defualt_retry_layout;
 
+        AnyRetryManager manager = AnyRetryManager.generate(this, new OnAnyRetryListener() {
+            @Override
+            public void setRetryEvent(View retryView) {
+
+            }
+        });
+        manager.showEmpty();
 
         getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
             @Override
