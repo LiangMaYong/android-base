@@ -15,7 +15,6 @@ import com.liangmayong.loading.Loading;
 import com.liangmayong.preferences.annotations.PreferenceValue;
 
 @Layout(R.layout.activity_main)
-@Title("关于我们")
 public class MainActivity extends BaseActivity {
 
     @PreferenceValue("key")
@@ -43,6 +42,7 @@ public class MainActivity extends BaseActivity {
         getDefualtToolbar().rightOne().iconToRight(Icon.icon_menu);
         getDefualtToolbar().rightTwo().iconToRight(Icon.icon_edit);
         getDefualtToolbar().rightThree().iconToRight(Icon.icon_location);
+        getDefualtToolbar().rightFour().iconToRight(Icon.icon_about);
 //        goTo("百度一下", "http://www.baidu.com");
 
         final PullRefreshLayout pullRefreshLayout = (PullRefreshLayout) findViewById(R.id.pull);

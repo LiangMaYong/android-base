@@ -54,6 +54,19 @@
                 android:singleLine="true"
                 android:textColor="@color/base_toolbar_item_text_color"
                 android:textSize="@dimen/base_toolbar_item_text_size" />
+
+            <com.liangmayong.base.widget.IconView
+                android:id="@+id/default_toolbar_left_four"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/base_toolbar_item_selector"
+                android:gravity="center"
+                android:minWidth="@dimen/base_toolbar_height"
+                android:paddingLeft="@dimen/base_toolbar_item_padding"
+                android:paddingRight="@dimen/base_toolbar_item_padding"
+                android:singleLine="true"
+                android:textColor="@color/base_toolbar_item_text_color"
+                android:textSize="@dimen/base_toolbar_item_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -61,6 +74,20 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:orientation="horizontal">
+
+            <com.liangmayong.base.widget.IconView
+                android:id="@+id/default_toolbar_right_four"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/base_toolbar_item_selector"
+                android:gravity="center"
+                android:minWidth="@dimen/base_toolbar_height"
+                android:paddingLeft="@dimen/base_toolbar_item_padding"
+                android:paddingRight="@dimen/base_toolbar_item_padding"
+                android:singleLine="true"
+                android:text=""
+                android:textColor="@color/base_toolbar_item_text_color"
+                android:textSize="@dimen/base_toolbar_item_text_size" />
 
             <com.liangmayong.base.widget.IconView
                 android:id="@+id/default_toolbar_right_three"

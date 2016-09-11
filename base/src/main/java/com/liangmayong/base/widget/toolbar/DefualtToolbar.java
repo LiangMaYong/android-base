@@ -22,8 +22,8 @@ public class DefualtToolbar {
     private Context context;
     private RelativeLayout toolbar_layout;
     private TextView toolbar_title, toolbar_subtitle;
-    private ToolbarItem toolbar_right_one, toolbar_right_two, toolbar_right_three;
-    private ToolbarItem toolbar_left_one, toolbar_left_two, toolbar_left_three;
+    private ToolbarItem toolbar_right_one, toolbar_right_two, toolbar_right_three, toolbar_right_four;
+    private ToolbarItem toolbar_left_one, toolbar_left_two, toolbar_left_three, toolbar_left_four;
     private ProgressBar toolbar_progress;
 
     public DefualtToolbar(View view) throws Exception {
@@ -37,15 +37,19 @@ public class DefualtToolbar {
         IconView right_one = (IconView) view.findViewById(R.id.default_toolbar_right_one);
         IconView right_two = (IconView) view.findViewById(R.id.default_toolbar_right_two);
         IconView right_three = (IconView) view.findViewById(R.id.default_toolbar_right_three);
+        IconView right_four = (IconView) view.findViewById(R.id.default_toolbar_right_four);
         IconView left_one = (IconView) view.findViewById(R.id.default_toolbar_left_one);
         IconView left_two = (IconView) view.findViewById(R.id.default_toolbar_left_two);
         IconView left_three = (IconView) view.findViewById(R.id.default_toolbar_left_three);
+        IconView left_four = (IconView) view.findViewById(R.id.default_toolbar_left_four);
         toolbar_right_one = new ToolbarItem(right_one);
         toolbar_right_two = new ToolbarItem(right_two);
         toolbar_right_three = new ToolbarItem(right_three);
+        toolbar_right_four = new ToolbarItem(right_four);
         toolbar_left_one = new ToolbarItem(left_one);
         toolbar_left_two = new ToolbarItem(left_two);
         toolbar_left_three = new ToolbarItem(left_three);
+        toolbar_left_four = new ToolbarItem(left_four);
         toolbar_progress = (ProgressBar) view.findViewById(R.id.default_toolbar_progress);
     }
 
@@ -60,15 +64,19 @@ public class DefualtToolbar {
         IconView right_one = (IconView) activity.findViewById(R.id.default_toolbar_right_one);
         IconView right_two = (IconView) activity.findViewById(R.id.default_toolbar_right_two);
         IconView right_three = (IconView) activity.findViewById(R.id.default_toolbar_right_three);
+        IconView right_four = (IconView) activity.findViewById(R.id.default_toolbar_right_four);
         IconView left_one = (IconView) activity.findViewById(R.id.default_toolbar_left_one);
         IconView left_two = (IconView) activity.findViewById(R.id.default_toolbar_left_two);
         IconView left_three = (IconView) activity.findViewById(R.id.default_toolbar_left_three);
+        IconView left_four = (IconView) activity.findViewById(R.id.default_toolbar_left_four);
         toolbar_right_one = new ToolbarItem(right_one);
         toolbar_right_two = new ToolbarItem(right_two);
         toolbar_right_three = new ToolbarItem(right_three);
+        toolbar_right_four = new ToolbarItem(right_four);
         toolbar_left_one = new ToolbarItem(left_one);
         toolbar_left_two = new ToolbarItem(left_two);
         toolbar_left_three = new ToolbarItem(left_three);
+        toolbar_left_four = new ToolbarItem(left_four);
         toolbar_progress = (ProgressBar) activity.findViewById(R.id.default_toolbar_progress);
     }
 
@@ -162,6 +170,15 @@ public class DefualtToolbar {
     }
 
     /**
+     * leftFour
+     *
+     * @return leftFour
+     */
+    public ToolbarItem leftFour() {
+        return toolbar_left_four;
+    }
+
+    /**
      * rightOne
      *
      * @return rightOne
@@ -186,6 +203,15 @@ public class DefualtToolbar {
      */
     public ToolbarItem rightThree() {
         return toolbar_right_three;
+    }
+
+    /**
+     * rightFour
+     *
+     * @return rightFour
+     */
+    public ToolbarItem rightFour() {
+        return toolbar_right_four;
     }
 
     /**
