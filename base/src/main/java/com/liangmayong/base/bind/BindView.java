@@ -347,7 +347,7 @@ public final class BindView {
                 mMethod.setAccessible(true);
                 if (mMethod.getParameterTypes().length == 0) {
                     mMethod.invoke(mReceiver);
-                } else if (mMethod.getParameterTypes().length == 1 || mMethod.getParameterTypes()[0] == View.class) {
+                } else if (mMethod.getParameterTypes().length == 1 && mMethod.getParameterTypes()[0] == View.class) {
                     mMethod.invoke(mReceiver, v);
                 } else {
                     Object[] objects = new Object[mMethod.getParameterTypes().length];
@@ -360,7 +360,7 @@ public final class BindView {
                             objects[i] = null;
                         }
                     }
-                    mMethod.invoke(mReceiver, null);
+                    mMethod.invoke(mReceiver, objects);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -388,7 +388,7 @@ public final class BindView {
                 Object object = null;
                 if (mMethod.getParameterTypes().length == 0) {
                     object = mMethod.invoke(mReceiver);
-                } else if (mMethod.getParameterTypes().length == 1 || mMethod.getParameterTypes()[0] == View.class) {
+                } else if (mMethod.getParameterTypes().length == 1 && mMethod.getParameterTypes()[0] == View.class) {
                     object = mMethod.invoke(mReceiver, v);
                 } else {
                     Object[] objects = new Object[mMethod.getParameterTypes().length];
@@ -401,7 +401,7 @@ public final class BindView {
                             objects[i] = null;
                         }
                     }
-                    object = mMethod.invoke(mReceiver, null);
+                    object = mMethod.invoke(mReceiver, objects);
                 }
                 if (mMethod.getReturnType() == Boolean.class || mMethod.getReturnType() == boolean.class) {
                     return (boolean) object;
