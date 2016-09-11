@@ -24,13 +24,10 @@ public class MainActivity extends BaseActivity {
     @ColorId
     int colorPrimary;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // getDefualtToolbar().setTitle(app_name);
-
-        setThemeColor(colorPrimary);
         getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

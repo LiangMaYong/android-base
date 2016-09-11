@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.liangmayong.base.bind.Presenter;
+import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
 import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 
@@ -121,7 +122,7 @@ public class BaseInterfaces {
         boolean hasSetThemeColor();
     }
 
-    public static interface IView {
+    public static interface IView extends OnSkinRefreshListener {
 
         /**
          * getContext
@@ -200,13 +201,6 @@ public class BaseInterfaces {
          * @param requestCode requestCode
          */
         void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode);
-
-        /**
-         * refreshThemeColor
-         *
-         * @param skin skin
-         */
-        void refreshThemeSkin(Skin skin);
 
         /**
          * setThemeColor

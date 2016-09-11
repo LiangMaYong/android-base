@@ -32,6 +32,6 @@ public class BaseApplication extends Application implements OnSkinRefreshListene
 
     @Override
     public void onRefreshSkin(Skin skin) {
-        Loading.setBackgroundColor(skin.getThemeColor() - 0x90000000);
+        Loading.setBackgroundColor(skin.getThemeColor() - 0x55111111);
     }
 }

@@ -139,6 +139,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IV
                 setThemeColor(getWindow().getStatusBarColor());
             }
         }
+        Skin.registerSkinRefresh(this);
     }
 
     /**
@@ -251,29 +252,15 @@ public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IV
     }
 
     @Override
-    public void refreshThemeSkin(Skin skin) {
-        if (isTranslucentStatus() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Window window = getWindow();
-                window.setStatusBarColor(skin.getThemeColor());
-            }
-        }
-        if (getDefualtToolbar() != null) {
-            getDefualtToolbar().refreshThemeSkin(skin);
-        }
-    }
-
-    @Override
     public void setThemeColor(int color) {
         getBasePresenter().setThemeColor(color);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
+        Skin.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
+        super.onDestroy();
     }
 
     /**
@@ -292,5 +279,20 @@ public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IV
     @Override
     public String getAnotationTitle() {
         return title;
+    }
+
+    @Override
+    public void onRefreshSkin(Skin skin) {
+        if (isTranslucentStatus() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(true);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.setStatusBarColor(skin.getThemeColor());
+            }
+        }
+        if (getDefualtToolbar() != null) {
+            getDefualtToolbar().refreshThemeSkin(skin);
+        }
     }
 }

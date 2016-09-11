@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.liangmayong.base.widget.SkinLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,6 +8,12 @@
 
     <include layout="@layout/defualt_toolbar" />
 
+    <com.liangmayong.base.widget.SkinButton
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="10dp"
+        android:text="ColorButton"
+        android:textColor="#ffffff" />
 
     <com.liangmayong.base.widget.pullrefresh.PullRefreshLayout
         android:id="@+id/pull"
@@ -23,4 +29,4 @@
             android:background="#ffffff"
             android:orientation="vertical" />
     </com.liangmayong.base.widget.pullrefresh.PullRefreshLayout>
-</LinearLayout>
+</com.liangmayong.base.widget.SkinLinearLayout>

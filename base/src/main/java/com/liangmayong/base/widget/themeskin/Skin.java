@@ -22,6 +22,7 @@ public class Skin {
      */
     public static void registerSkinRefresh(OnSkinRefreshListener refreshListener) {
         Airing.getDefault().observer(refreshListener).register(SKIN_AIRING_EVENT_NAME, new SkinAiringListener(refreshListener));
+        refreshListener.onRefreshSkin(Skin.get());
     }
 
     /**
