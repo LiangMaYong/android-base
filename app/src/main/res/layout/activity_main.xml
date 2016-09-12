@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.liangmayong.base.widget.themeskin.SkinLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#3399ff"
     tools:context="com.liangmayong.superandroid.MainActivity">
 
     <include layout="@layout/defualt_toolbar" />
@@ -30,4 +29,4 @@
             android:background="#ffffff"
             android:orientation="vertical" />
     </com.liangmayong.base.widget.pullrefresh.PullRefreshLayout>
-</LinearLayout>
+</com.liangmayong.base.widget.themeskin.SkinLinearLayout>
