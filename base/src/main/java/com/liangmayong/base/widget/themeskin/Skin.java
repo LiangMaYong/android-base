@@ -14,7 +14,7 @@ public class Skin {
      * SkinType
      */
     public static enum SkinType {
-        defualt, primary, success, info, warning, danger;
+        defualt, primary, success, info, warning, danger,white;
     }
 
     private static final String SKIN_PREFERENCES_NAME = "android_base_skin_preferences";
@@ -270,6 +270,8 @@ public class Skin {
                     return getWarningColor();
                 case danger:
                     return getDangerColor();
+                case white:
+                    return 0xffffffff;
                 default:
                     return getThemeColor();
             }
@@ -291,6 +293,8 @@ public class Skin {
                     return getWarningTextColor();
                 case danger:
                     return getDangerTextColor();
+                case white:
+                    return 0xff333333;
                 default:
                     return getThemeTextColor();
             }
@@ -415,6 +419,8 @@ public class Skin {
                 return hasDangerColor();
             case defualt:
                 return hasThemeColor();
+            case white:
+                return true;
             default:
                 return false;
         }

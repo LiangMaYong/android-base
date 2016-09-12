@@ -56,14 +56,12 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Skin.editor().setThemeColor(0xff663366, 0xffffffff).commit();
-                skinButton.setStrokeEnabled(true);
             }
         });
         getDefualtToolbar().rightOne().iconToRight(Icon.icon_menu).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Skin.editor().setThemeColor(0xffff6585, 0xffffffff).commit();
-                skinButton.setStrokeEnabled(false);
             }
         });
         getDefualtToolbar().rightTwo().iconToRight(Icon.icon_edit).clicked(new View.OnClickListener() {

@@ -155,8 +155,8 @@ public class SkinButton extends Button implements OnSkinRefreshListener {
             ((RadiusDrawable) drawables[1]).setRadius(radius);
             setTextColor(skin.getTextColor(skinType));
         } else {
-            ((RadiusDrawable) drawables[0]).setColor(0x00ffffffff);
-            ((RadiusDrawable) drawables[1]).setColor(0x00ffffffff);
+            ((RadiusDrawable) drawables[0]).setColor(0x00ffffff);
+            ((RadiusDrawable) drawables[1]).setColor(0x00ffffff);
             ((RadiusDrawable) drawables[0]).setStrokeColor(skin.getColor(skinType) - defualt_bg_nor_deta);
             ((RadiusDrawable) drawables[1]).setStrokeColor(skin.getColor(skinType) - defualt_bg_pre_deta);
             ((RadiusDrawable) drawables[0]).setStrokeWidth(DimenUtils.dip2px(getContext(), 2));
