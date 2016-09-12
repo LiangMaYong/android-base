@@ -20,6 +20,7 @@ public final class Icon {
         IconFont.loadFont(context, FONT_PATH);
     }
 
+    public static final IconValue icon_yes = new IconValue(FONT_PATH, 0xe617);
     public static final IconValue icon_location = new IconValue(FONT_PATH, 0xe616);
     public static final IconValue icon_edit = new IconValue(FONT_PATH, 0xe615);
     public static final IconValue icon_location_map = new IconValue(FONT_PATH, 0xe614);
