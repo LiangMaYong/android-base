@@ -22,7 +22,6 @@ public class RadiusDrawable extends Drawable {
     private int bottomLeftRadius;
     private int bottomRightRadius;
 
-
     private int left;
     private int top;
     private int right;
@@ -115,7 +114,15 @@ public class RadiusDrawable extends Drawable {
         this.top = top;
         this.right = right;
         this.bottom = bottom;
-
+        int maxRadius = Math.abs((bottom - top) / 2);
+        if (topLeftRadius > maxRadius)
+            topLeftRadius = maxRadius;
+        if (topRightRadius > maxRadius)
+            topRightRadius = maxRadius;
+        if (bottomLeftRadius > maxRadius)
+            bottomLeftRadius = maxRadius;
+        if (bottomRightRadius > maxRadius)
+            bottomRightRadius = maxRadius;
 
         if (isStroke) {
             int halfStrokeWidth = strokeWidth / 2;
@@ -124,7 +131,6 @@ public class RadiusDrawable extends Drawable {
             right -= halfStrokeWidth;
             bottom -= halfStrokeWidth;
         }
-
 
         path = new Path();
         path.moveTo(left + topLeftRadius, top);

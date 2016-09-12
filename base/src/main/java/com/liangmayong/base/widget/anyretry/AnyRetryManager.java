@@ -14,21 +14,29 @@ public class AnyRetryManager {
     public static int BASE_LOADING_LAYOUT_ID = NO_LAYOUT_ID;
     public static int BASE_RETRY_LAYOUT_ID = NO_LAYOUT_ID;
     public static int BASE_EMPTY_LAYOUT_ID = NO_LAYOUT_ID;
+    public static OnAnyRetryListener DEFAULT_LISTENER = null;
 
     public AnyRetryLayout mLoadingAndRetryLayout;
 
+    public static void setDefualtAnyRetryListener(OnAnyRetryListener defualtListener) {
+        AnyRetryManager.DEFAULT_LISTENER = defualtListener;
+    }
 
-    public OnAnyRetryListener DEFAULT_LISTENER = new OnAnyRetryListener() {
+
+    public OnAnyRetryListener defualtListener = new OnAnyRetryListener() {
         @Override
         public void setRetryEvent(View retryView) {
 
         }
     };
 
-
     public AnyRetryManager(Object activityOrFragmentOrView, OnAnyRetryListener listener) {
-        if (listener == null) listener = DEFAULT_LISTENER;
-
+        if (listener == null) {
+            listener = DEFAULT_LISTENER;
+        }
+        if (listener == null) {
+            listener = defualtListener;
+        }
         ViewGroup contentParent = null;
         Context context;
         if (activityOrFragmentOrView instanceof Activity) {

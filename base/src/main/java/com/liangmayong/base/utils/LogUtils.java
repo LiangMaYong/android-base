@@ -18,114 +18,19 @@ import java.lang.reflect.Method;
 public class LogUtils {
 
 
-    private static volatile LogUtils defualt_l = null;
+    private static volatile LogUtils defualt_log = null;
 
-    private static LogUtils getL() {
-        if (defualt_l == null) {
+    private static LogUtils getDefualt() {
+        if (defualt_log == null) {
             synchronized (LogUtils.class) {
-                defualt_l = new LogUtils("ANDROID-BASE-TAG");
+                defualt_log = new LogUtils("ANDROID-BASE-TAG");
             }
         }
-        return defualt_l;
+        return defualt_log;
     }
 
-    public static LogUtils tag(String tag) {
+    public static LogUtils get(String tag) {
         return new LogUtils(tag);
-    }
-
-    /**
-     * Send a DEBUG log message and log the exception.
-     *
-     * @param msg The message you would like logged.
-     */
-    public static void d(String msg) {
-        getL().debug(msg);
-    }
-
-    /**
-     * Send a DEBUG log message and log the exception.
-     *
-     * @param msg The message you would like logged.
-     * @param tr  An exception to log
-     */
-    public static void d(String msg, Throwable tr) {
-        getL().debug(msg, tr);
-    }
-
-    /**
-     * Send a ERROR log message and log the exception.
-     *
-     * @param msg The message you would like logged.
-     */
-    public static void e(String msg) {
-        getL().error(msg);
-    }
-
-    /**
-     * Send a ERROR log message and log the exception.
-     *
-     * @param msg The message you would like logged.
-     * @param tr  An exception to log
-     */
-    public static void e(String msg, Throwable tr) {
-        getL().error(msg, tr);
-    }
-
-    /**
-     * Send a INFO log message and log the exception.
-     *
-     * @param msg The message you would like logged.
-     */
-    public static void i(String msg) {
-        getL().info(msg);
-    }
-
-    /**
-     * Send a INFO log message and log the exception.
-     *
-     * @param msg The message you would like logged.
-     * @param tr  An exception to log
-     */
-    public static void i(String msg, Throwable tr) {
-        getL().info(msg, tr);
-    }
-
-    /**
-     * Send a VERBOSE log message and log the exception.
-     *
-     * @param msg The message you would like logged.
-     */
-    public static void v(String msg) {
-        getL().verbose(msg);
-    }
-
-    /**
-     * Send a VERBOSE log message and log the exception.
-     *
-     * @param msg The message you would like logged.
-     * @param tr  An exception to log
-     */
-    public static void v(String msg, Throwable tr) {
-        getL().info(msg, tr);
-    }
-
-    /**
-     * Send a WARN log message and log the exception.
-     *
-     * @param msg The message you would like logged.
-     */
-    public static void w(String msg) {
-        getL().warn(msg);
-    }
-
-    /**
-     * Send a WARN log message and log the exception.
-     *
-     * @param msg The message you would like logged.
-     * @param tr  An exception to log
-     */
-    public static void w(String msg, Throwable tr) {
-        getL().warn(msg, tr);
     }
 
 
@@ -204,7 +109,7 @@ public class LogUtils {
      *
      * @param msg The message you would like logged.
      */
-    public void debug(String msg) {
+    public void d(String msg) {
         if (isDebugable()) {
             Log.d(TAG, msg);
         }
@@ -216,7 +121,7 @@ public class LogUtils {
      * @param msg The message you would like logged.
      * @param tr  An exception to log
      */
-    public void debug(String msg, Throwable tr) {
+    public void d(String msg, Throwable tr) {
         if (isDebugable()) {
             Log.d(TAG, msg, tr);
         }
@@ -227,7 +132,7 @@ public class LogUtils {
      *
      * @param msg The message you would like logged.
      */
-    public void error(String msg) {
+    public void e(String msg) {
         if (isDebugable()) {
             Log.e(TAG, msg);
         }
@@ -239,7 +144,7 @@ public class LogUtils {
      * @param msg The message you would like logged.
      * @param tr  An exception to log
      */
-    public void error(String msg, Throwable tr) {
+    public void e(String msg, Throwable tr) {
         if (isDebugable()) {
             Log.e(TAG, msg, tr);
         }
@@ -250,7 +155,7 @@ public class LogUtils {
      *
      * @param msg The message you would like logged.
      */
-    public void info(String msg) {
+    public void i(String msg) {
         if (isDebugable()) {
             Log.i(TAG, msg);
         }
@@ -262,7 +167,7 @@ public class LogUtils {
      * @param msg The message you would like logged.
      * @param tr  An exception to log
      */
-    public void info(String msg, Throwable tr) {
+    public void i(String msg, Throwable tr) {
         if (isDebugable()) {
             Log.i(TAG, msg, tr);
         }
@@ -273,7 +178,7 @@ public class LogUtils {
      *
      * @param msg The message you would like logged.
      */
-    public void verbose(String msg) {
+    public void v(String msg) {
         if (isDebugable()) {
             Log.v(TAG, msg);
         }
@@ -285,7 +190,7 @@ public class LogUtils {
      * @param msg The message you would like logged.
      * @param tr  An exception to log
      */
-    public void verbose(String msg, Throwable tr) {
+    public void v(String msg, Throwable tr) {
         if (isDebugable()) {
             Log.v(TAG, msg, tr);
         }
@@ -296,7 +201,7 @@ public class LogUtils {
      *
      * @param msg The message you would like logged.
      */
-    public void warn(String msg) {
+    public void w(String msg) {
         if (isDebugable()) {
             Log.w(TAG, msg);
         }
@@ -308,7 +213,7 @@ public class LogUtils {
      * @param msg The message you would like logged.
      * @param tr  An exception to log
      */
-    public void warn(String msg, Throwable tr) {
+    public void w(String msg, Throwable tr) {
         if (isDebugable()) {
             Log.w(TAG, msg, tr);
         }
