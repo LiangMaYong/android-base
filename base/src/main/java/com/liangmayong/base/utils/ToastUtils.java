@@ -14,6 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
+import com.liangmayong.base.widget.themeskin.Skin;
+
 /**
  * ToastUtils
  *
@@ -21,7 +24,7 @@ import android.widget.Toast;
  * @version 1.0
  */
 @SuppressLint("InflateParams")
-public class ToastUtils {
+public class ToastUtils implements OnSkinRefreshListener {
 
     // mToast
     private static Toast mToast;
@@ -72,6 +75,11 @@ public class ToastUtils {
         mToast.show();
     }
 
+    @Override
+    public void onRefreshSkin(Skin skin) {
+
+    }
+
     /**
      * RoundColorDrawable
      *
@@ -105,6 +113,7 @@ public class ToastUtils {
             @Override
             public void drawRect(Rect r, Paint paint) {
                 RectF rectF = new RectF(r);
+                paint.setAntiAlias(true);
                 canvas.drawRoundRect(rectF, round, round, paint);
             }
 

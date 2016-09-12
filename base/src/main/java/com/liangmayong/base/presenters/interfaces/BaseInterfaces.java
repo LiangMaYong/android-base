@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.liangmayong.base.bind.Presenter;
-import com.liangmayong.base.widget.themeskin.Skin;
+import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 
 import java.util.HashMap;
@@ -21,13 +21,6 @@ public class BaseInterfaces {
     public static final String WEB_JAVASCRIPT_INTERFACE_NAME = "AndroidJs";
 
     public static interface IPresenter {
-
-        /**
-         * setThemeColor
-         *
-         * @param color color
-         */
-        void setThemeColor(int color);
 
         /**
          * showToast
@@ -112,16 +105,9 @@ public class BaseInterfaces {
          * @param editText editText
          */
         void showSoftKeyBoard(EditText editText);
-
-        /**
-         * hasSetThemeColor
-         *
-         * @return has
-         */
-        boolean hasSetThemeColor();
     }
 
-    public static interface IView {
+    public static interface IView extends OnSkinRefreshListener {
 
         /**
          * getContext
@@ -200,20 +186,6 @@ public class BaseInterfaces {
          * @param requestCode requestCode
          */
         void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode);
-
-        /**
-         * refreshThemeColor
-         *
-         * @param skin skin
-         */
-        void refreshThemeSkin(Skin skin);
-
-        /**
-         * setThemeColor
-         *
-         * @param color color
-         */
-        void setThemeColor(int color);
 
         /**
          * getDefualtToolbar

@@ -8,6 +8,12 @@
 
     <include layout="@layout/defualt_toolbar" />
 
+    <com.liangmayong.base.widget.themeskin.SkinButton
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:id="@+id/sbutton"
+        android:layout_margin="100dp"
+        android:text="确定按钮" />
 
     <com.liangmayong.base.widget.pullrefresh.PullRefreshLayout
         android:id="@+id/pull"

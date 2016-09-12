@@ -29,9 +29,6 @@ public class BasePresenter extends Presenter<BaseInterfaces.IView> implements Ba
     protected void onAttach(BaseInterfaces.IView view) {
         super.onAttach(view);
         inputManager = (InputMethodManager) view.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (Skin.hasThemeColor()) {
-            getViewInstance().refreshThemeSkin(Skin.get());
-        }
         Skin.registerSkinRefresh(this);
     }
 
@@ -39,11 +36,6 @@ public class BasePresenter extends Presenter<BaseInterfaces.IView> implements Ba
     protected void onDettach() {
         Skin.unregisterSkinRefresh(this);
         super.onDettach();
-    }
-
-    @Override
-    public void setThemeColor(int color) {
-        Skin.setSkinColor(color);
     }
 
     @Override
@@ -121,14 +113,6 @@ public class BasePresenter extends Presenter<BaseInterfaces.IView> implements Ba
     }
 
     @Override
-    public boolean hasSetThemeColor() {
-        return Skin.hasThemeColor();
-    }
-
-    @Override
     public void onRefreshSkin(Skin skin) {
-        if (getViewInstance() != null) {
-            getViewInstance().refreshThemeSkin(skin);
-        }
     }
 }

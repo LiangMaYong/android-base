@@ -147,6 +147,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterfaces.IV
         }
         initFragment(rootView);
         holder = BindMVP.bindPresenter(this);
+        Skin.registerSkinRefresh(this);
         return rootView;
     }
 
@@ -221,21 +222,17 @@ public abstract class BaseFragment extends Fragment implements BaseInterfaces.IV
     }
 
     @Override
-    public void refreshThemeSkin(Skin skin) {
+    public void onRefreshSkin(Skin skin) {
         if (getDefualtToolbar() != null) {
-            getDefualtToolbar().refreshThemeSkin(skin);
+            getDefualtToolbar().onRefreshSkin(skin);
         }
     }
 
     @Override
-    public void setThemeColor(int color) {
-        getBasePresenter().setThemeColor(color);
-    }
-
-    @Override
     public void onDestroyView() {
-        super.onDestroyView();
+        Skin.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
+        super.onDestroyView();
     }
 
 
