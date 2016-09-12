@@ -26,6 +26,7 @@ public class DefualtToolbar {
     private ToolbarItem toolbar_right_one, toolbar_right_two, toolbar_right_three, toolbar_right_four;
     private ToolbarItem toolbar_left_one, toolbar_left_two, toolbar_left_three, toolbar_left_four;
     private ProgressBar toolbar_progress;
+    private Skin.SkinType skinType = Skin.SkinType.defualt;
 
     public DefualtToolbar(View view) throws Exception {
         toolbar_layout = (RelativeLayout) view.findViewById(R.id.default_toolbar_layout);
@@ -54,7 +55,6 @@ public class DefualtToolbar {
         toolbar_progress = (ProgressBar) view.findViewById(R.id.default_toolbar_progress);
     }
 
-    private Skin.SkinType skinType = Skin.SkinType.defualt;
 
     /**
      * setSkinType

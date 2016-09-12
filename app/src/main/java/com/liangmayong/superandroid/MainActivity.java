@@ -9,10 +9,12 @@ import com.liangmayong.base.bind.annotations.ColorId;
 import com.liangmayong.base.bind.annotations.Layout;
 import com.liangmayong.base.bind.annotations.OnClick;
 import com.liangmayong.base.bind.annotations.Title;
+import com.liangmayong.base.bind.annotations.ViewId;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.pullrefresh.PullRefreshLayout;
 import com.liangmayong.base.widget.pullrefresh.drawables.PictureDrawable;
 import com.liangmayong.base.widget.themeskin.Skin;
+import com.liangmayong.base.widget.themeskin.SkinButton;
 import com.liangmayong.loading.Loading;
 import com.liangmayong.preferences.annotations.PreferenceValue;
 
@@ -25,6 +27,9 @@ public class MainActivity extends BaseActivity {
 
     @ColorId
     int colorPrimary;
+
+    @ViewId(R.id.sbutton)
+    SkinButton skinButton;
 
     @OnClick(R.id.sbutton)
     private void btn() {
@@ -51,12 +56,14 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Skin.editor().setThemeColor(0xff663366, 0xffffffff).commit();
+                skinButton.setStrokeEnabled(true);
             }
         });
         getDefualtToolbar().rightOne().iconToRight(Icon.icon_menu).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Skin.editor().setThemeColor(0xffff6585, 0xffffffff).commit();
+                skinButton.setStrokeEnabled(false);
             }
         });
         getDefualtToolbar().rightTwo().iconToRight(Icon.icon_edit).clicked(new View.OnClickListener() {
@@ -85,6 +92,7 @@ public class MainActivity extends BaseActivity {
                     public void run() {
                         pullRefreshLayout.setRefreshing(false);
                         Loading.cancelLoading(MainActivity.this);
+                        Skin.editor().reset().commit();
                     }
                 }, 1000);
             }

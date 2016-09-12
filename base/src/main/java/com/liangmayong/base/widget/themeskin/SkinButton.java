@@ -11,8 +11,6 @@ import android.widget.Button;
 import com.liangmayong.base.R;
 import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.widget.drawables.RadiusDrawable;
-import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
-import com.liangmayong.base.widget.themeskin.Skin;
 
 /**
  * Created by liangmayong on 2016/9/11.
@@ -26,6 +24,7 @@ public class SkinButton extends Button implements OnSkinRefreshListener {
     private int defualt_bg_nor_deta = 0x00111111;
     private int defualt_bg_pre_deta = 0x55111111;
     private Skin.SkinType skinType = Skin.SkinType.defualt;
+    private boolean strokeEnabled = false;
 
     public SkinButton(Context context) {
         super(context);
@@ -93,9 +92,24 @@ public class SkinButton extends Button implements OnSkinRefreshListener {
         super.onDetachedFromWindow();
     }
 
+    /**
+     * setRadius
+     *
+     * @param radius radius
+     */
     public void setRadius(int radius) {
         this.defualt_radius = radius;
         invalidate();
+    }
+
+    /**
+     * setStrokeEnabled
+     *
+     * @param strokeEnabled strokeEnabled
+     */
+    public void setStrokeEnabled(boolean strokeEnabled) {
+        this.strokeEnabled = strokeEnabled;
+        onRefreshSkin(Skin.get());
     }
 
     @Override
@@ -119,9 +133,21 @@ public class SkinButton extends Button implements OnSkinRefreshListener {
 
     @Override
     public void onRefreshSkin(Skin skin) {
-        ((RadiusDrawable) drawables[0]).setColor(skin.getColor(skinType) - defualt_bg_nor_deta);
-        ((RadiusDrawable) drawables[1]).setColor(skin.getColor(skinType) - defualt_bg_pre_deta);
-        setTextColor(skin.getTextColor(skinType));
+        if (!strokeEnabled) {
+            ((RadiusDrawable) drawables[0]).setColor(skin.getColor(skinType) - defualt_bg_nor_deta);
+            ((RadiusDrawable) drawables[1]).setColor(skin.getColor(skinType) - defualt_bg_pre_deta);
+            ((RadiusDrawable) drawables[0]).setStrokeWidth(0);
+            ((RadiusDrawable) drawables[1]).setStrokeWidth(0);
+            setTextColor(skin.getTextColor(skinType));
+        } else {
+            ((RadiusDrawable) drawables[0]).setColor(0x00ffffffff);
+            ((RadiusDrawable) drawables[1]).setColor(0x00ffffffff);
+            ((RadiusDrawable) drawables[0]).setStrokeColor(skin.getColor(skinType) - defualt_bg_nor_deta);
+            ((RadiusDrawable) drawables[1]).setStrokeColor(skin.getColor(skinType) - defualt_bg_pre_deta);
+            ((RadiusDrawable) drawables[0]).setStrokeWidth(DimenUtils.dip2px(getContext(), 3));
+            ((RadiusDrawable) drawables[1]).setStrokeWidth(DimenUtils.dip2px(getContext(), 3));
+            setTextColor(skin.getColor(skinType));
+        }
         invalidate();
     }
 }

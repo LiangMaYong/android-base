@@ -17,8 +17,8 @@ public class Skin {
         defualt, primary, success, info, warning, danger;
     }
 
-    private static final String SKIN_PREFERENCES_NAME = "android_base_skin";
-    private static final String SKIN_AIRING_EVENT_NAME = "android_base_skin";
+    private static final String SKIN_PREFERENCES_NAME = "android_base_skin_preferences";
+    private static final String SKIN_AIRING_EVENT_NAME = "android_base_skin_airing";
     private static volatile Preferences preferences = null;
     private static volatile Skin skin = null;
     private static volatile Editor editor = null;
@@ -122,20 +122,24 @@ public class Skin {
 
 
     private Skin() {
-        themeColor = getSkinPreferences().getInt("themeColor", 0);
-        themeTextColor = getSkinPreferences().getInt("themeTextColor", 0);
+        reset();
+        //defualt
+        themeColor = getSkinPreferences().getInt("themeColor", themeColor);
+        themeTextColor = getSkinPreferences().getInt("themeTextColor", themeTextColor);
 
-        primaryColor = getSkinPreferences().getInt("primaryColor", 0);
-        successColor = getSkinPreferences().getInt("successColor", 0);
-        infoColor = getSkinPreferences().getInt("infoColor", 0);
-        warningColor = getSkinPreferences().getInt("warningColor", 0);
-        dangerColor = getSkinPreferences().getInt("dangerColor", 0);
+        //colors
+        primaryColor = getSkinPreferences().getInt("primaryColor", primaryColor);
+        successColor = getSkinPreferences().getInt("successColor", successColor);
+        infoColor = getSkinPreferences().getInt("infoColor", infoColor);
+        warningColor = getSkinPreferences().getInt("warningColor", warningColor);
+        dangerColor = getSkinPreferences().getInt("dangerColor", dangerColor);
 
-        primaryTextColor = getSkinPreferences().getInt("primaryTextColor", 0);
-        successTextColor = getSkinPreferences().getInt("successTextColor", 0);
-        infoTextColor = getSkinPreferences().getInt("infoTextColor", 0);
-        warningTextColor = getSkinPreferences().getInt("warningTextColor", 0);
-        dangerTextColor = getSkinPreferences().getInt("dangerTextColor", 0);
+        //text colors
+        primaryTextColor = getSkinPreferences().getInt("primaryTextColor", primaryTextColor);
+        successTextColor = getSkinPreferences().getInt("successTextColor", successTextColor);
+        infoTextColor = getSkinPreferences().getInt("infoTextColor", infoTextColor);
+        warningTextColor = getSkinPreferences().getInt("warningTextColor", warningTextColor);
+        dangerTextColor = getSkinPreferences().getInt("dangerTextColor", dangerTextColor);
     }
 
     private int themeColor = 0;
@@ -181,6 +185,38 @@ public class Skin {
         return themeTextColor;
     }
 
+    /**
+     * reset
+     */
+    private void reset() {
+        //themeColor
+        themeColor = 0xff333333;
+        //themeTextColor
+        themeTextColor = 0xffffffff;
+        //primaryColor
+        primaryColor = 0xff428bca;
+        //successColor
+        successColor = 0xff5cb85c;
+        //infoColor
+        infoColor = 0xff5bc0de;
+        //warningColor
+        warningColor = 0xfff0ad4e;
+        //dangerColor
+        dangerColor = 0xffd9534f;
+
+        //primaryColor
+        primaryTextColor = 0xffffffff;
+        //successColor
+        successTextColor = 0xffffffff;
+        //infoColor
+        infoTextColor = 0xffffffff;
+        //warningColor
+        warningTextColor = 0xffffffff;
+        //dangerColor
+        dangerTextColor = 0xffffffff;
+    }
+
+
     public int getPrimaryColor() {
         return primaryColor;
     }
@@ -222,48 +258,44 @@ public class Skin {
     }
 
     public int getColor(SkinType skinType) {
-        switch (skinType) {
-            case primary:
-                return getPrimaryColor();
-            case success:
-                return getSuccessColor();
-            case info:
-                return getInfoColor();
-            case warning:
-                return getWarningColor();
-            case danger:
-                return getDangerColor();
-            case defualt:
-                return getThemeColor();
-            default:
-                return getThemeColor();
+        if (hasColor(skinType)) {
+            switch (skinType) {
+                case primary:
+                    return getPrimaryColor();
+                case success:
+                    return getSuccessColor();
+                case info:
+                    return getInfoColor();
+                case warning:
+                    return getWarningColor();
+                case danger:
+                    return getDangerColor();
+                default:
+                    return getThemeColor();
+            }
         }
+        return getThemeColor();
     }
 
 
     public int getTextColor(SkinType skinType) {
-        switch (skinType) {
-            case primary:
-                if (hasPrimaryColor())
+        if (hasColor(skinType)) {
+            switch (skinType) {
+                case primary:
                     return getPrimaryTextColor();
-            case success:
-                if (hasPrimaryColor())
+                case success:
                     return getSuccessTextColor();
-            case info:
-                if (hasPrimaryColor())
+                case info:
                     return getInfoTextColor();
-            case warning:
-                if (hasPrimaryColor())
+                case warning:
                     return getWarningTextColor();
-            case danger:
-                if (hasPrimaryColor())
+                case danger:
                     return getDangerTextColor();
-            case defualt:
-                if (hasPrimaryColor())
+                default:
                     return getThemeTextColor();
-            default:
-                return getThemeTextColor();
+            }
         }
+        return getThemeTextColor();
     }
 
     /**
@@ -315,8 +347,8 @@ public class Skin {
      * @param successTextColor successTextColor
      */
     private void setSuccessColor(int successColor, int successTextColor) {
-        this.successColor = primaryColor;
-        this.successTextColor = primaryTextColor;
+        this.successColor = successColor;
+        this.successTextColor = successTextColor;
     }
 
     /**
@@ -533,7 +565,7 @@ public class Skin {
          * @return editor
          */
         public Editor setInfoColor(int infoColor, int infoTextColor) {
-            Skin.get().setSuccessColor(infoColor, infoTextColor);
+            Skin.get().setInfoColor(infoColor, infoTextColor);
             getSkinPreferences().setInt("infoColor", infoColor);
             getSkinPreferences().setInt("infoTextColor", infoTextColor);
             return this;
@@ -547,7 +579,7 @@ public class Skin {
          * @return editor
          */
         public Editor setWarningColor(int warningColor, int warningTextColor) {
-            Skin.get().setSuccessColor(warningColor, warningTextColor);
+            Skin.get().setWarningColor(warningColor, warningTextColor);
             getSkinPreferences().setInt("warningColor", warningColor);
             getSkinPreferences().setInt("warningTextColor", warningTextColor);
             return this;
@@ -561,7 +593,7 @@ public class Skin {
          * @return editor
          */
         public Editor setDangerColor(int dangerColor, int dangerTextColor) {
-            Skin.get().setSuccessColor(dangerColor, dangerTextColor);
+            Skin.get().setDangerColor(dangerColor, dangerTextColor);
             getSkinPreferences().setInt("dangerColor", dangerColor);
             getSkinPreferences().setInt("dangerTextColor", dangerTextColor);
             return this;
@@ -590,10 +622,18 @@ public class Skin {
         }
 
         /**
+         * reset
+         */
+        public Editor reset() {
+            Skin.get().reset();
+            return this;
+        }
+
+        /**
          * commit
          */
         public void commit() {
-            Airing.getDefault().sender(SKIN_PREFERENCES_NAME).sendEmpty();
+            Airing.getDefault().sender(SKIN_AIRING_EVENT_NAME).sendEmpty();
         }
 
     }

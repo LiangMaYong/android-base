@@ -134,11 +134,6 @@ public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IV
             defualtToolbar = null;
         }
         holder = BindMVP.bindPresenter(this);
-        if (!Skin.get().hasThemeColor()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Skin.editor().setThemeColor(getWindow().getStatusBarColor(), 0xffffffff).commit();
-            }
-        }
         Skin.registerSkinRefresh(this);
     }
 
