@@ -54,6 +54,20 @@ public class DefualtToolbar {
         toolbar_progress = (ProgressBar) view.findViewById(R.id.default_toolbar_progress);
     }
 
+    private Skin.SkinType skinType = Skin.SkinType.defualt;
+
+    /**
+     * setSkinType
+     *
+     * @param skinType skinType
+     */
+    public void setSkinType(Skin.SkinType skinType) {
+        if (this.skinType != skinType) {
+            this.skinType = skinType;
+            onRefreshSkin(Skin.get());
+        }
+    }
+
     public DefualtToolbar(Activity activity) throws Exception {
         toolbar_layout = (RelativeLayout) activity.findViewById(R.id.default_toolbar_layout);
         if (toolbar_layout == null) {
@@ -220,10 +234,20 @@ public class DefualtToolbar {
      *
      * @param skin skin
      */
-    public void refreshThemeSkin(Skin skin) {
+    public void onRefreshSkin(Skin skin) {
         if (toolbar_layout != null) {
-            toolbar_layout.setBackgroundColor(skin.getThemeColor());
+            toolbar_layout.setBackgroundColor(skin.getColor(skinType));
         }
+        leftOne().getIconView().setTextColor(skin.getTextColor(skinType));
+        leftTwo().getIconView().setTextColor(skin.getTextColor(skinType));
+        leftThree().getIconView().setTextColor(skin.getTextColor(skinType));
+        leftFour().getIconView().setTextColor(skin.getTextColor(skinType));
+        rightOne().getIconView().setTextColor(skin.getTextColor(skinType));
+        rightTwo().getIconView().setTextColor(skin.getTextColor(skinType));
+        rightThree().getIconView().setTextColor(skin.getTextColor(skinType));
+        rightFour().getIconView().setTextColor(skin.getTextColor(skinType));
+        toolbar_title.setTextColor(skin.getTextColor(skinType));
+        toolbar_subtitle.setTextColor(skin.getTextColor(skinType));
     }
 
     /**

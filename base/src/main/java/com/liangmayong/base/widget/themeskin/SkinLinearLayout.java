@@ -1,4 +1,4 @@
-package com.liangmayong.base.widget;
+package com.liangmayong.base.widget.themeskin;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
+import com.liangmayong.base.R;
 import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
 import com.liangmayong.base.widget.themeskin.Skin;
 
@@ -37,7 +38,22 @@ public class SkinLinearLayout extends LinearLayout implements OnSkinRefreshListe
     }
 
     private void initView() {
+        setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         Skin.registerSkinRefresh(this);
+    }
+
+    private Skin.SkinType skinType = Skin.SkinType.defualt;
+
+    /**
+     * setSkinType
+     *
+     * @param skinType skinType
+     */
+    public void setSkinType(Skin.SkinType skinType) {
+        if (this.skinType != skinType) {
+            this.skinType = skinType;
+            onRefreshSkin(Skin.get());
+        }
     }
 
     @Override
@@ -48,6 +64,6 @@ public class SkinLinearLayout extends LinearLayout implements OnSkinRefreshListe
 
     @Override
     public void onRefreshSkin(Skin skin) {
-        setBackgroundColor(skin.getThemeColor());
+        setBackgroundColor(skin.getColor(skinType));
     }
 }

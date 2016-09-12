@@ -1,17 +1,11 @@
-package com.liangmayong.base.widget;
+package com.liangmayong.base.widget.themeskin;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.liangmayong.base.R;
-import com.liangmayong.base.utils.DimenUtils;
-import com.liangmayong.base.widget.drawables.RadiusDrawable;
 import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
 import com.liangmayong.base.widget.themeskin.Skin;
 
@@ -45,6 +39,21 @@ public class SkinTextView extends TextView implements OnSkinRefreshListener {
         Skin.registerSkinRefresh(this);
     }
 
+
+    private Skin.SkinType skinType = Skin.SkinType.defualt;
+
+    /**
+     * setSkinType
+     *
+     * @param skinType skinType
+     */
+    public void setSkinType(Skin.SkinType skinType) {
+        if (this.skinType != skinType) {
+            this.skinType = skinType;
+            onRefreshSkin(Skin.get());
+        }
+    }
+
     @Override
     protected void onDetachedFromWindow() {
         Skin.unregisterSkinRefresh(this);
@@ -53,6 +62,6 @@ public class SkinTextView extends TextView implements OnSkinRefreshListener {
 
     @Override
     public void onRefreshSkin(Skin skin) {
-        setTextColor(skin.getThemeColor());
+        setTextColor(skin.getColor(skinType));
     }
 }

@@ -134,9 +134,9 @@ public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IV
             defualtToolbar = null;
         }
         holder = BindMVP.bindPresenter(this);
-        if (!getBasePresenter().hasSetThemeColor()) {
+        if (!Skin.get().hasThemeColor()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                setThemeColor(getWindow().getStatusBarColor());
+                Skin.editor().setThemeColor(getWindow().getStatusBarColor(), 0xffffffff).commit();
             }
         }
         Skin.registerSkinRefresh(this);
@@ -252,11 +252,6 @@ public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IV
     }
 
     @Override
-    public void setThemeColor(int color) {
-        getBasePresenter().setThemeColor(color);
-    }
-
-    @Override
     protected void onDestroy() {
         Skin.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
@@ -292,7 +287,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IV
             }
         }
         if (getDefualtToolbar() != null) {
-            getDefualtToolbar().refreshThemeSkin(skin);
+            getDefualtToolbar().onRefreshSkin(skin);
         }
     }
 }

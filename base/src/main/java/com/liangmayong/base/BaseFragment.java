@@ -224,13 +224,8 @@ public abstract class BaseFragment extends Fragment implements BaseInterfaces.IV
     @Override
     public void onRefreshSkin(Skin skin) {
         if (getDefualtToolbar() != null) {
-            getDefualtToolbar().refreshThemeSkin(skin);
+            getDefualtToolbar().onRefreshSkin(skin);
         }
-    }
-
-    @Override
-    public void setThemeColor(int color) {
-        getBasePresenter().setThemeColor(color);
     }
 
     @Override

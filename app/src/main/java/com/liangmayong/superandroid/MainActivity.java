@@ -7,10 +7,12 @@ import android.view.View;
 import com.liangmayong.base.BaseActivity;
 import com.liangmayong.base.bind.annotations.ColorId;
 import com.liangmayong.base.bind.annotations.Layout;
+import com.liangmayong.base.bind.annotations.OnClick;
 import com.liangmayong.base.bind.annotations.Title;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.pullrefresh.PullRefreshLayout;
 import com.liangmayong.base.widget.pullrefresh.drawables.PictureDrawable;
+import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.loading.Loading;
 import com.liangmayong.preferences.annotations.PreferenceValue;
 
@@ -23,6 +25,11 @@ public class MainActivity extends BaseActivity {
 
     @ColorId
     int colorPrimary;
+
+    @OnClick(R.id.sbutton)
+    private void btn() {
+        showToast("MainActivity");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,31 +44,31 @@ public class MainActivity extends BaseActivity {
         getDefualtToolbar().leftTwo().iconToRight(Icon.icon_filter).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setThemeColor(0xff336666);
+                Skin.editor().setThemeColor(0xff336666, 0xffffffff).commit();
             }
         });
         getDefualtToolbar().leftThree().iconToRight(Icon.icon_message).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setThemeColor(0xff663366);
+                Skin.editor().setThemeColor(0xff663366, 0xffffffff).commit();
             }
         });
         getDefualtToolbar().rightOne().iconToRight(Icon.icon_menu).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setThemeColor(0xffff6585);
+                Skin.editor().setThemeColor(0xffff6585, 0xffffffff).commit();
             }
         });
         getDefualtToolbar().rightTwo().iconToRight(Icon.icon_edit).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setThemeColor(0xff3399ff);
+                Skin.editor().setThemeColor(0xff3399ff, 0xffffffff).commit();
             }
         });
         getDefualtToolbar().rightThree().iconToRight(Icon.icon_location).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setThemeColor(0xff18a28b);
+                Skin.editor().setThemeColor(0xff18a28b, 0xffffffff).commit();
             }
         });
 //        goTo("百度一下", "http://www.baidu.com");

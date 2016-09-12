@@ -39,11 +39,6 @@ public class BasePresenter extends Presenter<BaseInterfaces.IView> implements Ba
     }
 
     @Override
-    public void setThemeColor(int color) {
-        Skin.setSkinColor(color);
-    }
-
-    @Override
     public void showToast(CharSequence text) {
         ToastUtils.showToast(getViewInstance().getActivity(), text);
     }
@@ -115,11 +110,6 @@ public class BasePresenter extends Presenter<BaseInterfaces.IView> implements Ba
                 inputManager.showSoftInput(editText, 0);
             }
         }, 500);
-    }
-
-    @Override
-    public boolean hasSetThemeColor() {
-        return Skin.hasThemeColor();
     }
 
     @Override

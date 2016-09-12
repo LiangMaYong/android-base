@@ -24,6 +24,7 @@ public class BaseApplication extends Application implements OnSkinRefreshListene
     @Override
     public void onTerminate() {
         super.onTerminate();
+        Skin.unregisterSkinRefresh(this);
     }
 
     public String getTakePhotoPath() {
