@@ -1,6 +1,7 @@
 package com.liangmayong.base.utils;
 
 import android.app.Application;
+import android.content.pm.ApplicationInfo;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
@@ -43,5 +44,20 @@ public class ContextUtils {
             }
         }
         return application.get();
+    }
+
+    /**
+     * isDebugable
+     *
+     * @return true or false
+     */
+    public static boolean isDebugable() {
+        try {
+            ApplicationInfo info = ContextUtils.getApplication().getApplicationInfo();
+            boolean debugable = (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+            return debugable;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
