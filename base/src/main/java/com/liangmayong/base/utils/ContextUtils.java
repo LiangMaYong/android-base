@@ -21,7 +21,7 @@ public class ContextUtils {
      *
      * @return application
      */
-    private static Application getApplication() {
+    public static Application getApplication() {
         if (application == null || application.get() == null) {
             synchronized (ContextUtils.class) {
                 if (application == null) {
