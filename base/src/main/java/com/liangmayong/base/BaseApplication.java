@@ -5,7 +5,6 @@ import android.app.Application;
 import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
 import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.loading.Loading;
-import com.liangmayong.takephoto.TakePhoto;
 
 
 /**
@@ -16,19 +15,13 @@ public class BaseApplication extends Application implements OnSkinRefreshListene
     @Override
     public void onCreate() {
         super.onCreate();
-        onRefreshSkin(Skin.get());
         Skin.registerSkinRefresh(this);
-        TakePhoto.init(getTakePhotoPath());
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
         Skin.unregisterSkinRefresh(this);
-    }
-
-    public String getTakePhotoPath() {
-        return "/android/takephoto/";
     }
 
     @Override

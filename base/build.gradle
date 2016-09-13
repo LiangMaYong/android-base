@@ -27,10 +27,6 @@ dependencies {
     compile files('libs/android-preferences-src.jar')
     //广播事件
     compile files('libs/android-airing-src.jar')
-    //图片选取
-    compile files('libs/android-takephoto-src.jar')
-    //权限管理
-    compile files('libs/android-permit-src.jar')
     //Loading对话框
     compile files('libs/android-loading-src.jar')
 }
