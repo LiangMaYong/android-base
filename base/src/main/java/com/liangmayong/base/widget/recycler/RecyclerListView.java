@@ -843,7 +843,7 @@ public class RecyclerListView extends RelativeLayout {
             item.setPosition(position);
             item.setItemPool(pool);
             if (item != null) {
-                item.proxyOnBindViewHolder();
+                item.proxyOnBindViewHolder(holder.itemView);
             }
         }
 
@@ -952,7 +952,7 @@ public class RecyclerListView extends RelativeLayout {
         private final View onCreateItemView(LayoutInflater inflater, ViewGroup parent) {
             if (getItemLayoutId() > 0) {
                 itemView = inflater.inflate(getItemLayoutId(), null);
-                BindView.parserClassByView(this, itemView);
+                bindView();
             } else {
                 itemView = BindView.parserClass(this, inflater.getContext());
             }
@@ -1008,8 +1008,17 @@ public class RecyclerListView extends RelativeLayout {
         /**
          * proxyOnBindViewHolder
          */
-        private final void proxyOnBindViewHolder() {
+        private final void proxyOnBindViewHolder(View itemView) {
+            this.itemView = itemView;
+            bindView();
             onBindItem(data);
+        }
+
+        /**
+         * bindView
+         */
+        private void bindView() {
+            BindView.parserClassByView(this, itemView);
         }
 
         /**

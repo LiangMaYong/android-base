@@ -13,10 +13,7 @@ import android.webkit.WebViewClient;
 
 import com.liangmayong.base.BaseActivity;
 import com.liangmayong.base.R;
-import com.liangmayong.base.bind.annotations.BindPresenter;
-import com.liangmayong.base.presenters.WebPresenter;
-import com.liangmayong.base.presenters.interfaces.BaseInterfaces;
-import com.liangmayong.base.presenters.interfaces.WebInterfaces;
+import com.liangmayong.base.BaseInterfaces;
 import com.liangmayong.base.widget.iconfont.Icon;
 
 import java.util.HashMap;
@@ -26,8 +23,7 @@ import java.util.Map;
 /**
  * Created by LiangMaYong on 2016/8/22.
  */
-@BindPresenter({WebPresenter.class})
-public class WebActivity extends BaseActivity implements WebInterfaces.IView {
+public class WebActivity extends BaseActivity {
 
     //base_webview
     private WebView base_webview;

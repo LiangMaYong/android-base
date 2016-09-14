@@ -18,8 +18,6 @@ import com.liangmayong.base.bind.Presenter;
 import com.liangmayong.base.bind.annotations.BindPresenter;
 import com.liangmayong.base.interfaces.AnotationTitle;
 import com.liangmayong.base.interfaces.HandleBridge;
-import com.liangmayong.base.presenters.BasePresenter;
-import com.liangmayong.base.presenters.interfaces.BaseInterfaces;
 import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
@@ -32,7 +30,7 @@ import java.util.HashMap;
  * Created by LiangMaYong on 2016/8/22.
  */
 @BindPresenter({BasePresenter.class})
-public class BaseActivity extends AppCompatActivity implements BaseInterfaces.IView, HandleBridge, AnotationTitle {
+public class BaseActivity extends AppCompatActivity implements BaseView, HandleBridge, AnotationTitle {
 
     //holder
     private Presenter.PresenterHolder holder = null;

@@ -1,4 +1,4 @@
-package com.liangmayong.base.presenters;
+package com.liangmayong.base;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.widget.EditText;
 
 import com.liangmayong.base.activitys.WebActivity;
 import com.liangmayong.base.bind.Presenter;
-import com.liangmayong.base.presenters.interfaces.BaseInterfaces;
 import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
 import com.liangmayong.base.widget.themeskin.Skin;
@@ -20,13 +19,13 @@ import java.util.HashMap;
 /**
  * Created by LiangMaYong on 2016/8/22.
  */
-public class BasePresenter extends Presenter<BaseInterfaces.IView> implements BaseInterfaces.IPresenter, OnSkinRefreshListener {
+public final class BasePresenter extends Presenter<BaseView> implements BaseInterfaces, OnSkinRefreshListener {
 
     //inputManager
     private InputMethodManager inputManager = null;
 
     @Override
-    protected void onAttach(BaseInterfaces.IView view) {
+    protected void onAttach(BaseView view) {
         super.onAttach(view);
         inputManager = (InputMethodManager) view.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         Skin.registerSkinRefresh(this);
@@ -71,10 +70,10 @@ public class BasePresenter extends Presenter<BaseInterfaces.IView> implements Ba
     @Override
     public void goTo(String title, String url, HashMap<String, String> headers) {
         Bundle extras = new Bundle();
-        extras.putString(BaseInterfaces.WEB_EXTRA_TITLE, title);
-        extras.putString(BaseInterfaces.WEB_EXTRA_URL, url);
+        extras.putString(WEB_EXTRA_TITLE, title);
+        extras.putString(WEB_EXTRA_URL, url);
         if (headers != null) {
-            extras.putSerializable(BaseInterfaces.WEB_EXTRA_HEADERS, headers);
+            extras.putSerializable(WEB_EXTRA_HEADERS, headers);
         }
         goTo(WebActivity.class, extras);
     }

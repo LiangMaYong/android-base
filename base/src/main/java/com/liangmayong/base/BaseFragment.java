@@ -16,8 +16,6 @@ import com.liangmayong.base.bind.Presenter;
 import com.liangmayong.base.bind.annotations.BindPresenter;
 import com.liangmayong.base.interfaces.AnotationTitle;
 import com.liangmayong.base.interfaces.HandleBridge;
-import com.liangmayong.base.presenters.BasePresenter;
-import com.liangmayong.base.presenters.interfaces.BaseInterfaces;
 import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 import com.liangmayong.preferences.Preferences;
@@ -28,7 +26,7 @@ import java.util.HashMap;
  * Created by LiangMaYong on 2016/8/22.
  */
 @BindPresenter({BasePresenter.class})
-public abstract class BaseFragment extends Fragment implements BaseInterfaces.IView, AnotationTitle {
+public abstract class BaseFragment extends Fragment implements BaseView, AnotationTitle {
 
     //holder
     private Presenter.PresenterHolder holder = null;
@@ -145,8 +143,8 @@ public abstract class BaseFragment extends Fragment implements BaseInterfaces.IV
         } catch (Exception e) {
             defualtToolbar = null;
         }
-        initFragment(rootView);
         holder = BindMVP.bindPresenter(this);
+        initFragment(rootView);
         Skin.registerSkinRefresh(this);
         return rootView;
     }
