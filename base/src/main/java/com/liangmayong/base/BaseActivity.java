@@ -12,9 +12,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 
-import com.liangmayong.base.bind.BindView;
-import com.liangmayong.base.bind.Presenter;
-import com.liangmayong.base.bind.annotations.BindPresenter;
+import com.liangmayong.base.bind.view.BindView;
+import com.liangmayong.base.bind.mvp.BindPresenter;
+import com.liangmayong.base.bind.mvp.Presenter;
 import com.liangmayong.base.interfaces.AnotationTitle;
 import com.liangmayong.base.interfaces.HandleBridge;
 import com.liangmayong.base.widget.themeskin.Skin;

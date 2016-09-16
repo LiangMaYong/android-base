@@ -1,6 +1,4 @@
-package com.liangmayong.base.bind.annotations;
-
-import com.liangmayong.base.bind.Presenter;
+package com.liangmayong.base.bind.mvp;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package com.liangmayong.base.bind.annotations;
+package com.liangmayong.base.bind.view.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,8 +1,6 @@
-package com.liangmayong.base.bind;
+package com.liangmayong.base.bind.mvp;
 
 import android.os.Handler;
-
-import com.liangmayong.base.bind.annotations.BindPresenter;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -10,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Presenter
+ * BindPresenter
  *
  * @param <V> viewType
  * @author LiangMaYong

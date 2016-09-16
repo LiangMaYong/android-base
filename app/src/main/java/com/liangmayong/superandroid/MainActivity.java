@@ -5,11 +5,11 @@ import android.os.Handler;
 import android.view.View;
 
 import com.liangmayong.base.BaseActivity;
-import com.liangmayong.base.bind.annotations.ColorId;
-import com.liangmayong.base.bind.annotations.Layout;
-import com.liangmayong.base.bind.annotations.OnClick;
-import com.liangmayong.base.bind.annotations.Title;
-import com.liangmayong.base.bind.annotations.ViewId;
+import com.liangmayong.base.bind.view.annotations.ColorId;
+import com.liangmayong.base.bind.view.annotations.Layout;
+import com.liangmayong.base.bind.view.annotations.OnClick;
+import com.liangmayong.base.bind.view.annotations.Title;
+import com.liangmayong.base.bind.view.annotations.ViewId;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.pullrefresh.PullRefreshLayout;
 import com.liangmayong.base.widget.pullrefresh.drawables.PictureDrawable;

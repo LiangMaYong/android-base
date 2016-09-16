@@ -8,7 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.liangmayong.base.activitys.WebActivity;
-import com.liangmayong.base.bind.Presenter;
+import com.liangmayong.base.bind.mvp.Presenter;
 import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
 import com.liangmayong.base.widget.themeskin.Skin;

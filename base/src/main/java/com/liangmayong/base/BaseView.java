@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.EditText;
 
-import com.liangmayong.base.bind.Presenter;
+import com.liangmayong.base.bind.mvp.Presenter;
 import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 

@@ -1,4 +1,4 @@
-package com.liangmayong.base.bind;
+package com.liangmayong.base.bind.view;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -9,14 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.liangmayong.base.bind.annotations.ColorId;
-import com.liangmayong.base.bind.annotations.Layout;
-import com.liangmayong.base.bind.annotations.OnClick;
-import com.liangmayong.base.bind.annotations.OnLongClick;
-import com.liangmayong.base.bind.annotations.StringId;
-import com.liangmayong.base.bind.annotations.Title;
-import com.liangmayong.base.bind.annotations.TitleId;
-import com.liangmayong.base.bind.annotations.ViewId;
+import com.liangmayong.base.bind.view.annotations.ColorId;
+import com.liangmayong.base.bind.view.annotations.Layout;
+import com.liangmayong.base.bind.view.annotations.OnClick;
+import com.liangmayong.base.bind.view.annotations.OnLongClick;
+import com.liangmayong.base.bind.view.annotations.StringId;
+import com.liangmayong.base.bind.view.annotations.Title;
+import com.liangmayong.base.bind.view.annotations.TitleId;
+import com.liangmayong.base.bind.view.annotations.ViewId;
 import com.liangmayong.base.interfaces.AnotationTitle;
 import com.liangmayong.base.utils.ResourceUtils;
 

@@ -1,4 +1,4 @@
-package com.liangmayong.base.bind.annotations;
+package com.liangmayong.base.bind.view.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,13 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Layout
- *
- * @author LiangMaYong
- * @version 1.0
+ * Created by liangmayong on 2016/9/10.
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Layout {
+public @interface ColorId {
     int value();
 }

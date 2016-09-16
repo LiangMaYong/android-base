@@ -1,4 +1,4 @@
-package com.liangmayong.base.bind.annotations;
+package com.liangmayong.base.bind.view.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,13 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * ViewId
+ * OnLongClick
  *
  * @author LiangMaYong
  * @version 1.0
  */
-@Target(ElementType.FIELD)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ViewId {
-    int value();
+public @interface OnLongClick {
+    int[] value();
 }
