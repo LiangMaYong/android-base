@@ -15,6 +15,4 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface OnLongClick {
     int[] value();
-
-    String note() default "";
 }

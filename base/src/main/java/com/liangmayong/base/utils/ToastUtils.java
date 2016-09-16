@@ -1,7 +1,7 @@
 package com.liangmayong.base.utils;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
+import android.app.Application;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
@@ -14,8 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
-import com.liangmayong.base.widget.themeskin.Skin;
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Method;
 
 /**
  * ToastUtils
@@ -24,7 +24,38 @@ import com.liangmayong.base.widget.themeskin.Skin;
  * @version 1.0
  */
 @SuppressLint("InflateParams")
-public class ToastUtils implements OnSkinRefreshListener {
+public class ToastUtils {
+    // application
+    private static WeakReference<Application> application = null;
+
+    /**
+     * getApplication
+     *
+     * @return application
+     */
+    private static Application getApplication() {
+        if (application == null || application.get() == null) {
+            synchronized (ContextUtils.class) {
+                if (application == null) {
+                    try {
+                        Class<?> clazz = Class.forName("android.app.ActivityThread");
+                        Method currentActivityThread = clazz.getDeclaredMethod("currentActivityThread");
+                        if (currentActivityThread != null) {
+                            Object object = currentActivityThread.invoke(null);
+                            if (object != null) {
+                                Method getApplication = object.getClass().getDeclaredMethod("getApplication");
+                                if (getApplication != null) {
+                                    application = new WeakReference<Application>((Application) getApplication.invoke(object));
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        }
+        return application.get();
+    }
 
     // mToast
     private static Toast mToast;
@@ -39,33 +70,31 @@ public class ToastUtils implements OnSkinRefreshListener {
     /**
      * showToast
      *
-     * @param context context
-     * @param text    text
+     * @param text text
      */
-    public static void showToast(Context context, CharSequence text) {
-        showToast(context, text, 1500);
+    public static void showToast(CharSequence text) {
+        showToast(text, 1500);
     }
 
     /**
      * show toast
      *
-     * @param context  context
      * @param text     text
      * @param duration duration
      */
     @SuppressWarnings("deprecation")
-    public static void showToast(Context context, CharSequence text, int duration) {
+    public static void showToast(CharSequence text, int duration) {
         mHandler.removeCallbacks(run);
         if (mToast == null) {
-            mToast = new Toast(context);
+            mToast = new Toast(getApplication());
         }
-        LinearLayout linearLayout = new LinearLayout(context);
+        LinearLayout linearLayout = new LinearLayout(getApplication());
         linearLayout.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         linearLayout.setGravity(Gravity.CENTER);
         linearLayout.setPadding(20, 10, 20, 10);
         linearLayout.setBackgroundDrawable(new RoundColorDrawable(15, 0x99333333));
 
-        TextView tv = new TextView(context);
+        TextView tv = new TextView(getApplication());
         linearLayout.addView(tv);
         tv.setTextColor(0xffffffff);
         tv.setTextSize(14);
@@ -73,11 +102,6 @@ public class ToastUtils implements OnSkinRefreshListener {
         mToast.setView(linearLayout);
         mHandler.postDelayed(run, duration);
         mToast.show();
-    }
-
-    @Override
-    public void onRefreshSkin(Skin skin) {
-
     }
 
     /**

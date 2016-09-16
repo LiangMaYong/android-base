@@ -39,17 +39,17 @@ public final class BasePresenter extends Presenter<BaseView> implements BaseInte
 
     @Override
     public void showToast(CharSequence text) {
-        ToastUtils.showToast(getViewInstance().getActivity(), text);
+        ToastUtils.showToast(text);
     }
 
     @Override
     public void showToast(int stringId) {
-        ToastUtils.showToast(getViewInstance().getActivity(), getViewInstance().getActivity().getString(stringId));
+        ToastUtils.showToast(getViewInstance().getActivity().getString(stringId));
     }
 
     @Override
     public void showToast(CharSequence text, int duration) {
-        ToastUtils.showToast(getViewInstance().getActivity(), text, duration);
+        ToastUtils.showToast(text, duration);
     }
 
     @Override

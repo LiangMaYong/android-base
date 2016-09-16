@@ -25,7 +25,7 @@ public class MainActivity extends BaseActivity {
     @PreferenceValue("key")
     String app_name;
 
-    @ColorId
+    @ColorId(R.color.colorPrimary)
     int colorPrimary;
 
     @ViewId(R.id.sbutton)

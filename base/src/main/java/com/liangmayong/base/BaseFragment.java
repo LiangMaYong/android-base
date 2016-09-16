@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.liangmayong.base.bind.BindMVP;
 import com.liangmayong.base.bind.BindView;
 import com.liangmayong.base.bind.Presenter;
 import com.liangmayong.base.bind.annotations.BindPresenter;
@@ -103,7 +102,7 @@ public abstract class BaseFragment extends Fragment implements BaseView, Anotati
      *
      * @return base presenter
      */
-    protected BasePresenter getBasePresenter() {
+    private BasePresenter getBasePresenter() {
         if (basePresenter == null) {
             if (getPresenterHolder() != null) {
                 basePresenter = getPresenterHolder().getPresenter(BasePresenter.class);
@@ -143,7 +142,7 @@ public abstract class BaseFragment extends Fragment implements BaseView, Anotati
         } catch (Exception e) {
             defualtToolbar = null;
         }
-        holder = BindMVP.bindPresenter(this);
+        holder = Presenter.Bind.bindPresenter(this);
         initFragment(rootView);
         Skin.registerSkinRefresh(this);
         return rootView;
@@ -246,7 +245,7 @@ public abstract class BaseFragment extends Fragment implements BaseView, Anotati
 
     @Override
     public void addPresenter(Class<? extends Presenter>... presenterType) {
-        BindMVP.addPresenter(getPresenterHolder(), presenterType);
+        Presenter.Bind.addPresenter(getPresenterHolder(), presenterType);
     }
 
     @Override

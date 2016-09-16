@@ -12,13 +12,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 
-import com.liangmayong.base.bind.BindMVP;
 import com.liangmayong.base.bind.BindView;
 import com.liangmayong.base.bind.Presenter;
 import com.liangmayong.base.bind.annotations.BindPresenter;
 import com.liangmayong.base.interfaces.AnotationTitle;
 import com.liangmayong.base.interfaces.HandleBridge;
-import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 import com.liangmayong.preferences.Preferences;
@@ -116,7 +114,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView, HandleB
 
     @Override
     public void addPresenter(Class<? extends Presenter>... presenterType) {
-        BindMVP.addPresenter(getPresenterHolder(), presenterType);
+        Presenter.Bind.addPresenter(getPresenterHolder(), presenterType);
     }
 
     @Override
@@ -131,7 +129,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView, HandleB
         } catch (Exception e) {
             defualtToolbar = null;
         }
-        holder = BindMVP.bindPresenter(this);
+        holder = Presenter.Bind.bindPresenter(this);
         Skin.registerSkinRefresh(this);
     }
 
@@ -158,7 +156,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView, HandleB
      *
      * @return basePresenter
      */
-    protected BasePresenter getBasePresenter() {
+    private BasePresenter getBasePresenter() {
         if (basePresenter == null) {
             if (getPresenterHolder() != null) {
                 basePresenter = getPresenterHolder().getPresenter(BasePresenter.class);
@@ -201,7 +199,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView, HandleB
 
     @Override
     public void showToast(CharSequence text) {
-        ToastUtils.showToast(this, text);
+        getBasePresenter().showToast(text);
     }
 
     @Override
@@ -211,7 +209,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView, HandleB
 
     @Override
     public void showToast(CharSequence text, int duration) {
-        ToastUtils.showToast(this, text, duration);
+        getBasePresenter().showToast(text, duration);
     }
 
     @Override

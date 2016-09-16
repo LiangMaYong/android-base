@@ -11,7 +11,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ColorId {
-    int value() default -1;
-
-    String note() default "";
+    int value();
 }
