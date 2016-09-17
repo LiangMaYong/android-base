@@ -5,21 +5,21 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 
-import com.liangmayong.base.bind.view.BindView;
-import com.liangmayong.base.bind.mvp.BindPresenter;
-import com.liangmayong.base.bind.mvp.Presenter;
-import com.liangmayong.base.interfaces.AnotationTitle;
-import com.liangmayong.base.interfaces.HandleBridge;
+import com.liangmayong.base.widget.viewbinding.ViewBinding;
+import com.liangmayong.base.interfaces.BaseInterface;
+import com.liangmayong.base.widget.viewbinding.interfaces.TitleInterface;
 import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
-import com.liangmayong.preferences.Preferences;
+import com.liangmayong.presenter.BindP;
+import com.liangmayong.presenter.Presenter;
+import com.liangmayong.presenter.PresenterBind;
+import com.liangmayong.presenter.PresenterHolder;
 
 import java.util.HashMap;
 
@@ -27,11 +27,11 @@ import java.util.HashMap;
 /**
  * Created by LiangMaYong on 2016/8/22.
  */
-@BindPresenter({BasePresenter.class})
-public class BaseActivity extends AppCompatActivity implements BaseView, HandleBridge, AnotationTitle {
+@BindP({BasePresenter.class})
+public class BaseActivity extends AppCompatActivity implements BaseInterface, TitleInterface {
 
     //holder
-    private Presenter.PresenterHolder holder = null;
+    private PresenterHolder holder = null;
     //defualtToolbar
     private DefualtToolbar defualtToolbar = null;
     //title
@@ -39,13 +39,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView, HandleB
     //basePresenter
     private BasePresenter basePresenter = null;
     //handler
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            BaseActivity.this.handleActivityMessage(msg);
-        }
-    };
+    private final Handler handler = new Handler();
 
     @Override
     public void setTitle(CharSequence title) {
@@ -61,16 +55,6 @@ public class BaseActivity extends AppCompatActivity implements BaseView, HandleB
         if (title != null || getDefualtToolbar() != null) {
             getDefualtToolbar().setTitle(titleId);
         }
-    }
-
-    /**
-     * getHandler
-     *
-     * @return handler
-     */
-    @Override
-    public Handler getHandler() {
-        return handler;
     }
 
     /**
@@ -103,33 +87,32 @@ public class BaseActivity extends AppCompatActivity implements BaseView, HandleB
     }
 
     @Override
-    public void hideSoftKeyBoard() {
+    public final void hideSoftKeyBoard() {
         getBasePresenter().hideSoftKeyBoard();
     }
 
     @Override
-    public void showSoftKeyBoard(EditText editText) {
+    public final void showSoftKeyBoard(EditText editText) {
         getBasePresenter().showSoftKeyBoard(editText);
     }
 
     @Override
     public void addPresenter(Class<? extends Presenter>... presenterType) {
-        Presenter.Bind.addPresenter(getPresenterHolder(), presenterType);
+        PresenterBind.bind(getPresenterHolder(), presenterType);
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Preferences.bind(this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        BindView.parserActivity(this);
+        ViewBinding.parserActivity(this);
         try {
             defualtToolbar = new DefualtToolbar(this);
             defualtToolbar.setTitle(getAnotationTitle());
         } catch (Exception e) {
             defualtToolbar = null;
         }
-        holder = Presenter.Bind.bindPresenter(this);
+        holder = PresenterBind.bind(this);
         Skin.registerSkinRefresh(this);
     }
 
@@ -147,7 +130,7 @@ public class BaseActivity extends AppCompatActivity implements BaseView, HandleB
      *
      * @return holder
      */
-    public Presenter.PresenterHolder getPresenterHolder() {
+    public PresenterHolder getPresenterHolder() {
         return holder;
     }
 
@@ -198,47 +181,47 @@ public class BaseActivity extends AppCompatActivity implements BaseView, HandleB
     }
 
     @Override
-    public void showToast(CharSequence text) {
+    public final void showToast(CharSequence text) {
         getBasePresenter().showToast(text);
     }
 
     @Override
-    public void showToast(int stringId) {
+    public final void showToast(int stringId) {
         getBasePresenter().showToast(stringId);
     }
 
     @Override
-    public void showToast(CharSequence text, int duration) {
+    public final void showToast(CharSequence text, int duration) {
         getBasePresenter().showToast(text, duration);
     }
 
     @Override
-    public void goTo(Class<? extends Activity> cls) {
+    public final void goTo(Class<? extends Activity> cls) {
         getBasePresenter().goTo(cls);
     }
 
     @Override
-    public void goTo(Class<? extends Activity> cls, Bundle extras) {
+    public final void goTo(Class<? extends Activity> cls, Bundle extras) {
         getBasePresenter().goTo(cls, extras);
     }
 
     @Override
-    public void goTo(String title, String url) {
+    public final void goTo(String title, String url) {
         getBasePresenter().goTo(title, url);
     }
 
     @Override
-    public void goTo(String title, String url, HashMap<String, String> headers) {
+    public final void goTo(String title, String url, HashMap<String, String> headers) {
         getBasePresenter().goTo(title, url, headers);
     }
 
     @Override
-    public void goToForResult(Class<? extends Activity> cls, int requestCode) {
+    public final void goToForResult(Class<? extends Activity> cls, int requestCode) {
         getBasePresenter().goToForResult(cls, requestCode);
     }
 
     @Override
-    public void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
+    public final void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
         getBasePresenter().goToForResult(cls, extras, requestCode);
     }
 
@@ -247,14 +230,6 @@ public class BaseActivity extends AppCompatActivity implements BaseView, HandleB
         Skin.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
         super.onDestroy();
-    }
-
-    /**
-     * handleActivityMessage
-     *
-     * @param message message
-     */
-    protected void handleActivityMessage(Message message) {
     }
 
     @Override

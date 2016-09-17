@@ -1,9 +1,9 @@
-package com.liangmayong.base.interfaces;
+package com.liangmayong.base.widget.viewbinding.interfaces;
 
 /**
  * Created by LiangMaYong on 2016/9/10.
  */
-public interface AnotationTitle {
+public interface TitleInterface {
     /**
      * setTitle
      *

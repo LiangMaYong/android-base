@@ -1,4 +1,4 @@
-package com.liangmayong.base.bind.view.annotations;
+package com.liangmayong.base.widget.viewbinding.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,13 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Layout
+ * OnClick
  *
  * @author LiangMaYong
  * @version 1.0
  */
-@Target(ElementType.TYPE)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Layout {
-    int value();
+public @interface OnClick {
+    int[] value();
 }

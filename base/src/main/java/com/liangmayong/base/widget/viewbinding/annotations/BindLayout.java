@@ -1,21 +1,18 @@
-package com.liangmayong.base.bind.mvp;
+package com.liangmayong.base.widget.viewbinding.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
 /**
- * BindPresenter
+ * BindLayout
  *
  * @author LiangMaYong
  * @version 1.0
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface BindPresenter {
-    @SuppressWarnings("rawtypes") Class<? extends Presenter>[] value();
-
-    String note() default "";
+public @interface BindLayout {
+    int value();
 }

@@ -219,6 +219,8 @@ public class PhotoUtils {
         intent.putExtra("aspectY", height);
         intent.putExtra("outputX", width);
         intent.putExtra("outputY", height);
+        intent.putExtra("scale", true);
+        intent.putExtra("scaleUpIfNeeded", true);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(id));
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         return intent;

@@ -1,9 +1,9 @@
 package com.liangmayong.base.widget.themeskin;
 
-import com.liangmayong.airing.Airing;
-import com.liangmayong.airing.AiringContent;
-import com.liangmayong.airing.OnAiringListener;
 import com.liangmayong.preferences.Preferences;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by LiangMaYong on 2016/9/11.
@@ -14,7 +14,7 @@ public class Skin {
      * SkinType
      */
     public static enum SkinType {
-        defualt, primary, success, info, warning, danger,white;
+        defualt, primary, success, info, warning, danger, white;
     }
 
     private static final String SKIN_PREFERENCES_NAME = "android_base_skin_preferences";
@@ -22,6 +22,7 @@ public class Skin {
     private static volatile Preferences preferences = null;
     private static volatile Skin skin = null;
     private static volatile Editor editor = null;
+    private static final List<OnSkinRefreshListener> SKIN_REFRESH_LISTENERS = new ArrayList<OnSkinRefreshListener>();
 
     /**
      * registerSkinRefresh
@@ -29,27 +30,11 @@ public class Skin {
      * @param refreshListener refreshListener
      */
     public static void registerSkinRefresh(OnSkinRefreshListener refreshListener) {
-        Airing.getDefault().observer(refreshListener).register(SKIN_AIRING_EVENT_NAME, new SkinAiringListener(refreshListener));
-        refreshListener.onRefreshSkin(Skin.get());
-    }
-
-    /**
-     * SkinAiringListener
-     */
-    private static class SkinAiringListener implements OnAiringListener {
-        OnSkinRefreshListener refreshListener;
-
-        public SkinAiringListener(OnSkinRefreshListener refreshListener) {
-
-            this.refreshListener = refreshListener;
-        }
-
-        @Override
-        public void onAiring(AiringContent airingContent) {
-            refreshListener.onRefreshSkin(Skin.get());
+        if (refreshListener != null && !SKIN_REFRESH_LISTENERS.contains(refreshListener)) {
+            SKIN_REFRESH_LISTENERS.add(refreshListener);
+            refreshListener.onRefreshSkin(get());
         }
     }
-
 
     /**
      * unregisterSkinRefresh
@@ -57,7 +42,18 @@ public class Skin {
      * @param refreshListener refreshListener
      */
     public static void unregisterSkinRefresh(OnSkinRefreshListener refreshListener) {
-        Airing.getDefault().observer(refreshListener).unregister(SKIN_AIRING_EVENT_NAME);
+        if (refreshListener != null && SKIN_REFRESH_LISTENERS.contains(refreshListener)) {
+            SKIN_REFRESH_LISTENERS.remove(refreshListener);
+        }
+    }
+
+    /**
+     * refreshSkin
+     */
+    public static void refreshSkin() {
+        for (int i = 0; i < SKIN_REFRESH_LISTENERS.size(); i++) {
+            SKIN_REFRESH_LISTENERS.get(i).onRefreshSkin(get());
+        }
     }
 
     /**
@@ -639,7 +635,7 @@ public class Skin {
          * commit
          */
         public void commit() {
-            Airing.getDefault().sender(SKIN_AIRING_EVENT_NAME).sendEmpty();
+            refreshSkin();
         }
 
     }

@@ -10,25 +10,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.liangmayong.base.bind.view.BindView;
-import com.liangmayong.base.bind.mvp.BindPresenter;
-import com.liangmayong.base.bind.mvp.Presenter;
-import com.liangmayong.base.interfaces.AnotationTitle;
-import com.liangmayong.base.interfaces.HandleBridge;
+import com.liangmayong.base.widget.viewbinding.ViewBinding;
+import com.liangmayong.base.interfaces.BaseInterface;
+import com.liangmayong.base.widget.viewbinding.interfaces.TitleInterface;
 import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
-import com.liangmayong.preferences.Preferences;
+import com.liangmayong.presenter.BindP;
+import com.liangmayong.presenter.Presenter;
+import com.liangmayong.presenter.PresenterBind;
+import com.liangmayong.presenter.PresenterHolder;
 
 import java.util.HashMap;
 
 /**
  * Created by LiangMaYong on 2016/8/22.
  */
-@BindPresenter({BasePresenter.class})
-public abstract class BaseFragment extends Fragment implements BaseView, AnotationTitle {
+@BindP({BasePresenter.class})
+public abstract class BaseFragment extends Fragment implements BaseInterface, TitleInterface {
 
     //holder
-    private Presenter.PresenterHolder holder = null;
+    private PresenterHolder holder = null;
     //defualtToolbar
     private DefualtToolbar defualtToolbar = null;
     //handler
@@ -41,23 +42,6 @@ public abstract class BaseFragment extends Fragment implements BaseView, Anotati
     private String title = "";
     //basePresenter
     private BasePresenter basePresenter = null;
-
-    /**
-     * getActivityHandler
-     *
-     * @return activityHandler
-     */
-    public Handler getActivityHandler() {
-        return activityHandler;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof HandleBridge) {
-            activityHandler = ((HandleBridge) activity).getHandler();
-        }
-    }
 
     /**
      * postDelayed
@@ -93,7 +77,7 @@ public abstract class BaseFragment extends Fragment implements BaseView, Anotati
      *
      * @return holder
      */
-    public Presenter.PresenterHolder getPresenterHolder() {
+    public PresenterHolder getPresenterHolder() {
         return holder;
     }
 
@@ -128,13 +112,12 @@ public abstract class BaseFragment extends Fragment implements BaseView, Anotati
     @Nullable
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Preferences.bind(this);
         rootView = null;
-        if (getContainerViewId() > 0) {
-            rootView = inflater.inflate(getContainerViewId(), null);
-            BindView.parserClassByView(this, rootView);
+        if (generateContainerViewId() > 0) {
+            rootView = inflater.inflate(generateContainerViewId(), null);
+            ViewBinding.parserClassByView(this, rootView);
         } else {
-            rootView = BindView.parserFragment(this, container);
+            rootView = ViewBinding.parserFragment(this, container);
         }
         try {
             defualtToolbar = new DefualtToolbar(rootView);
@@ -142,8 +125,7 @@ public abstract class BaseFragment extends Fragment implements BaseView, Anotati
         } catch (Exception e) {
             defualtToolbar = null;
         }
-        holder = Presenter.Bind.bindPresenter(this);
-        initFragment(rootView);
+        holder = PresenterBind.bind(this);
         Skin.registerSkinRefresh(this);
         return rootView;
     }
@@ -153,83 +135,63 @@ public abstract class BaseFragment extends Fragment implements BaseView, Anotati
      *
      * @return rootView
      */
-    public View getRootView() {
+    public final View getRootView() {
         return rootView;
     }
 
     /**
-     * getContainerViewId
+     * generateContainerViewId
      *
      * @return containerViewId
      */
-    protected int getContainerViewId() {
+    protected int generateContainerViewId() {
         return -1;
     }
 
-    /**
-     * initFragment
-     *
-     * @param rootView rootView
-     */
-    protected abstract void initFragment(View rootView);
 
     @Override
-    public void showToast(CharSequence text) {
+    public final void showToast(CharSequence text) {
         getBasePresenter().showToast(text);
     }
 
     @Override
-    public void showToast(int stringId) {
+    public final void showToast(int stringId) {
         getBasePresenter().showToast(stringId);
     }
 
     @Override
-    public void showToast(CharSequence text, int duration) {
+    public final void showToast(CharSequence text, int duration) {
         getBasePresenter().showToast(text, duration);
     }
 
     @Override
-    public void goTo(Class<? extends Activity> cls) {
+    public final void goTo(Class<? extends Activity> cls) {
         getBasePresenter().goTo(cls);
     }
 
     @Override
-    public void goTo(Class<? extends Activity> cls, Bundle extras) {
+    public final void goTo(Class<? extends Activity> cls, Bundle extras) {
         getBasePresenter().goTo(cls, extras);
     }
 
     @Override
-    public void goTo(String title, String url) {
+    public final void goTo(String title, String url) {
         getBasePresenter().goTo(title, url);
     }
 
     @Override
-    public void goTo(String title, String url, HashMap<String, String> headers) {
+    public final void goTo(String title, String url, HashMap<String, String> headers) {
         getBasePresenter().goTo(title, url, headers);
     }
 
     @Override
-    public void goToForResult(Class<? extends Activity> cls, int requestCode) {
+    public final void goToForResult(Class<? extends Activity> cls, int requestCode) {
         getBasePresenter().goToForResult(cls, requestCode);
     }
 
     @Override
-    public void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
+    public final void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
         getBasePresenter().goToForResult(cls, extras, requestCode);
-    }
-
-    @Override
-    public void onRefreshSkin(Skin skin) {
-        if (getDefualtToolbar() != null) {
-            getDefualtToolbar().onRefreshSkin(skin);
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        Skin.unregisterSkinRefresh(this);
-        getPresenterHolder().onDettach();
-        super.onDestroyView();
     }
 
 
@@ -245,7 +207,7 @@ public abstract class BaseFragment extends Fragment implements BaseView, Anotati
 
     @Override
     public void addPresenter(Class<? extends Presenter>... presenterType) {
-        Presenter.Bind.addPresenter(getPresenterHolder(), presenterType);
+        PresenterBind.bind(getPresenterHolder(), presenterType);
     }
 
     @Override
@@ -256,5 +218,19 @@ public abstract class BaseFragment extends Fragment implements BaseView, Anotati
     @Override
     public String getAnotationTitle() {
         return title;
+    }
+
+    @Override
+    public void onRefreshSkin(Skin skin) {
+        if (getDefualtToolbar() != null) {
+            getDefualtToolbar().onRefreshSkin(skin);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        Skin.unregisterSkinRefresh(this);
+        getPresenterHolder().onDettach();
+        super.onDestroyView();
     }
 }

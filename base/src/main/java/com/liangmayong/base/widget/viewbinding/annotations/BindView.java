@@ -1,4 +1,4 @@
-package com.liangmayong.base.bind.view.annotations;
+package com.liangmayong.base.widget.viewbinding.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,13 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * OnClick
+ * BindView
  *
  * @author LiangMaYong
  * @version 1.0
  */
-@Target(ElementType.METHOD)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface OnClick {
-    int[] value();
+public @interface BindView {
+    int value();
 }

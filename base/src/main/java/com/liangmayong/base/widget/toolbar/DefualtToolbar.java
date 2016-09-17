@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.widget.IconView;
+import com.liangmayong.base.widget.iconfont.IconView;
 import com.liangmayong.base.widget.iconfont.IconValue;
 import com.liangmayong.base.widget.themeskin.Skin;
 

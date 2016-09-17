@@ -1,4 +1,4 @@
-package com.liangmayong.base.bind.view;
+package com.liangmayong.base.widget.viewbinding;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -9,27 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.liangmayong.base.bind.view.annotations.ColorId;
-import com.liangmayong.base.bind.view.annotations.Layout;
-import com.liangmayong.base.bind.view.annotations.OnClick;
-import com.liangmayong.base.bind.view.annotations.OnLongClick;
-import com.liangmayong.base.bind.view.annotations.StringId;
-import com.liangmayong.base.bind.view.annotations.Title;
-import com.liangmayong.base.bind.view.annotations.TitleId;
-import com.liangmayong.base.bind.view.annotations.ViewId;
-import com.liangmayong.base.interfaces.AnotationTitle;
 import com.liangmayong.base.utils.ResourceUtils;
+import com.liangmayong.base.widget.viewbinding.annotations.BindColor;
+import com.liangmayong.base.widget.viewbinding.annotations.BindLayout;
+import com.liangmayong.base.widget.viewbinding.annotations.BindString;
+import com.liangmayong.base.widget.viewbinding.annotations.BindTitle;
+import com.liangmayong.base.widget.viewbinding.annotations.BindView;
+import com.liangmayong.base.widget.viewbinding.annotations.OnClick;
+import com.liangmayong.base.widget.viewbinding.annotations.OnLongClick;
+import com.liangmayong.base.widget.viewbinding.interfaces.TitleInterface;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
- * BindView
+ * ViewBinding
  *
  * @author LiangMaYong
  * @version 1.0
  */
-public final class BindView {
+public final class ViewBinding {
 
     /**
      * parserActivity
@@ -42,20 +41,17 @@ public final class BindView {
         Class<?> cl = act.getClass();
         View root = null;
         if (isLayout(cl)) {
-            Layout layout = cl.getAnnotation(Layout.class);
+            BindLayout layout = cl.getAnnotation(BindLayout.class);
             root = LayoutInflater.from(act).inflate(layout.value(), null);
             act.setContentView(root);
         }
         if (isTitle(cl)) {
-            Title title = cl.getAnnotation(Title.class);
+            BindTitle title = cl.getAnnotation(BindTitle.class);
             if (title.id() != 0) {
-                ((AnotationTitle) act).setAnotationTitle(act.getString(title.id()));
+                ((TitleInterface) act).setAnotationTitle(act.getString(title.id()));
             } else {
-                ((AnotationTitle) act).setAnotationTitle(title.value());
+                ((TitleInterface) act).setAnotationTitle(title.value());
             }
-        } else if (isTitleId(cl)) {
-            TitleId title = cl.getAnnotation(TitleId.class);
-            ((AnotationTitle) act).setAnotationTitle(act.getString(title.value()));
         }
         View decorView = act.getWindow().getDecorView();
         initFields(cl.getDeclaredFields(), decorView, act);
@@ -74,15 +70,12 @@ public final class BindView {
             return;
         Class<?> cl = obj.getClass();
         if (isTitle(cl)) {
-            Title title = cl.getAnnotation(Title.class);
+            BindTitle title = cl.getAnnotation(BindTitle.class);
             if (title.id() != 0) {
-                ((AnotationTitle) obj).setAnotationTitle(root.getContext().getString(title.id()));
+                ((TitleInterface) obj).setAnotationTitle(root.getContext().getString(title.id()));
             } else {
-                ((AnotationTitle) obj).setAnotationTitle(title.value());
+                ((TitleInterface) obj).setAnotationTitle(title.value());
             }
-        } else if (isTitleId(cl)) {
-            TitleId title = cl.getAnnotation(TitleId.class);
-            ((AnotationTitle) obj).setAnotationTitle(root.getContext().getString(title.value()));
         }
         initFields(cl.getDeclaredFields(), root, obj);
         initMethods(cl.getDeclaredMethods(), root, obj);
@@ -100,19 +93,16 @@ public final class BindView {
         Class<?> cl = obj.getClass();
         View root = null;
         if (isLayout(cl)) {
-            Layout layout = cl.getAnnotation(Layout.class);
+            BindLayout layout = cl.getAnnotation(BindLayout.class);
             root = LayoutInflater.from(context).inflate(layout.value(), null);
         }
         if (isTitle(cl)) {
-            Title title = cl.getAnnotation(Title.class);
+            BindTitle title = cl.getAnnotation(BindTitle.class);
             if (title.id() != 0) {
-                ((AnotationTitle) obj).setAnotationTitle(root.getContext().getString(title.id()));
+                ((TitleInterface) obj).setAnotationTitle(root.getContext().getString(title.id()));
             } else {
-                ((AnotationTitle) obj).setAnotationTitle(title.value());
+                ((TitleInterface) obj).setAnotationTitle(title.value());
             }
-        } else if (isTitleId(cl)) {
-            TitleId title = cl.getAnnotation(TitleId.class);
-            ((AnotationTitle) obj).setAnotationTitle(context.getString(title.value()));
         }
         initFields(cl.getDeclaredFields(), root, obj);
         initMethods(cl.getDeclaredMethods(), root, obj);
@@ -130,19 +120,16 @@ public final class BindView {
         Class<?> cl = fragment.getClass();
         View view = null;
         if (isLayout(cl)) {
-            Layout layout = cl.getAnnotation(Layout.class);
+            BindLayout layout = cl.getAnnotation(BindLayout.class);
             view = fragment.getActivity().getLayoutInflater().inflate(layout.value(), group, false);
         }
         if (isTitle(cl)) {
-            Title title = cl.getAnnotation(Title.class);
+            BindTitle title = cl.getAnnotation(BindTitle.class);
             if (title.id() != 0) {
-                ((AnotationTitle) fragment).setAnotationTitle(fragment.getActivity().getString(title.id()));
+                ((TitleInterface) fragment).setAnotationTitle(fragment.getActivity().getString(title.id()));
             } else {
-                ((AnotationTitle) fragment).setAnotationTitle(title.value());
+                ((TitleInterface) fragment).setAnotationTitle(title.value());
             }
-        } else if (isTitleId(cl)) {
-            TitleId title = cl.getAnnotation(TitleId.class);
-            ((AnotationTitle) fragment).setAnotationTitle(fragment.getActivity().getString(title.value()));
         }
 
         if (null != view) {
@@ -160,15 +147,12 @@ public final class BindView {
     public static void parserView(View view) {
         Class<?> cl = view.getClass();
         if (isTitle(cl)) {
-            Title title = cl.getAnnotation(Title.class);
+            BindTitle title = cl.getAnnotation(BindTitle.class);
             if (title.id() != 0) {
-                ((AnotationTitle) view).setAnotationTitle(view.getContext().getString(title.id()));
+                ((TitleInterface) view).setAnotationTitle(view.getContext().getString(title.id()));
             } else {
-                ((AnotationTitle) view).setAnotationTitle(title.value());
+                ((TitleInterface) view).setAnotationTitle(title.value());
             }
-        } else if (isTitleId(cl)) {
-            TitleId title = cl.getAnnotation(TitleId.class);
-            ((AnotationTitle) view).setAnotationTitle(view.getContext().getString(title.value()));
         }
         initFields(cl.getDeclaredFields(), view, view);
         initMethods(cl.getDeclaredMethods(), view, view);
@@ -186,7 +170,7 @@ public final class BindView {
         for (Field field : allField) {
             // View
             if (isView(field)) {
-                ViewId xkView = field.getAnnotation(ViewId.class);
+                BindView xkView = field.getAnnotation(BindView.class);
                 View v = root.findViewById(xkView.value());
                 if (null != v) {
                     try {
@@ -201,7 +185,7 @@ public final class BindView {
             }
             // String
             if (isString(field)) {
-                StringId xkString = field.getAnnotation(StringId.class);
+                BindString xkString = field.getAnnotation(BindString.class);
                 String s;
                 if (xkString.value() == -1) {
                     s = ResourceUtils.getString(root.getContext(), field.getName());
@@ -212,9 +196,7 @@ public final class BindView {
                     try {
                         field.setAccessible(true);
                         field.set(object, s);
-                    } catch (IllegalArgumentException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -222,7 +204,7 @@ public final class BindView {
 
             // Color
             if (isColor(field)) {
-                ColorId xkColor = field.getAnnotation(ColorId.class);
+                BindColor xkColor = field.getAnnotation(BindColor.class);
                 try {
                     int color;
                     if (xkColor.value() == -1) {
@@ -232,9 +214,7 @@ public final class BindView {
                     }
                     field.setAccessible(true);
                     field.set(object, color);
-                } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -282,7 +262,7 @@ public final class BindView {
      * @return true or false
      */
     private static boolean isLayout(Class<?> cls) {
-        return cls.isAnnotationPresent(Layout.class);
+        return cls.isAnnotationPresent(BindLayout.class);
     }
 
     /**
@@ -292,17 +272,7 @@ public final class BindView {
      * @return true or false
      */
     private static boolean isTitle(Class<?> cls) {
-        return cls.isAnnotationPresent(Title.class) && isClassGeneric(cls, AnotationTitle.class.getName());
-    }
-
-    /**
-     * isTitleId
-     *
-     * @param cls cls
-     * @return true or false
-     */
-    private static boolean isTitleId(Class<?> cls) {
-        return cls.isAnnotationPresent(TitleId.class) && isClassGeneric(cls, AnotationTitle.class.getName());
+        return cls.isAnnotationPresent(BindTitle.class) && isClassGeneric(cls, TitleInterface.class.getName());
     }
 
     /**
@@ -312,7 +282,7 @@ public final class BindView {
      * @return true or false
      */
     private static boolean isView(Field field) {
-        return field.isAnnotationPresent(ViewId.class);
+        return field.isAnnotationPresent(BindView.class);
     }
 
     /**
@@ -322,7 +292,7 @@ public final class BindView {
      * @return true or false
      */
     private static boolean isString(Field field) {
-        return field.isAnnotationPresent(StringId.class);
+        return field.isAnnotationPresent(BindString.class);
     }
 
     /**
@@ -332,7 +302,7 @@ public final class BindView {
      * @return true or false
      */
     private static boolean isColor(Field field) {
-        return field.isAnnotationPresent(ColorId.class);
+        return field.isAnnotationPresent(BindColor.class);
     }
 
     /**

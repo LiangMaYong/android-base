@@ -12,8 +12,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.liangmayong.base.BaseActivity;
+import com.liangmayong.base.interfaces.BaseInterface;
 import com.liangmayong.base.R;
-import com.liangmayong.base.BaseInterfaces;
 import com.liangmayong.base.widget.iconfont.Icon;
 
 import java.util.HashMap;
@@ -68,10 +68,10 @@ public class WebActivity extends BaseActivity {
      * initData
      */
     private void initData() {
-        url = getIntent().getStringExtra(BaseInterfaces.WEB_EXTRA_URL);
-        title = getIntent().getStringExtra(BaseInterfaces.WEB_EXTRA_TITLE);
+        url = getIntent().getStringExtra(BaseInterface.WEB_EXTRA_URL);
+        title = getIntent().getStringExtra(BaseInterface.WEB_EXTRA_TITLE);
         try {
-            headers = (HashMap<String, String>) getIntent().getSerializableExtra(BaseInterfaces.WEB_EXTRA_HEADERS);
+            headers = (HashMap<String, String>) getIntent().getSerializableExtra(BaseInterface.WEB_EXTRA_HEADERS);
         } catch (Exception e) {
         }
         if (url == null || "".equals(url) || "null".equals(url)) {
@@ -99,7 +99,7 @@ public class WebActivity extends BaseActivity {
         base_webview.setWebViewClient(new BaseWebViewClient());
         base_webview.getSettings().setJavaScriptEnabled(true);
         base_webview.getSettings().setAppCacheEnabled(true);
-        base_webview.addJavascriptInterface(new BaseWebViewInterface(), BaseInterfaces.WEB_JAVASCRIPT_INTERFACE_NAME);
+        base_webview.addJavascriptInterface(new BaseWebViewInterface(), BaseInterface.WEB_JAVASCRIPT_INTERFACE_NAME);
         base_webview.loadData("", "text/html", null);
         base_webview.getSettings().setDefaultTextEncodingName("UTF-8");
         base_webview.setWebChromeClient(new WebChromeClient() {

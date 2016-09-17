@@ -95,14 +95,14 @@ public class DefualtDrawable extends RefreshDrawable implements Animatable {
     private float mRotation;
 
     /**
-     * Layout info for the arrowhead in dp
+     * BindLayout info for the arrowhead in dp
      */
     private static final int ARROW_WIDTH = 10;
     private static final int ARROW_HEIGHT = 5;
     private static final float ARROW_OFFSET_ANGLE = 5;
 
     /**
-     * Layout info for the arrowhead for the large spinner in dp
+     * BindLayout info for the arrowhead for the large spinner in dp
      */
     private static final int ARROW_WIDTH_LARGE = 12;
     private static final int ARROW_HEIGHT_LARGE = 6;
