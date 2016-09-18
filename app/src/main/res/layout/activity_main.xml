@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.liangmayong.base.widget.themeskin.SkinLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.liangmayong.skin.SkinLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,10 +8,10 @@
 
     <include layout="@layout/defualt_toolbar" />
 
-    <com.liangmayong.base.widget.themeskin.SkinButton
+    <com.liangmayong.skin.SkinButton
+        android:id="@+id/sbutton"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:id="@+id/sbutton"
         android:layout_margin="20dp"
         android:text="确定按钮" />
 
@@ -29,4 +29,4 @@
             android:background="#ffffff"
             android:orientation="vertical" />
     </com.liangmayong.base.widget.pullrefresh.PullRefreshLayout>
-</com.liangmayong.base.widget.themeskin.SkinLinearLayout>
+</com.liangmayong.skin.SkinLinearLayout>

@@ -2,8 +2,8 @@ package com.liangmayong.base;
 
 import android.app.Application;
 
-import com.liangmayong.base.widget.themeskin.OnSkinRefreshListener;
-import com.liangmayong.base.widget.themeskin.Skin;
+import com.liangmayong.skin.OnSkinRefreshListener;
+import com.liangmayong.skin.Skin;
 
 
 /**

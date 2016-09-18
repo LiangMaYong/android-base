@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.widget.viewbinding.ViewBinding;
+import com.liangmayong.viewbinding.ViewBinding;
 
 import java.util.ArrayList;
 import java.util.List;

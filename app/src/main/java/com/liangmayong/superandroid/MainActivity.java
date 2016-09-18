@@ -5,14 +5,14 @@ import android.os.Handler;
 import android.view.View;
 
 import com.liangmayong.base.BaseActivity;
-import com.liangmayong.base.widget.viewbinding.annotations.BindLayout;
-import com.liangmayong.base.widget.viewbinding.annotations.OnClick;
-import com.liangmayong.base.widget.viewbinding.annotations.BindTitle;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.pullrefresh.PullRefreshLayout;
 import com.liangmayong.base.widget.pullrefresh.drawables.PictureDrawable;
-import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.loading.Loading;
+import com.liangmayong.skin.Skin;
+import com.liangmayong.viewbinding.annotations.BindLayout;
+import com.liangmayong.viewbinding.annotations.BindTitle;
+import com.liangmayong.viewbinding.annotations.OnClick;
 
 @BindLayout(R.layout.activity_main)
 @BindTitle("AndroidBase")

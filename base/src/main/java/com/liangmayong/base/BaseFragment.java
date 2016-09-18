@@ -10,15 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.liangmayong.base.widget.viewbinding.ViewBinding;
 import com.liangmayong.base.interfaces.BaseInterface;
-import com.liangmayong.base.widget.viewbinding.interfaces.TitleInterface;
-import com.liangmayong.base.widget.themeskin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 import com.liangmayong.presenter.BindP;
 import com.liangmayong.presenter.Presenter;
 import com.liangmayong.presenter.PresenterBind;
 import com.liangmayong.presenter.PresenterHolder;
+import com.liangmayong.skin.Skin;
+import com.liangmayong.viewbinding.ViewBinding;
+import com.liangmayong.viewbinding.interfaces.TitleInterface;
 
 import java.util.HashMap;
 

@@ -27,6 +27,10 @@ dependencies {
     compile files('libs/android-loading-src.jar')
     //MVP
     compile files('libs/android-presenter-src.jar')
+    //ViewBinding
+    compile files('libs/android-viewbinding-src.jar')
+    //Skin
+    compile files('libs/android-skin-src.jar')
 }
 
 apply from: 'https://raw.githubusercontent.com/LiangMaYong/android-gradlepublish/master/library.gradle'
