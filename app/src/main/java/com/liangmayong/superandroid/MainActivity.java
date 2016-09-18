@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity {
         pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Loading.showLoading(MainActivity.this, "开始加载数据");
+                //Loading.showLoading(MainActivity.this, "开始加载数据");
                 index++;
                 if (index > colors.length - 1) {
                     index = 0;
@@ -52,10 +52,10 @@ public class MainActivity extends BaseActivity {
                     @Override
                     public void run() {
                         pullRefreshLayout.setRefreshing(false);
-                        Loading.cancelLoading(MainActivity.this);
+                        //Loading.cancelLoading(MainActivity.this);
                         Skin.editor().setThemeColor(colors[index], 0xffffffff).commit();
                     }
-                }, 1000);
+                }, 0);
             }
         });
 
