@@ -58,7 +58,7 @@ public class ToastUtils {
     }
 
     // mToast
-    private static Toast mToast;
+    private static Toast mToast = null;
     private static Handler mHandler = new Handler();
     private static Runnable run = new Runnable() {
         @Override
