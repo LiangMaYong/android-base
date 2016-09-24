@@ -13,7 +13,6 @@ import com.liangmayong.viewbinding.annotations.BindLayout;
 import com.liangmayong.viewbinding.annotations.BindTitle;
 import com.liangmayong.viewbinding.annotations.OnClick;
 
-@BindLayout(R.layout.activity_main)
 @BindTitle("AndroidBase")
 public class MainActivity extends BaseActivity {
 
@@ -30,6 +29,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -162,7 +162,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     @Override
     public void setAnotationTitle(String title) {
         this.title = title;
-        if (title != null || getDefualtToolbar() != null) {
+        if (title != null && getDefualtToolbar() != null) {
             getDefualtToolbar().setTitle(title.toString());
         }
     }

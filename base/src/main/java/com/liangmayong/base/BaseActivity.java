@@ -53,7 +53,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     @Override
     public void setTitle(CharSequence title) {
         super.setTitle(title);
-        if (title != null || getDefualtToolbar() != null) {
+        if (title != null && getDefualtToolbar() != null) {
             getDefualtToolbar().setTitle(title.toString());
         }
     }
@@ -61,7 +61,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     @Override
     public void setTitle(int titleId) {
         super.setTitle(titleId);
-        if (title != null || getDefualtToolbar() != null) {
+        if (title != null && getDefualtToolbar() != null) {
             getDefualtToolbar().setTitle(titleId);
         }
     }
@@ -129,6 +129,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     }
 
     private void initToolbar() {
+        ViewBinding.parserClassByView(this, getWindow().getDecorView());
         try {
             defualtToolbar = new DefualtToolbar(this);
             defualtToolbar.setTitle(getAnotationTitle() != null ? getAnotationTitle() : "");
@@ -207,7 +208,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     @Override
     public void setAnotationTitle(String title) {
         this.title = title;
-        if (title != null || getDefualtToolbar() != null) {
+        if (title != null && getDefualtToolbar() != null) {
             getDefualtToolbar().setTitle(title.toString());
         }
     }
