@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.liangmayong.skin.SkinRelativeLayout
         android:id="@+id/default_toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_toolbar_height"
@@ -177,6 +177,6 @@
                 android:progressDrawable="@drawable/base_toolbar_progressbar"
                 android:visibility="visible"></ProgressBar>
         </LinearLayout>
-    </RelativeLayout>
+    </com.liangmayong.skin.SkinRelativeLayout>
 
 </LinearLayout>

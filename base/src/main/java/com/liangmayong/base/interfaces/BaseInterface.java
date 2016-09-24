@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.EditText;
 
-import com.liangmayong.skin.OnSkinRefreshListener;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 import com.liangmayong.presenter.Presenter;
+import com.liangmayong.skin.OnSkinRefreshListener;
 
 import java.util.HashMap;
 
@@ -19,13 +19,6 @@ public interface BaseInterface extends OnSkinRefreshListener {
     public static final String WEB_EXTRA_TITLE = "title";
     public static final String WEB_EXTRA_HEADERS = "headers";
     public static final String WEB_JAVASCRIPT_INTERFACE_NAME = "AndroidJs";
-
-    /**
-     * getContext
-     *
-     * @return context
-     */
-    Activity getActivity();
 
     /**
      * showToast

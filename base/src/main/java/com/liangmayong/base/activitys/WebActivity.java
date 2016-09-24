@@ -12,8 +12,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.liangmayong.base.BaseActivity;
-import com.liangmayong.base.interfaces.BaseInterface;
 import com.liangmayong.base.R;
+import com.liangmayong.base.interfaces.BaseInterface;
 import com.liangmayong.base.widget.iconfont.Icon;
 
 import java.util.HashMap;

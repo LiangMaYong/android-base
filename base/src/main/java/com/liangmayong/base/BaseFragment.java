@@ -1,6 +1,8 @@
 package com.liangmayong.base;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -8,9 +10,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.liangmayong.base.activitys.WebActivity;
 import com.liangmayong.base.interfaces.BaseInterface;
+import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 import com.liangmayong.presenter.BindP;
 import com.liangmayong.presenter.Presenter;
@@ -36,12 +41,10 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     private Handler handler = new Handler();
     //rootView
     private View rootView = null;
-    //activity handler
-    private Handler activityHandler = null;
     //title
     private String title = "";
-    //basePresenter
-    private BasePresenter basePresenter = null;
+    //inputManager
+    private InputMethodManager inputManager = null;
 
     /**
      * postDelayed
@@ -82,20 +85,6 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     }
 
     /**
-     * getBasePresenter
-     *
-     * @return base presenter
-     */
-    private BasePresenter getBasePresenter() {
-        if (basePresenter == null) {
-            if (getPresenterHolder() != null) {
-                basePresenter = getPresenterHolder().getPresenter(BasePresenter.class);
-            }
-        }
-        return basePresenter;
-    }
-
-    /**
      * getPresenter
      *
      * @param cls cls
@@ -127,6 +116,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
         }
         holder = PresenterBind.bind(this);
         Skin.registerSkinRefresh(this);
+        inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         return rootView;
     }
 
@@ -151,58 +141,17 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
 
     @Override
     public final void showToast(CharSequence text) {
-        getBasePresenter().showToast(text);
+        ToastUtils.showToast(text);
     }
 
     @Override
     public final void showToast(int stringId) {
-        getBasePresenter().showToast(stringId);
+        ToastUtils.showToast(getString(stringId));
     }
 
     @Override
     public final void showToast(CharSequence text, int duration) {
-        getBasePresenter().showToast(text, duration);
-    }
-
-    @Override
-    public final void goTo(Class<? extends Activity> cls) {
-        getBasePresenter().goTo(cls);
-    }
-
-    @Override
-    public final void goTo(Class<? extends Activity> cls, Bundle extras) {
-        getBasePresenter().goTo(cls, extras);
-    }
-
-    @Override
-    public final void goTo(String title, String url) {
-        getBasePresenter().goTo(title, url);
-    }
-
-    @Override
-    public final void goTo(String title, String url, HashMap<String, String> headers) {
-        getBasePresenter().goTo(title, url, headers);
-    }
-
-    @Override
-    public final void goToForResult(Class<? extends Activity> cls, int requestCode) {
-        getBasePresenter().goToForResult(cls, requestCode);
-    }
-
-    @Override
-    public final void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
-        getBasePresenter().goToForResult(cls, extras, requestCode);
-    }
-
-
-    @Override
-    public void hideSoftKeyBoard() {
-        getBasePresenter().hideSoftKeyBoard();
-    }
-
-    @Override
-    public void showSoftKeyBoard(EditText editText) {
-        getBasePresenter().showSoftKeyBoard(editText);
+        ToastUtils.showToast(text, duration);
     }
 
     @Override
@@ -213,6 +162,9 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     @Override
     public void setAnotationTitle(String title) {
         this.title = title;
+        if (title != null || getDefualtToolbar() != null) {
+            getDefualtToolbar().setTitle(title.toString());
+        }
     }
 
     @Override
@@ -222,9 +174,6 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
 
     @Override
     public void onRefreshSkin(Skin skin) {
-        if (getDefualtToolbar() != null) {
-            getDefualtToolbar().onRefreshSkin(skin);
-        }
     }
 
     @Override
@@ -232,5 +181,57 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
         Skin.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
         super.onDestroyView();
+    }
+
+
+    public void goTo(Class<? extends Activity> cls) {
+        goToForResult(cls, null, -1);
+    }
+
+    public void goTo(Class<? extends Activity> cls, Bundle extras) {
+        goToForResult(cls, extras, -1);
+    }
+
+    public void goTo(String title, String url) {
+        goTo(title, url, null);
+    }
+
+    public void goTo(String title, String url, HashMap<String, String> headers) {
+        Bundle extras = new Bundle();
+        extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
+        extras.putString(BaseInterface.WEB_EXTRA_URL, url);
+        if (headers != null) {
+            extras.putSerializable(BaseInterface.WEB_EXTRA_HEADERS, headers);
+        }
+        goTo(WebActivity.class, extras);
+    }
+
+    public void goToForResult(Class<? extends Activity> cls, int requestCode) {
+        goToForResult(cls, null, requestCode);
+    }
+
+    public void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
+        Intent intent = new Intent(getActivity(), cls);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        getActivity().startActivityForResult(intent, requestCode);
+    }
+
+    public void hideSoftKeyBoard() {
+        if (inputManager.isActive() && getActivity().getCurrentFocus() != null) {
+            if (getActivity().getCurrentFocus().getWindowToken() != null) {
+                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
+    }
+
+    public void showSoftKeyBoard(final EditText editText) {
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                inputManager.showSoftInput(editText, 0);
+            }
+        }, 500);
     }
 }

@@ -2,16 +2,24 @@ package com.liangmayong.base;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.liangmayong.base.activitys.WebActivity;
 import com.liangmayong.base.interfaces.BaseInterface;
+import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 import com.liangmayong.presenter.BindP;
 import com.liangmayong.presenter.Presenter;
@@ -36,10 +44,11 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     private DefualtToolbar defualtToolbar = null;
     //title
     private String title = "";
-    //basePresenter
-    private BasePresenter basePresenter = null;
     //handler
     private final Handler handler = new Handler();
+    //inputManager
+    private InputMethodManager inputManager = null;
+
 
     @Override
     public void setTitle(CharSequence title) {
@@ -87,16 +96,6 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     }
 
     @Override
-    public final void hideSoftKeyBoard() {
-        getBasePresenter().hideSoftKeyBoard();
-    }
-
-    @Override
-    public final void showSoftKeyBoard(EditText editText) {
-        getBasePresenter().showSoftKeyBoard(editText);
-    }
-
-    @Override
     public void addPresenter(Class<? extends Presenter>... presenterType) {
         PresenterBind.bind(getPresenterHolder(), presenterType);
     }
@@ -104,16 +103,38 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         ViewBinding.parserActivity(this);
+        holder = PresenterBind.bind(this);
+        Skin.registerSkinRefresh(this);
+    }
+
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(layoutResID);
+        initToolbar();
+    }
+
+    @Override
+    public void setContentView(View view) {
+        super.setContentView(view);
+        initToolbar();
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        super.setContentView(view, params);
+        initToolbar();
+    }
+
+    private void initToolbar() {
         try {
             defualtToolbar = new DefualtToolbar(this);
-            defualtToolbar.setTitle(getAnotationTitle());
+            defualtToolbar.setTitle(getAnotationTitle() != null ? getAnotationTitle() : "");
         } catch (Exception e) {
             defualtToolbar = null;
         }
-        holder = PresenterBind.bind(this);
-        Skin.registerSkinRefresh(this);
     }
 
     /**
@@ -132,20 +153,6 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
      */
     public PresenterHolder getPresenterHolder() {
         return holder;
-    }
-
-    /**
-     * getBasePresenter
-     *
-     * @return basePresenter
-     */
-    private BasePresenter getBasePresenter() {
-        if (basePresenter == null) {
-            if (getPresenterHolder() != null) {
-                basePresenter = getPresenterHolder().getPresenter(BasePresenter.class);
-            }
-        }
-        return basePresenter;
     }
 
     /**
@@ -176,53 +183,18 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     }
 
     @Override
-    public Activity getActivity() {
-        return this;
-    }
-
-    @Override
     public final void showToast(CharSequence text) {
-        getBasePresenter().showToast(text);
+        ToastUtils.showToast(text);
     }
 
     @Override
     public final void showToast(int stringId) {
-        getBasePresenter().showToast(stringId);
+        ToastUtils.showToast(getString(stringId));
     }
 
     @Override
     public final void showToast(CharSequence text, int duration) {
-        getBasePresenter().showToast(text, duration);
-    }
-
-    @Override
-    public final void goTo(Class<? extends Activity> cls) {
-        getBasePresenter().goTo(cls);
-    }
-
-    @Override
-    public final void goTo(Class<? extends Activity> cls, Bundle extras) {
-        getBasePresenter().goTo(cls, extras);
-    }
-
-    @Override
-    public final void goTo(String title, String url) {
-        getBasePresenter().goTo(title, url);
-    }
-
-    @Override
-    public final void goTo(String title, String url, HashMap<String, String> headers) {
-        getBasePresenter().goTo(title, url, headers);
-    }
-
-    @Override
-    public final void goToForResult(Class<? extends Activity> cls, int requestCode) {
-        getBasePresenter().goToForResult(cls, requestCode);
-    }
-
-    @Override
-    public final void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
-        getBasePresenter().goToForResult(cls, extras, requestCode);
+        ToastUtils.showToast(text, duration);
     }
 
     @Override
@@ -235,6 +207,9 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     @Override
     public void setAnotationTitle(String title) {
         this.title = title;
+        if (title != null || getDefualtToolbar() != null) {
+            getDefualtToolbar().setTitle(title.toString());
+        }
     }
 
     @Override
@@ -252,8 +227,56 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
                 window.setStatusBarColor(skin.getThemeColor());
             }
         }
-        if (getDefualtToolbar() != null) {
-            getDefualtToolbar().onRefreshSkin(skin);
+    }
+
+    public void goTo(Class<? extends Activity> cls) {
+        goToForResult(cls, null, -1);
+    }
+
+    public void goTo(Class<? extends Activity> cls, Bundle extras) {
+        goToForResult(cls, extras, -1);
+    }
+
+    public void goTo(String title, String url) {
+        goTo(title, url, null);
+    }
+
+    public void goTo(String title, String url, HashMap<String, String> headers) {
+        Bundle extras = new Bundle();
+        extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
+        extras.putString(BaseInterface.WEB_EXTRA_URL, url);
+        if (headers != null) {
+            extras.putSerializable(BaseInterface.WEB_EXTRA_HEADERS, headers);
         }
+        goTo(WebActivity.class, extras);
+    }
+
+    public void goToForResult(Class<? extends Activity> cls, int requestCode) {
+        goToForResult(cls, null, requestCode);
+    }
+
+    public void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
+        Intent intent = new Intent(this, cls);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        this.startActivityForResult(intent, requestCode);
+    }
+
+    public void hideSoftKeyBoard() {
+        if (inputManager.isActive() && this.getCurrentFocus() != null) {
+            if (this.getCurrentFocus().getWindowToken() != null) {
+                inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
+    }
+
+    public void showSoftKeyBoard(final EditText editText) {
+        postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                inputManager.showSoftInput(editText, 0);
+            }
+        }, 500);
     }
 }

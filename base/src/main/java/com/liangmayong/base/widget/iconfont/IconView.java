@@ -9,9 +9,6 @@ import android.util.AttributeSet;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
-import com.liangmayong.base.widget.iconfont.IconFont;
-import com.liangmayong.base.widget.iconfont.IconValue;
-
 
 /**
  * IconView

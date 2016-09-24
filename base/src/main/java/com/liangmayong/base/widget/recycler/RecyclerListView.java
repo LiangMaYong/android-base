@@ -159,7 +159,7 @@ public class RecyclerListView extends RelativeLayout {
             emptyLayout.removeAllViews();
             emptyView = LayoutInflater.from(getContext()).inflate(resLayoutId, null);
             emptyView.setOnTouchListener(layoutTouchListener);
-            emptyView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            emptyView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             if (emptyListViewRetryListener != null) {
                 emptyListViewRetryListener.setRetryView(emptyView);
             }
@@ -177,7 +177,7 @@ public class RecyclerListView extends RelativeLayout {
             errorLayout.removeAllViews();
             errorView = LayoutInflater.from(getContext()).inflate(resLayoutId, null);
             errorView.setOnTouchListener(layoutTouchListener);
-            errorView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            errorView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             if (errorListViewRetryListener != null) {
                 errorListViewRetryListener.setRetryView(errorView);
             }
@@ -195,7 +195,7 @@ public class RecyclerListView extends RelativeLayout {
             loadingLayout.removeAllViews();
             loadingView = LayoutInflater.from(getContext()).inflate(resLayoutId, null);
             loadingView.setOnTouchListener(layoutTouchListener);
-            loadingView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            loadingView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             if (loadingListViewRetryListener != null) {
                 loadingListViewRetryListener.setRetryView(loadingView);
             }
@@ -214,7 +214,7 @@ public class RecyclerListView extends RelativeLayout {
             emptyLayout.removeAllViews();
             emptyView = LayoutInflater.from(getContext()).inflate(R.layout.base_defualt_retry_layout, null);
             emptyView.setOnTouchListener(layoutTouchListener);
-            emptyView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            emptyView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             if (text != null) {
                 ((TextView) emptyView.findViewById(R.id.base_defualt_retry_text)).setText(text);
             }
@@ -241,7 +241,7 @@ public class RecyclerListView extends RelativeLayout {
             errorLayout.removeAllViews();
             errorView = LayoutInflater.from(getContext()).inflate(R.layout.base_defualt_retry_layout, null);
             errorView.setOnTouchListener(layoutTouchListener);
-            errorView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            errorView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             if (text != null) {
                 ((TextView) errorView.findViewById(R.id.base_defualt_retry_text)).setText(text);
             }
@@ -266,7 +266,7 @@ public class RecyclerListView extends RelativeLayout {
             loadingLayout.removeAllViews();
             loadingView = LayoutInflater.from(getContext()).inflate(R.layout.base_defualt_retry_layout, null);
             loadingView.setOnTouchListener(layoutTouchListener);
-            loadingView.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            loadingView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             if (text != null) {
                 ((TextView) loadingView.findViewById(R.id.base_defualt_retry_text)).setText(text);
             }

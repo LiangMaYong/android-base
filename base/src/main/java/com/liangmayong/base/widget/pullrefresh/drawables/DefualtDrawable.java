@@ -507,7 +507,7 @@ public class DefualtDrawable extends RefreshDrawable implements Animatable {
         mAnimation = animation;
     }
 
-    private final Callback mCallback = new Callback() {
+    private final Drawable.Callback mCallback = new Drawable.Callback() {
         @Override
         public void invalidateDrawable(Drawable d) {
             invalidateSelf();
@@ -529,7 +529,7 @@ public class DefualtDrawable extends RefreshDrawable implements Animatable {
         private final Paint mPaint = new Paint();
         private final Paint mArrowPaint = new Paint();
 
-        private final Callback mCallback;
+        private final Drawable.Callback mCallback;
 
         private float mStartTrim = 0.0f;
         private float mEndTrim = 0.0f;
@@ -555,7 +555,7 @@ public class DefualtDrawable extends RefreshDrawable implements Animatable {
         private final Paint mCirclePaint = new Paint();
         private int mBackgroundColor;
 
-        public Ring(Callback callback) {
+        public Ring(Drawable.Callback callback) {
             mCallback = callback;
 
             mPaint.setStrokeCap(Paint.Cap.SQUARE);

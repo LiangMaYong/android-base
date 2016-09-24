@@ -6,13 +6,14 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.widget.iconfont.IconView;
 import com.liangmayong.base.widget.iconfont.IconValue;
+import com.liangmayong.base.widget.iconfont.IconView;
+import com.liangmayong.skin.OnSkinRefreshListener;
 import com.liangmayong.skin.Skin;
+import com.liangmayong.skin.SkinRelativeLayout;
 
 
 /**
@@ -21,18 +22,36 @@ import com.liangmayong.skin.Skin;
 public class DefualtToolbar {
 
     private Context context;
-    private RelativeLayout toolbar_layout;
+    private SkinRelativeLayout toolbar_layout;
     private TextView toolbar_title, toolbar_subtitle;
     private ToolbarItem toolbar_right_one, toolbar_right_two, toolbar_right_three, toolbar_right_four;
     private ToolbarItem toolbar_left_one, toolbar_left_two, toolbar_left_three, toolbar_left_four;
     private ProgressBar toolbar_progress;
     private Skin.SkinType skinType = Skin.SkinType.defualt;
+    private OnSkinRefreshListener skinRefreshListener = new OnSkinRefreshListener() {
+        @Override
+        public void onRefreshSkin(Skin skin) {
+            if (toolbar_layout != null) {
+                leftOne().getIconView().setTextColor(skin.getTextColor(skinType));
+                leftTwo().getIconView().setTextColor(skin.getTextColor(skinType));
+                leftThree().getIconView().setTextColor(skin.getTextColor(skinType));
+                leftFour().getIconView().setTextColor(skin.getTextColor(skinType));
+                rightOne().getIconView().setTextColor(skin.getTextColor(skinType));
+                rightTwo().getIconView().setTextColor(skin.getTextColor(skinType));
+                rightThree().getIconView().setTextColor(skin.getTextColor(skinType));
+                rightFour().getIconView().setTextColor(skin.getTextColor(skinType));
+                toolbar_title.setTextColor(skin.getTextColor(skinType));
+                toolbar_subtitle.setTextColor(skin.getTextColor(skinType));
+            }
+        }
+    };
 
     public DefualtToolbar(View view) throws Exception {
-        toolbar_layout = (RelativeLayout) view.findViewById(R.id.default_toolbar_layout);
+        toolbar_layout = (SkinRelativeLayout) view.findViewById(R.id.default_toolbar_layout);
         if (toolbar_layout == null) {
             throw new Exception("not include defualt_toolbar");
         }
+        toolbar_layout.setSkinRefreshListener(skinRefreshListener);
         context = view.getContext();
         toolbar_title = (TextView) view.findViewById(R.id.default_toolbar_title);
         toolbar_subtitle = (TextView) view.findViewById(R.id.default_toolbar_subtitle);
@@ -64,15 +83,16 @@ public class DefualtToolbar {
     public void setSkinType(Skin.SkinType skinType) {
         if (this.skinType != skinType) {
             this.skinType = skinType;
-            onRefreshSkin(Skin.get());
         }
+        toolbar_layout.setSkinType(skinType);
     }
 
     public DefualtToolbar(Activity activity) throws Exception {
-        toolbar_layout = (RelativeLayout) activity.findViewById(R.id.default_toolbar_layout);
+        toolbar_layout = (SkinRelativeLayout) activity.findViewById(R.id.default_toolbar_layout);
         if (toolbar_layout == null) {
             throw new Exception("not include defualt_toolbar");
         }
+        toolbar_layout.setSkinRefreshListener(skinRefreshListener);
         context = activity;
         toolbar_title = (TextView) activity.findViewById(R.id.default_toolbar_title);
         toolbar_subtitle = (TextView) activity.findViewById(R.id.default_toolbar_subtitle);
@@ -227,27 +247,6 @@ public class DefualtToolbar {
      */
     public ToolbarItem rightFour() {
         return toolbar_right_four;
-    }
-
-    /**
-     * refreshThemeColor
-     *
-     * @param skin skin
-     */
-    public void onRefreshSkin(Skin skin) {
-        if (toolbar_layout != null) {
-            toolbar_layout.setBackgroundColor(skin.getColor(skinType));
-        }
-        leftOne().getIconView().setTextColor(skin.getTextColor(skinType));
-        leftTwo().getIconView().setTextColor(skin.getTextColor(skinType));
-        leftThree().getIconView().setTextColor(skin.getTextColor(skinType));
-        leftFour().getIconView().setTextColor(skin.getTextColor(skinType));
-        rightOne().getIconView().setTextColor(skin.getTextColor(skinType));
-        rightTwo().getIconView().setTextColor(skin.getTextColor(skinType));
-        rightThree().getIconView().setTextColor(skin.getTextColor(skinType));
-        rightFour().getIconView().setTextColor(skin.getTextColor(skinType));
-        toolbar_title.setTextColor(skin.getTextColor(skinType));
-        toolbar_subtitle.setTextColor(skin.getTextColor(skinType));
     }
 
     /**
