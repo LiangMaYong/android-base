@@ -27,7 +27,7 @@ import com.liangmayong.presenter.PresenterBind;
 import com.liangmayong.presenter.PresenterHolder;
 import com.liangmayong.skin.Skin;
 import com.liangmayong.viewbinding.ViewBinding;
-import com.liangmayong.viewbinding.interfaces.TitleInterface;
+import com.liangmayong.viewbinding.interfaces.AnnotationTitleInterface;
 
 import java.util.HashMap;
 
@@ -36,7 +36,7 @@ import java.util.HashMap;
  * Created by LiangMaYong on 2016/8/22.
  */
 @BindP({BasePresenter.class})
-public class BaseActivity extends AppCompatActivity implements BaseInterface, TitleInterface {
+public class BaseActivity extends AppCompatActivity implements BaseInterface, AnnotationTitleInterface {
 
     //holder
     private PresenterHolder holder = null;

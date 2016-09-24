@@ -9,14 +9,13 @@ import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.pullrefresh.PullRefreshLayout;
 import com.liangmayong.base.widget.pullrefresh.drawables.PictureDrawable;
 import com.liangmayong.skin.Skin;
-import com.liangmayong.viewbinding.annotations.BindLayout;
+import com.liangmayong.viewbinding.annotations.BindOnClick;
 import com.liangmayong.viewbinding.annotations.BindTitle;
-import com.liangmayong.viewbinding.annotations.OnClick;
 
 @BindTitle("AndroidBase")
 public class MainActivity extends BaseActivity {
 
-    @OnClick(R.id.sbutton)
+    @BindOnClick(R.id.sbutton)
     private void btn() {
         goTo("百度一下", "http://www.baidu.com");
     }
