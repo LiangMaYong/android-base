@@ -49,7 +49,7 @@ public class DefualtToolbar {
     public DefualtToolbar(View view) throws Exception {
         toolbar_layout = (SkinRelativeLayout) view.findViewById(R.id.default_toolbar_layout);
         if (toolbar_layout == null) {
-            throw new Exception("not include defualt_toolbar");
+            throw new Exception("not include base_defualt_toolbar");
         }
         toolbar_layout.setSkinRefreshListener(skinRefreshListener);
         context = view.getContext();
@@ -90,7 +90,7 @@ public class DefualtToolbar {
     public DefualtToolbar(Activity activity) throws Exception {
         toolbar_layout = (SkinRelativeLayout) activity.findViewById(R.id.default_toolbar_layout);
         if (toolbar_layout == null) {
-            throw new Exception("not include defualt_toolbar");
+            throw new Exception("not include base_defualt_toolbar");
         }
         toolbar_layout.setSkinRefreshListener(skinRefreshListener);
         context = activity;

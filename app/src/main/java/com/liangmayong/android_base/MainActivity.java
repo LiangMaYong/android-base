@@ -5,9 +5,11 @@ import android.os.Handler;
 import android.view.View;
 
 import com.liangmayong.base.BaseActivity;
+import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.pullrefresh.PullRefreshLayout;
 import com.liangmayong.base.widget.pullrefresh.drawables.PictureDrawable;
+import com.liangmayong.base.widget.relistview.ReListView;
 import com.liangmayong.skin.Skin;
 import com.liangmayong.viewbinding.annotations.BindOnClick;
 import com.liangmayong.viewbinding.annotations.BindTitle;
@@ -21,7 +23,7 @@ public class MainActivity extends BaseActivity {
     }
 
     // colors
-    private int[] colors = {0xff336666, 0xff663366, 0xff3399ff, 0xff18a28b, 0xffff6585};
+    private int[] colors = {0xff336666, 0xff663366, 0xff3399ff};
     // index
     private int index = 0;
 
@@ -36,6 +38,13 @@ public class MainActivity extends BaseActivity {
             }
         });
         final PullRefreshLayout pullRefreshLayout = (PullRefreshLayout) findViewById(R.id.pull);
+        final ReListView reListView = (ReListView) findViewById(R.id.relist);
+        reListView.getPool().add(new ViewItem(""));
+        reListView.getPool().add(new ViewItem(""));
+        reListView.getPool().add(new ViewItem(""));
+        reListView.getPool().notifyDataSetChanged();
+        reListView.setDecorationSize(DimenUtils.dip2px(this, 2));
+
         PictureDrawable pictureDrawable = new PictureDrawable(pullRefreshLayout, R.mipmap.loading_bee, R.mipmap.loading_bee1, R.mipmap.loading_bee2, R.mipmap.loading_bee3, R.mipmap.loading_bee4, R.mipmap.loading_bee5, R.mipmap.loading_bee6);
         pullRefreshLayout.setRefreshDrawable(pictureDrawable);
         pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
@@ -52,6 +61,7 @@ public class MainActivity extends BaseActivity {
                         Skin.editor().setThemeColor(colors[index], 0xffffffff).commit();
                     }
                 }, 0);
+                reListView.setColumnCount(index + 1);
             }
         });
 

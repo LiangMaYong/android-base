@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/defualt_toolbar" />
+    <include layout="@layout/base_defualt_toolbar" />
 
     <com.liangmayong.skin.SkinButton
         android:id="@+id/sbutton"
@@ -18,8 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/textView"
+        <com.liangmayong.base.widget.relistview.ReListView
+            android:id="@+id/relist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"

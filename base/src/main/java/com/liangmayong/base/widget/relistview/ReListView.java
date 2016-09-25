@@ -1,6 +1,7 @@
-package com.liangmayong.base.widget.recycler;
+package com.liangmayong.base.widget.relistview;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.os.Build;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +18,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
-import com.liangmayong.viewbinding.ViewBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,93 +25,75 @@ import java.util.List;
 /**
  * Created by LiangMaYong on 2016/8/24.
  */
-public class RecyclerListView extends RelativeLayout {
+public class ReListView extends RelativeLayout {
 
     /**
-     * OnRecyclerListViewRetryListener
+     * OnReListViewRetryListener
      */
-    public interface OnRecyclerListViewRetryListener {
+    public interface OnReListViewRetryListener {
         void setRetryView(View retryView);
     }
 
-    //itemPool
-    private ItemPool itemPool = null;
-    //itemDecoration
+    // pool
+    private Pool pool = null;
+    // itemDecoration
     private RecyclerView.ItemDecoration itemDecoration = null;
-    //isLast
+    // isLast
     private boolean isLast = false;
-    //lastItemVisibleListener
+    // lastItemVisibleListener
     private OnLastItemVisibleListener lastItemVisibleListener = null;
-    //lastCount
+    // lastCount
     private int lastCount = 5;
-    //contentLayout
+    // lastDelay
+    private long lastDelay = 1500;
+    // lastTime
+    private long lastTime = 0;
+    // contentLayout
     private LinearLayout contentLayout = null;
-    //headLayout
+    // headLayout
     private LinearLayout headLayout = null;
-    //footLayout
+    // footLayout
     private LinearLayout footLayout = null;
-    //emptyLayout
+    // emptyLayout
     private RelativeLayout emptyLayout = null;
-    //errorLayout
+    // errorLayout
     private RelativeLayout errorLayout = null;
-    //loadingLayout
+    // loadingLayout
     private RelativeLayout loadingLayout = null;
-    //emptyView
+    // emptyView
     private View emptyView = null;
-    //errorView
+    // errorView
     private View errorView = null;
-    //loadingView
+    // loadingView
     private View loadingView = null;
-    //is empty
+    // is empty
     private boolean isEmpty = false;
-    //is error
+    // is error
     private boolean isError = false;
-    //is loading
+    // is loading
     private boolean isLoading = false;
-    //is content
+    // is content
     private boolean isContent = true;
+    // columnCount
+    private int columnCount = 1;
+    // staggeredEnable
+    private boolean staggeredEnable = false;
+    //recyclerView
+    private ProxyRecyclerView recyclerView;
 
-    //errorListViewRetryListener
-    private OnRecyclerListViewRetryListener errorListViewRetryListener;
-    //emptyListViewRetryListener
-    private OnRecyclerListViewRetryListener emptyListViewRetryListener;
-    //loadingListViewRetryListener
-    private OnRecyclerListViewRetryListener loadingListViewRetryListener;
-    //emptyView
+    //errorRetryListener
+    private OnReListViewRetryListener errorRetryListener;
+    //emptyRetryListener
+    private OnReListViewRetryListener emptyRetryListener;
+    //loadingRetryListener
+    private OnReListViewRetryListener loadingRetryListener;
+    //layoutTouchListener
     private OnTouchListener layoutTouchListener = new OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             return true;
         }
     };
-
-    /**
-     * setEmptyRetryListener
-     *
-     * @param emptyListViewRetryListener emptyListViewRetryListener
-     */
-    public void setEmptyRetryListener(OnRecyclerListViewRetryListener emptyListViewRetryListener) {
-        this.emptyListViewRetryListener = emptyListViewRetryListener;
-    }
-
-
-    /**
-     * setLoadingRetryListener
-     *
-     * @param loadingListViewRetryListener loadingListViewRetryListener
-     */
-    public void setLoadingRetryListener(OnRecyclerListViewRetryListener loadingListViewRetryListener) {
-        this.loadingListViewRetryListener = loadingListViewRetryListener;
-    }
-
-    /**
-     * setErrorRetryListener
-     *
-     * @param errorListViewRetryListener errorListViewRetryListener
-     */
-    public void setErrorRetryListener(OnRecyclerListViewRetryListener errorListViewRetryListener) {
-        this.errorListViewRetryListener = errorListViewRetryListener;
-    }
 
     /**
      * getEmptyView
@@ -141,27 +123,20 @@ public class RecyclerListView extends RelativeLayout {
     }
 
     /**
-     * getRecyclerView
-     *
-     * @return recyclerView
-     */
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
-    }
-
-    /**
      * setEmptyLayout
      *
-     * @param resLayoutId resLayoutId
+     * @param resLayoutId        resLayoutId
+     * @param emptyRetryListener emptyRetryListener
      */
-    public void setEmptyLayout(int resLayoutId) {
+    public void setEmptyLayout(int resLayoutId, OnReListViewRetryListener emptyRetryListener) {
+        this.emptyRetryListener = emptyRetryListener;
         if (emptyLayout != null) {
             emptyLayout.removeAllViews();
             emptyView = LayoutInflater.from(getContext()).inflate(resLayoutId, null);
             emptyView.setOnTouchListener(layoutTouchListener);
             emptyView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-            if (emptyListViewRetryListener != null) {
-                emptyListViewRetryListener.setRetryView(emptyView);
+            if (this.emptyRetryListener != null) {
+                this.emptyRetryListener.setRetryView(emptyView);
             }
             emptyLayout.addView(emptyView);
         }
@@ -170,16 +145,18 @@ public class RecyclerListView extends RelativeLayout {
     /**
      * setErrorLayout
      *
-     * @param resLayoutId resLayoutId
+     * @param resLayoutId        resLayoutId
+     * @param errorRetryListener errorRetryListener
      */
-    public void setErrorLayout(int resLayoutId) {
+    public void setErrorLayout(int resLayoutId, OnReListViewRetryListener errorRetryListener) {
+        this.errorRetryListener = errorRetryListener;
         if (errorLayout != null) {
             errorLayout.removeAllViews();
             errorView = LayoutInflater.from(getContext()).inflate(resLayoutId, null);
             errorView.setOnTouchListener(layoutTouchListener);
             errorView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-            if (errorListViewRetryListener != null) {
-                errorListViewRetryListener.setRetryView(errorView);
+            if (this.errorRetryListener != null) {
+                this.errorRetryListener.setRetryView(errorView);
             }
             errorLayout.addView(errorView);
         }
@@ -188,16 +165,18 @@ public class RecyclerListView extends RelativeLayout {
     /**
      * setErrorLayout
      *
-     * @param resLayoutId resLayoutId
+     * @param resLayoutId          resLayoutId
+     * @param loadingRetryListener loadingRetryListener
      */
-    public void setLoadingLayout(int resLayoutId) {
+    public void setLoadingLayout(int resLayoutId, OnReListViewRetryListener loadingRetryListener) {
+        this.loadingRetryListener = loadingRetryListener;
         if (loadingLayout != null) {
             loadingLayout.removeAllViews();
             loadingView = LayoutInflater.from(getContext()).inflate(resLayoutId, null);
             loadingView.setOnTouchListener(layoutTouchListener);
             loadingView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-            if (loadingListViewRetryListener != null) {
-                loadingListViewRetryListener.setRetryView(loadingView);
+            if (this.loadingRetryListener != null) {
+                this.loadingRetryListener.setRetryView(loadingView);
             }
             loadingLayout.addView(loadingView);
         }
@@ -223,8 +202,8 @@ public class RecyclerListView extends RelativeLayout {
             } else {
                 ((ImageView) emptyView.findViewById(R.id.base_defualt_retry_img)).setImageResource(R.mipmap.base_defualt_empty_img);
             }
-            if (emptyListViewRetryListener != null) {
-                emptyListViewRetryListener.setRetryView(emptyView);
+            if (emptyRetryListener != null) {
+                emptyRetryListener.setRetryView(emptyView);
             }
             emptyLayout.addView(emptyView);
         }
@@ -247,9 +226,11 @@ public class RecyclerListView extends RelativeLayout {
             }
             if (imageResId != 0) {
                 ((ImageView) errorView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
+            } else {
+                ((ImageView) loadingView.findViewById(R.id.base_defualt_retry_img)).setImageResource(R.mipmap.base_defualt_retry_img);
             }
-            if (errorListViewRetryListener != null) {
-                errorListViewRetryListener.setRetryView(errorView);
+            if (errorRetryListener != null) {
+                errorRetryListener.setRetryView(errorView);
             }
             errorLayout.addView(errorView);
         }
@@ -275,8 +256,8 @@ public class RecyclerListView extends RelativeLayout {
             } else {
                 ((ImageView) loadingView.findViewById(R.id.base_defualt_retry_img)).setImageResource(R.mipmap.base_defualt_loading_img);
             }
-            if (loadingListViewRetryListener != null) {
-                loadingListViewRetryListener.setRetryView(loadingView);
+            if (loadingRetryListener != null) {
+                loadingRetryListener.setRetryView(loadingView);
             }
             loadingLayout.addView(loadingView);
         }
@@ -339,6 +320,24 @@ public class RecyclerListView extends RelativeLayout {
     }
 
     /**
+     * getColumnCount
+     *
+     * @return columnCount
+     */
+    public int getColumnCount() {
+        return columnCount;
+    }
+
+    /**
+     * isStaggeredEnable
+     *
+     * @return staggeredEnable
+     */
+    public boolean isStaggeredEnable() {
+        return staggeredEnable;
+    }
+
+    /**
      * isEmpty
      *
      * @return isEmpty
@@ -387,6 +386,52 @@ public class RecyclerListView extends RelativeLayout {
     }
 
     /**
+     * setColumnCount
+     *
+     * @param columnCount columnCount
+     */
+    public void setColumnCount(int columnCount) {
+        if (columnCount <= 1) {
+            columnCount = 1;
+        }
+        this.columnCount = columnCount;
+        if (this.columnCount == 1) {
+            setLayoutManager(new LinearLayoutManager(getContext()));
+        } else {
+            if (staggeredEnable) {
+                setLayoutManager(new StaggeredGridLayoutManager(this.columnCount, StaggeredGridLayoutManager.VERTICAL));
+            } else {
+                setLayoutManager(new GridLayoutManager(getContext(), this.columnCount));
+            }
+        }
+    }
+
+    /**
+     * setStaggeredEnable
+     *
+     * @param staggeredEnable staggeredEnable
+     */
+    public void setStaggeredEnable(boolean staggeredEnable) {
+        this.staggeredEnable = staggeredEnable;
+        if (this.columnCount > 1) {
+            if (this.staggeredEnable) {
+                setLayoutManager(new StaggeredGridLayoutManager(this.columnCount, StaggeredGridLayoutManager.VERTICAL));
+            } else {
+                setLayoutManager(new GridLayoutManager(getContext(), this.columnCount));
+            }
+        }
+    }
+
+    /**
+     * setLastDelay
+     *
+     * @param lastDelay lastDelay
+     */
+    public void setLastDelay(long lastDelay) {
+        this.lastDelay = lastDelay;
+    }
+
+    /**
      * headLayout
      *
      * @return headLayout
@@ -420,8 +465,9 @@ public class RecyclerListView extends RelativeLayout {
             super.onScrolled(recyclerView, dx, dy);
             if (dy > 0) {
                 if (lastVisible(dy)) {
-                    if (!isLast) {
+                    if (!isLast || (System.currentTimeMillis() - lastTime > lastDelay)) {
                         isLast = true;
+                        lastTime = System.currentTimeMillis();
                         if (lastItemVisibleListener != null) {
                             lastItemVisibleListener.onLastItemVisible(recyclerView, dx, dy);
                         }
@@ -440,12 +486,12 @@ public class RecyclerListView extends RelativeLayout {
         }
     };
 
-    public RecyclerListView(Context context) {
+    public ReListView(Context context) {
         super(context);
         initView();
     }
 
-    public RecyclerListView(Context context, AttributeSet attrs) {
+    public ReListView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
@@ -455,7 +501,7 @@ public class RecyclerListView extends RelativeLayout {
      *
      * @param layoutManager layoutManager
      */
-    public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
+    private void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
         if (layoutManager != null) {
             getRecyclerListView().setLayoutManager(layoutManager);
         }
@@ -466,16 +512,14 @@ public class RecyclerListView extends RelativeLayout {
         return getRecyclerListView().canScrollVertically(direction);
     }
 
-    //recyclerView
-    private ProxyRecyclerView recyclerView;
-
     /**
      * initView
      */
     private void initView() {
+        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         //add contentLayout
         contentLayout = new LinearLayout(getContext());
-        contentLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        contentLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         contentLayout.setOrientation(LinearLayout.VERTICAL);
         //add headLayout
         headLayout = new LinearLayout(getContext());
@@ -488,8 +532,8 @@ public class RecyclerListView extends RelativeLayout {
         }
         recyclerView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         recyclerView.addOnScrollListener(scrollListener);
-        itemPool = new ItemPool();
-        itemPool.attachTo(recyclerView);
+        pool = new Pool();
+        pool.attachTo(recyclerView);
         contentLayout.addView(recyclerView);
 
         //add footLayout
@@ -536,12 +580,12 @@ public class RecyclerListView extends RelativeLayout {
     }
 
     /**
-     * getItemPool
+     * getPool
      *
-     * @return itemPool
+     * @return pool
      */
-    public ItemPool getItemPool() {
-        return itemPool;
+    public Pool getPool() {
+        return pool;
     }
 
     /**
@@ -553,19 +597,29 @@ public class RecyclerListView extends RelativeLayout {
         return recyclerView;
     }
 
+
+    /**
+     * setDecorationSize
+     *
+     * @param size size
+     */
+    public void setDecorationSize(int size) {
+        setItemDecoration(new ReDecoration(size));
+    }
+
     /**
      * setItemDecoration
      *
      * @param itemDecoration itemDecoration
      */
-    public void setItemDecoration(RecyclerView.ItemDecoration itemDecoration) {
+    private void setItemDecoration(RecyclerView.ItemDecoration itemDecoration) {
         if (this.itemDecoration != null) {
             getRecyclerListView().removeItemDecoration(this.itemDecoration);
-        } else {
-            if (itemDecoration != null) {
-                this.itemDecoration = itemDecoration;
-                getRecyclerListView().addItemDecoration(this.itemDecoration);
-            }
+            itemDecoration = null;
+        }
+        if (itemDecoration != null) {
+            this.itemDecoration = itemDecoration;
+            getRecyclerListView().addItemDecoration(this.itemDecoration);
         }
     }
 
@@ -592,7 +646,7 @@ public class RecyclerListView extends RelativeLayout {
     }
 
     /**
-     * RecyclerListView
+     * ProxyRecyclerView
      */
     private static class ProxyRecyclerView extends RecyclerView {
 
@@ -687,11 +741,11 @@ public class RecyclerListView extends RelativeLayout {
 
     }
 
-    public static class ItemPool {
-        // datas
-        private final List<Item<?>> items = new ArrayList<Item<?>>();
+    public static class Pool {
+        // items
+        private final List<Item> items = new ArrayList<Item>();
         // adapter
-        private final ItemAdapterInterface adapter;
+        private final ReAdapter adapter;
         //tag
         private Object tag;
         //recyclerView
@@ -699,8 +753,8 @@ public class RecyclerListView extends RelativeLayout {
         // isAttach
         private boolean isAttach = false;
 
-        private ItemPool() {
-            adapter = new ItemPoolRecyclerViewAdapter(this);
+        private Pool() {
+            adapter = new ReAdapter(this);
         }
 
 
@@ -731,7 +785,7 @@ public class RecyclerListView extends RelativeLayout {
         private void attachTo(RecyclerView recyclerView) {
             if (recyclerView != null) {
                 this.recyclerView = recyclerView;
-                this.recyclerView.setAdapter((ItemPoolRecyclerViewAdapter) adapter);
+                this.recyclerView.setAdapter(adapter);
                 isAttach = true;
             }
         }
@@ -753,8 +807,9 @@ public class RecyclerListView extends RelativeLayout {
          * notifyDataSetChanged
          */
         public void notifyDataSetChanged() {
-            if (!isAttach)
+            if (!isAttach) {
                 return;
+            }
             adapter.proxyNotifyDataSetChanged();
         }
 
@@ -762,8 +817,9 @@ public class RecyclerListView extends RelativeLayout {
          * notifyDataSetChanged
          */
         public void notifyItemChanged(int position) {
-            if (!isAttach)
+            if (!isAttach) {
                 return;
+            }
             adapter.proxyNotifyItemChanged(position);
         }
 
@@ -771,8 +827,9 @@ public class RecyclerListView extends RelativeLayout {
          * notifyDataSetChanged
          */
         public void notifyItemChanged(int position, Object payload) {
-            if (!isAttach)
+            if (!isAttach) {
                 return;
+            }
             adapter.proxyNotifyItemChanged(position, payload);
         }
 
@@ -781,7 +838,7 @@ public class RecyclerListView extends RelativeLayout {
          *
          * @param item item
          */
-        public void add(Item<?> item) {
+        public void add(Item item) {
             items.add(item);
         }
 
@@ -790,7 +847,7 @@ public class RecyclerListView extends RelativeLayout {
          *
          * @param items items
          */
-        public void addAll(List<Item<?>> items) {
+        public void addAll(List<Item> items) {
             items.addAll(items);
         }
 
@@ -799,7 +856,7 @@ public class RecyclerListView extends RelativeLayout {
          *
          * @return items
          */
-        public List<Item<?>> getItems() {
+        public List<Item> getItems() {
             return items;
         }
 
@@ -825,24 +882,14 @@ public class RecyclerListView extends RelativeLayout {
     }
 
     /**
-     * ItemAdapter
+     * ReAdapter
      */
-    private static interface ItemAdapterInterface {
-        void proxyNotifyDataSetChanged();
+    private static class ReAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-        void proxyNotifyItemChanged(int position);
+        // pool
+        private final Pool pool;
 
-        void proxyNotifyItemChanged(int position, Object payload);
-    }
-
-    /**
-     * ItemPoolAdapter
-     */
-    private static class ItemPoolRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemAdapterInterface {
-
-        private ItemPool pool;
-
-        public ItemPoolRecyclerViewAdapter(ItemPool pool) {
+        public ReAdapter(Pool pool) {
             this.pool = pool;
         }
 
@@ -850,9 +897,9 @@ public class RecyclerListView extends RelativeLayout {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
             Item item = pool.get(position);
             item.setPosition(position);
-            item.setItemPool(pool);
+            item.setPool(pool);
             if (item != null) {
-                return item.proxyOnCreateViewHolder(parent);
+                return item.proxyNewView(parent);
             }
             return null;
         }
@@ -861,9 +908,9 @@ public class RecyclerListView extends RelativeLayout {
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             Item item = pool.get(position);
             item.setPosition(position);
-            item.setItemPool(pool);
+            item.setPool(pool);
             if (item != null) {
-                item.proxyOnBindViewHolder(holder.itemView);
+                item.proxyBindView();
             }
         }
 
@@ -877,21 +924,18 @@ public class RecyclerListView extends RelativeLayout {
             return position;
         }
 
-        @Override
         public void proxyNotifyDataSetChanged() {
             synchronized (this) {
                 notifyDataSetChanged();
             }
         }
 
-        @Override
         public void proxyNotifyItemChanged(int position) {
             synchronized (this) {
                 notifyItemChanged(position);
             }
         }
 
-        @Override
         public void proxyNotifyItemChanged(int position, Object payload) {
             synchronized (this) {
                 notifyItemChanged(position, payload);
@@ -910,25 +954,31 @@ public class RecyclerListView extends RelativeLayout {
         private Data data;
         //position
         private int position = 0;
-        //position
-        private ItemPool itemPool = null;
+        //pool
+        private Pool pool = null;
+        //holder
+        private ItemHolder holder = null;
 
-        /**
-         * getItemPool
-         *
-         * @return itemPool
-         */
-        public ItemPool getItemPool() {
-            return itemPool;
+        public Item(Data data) {
+            this.data = data;
         }
 
         /**
-         * setItemPool
+         * getPool
          *
-         * @param itemPool itemPool
+         * @return pool
          */
-        private void setItemPool(ItemPool itemPool) {
-            this.itemPool = itemPool;
+        public Pool getPool() {
+            return pool;
+        }
+
+        /**
+         * setPool
+         *
+         * @param pool pool
+         */
+        private void setPool(Pool pool) {
+            this.pool = pool;
         }
 
         /**
@@ -949,10 +999,6 @@ public class RecyclerListView extends RelativeLayout {
             return position;
         }
 
-        //rootView
-        private View itemView;
-        // view holder
-        private InternalViewHolder internalViewHolder;
 
         /**
          * getItemView
@@ -960,62 +1006,27 @@ public class RecyclerListView extends RelativeLayout {
          * @return itemView
          */
         public View getItemView() {
-            return itemView;
+            if (holder != null) {
+                return holder.itemView;
+            }
+            return null;
         }
 
         /**
-         * getContext
-         *
-         * @return context
-         */
-        private Context getContext() {
-            return getItemView().getContext();
-        }
-
-        public Item(Data data) {
-            this.data = data;
-        }
-
-        /**
-         * onCreateItemView
+         * newView
          *
          * @param inflater inflater
          * @param parent   parent
          * @return view
          */
-        private final View onCreateItemView(LayoutInflater inflater, ViewGroup parent) {
-            if (getItemLayoutId() > 0) {
-                itemView = inflater.inflate(getItemLayoutId(), null);
-                bindView();
-            } else {
-                itemView = ViewBinding.parserClass(this, inflater.getContext());
-            }
-            initView(itemView);
-            return itemView;
-        }
+        protected abstract View newView(LayoutInflater inflater, ViewGroup parent);
 
         /**
-         * initView
-         *
-         * @param itemView itemView
-         */
-        protected abstract void initView(View itemView);
-
-        /**
-         * getContainerViewId
-         *
-         * @return containerViewId
-         */
-        protected int getItemLayoutId() {
-            return -1;
-        }
-
-        /**
-         * onBindItem
+         * bindView
          *
          * @param data data
          */
-        protected abstract void onBindItem(Data data);
+        protected abstract void bindView(View itemView, Data data);
 
 
         /**
@@ -1028,41 +1039,60 @@ public class RecyclerListView extends RelativeLayout {
         }
 
         /**
-         * proxyOnCreateViewHolder
+         * proxyNewView
          *
          * @param parent parent
-         * @return internalViewHolder
+         * @return holder
          */
-        private final RecyclerView.ViewHolder proxyOnCreateViewHolder(ViewGroup parent) {
-            View itemView = onCreateItemView(LayoutInflater.from(parent.getContext()), parent);
-            internalViewHolder = new InternalViewHolder(itemView);
-            return internalViewHolder;
+        private final RecyclerView.ViewHolder proxyNewView(ViewGroup parent) {
+            View itemView = newView(LayoutInflater.from(parent.getContext()), parent);
+            itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            holder = new ItemHolder(itemView);
+            return holder;
         }
 
         /**
-         * proxyOnBindViewHolder
+         * proxyBindView
          */
-        private final void proxyOnBindViewHolder(View itemView) {
-            this.itemView = itemView;
-            bindView();
-            onBindItem(data);
+        private final void proxyBindView() {
+            bindView(getItemView(), data);
         }
 
         /**
-         * bindView
+         * ItemHolder
          */
-        private void bindView() {
-            ViewBinding.parserClassByView(this, itemView);
-        }
-
-        /**
-         * InternalViewHolder
-         */
-        private class InternalViewHolder extends RecyclerView.ViewHolder {
-            public InternalViewHolder(View itemView) {
+        private class ItemHolder extends RecyclerView.ViewHolder {
+            public ItemHolder(View itemView) {
                 super(itemView);
             }
         }
 
+    }
+
+    /**
+     * ReDecoration
+     */
+    private static class ReDecoration extends RecyclerView.ItemDecoration {
+        //space
+        private int space = 0;
+
+        public ReDecoration(int spacingInPixels) {
+            this.space = spacingInPixels / 2;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view,
+                                   RecyclerView parent, RecyclerView.State state) {
+            // Add top margin only for the first item to avoid double space between items
+            if (parent.getLayoutManager() instanceof GridLayoutManager || parent.getLayoutManager() instanceof StaggeredGridLayoutManager) {
+                outRect.left = space;
+                outRect.right = space;
+                outRect.bottom = space;
+                outRect.top = space;
+                parent.setPadding(space, space, space, space);
+            } else {
+                outRect.bottom = space;
+            }
+        }
     }
 }
