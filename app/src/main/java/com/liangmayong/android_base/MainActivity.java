@@ -23,7 +23,7 @@ public class MainActivity extends BaseActivity {
     }
 
     // colors
-    private int[] colors = {0xff336666, 0xff663366, 0xff3399ff};
+    private int[] colors = {0xff336666, 0xff663366, 0xff3399ff,0xffff6858,0xfffcb815};
     // index
     private int index = 0;
 
@@ -39,9 +39,9 @@ public class MainActivity extends BaseActivity {
         });
         final PullRefreshLayout pullRefreshLayout = (PullRefreshLayout) findViewById(R.id.pull);
         final ReListView reListView = (ReListView) findViewById(R.id.relist);
-        reListView.getPool().add(new ViewItem(""));
-        reListView.getPool().add(new ViewItem(""));
-        reListView.getPool().add(new ViewItem(""));
+        for (int i = 0; i < 50; i++) {
+            reListView.getPool().add(new ViewItem(""));
+        }
         reListView.getPool().notifyDataSetChanged();
         reListView.setDecorationSize(DimenUtils.dip2px(this, 2));
 
