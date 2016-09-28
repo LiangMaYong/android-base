@@ -11,9 +11,7 @@ import android.widget.TextView;
 import com.liangmayong.base.R;
 import com.liangmayong.base.widget.iconfont.IconValue;
 import com.liangmayong.base.widget.iconfont.IconView;
-import com.liangmayong.skin.OnSkinRefreshListener;
-import com.liangmayong.skin.Skin;
-import com.liangmayong.skin.SkinRelativeLayout;
+import com.liangmayong.skin.*;
 
 
 /**
