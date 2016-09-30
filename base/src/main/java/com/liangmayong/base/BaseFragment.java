@@ -144,7 +144,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, An
      *
      * @param rootView rootView
      */
-    public abstract void initView(View rootView);
+    protected abstract void initView(View rootView);
 
     @Override
     public final void showToast(CharSequence text) {
@@ -199,7 +199,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, An
         goToForResult(cls, extras, -1);
     }
 
-    public void goHome(){
+    public void goHome() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
