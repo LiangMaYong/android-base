@@ -11,7 +11,9 @@ import android.widget.TextView;
 import com.liangmayong.base.R;
 import com.liangmayong.base.widget.iconfont.IconValue;
 import com.liangmayong.base.widget.iconfont.IconView;
-import com.liangmayong.skin.*;
+import com.liangmayong.skin.OnSkinRefreshListener;
+import com.liangmayong.skin.Skin;
+import com.liangmayong.skin.SkinRelativeLayout;
 
 
 /**
@@ -72,6 +74,19 @@ public class DefualtToolbar {
         toolbar_progress = (ProgressBar) view.findViewById(R.id.default_toolbar_progress);
     }
 
+    /**
+     * gone
+     */
+    private void gone() {
+        toolbar_layout.setVisibility(View.GONE);
+    }
+
+    /**
+     * visible
+     */
+    private void visible() {
+        toolbar_layout.setVisibility(View.VISIBLE);
+    }
 
     /**
      * setSkinType

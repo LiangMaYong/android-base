@@ -117,6 +117,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, An
         holder = PresenterBind.bind(this);
         Skin.registerSkinRefresh(this);
         inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        initView(rootView);
         return rootView;
     }
 
@@ -138,6 +139,12 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, An
         return -1;
     }
 
+    /**
+     * initView
+     *
+     * @param rootView rootView
+     */
+    public abstract void initView(View rootView);
 
     @Override
     public final void showToast(CharSequence text) {
@@ -190,6 +197,13 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, An
 
     public void goTo(Class<? extends Activity> cls, Bundle extras) {
         goToForResult(cls, extras, -1);
+    }
+
+    public void goHome(){
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
     public void goTo(String title, String url) {

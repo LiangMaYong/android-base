@@ -66,6 +66,11 @@ public interface BaseInterface extends OnSkinRefreshListener {
     void goTo(String title, String url);
 
     /**
+     * goHome
+     */
+    void goHome();
+
+    /**
      * goTo
      *
      * @param title   title

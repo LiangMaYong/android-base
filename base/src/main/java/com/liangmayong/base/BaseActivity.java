@@ -238,6 +238,13 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, An
         goToForResult(cls, extras, -1);
     }
 
+    public void goHome() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
     public void goTo(String title, String url) {
         goTo(title, url, null);
     }
