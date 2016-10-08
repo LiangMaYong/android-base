@@ -200,7 +200,7 @@ public class ReListView extends RelativeLayout {
             if (imageResId != 0) {
                 ((ImageView) emptyView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
             } else {
-                ((ImageView) emptyView.findViewById(R.id.base_defualt_retry_img)).setImageResource(R.mipmap.base_defualt_empty_img);
+                (emptyView.findViewById(R.id.base_defualt_retry_img)).setVisibility(GONE);
             }
             if (emptyRetryListener != null) {
                 emptyRetryListener.setRetryView(emptyView);
@@ -227,7 +227,7 @@ public class ReListView extends RelativeLayout {
             if (imageResId != 0) {
                 ((ImageView) errorView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
             } else {
-                ((ImageView) loadingView.findViewById(R.id.base_defualt_retry_img)).setImageResource(R.mipmap.base_defualt_retry_img);
+                (errorView.findViewById(R.id.base_defualt_retry_img)).setVisibility(GONE);
             }
             if (errorRetryListener != null) {
                 errorRetryListener.setRetryView(errorView);
@@ -254,7 +254,7 @@ public class ReListView extends RelativeLayout {
             if (imageResId != 0) {
                 ((ImageView) loadingView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
             } else {
-                ((ImageView) loadingView.findViewById(R.id.base_defualt_retry_img)).setImageResource(R.mipmap.base_defualt_loading_img);
+                (loadingView.findViewById(R.id.base_defualt_retry_img)).setVisibility(GONE);
             }
             if (loadingRetryListener != null) {
                 loadingRetryListener.setRetryView(loadingView);
@@ -910,7 +910,7 @@ public class ReListView extends RelativeLayout {
             item.setPosition(position);
             item.setPool(pool);
             if (item != null) {
-                item.proxyBindView();
+                item.proxyBindView(holder.itemView);
             }
         }
 
@@ -956,8 +956,6 @@ public class ReListView extends RelativeLayout {
         private int position = 0;
         //pool
         private Pool pool = null;
-        //holder
-        private ItemHolder holder = null;
 
         public Item(Data data) {
             this.data = data;
@@ -999,19 +997,6 @@ public class ReListView extends RelativeLayout {
             return position;
         }
 
-
-        /**
-         * getItemView
-         *
-         * @return itemView
-         */
-        public View getItemView() {
-            if (holder != null) {
-                return holder.itemView;
-            }
-            return null;
-        }
-
         /**
          * newView
          *
@@ -1047,15 +1032,15 @@ public class ReListView extends RelativeLayout {
         private final RecyclerView.ViewHolder proxyNewView(ViewGroup parent) {
             View itemView = newView(LayoutInflater.from(parent.getContext()), parent);
             itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            holder = new ItemHolder(itemView);
+            ItemHolder holder = new ItemHolder(itemView);
             return holder;
         }
 
         /**
          * proxyBindView
          */
-        private final void proxyBindView() {
-            bindView(getItemView(), data);
+        private final void proxyBindView(View itemView) {
+            bindView(itemView, data);
         }
 
         /**

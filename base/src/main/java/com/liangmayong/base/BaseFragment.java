@@ -32,7 +32,6 @@ import java.util.HashMap;
  */
 @BindP({BasePresenter.class})
 public abstract class BaseFragment extends Fragment implements BaseInterface, AnnotationTitleInterface {
-
     //holder
     private PresenterHolder holder = null;
     //defualtToolbar
@@ -98,6 +97,13 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, An
         return null;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        holder = PresenterBind.bind(this);
+        Skin.registerSkinRefresh(this);
+    }
+
     @Nullable
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -114,8 +120,6 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, An
         } catch (Exception e) {
             defualtToolbar = null;
         }
-        holder = PresenterBind.bind(this);
-        Skin.registerSkinRefresh(this);
         inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         initView(rootView);
         return rootView;
@@ -184,12 +188,11 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, An
     }
 
     @Override
-    public void onDestroyView() {
+    public void onDestroy() {
+        super.onDestroy();
         Skin.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
-        super.onDestroyView();
     }
-
 
     public void goTo(Class<? extends Activity> cls) {
         goToForResult(cls, null, -1);
