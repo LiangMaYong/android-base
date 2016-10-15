@@ -38,8 +38,8 @@ public class WebActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setContentView(R.layout.base_activity_web);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.base_activity_web);
         base_webview = (WebView) findViewById(R.id.base_webview);
         if (Build.VERSION.SDK_INT >= 9) {
             base_webview.setOverScrollMode(View.OVER_SCROLL_NEVER);
