@@ -30,6 +30,12 @@
   <dependencies>
     <dependency>
       <groupId>com.android.support</groupId>
+      <artifactId>appcompat-v7</artifactId>
+      <version>24.2.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.android.support</groupId>
       <artifactId>recyclerview-v7</artifactId>
       <version>24.2.1</version>
       <scope>compile</scope>
@@ -42,20 +48,14 @@
     </dependency>
     <dependency>
       <groupId>com.liangmayong.android</groupId>
-      <artifactId>preferences</artifactId>
-      <version>1.0.0</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.liangmayong.android</groupId>
       <artifactId>skin</artifactId>
       <version>1.0.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>com.android.support</groupId>
-      <artifactId>appcompat-v7</artifactId>
-      <version>24.2.1</version>
+      <groupId>com.liangmayong.android</groupId>
+      <artifactId>preferences</artifactId>
+      <version>1.0.0</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>

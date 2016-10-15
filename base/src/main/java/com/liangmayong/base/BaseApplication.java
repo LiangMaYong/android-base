@@ -2,6 +2,7 @@ package com.liangmayong.base;
 
 import android.app.Application;
 
+import com.liangmayong.base.utils.FrescoUtils;
 import com.liangmayong.skin.OnSkinRefreshListener;
 import com.liangmayong.skin.Skin;
 
@@ -14,6 +15,7 @@ public class BaseApplication extends Application implements OnSkinRefreshListene
     @Override
     public void onCreate() {
         super.onCreate();
+        FrescoUtils.initialize(this);
         Skin.registerSkinRefresh(this);
     }
 
