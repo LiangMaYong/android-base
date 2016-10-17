@@ -1,53 +1,44 @@
 package com.liangmayong.android_base;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 
-import com.liangmayong.base.appbox.AppboxFragment;
+import com.liangmayong.base.BaseActivity;
 import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.pullrefresh.PullRefreshLayout;
 import com.liangmayong.base.widget.pullrefresh.drawables.PictureDrawable;
 import com.liangmayong.base.widget.relistview.ReListView;
 import com.liangmayong.skin.Skin;
-import com.liangmayong.viewbinding.annotations.BindLayout;
 import com.liangmayong.viewbinding.annotations.BindOnClick;
 import com.liangmayong.viewbinding.annotations.BindTitle;
 
-/**
- * Created by LiangMaYong on 2016/10/15.
- */
-@BindLayout(R.layout.activity_main)
-@BindTitle("Appbox")
-public class MainFragment extends AppboxFragment {
-
+@BindTitle("AndroidBase")
+public class MainActivity2 extends BaseActivity {
 
     @BindOnClick(R.id.sbutton)
     private void btn() {
-        goTo("百度一下","HTTP://WWW.BAIDU.COM");
-       // goTo(MainActivity.class);
+        goTo("百度一下", "http://www.baidu.com");
     }
 
     // colors
-    private int[] colors = {0xff336666, 0xff663366, 0xff3399ff, 0xffff6858, 0xfffcb815};
+    private int[] colors = {0xff336666, 0xff663366, 0xff3399ff,0xffff6858,0xfffcb815};
     // index
     private int index = 0;
 
-    public void initView(View view) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getHostActivity().finish();
+                finish();
             }
         });
-        getDefualtToolbar().rightOne().iconToLeft(Icon.icon_add).clicked(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goTo(MainActivity.class);
-            }
-        });
-        final PullRefreshLayout pullRefreshLayout = (PullRefreshLayout) view.findViewById(R.id.pull);
-        final ReListView reListView = (ReListView) view.findViewById(R.id.relist);
+        final PullRefreshLayout pullRefreshLayout = (PullRefreshLayout) findViewById(R.id.pull);
+        final ReListView reListView = (ReListView) findViewById(R.id.relist);
         for (int i = 0; i < 50; i++) {
             reListView.getPool().add(new ViewItem(""));
         }
@@ -73,6 +64,6 @@ public class MainFragment extends AppboxFragment {
                 reListView.setColumnCount(index + 1);
             }
         });
-    }
 
+    }
 }

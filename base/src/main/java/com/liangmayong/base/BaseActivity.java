@@ -29,8 +29,6 @@ import com.liangmayong.skin.Skin;
 import com.liangmayong.viewbinding.ViewBinding;
 import com.liangmayong.viewbinding.interfaces.AnnotationTitleInterface;
 
-import java.util.HashMap;
-
 
 /**
  * Created by LiangMaYong on 2016/8/22.
@@ -246,16 +244,9 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, An
     }
 
     public void goTo(String title, String url) {
-        goTo(title, url, null);
-    }
-
-    public void goTo(String title, String url, HashMap<String, String> headers) {
         Bundle extras = new Bundle();
         extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
         extras.putString(BaseInterface.WEB_EXTRA_URL, url);
-        if (headers != null) {
-            extras.putSerializable(BaseInterface.WEB_EXTRA_HEADERS, headers);
-        }
         goTo(WebActivity.class, extras);
     }
 

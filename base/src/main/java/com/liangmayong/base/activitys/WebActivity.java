@@ -1,190 +1,75 @@
 package com.liangmayong.base.activitys;
 
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-import android.webkit.DownloadListener;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.annotation.SuppressLint;
 
-import com.liangmayong.base.BaseActivity;
-import com.liangmayong.base.R;
+import com.liangmayong.base.fragments.WebFragment;
 import com.liangmayong.base.interfaces.BaseInterface;
-import com.liangmayong.base.widget.iconfont.Icon;
+import com.liangmayong.base.sub.BaseSubActivity;
+import com.liangmayong.base.sub.BaseSubFragment;
 
 import java.util.HashMap;
 import java.util.Map;
 
-
 /**
- * Created by LiangMaYong on 2016/8/22.
+ * Created by LiangMaYong on 2016/10/17.
  */
-public class WebActivity extends BaseActivity {
 
-    //base_webview
-    private WebView base_webview;
-    //title
-    private String title = "";
-    //url
-    private String url = "";
-    //headers
-    private HashMap<String, String> headers = null;
-    //isLockTitle
-    private boolean isLockTitle = false;
+public class WebActivity extends BaseSubActivity {
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.base_activity_web);
-        base_webview = (WebView) findViewById(R.id.base_webview);
-        if (Build.VERSION.SDK_INT >= 9) {
-            base_webview.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        }
-        getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (base_webview != null && base_webview.canGoBack()) {
-                    base_webview.goBack();
-                    getDefualtToolbar().leftTwo().iconToLeft(Icon.icon_close).clicked(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            finish();
-                        }
-                    });
-                } else {
-                    finish();
-                }
-            }
-        });
-        initData();
-        initView();
-    }
+    // HEADERS
+    private static final Map<String, String> HEADERS = new HashMap<String, String>();
 
     /**
-     * initData
-     */
-    private void initData() {
-        url = getIntent().getStringExtra(BaseInterface.WEB_EXTRA_URL);
-        title = getIntent().getStringExtra(BaseInterface.WEB_EXTRA_TITLE);
-        try {
-            headers = (HashMap<String, String>) getIntent().getSerializableExtra(BaseInterface.WEB_EXTRA_HEADERS);
-        } catch (Exception e) {
-        }
-        if (url == null || "".equals(url) || "null".equals(url)) {
-            url = "about:blank";
-        }
-        if (title != null && !"".equals(title) && !"null".equals(title)) {
-            isLockTitle = true;
-        }
-        getDefualtToolbar().setTitle(title);
-    }
-
-    /**
-     * setToolbarTitle
+     * addHeader
      *
-     * @param title title
+     * @param key   key
+     * @param value value
      */
-    private void setToolbarTitle(String title) {
-        if (isLockTitle) {
-            return;
-        }
-        getDefualtToolbar().setTitle(title);
-    }
-
-    private void initView() {
-        base_webview.setWebViewClient(new BaseWebViewClient());
-        base_webview.getSettings().setJavaScriptEnabled(true);
-        base_webview.getSettings().setAppCacheEnabled(true);
-        base_webview.addJavascriptInterface(new BaseWebViewInterface(), BaseInterface.WEB_JAVASCRIPT_INTERFACE_NAME);
-        base_webview.loadData("", "text/html", null);
-        base_webview.getSettings().setDefaultTextEncodingName("UTF-8");
-        base_webview.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                if (newProgress == 100) {
-                    getDefualtToolbar().setProgress(0);
-                    setToolbarTitle(view.getTitle());
-                } else {
-                    getDefualtToolbar().setProgress(newProgress);
-                }
-                super.onProgressChanged(view, newProgress);
+    public static void addHeader(String key, String value) {
+        if (value == null) {
+            if (HEADERS.containsKey(key)) {
+                HEADERS.remove(key);
             }
-        });
-        base_webview.setDownloadListener(new BaseWebViewDownLoadListener());
-        base_webview.loadUrl(url, getHeaders());
-        setToolbarTitle(title);
-    }
-
-
-    /**
-     * getHeaders
-     *
-     * @return headers
-     */
-    private Map<String, String> getHeaders() {
-        return headers;
-    }
-
-    /**
-     * BaseWebViewClient
-     */
-    private class BaseWebViewClient extends WebViewClient {
-
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.startsWith("http:") || url.startsWith("https:")) {
-                view.loadUrl(url, getHeaders());
-                return false;
-            }
-            // Otherwise allow the OS to handle things like tel, mailto, etc.
-            if (url.startsWith("tel:") || url.startsWith("email:")) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
-            }
-            return true;
-        }
-
-    }
-
-    /**
-     * BaseWebViewDownLoadListener
-     */
-    private class BaseWebViewDownLoadListener implements DownloadListener {
-        @Override
-        public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
-                                    long contentLength) {
-            Uri uri = Uri.parse(url);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-        }
-    }
-
-    /**
-     * BaseWebViewInterface
-     */
-    private class BaseWebViewInterface {
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (base_webview != null && base_webview.canGoBack()) {
-            base_webview.goBack();
         } else {
-            finish();
+            HEADERS.put(key, value);
         }
     }
 
     /**
-     * backClose
+     * addHeaders
      *
-     * @param v v
+     * @param headers headers
      */
-    public void backClose(View v) {
-        finish();
+    public static void addHeaders(Map<String, String> headers) {
+        if (headers != null) {
+            HEADERS.putAll(headers);
+        }
     }
 
+    /**
+     * clearHeaders
+     */
+    public static void clearHeaders() {
+        HEADERS.clear();
+    }
+
+    @Override
+    public BaseSubFragment generateSubFragment() {
+        String title = getIntent().getStringExtra(BaseInterface.WEB_EXTRA_TITLE);
+        String url = getIntent().getStringExtra(BaseInterface.WEB_EXTRA_URL);
+        return new WebActFragment(title, url);
+    }
+
+    @SuppressLint("ValidFragment")
+    public static class WebActFragment extends WebFragment {
+
+        public WebActFragment(String title, String url) {
+            super(title, url);
+        }
+
+        @Override
+        protected Map<String, String> generateHeaders() {
+            return HEADERS;
+        }
+    }
 }

@@ -25,8 +25,6 @@ import com.liangmayong.skin.Skin;
 import com.liangmayong.viewbinding.ViewBinding;
 import com.liangmayong.viewbinding.interfaces.AnnotationTitleInterface;
 
-import java.util.HashMap;
-
 /**
  * Created by LiangMaYong on 2016/8/22.
  */
@@ -107,6 +105,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, An
     @Nullable
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        createView();
         rootView = null;
         if (generateContainerViewId() > 0) {
             rootView = inflater.inflate(generateContainerViewId(), null);
@@ -127,7 +126,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, An
     }
 
     /**
-     * getRootView
+     * getmRootView
      *
      * @return rootView
      */
@@ -150,6 +149,12 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, An
      * @param rootView rootView
      */
     protected abstract void initView(View rootView);
+
+    /**
+     * createView
+     */
+    protected void createView() {
+    }
 
     @Override
     public final void showToast(CharSequence text) {
@@ -211,16 +216,9 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, An
     }
 
     public void goTo(String title, String url) {
-        goTo(title, url, null);
-    }
-
-    public void goTo(String title, String url, HashMap<String, String> headers) {
         Bundle extras = new Bundle();
         extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
         extras.putString(BaseInterface.WEB_EXTRA_URL, url);
-        if (headers != null) {
-            extras.putSerializable(BaseInterface.WEB_EXTRA_HEADERS, headers);
-        }
         goTo(WebActivity.class, extras);
     }
 

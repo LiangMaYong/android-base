@@ -3,7 +3,9 @@ package com.liangmayong.android_base;
 import android.os.Handler;
 import android.view.View;
 
-import com.liangmayong.base.appbox.AppboxFragment;
+import com.liangmayong.base.fragments.WebFragment;
+import com.liangmayong.base.sub.BaseSubActivity;
+import com.liangmayong.base.sub.BaseSubFragment;
 import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.pullrefresh.PullRefreshLayout;
@@ -15,44 +17,32 @@ import com.liangmayong.viewbinding.annotations.BindOnClick;
 import com.liangmayong.viewbinding.annotations.BindTitle;
 
 /**
- * Created by LiangMaYong on 2016/10/15.
+ * Created by LiangMaYong on 2016/10/17.
  */
 @BindLayout(R.layout.activity_main)
-@BindTitle("Appbox")
-public class MainFragment extends AppboxFragment {
-
-
-    @BindOnClick(R.id.sbutton)
-    private void btn() {
-        goTo("百度一下","HTTP://WWW.BAIDU.COM");
-       // goTo(MainActivity.class);
-    }
+@BindTitle("TestSub")
+public class SubFrag extends BaseSubFragment {
 
     // colors
     private int[] colors = {0xff336666, 0xff663366, 0xff3399ff, 0xffff6858, 0xfffcb815};
     // index
     private int index = 0;
 
-    public void initView(View view) {
+    @Override
+    protected void initSubView(View rootView) {
         getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getHostActivity().finish();
+                finish();
             }
         });
-        getDefualtToolbar().rightOne().iconToLeft(Icon.icon_add).clicked(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goTo(MainActivity.class);
-            }
-        });
-        final PullRefreshLayout pullRefreshLayout = (PullRefreshLayout) view.findViewById(R.id.pull);
-        final ReListView reListView = (ReListView) view.findViewById(R.id.relist);
+        final PullRefreshLayout pullRefreshLayout = (PullRefreshLayout) rootView.findViewById(R.id.pull);
+        final ReListView reListView = (ReListView) rootView.findViewById(R.id.relist);
         for (int i = 0; i < 50; i++) {
             reListView.getPool().add(new ViewItem(""));
         }
         reListView.getPool().notifyDataSetChanged();
-        reListView.setDecorationSize(DimenUtils.dip2px(this, 2));
+        reListView.setDecorationSize(DimenUtils.dip2px(getActivity(), 2));
 
         PictureDrawable pictureDrawable = new PictureDrawable(pullRefreshLayout, R.mipmap.loading_bee, R.mipmap.loading_bee1, R.mipmap.loading_bee2, R.mipmap.loading_bee3, R.mipmap.loading_bee4, R.mipmap.loading_bee5, R.mipmap.loading_bee6);
         pullRefreshLayout.setRefreshDrawable(pictureDrawable);
@@ -75,4 +65,15 @@ public class MainFragment extends AppboxFragment {
         });
     }
 
+    @BindOnClick(R.id.sbutton)
+    private void btn() {
+        goTo("百度一下", "http://www.baidu.com");
+        // ((BaseSubActivity) getActivity()).getSubManager().addFragment(new WebFragment("百度一下", "http://www.baidu.com"));
+    }
+
+    @Override
+    protected boolean onBackPressed() {
+        showToast("onBackPressed");
+        return true;
+    }
 }
