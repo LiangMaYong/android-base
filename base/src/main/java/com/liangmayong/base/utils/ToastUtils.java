@@ -12,7 +12,8 @@ import android.view.Gravity;
 import android.view.WindowManager.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.liangmayong.base.utils.toast.ToastCompat;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
@@ -25,6 +26,7 @@ import java.lang.reflect.Method;
  */
 @SuppressLint("InflateParams")
 public class ToastUtils {
+
     // application
     private static WeakReference<Application> application = null;
 
@@ -58,7 +60,7 @@ public class ToastUtils {
     }
 
     // mToast
-    private static Toast mToast = null;
+    private static ToastCompat mToast = null;
     private static Handler mHandler = new Handler();
     private static Runnable run = new Runnable() {
         @Override
@@ -86,7 +88,7 @@ public class ToastUtils {
     public static void showToast(CharSequence text, int duration) {
         mHandler.removeCallbacks(run);
         if (mToast == null) {
-            mToast = new Toast(getApplication());
+            mToast = new ToastCompat(getApplication());
         }
         LinearLayout linearLayout = new LinearLayout(getApplication());
         linearLayout.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));

@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.liangmayong.base.activitys.WebActivity;
+import com.liangmayong.base.interfaces.BaseInterface;
+
 /**
  * Created by LiangMaYong on 2016/9/18.
  */
@@ -34,5 +37,18 @@ public class BaseUtils {
             intent.putExtras(extras);
         }
         context.startActivity(intent);
+    }
+
+    /**
+     * goTo
+     *
+     * @param title title
+     * @param url   url
+     */
+    public static void goTo(Context context, String title, String url) {
+        Bundle extras = new Bundle();
+        extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
+        extras.putString(BaseInterface.WEB_EXTRA_URL, url);
+        goTo(context, WebActivity.class, extras);
     }
 }
