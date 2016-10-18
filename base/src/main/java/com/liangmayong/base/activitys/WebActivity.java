@@ -61,7 +61,7 @@ public class WebActivity extends BaseSubActivity {
     }
 
     @SuppressLint("ValidFragment")
-    public static class WebActFragment extends WebFragment {
+    private static class WebActFragment extends WebFragment {
 
         public WebActFragment(String title, String url) {
             super(title, url);

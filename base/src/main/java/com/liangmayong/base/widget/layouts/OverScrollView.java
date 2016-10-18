@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * Created by LiangMaYong on 2015/10/25.
  */
-public class ScrollLayout extends FrameLayout implements OnTouchListener {
+public class OverScrollView extends FrameLayout implements OnTouchListener {
 
     static final int ANIMATED_SCROLL_GAP = 250;
 
@@ -116,16 +116,16 @@ public class ScrollLayout extends FrameLayout implements OnTouchListener {
      */
     private static final int INVALID_POINTER = -1;
 
-    public ScrollLayout(Context context) {
+    public OverScrollView(Context context) {
         this(context, null);
     }
 
-    public ScrollLayout(Context context, AttributeSet attrs) {
+    public OverScrollView(Context context, AttributeSet attrs) {
 
         this(context, attrs, 0);
     }
 
-    public ScrollLayout(Context context, AttributeSet attrs, int defStyle) {
+    public OverScrollView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
 
@@ -248,7 +248,7 @@ public class ScrollLayout extends FrameLayout implements OnTouchListener {
     @Override
     public void addView(View child) {
         if (getChildCount() > 0) {
-            throw new IllegalStateException("ScrollView can host only one direct child");
+            throw new IllegalStateException("OverScrollView can host only one direct child");
         }
 
         super.addView(child);
@@ -258,7 +258,7 @@ public class ScrollLayout extends FrameLayout implements OnTouchListener {
     @Override
     public void addView(View child, int index) {
         if (getChildCount() > 0) {
-            throw new IllegalStateException("ScrollView can host only one direct child");
+            throw new IllegalStateException("OverScrollView can host only one direct child");
         }
 
         super.addView(child, index);
@@ -268,7 +268,7 @@ public class ScrollLayout extends FrameLayout implements OnTouchListener {
     @Override
     public void addView(View child, ViewGroup.LayoutParams params) {
         if (getChildCount() > 0) {
-            throw new IllegalStateException("ScrollView can host only one direct child");
+            throw new IllegalStateException("OverScrollView can host only one direct child");
         }
 
         super.addView(child, params);
@@ -278,7 +278,7 @@ public class ScrollLayout extends FrameLayout implements OnTouchListener {
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         if (getChildCount() > 0) {
-            throw new IllegalStateException("ScrollView can host only one direct child");
+            throw new IllegalStateException("OverScrollView can host only one direct child");
         }
 
         super.addView(child, index, params);

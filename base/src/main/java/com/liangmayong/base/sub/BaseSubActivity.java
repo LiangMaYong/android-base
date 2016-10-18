@@ -5,7 +5,6 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,7 +13,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.liangmayong.base.BaseActivity;
 import com.liangmayong.base.R;
@@ -49,12 +47,7 @@ public abstract class BaseSubActivity extends BaseActivity {
             mSubManager = new BaseSubFragmentManager(this, generateFragmentId(), fragment);
             mSubManager.setAnim(R.anim.anim_next_in, R.anim.anim_next_out, R.anim.anim_quit_in, R.anim.anim_quit_out);
         } else {
-            TextView textView = new TextView(this);
-            textView.setTextSize(14);
-            textView.setGravity(Gravity.CENTER);
-            textView.setText("Sub fragment can't is NULL");
-            textView.setTextColor(0xff18a28b);
-            mFrameView.addView(textView);
+            throw new IllegalArgumentException("generateSubFragment return can't is NULL");
         }
     }
 

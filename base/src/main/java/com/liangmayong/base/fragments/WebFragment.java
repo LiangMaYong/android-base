@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
@@ -13,6 +14,8 @@ import android.webkit.WebViewClient;
 import com.liangmayong.base.R;
 import com.liangmayong.base.sub.BaseSubFragment;
 import com.liangmayong.base.widget.iconfont.Icon;
+import com.liangmayong.base.widget.layouts.SwipeLayout;
+import com.liangmayong.skin.Skin;
 
 import java.util.Map;
 
@@ -29,6 +32,8 @@ public class WebFragment extends BaseSubFragment {
     }
 
     //base_webview
+    private SwipeLayout base_refresh_layout;
+    //base_webview
     private WebView base_webview;
     //title
     private String title = "";
@@ -38,6 +43,17 @@ public class WebFragment extends BaseSubFragment {
     @Override
     protected void initSubView(View rootView) {
         base_webview = (WebView) rootView.findViewById(R.id.base_webview);
+        base_refresh_layout = (SwipeLayout) rootView.findViewById(R.id.base_refreshLayout);
+        base_refresh_layout.setEnabled(generateRefreshEnabled());
+        base_refresh_layout.setColorSchemeColors(Skin.get().getThemeColor());
+        base_refresh_layout.setViewGroup(base_webview);
+        base_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                base_webview.reload();
+                base_refresh_layout.setRefreshing(false);
+            }
+        });
         if (Build.VERSION.SDK_INT >= 9) {
             base_webview.setOverScrollMode(View.OVER_SCROLL_NEVER);
         }
@@ -106,6 +122,23 @@ public class WebFragment extends BaseSubFragment {
     @Override
     protected int generateContainerViewId() {
         return R.layout.base_defualt_fragment_web;
+    }
+
+    /**
+     * generateRefreshEnabled
+     *
+     * @return false
+     */
+    protected boolean generateRefreshEnabled() {
+        return true;
+    }
+
+    @Override
+    public void onRefreshSkin(Skin skin) {
+        super.onRefreshSkin(skin);
+        if(base_refresh_layout != null){
+            base_refresh_layout.setColorSchemeColors(skin.getThemeColor());
+        }
     }
 
     /**
@@ -184,7 +217,6 @@ public class WebFragment extends BaseSubFragment {
     }
 
     private class BaseWebJavascriptInterface {
-
     }
 
     /**

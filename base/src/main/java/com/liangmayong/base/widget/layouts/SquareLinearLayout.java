@@ -7,14 +7,14 @@ import android.widget.LinearLayout;
 /**
  * Created by LiangMaYong on 2016/8/30.
  */
-public class SquareLayout extends LinearLayout {
+public class SquareLinearLayout extends LinearLayout {
 
-    public SquareLayout(Context context) {
+    public SquareLinearLayout(Context context) {
         super(context);
         setOrientation(VERTICAL);
     }
 
-    public SquareLayout(Context context, AttributeSet attrs) {
+    public SquareLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         setOrientation(VERTICAL);
     }

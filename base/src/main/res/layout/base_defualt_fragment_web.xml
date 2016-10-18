@@ -6,10 +6,14 @@
 
     <include layout="@layout/base_defualt_toolbar" />
 
-    <WebView
-        android:id="@+id/base_webview"
+    <com.liangmayong.base.widget.layouts.SwipeLayout
+        android:id="@+id/base_refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent">
 
+        <WebView
+            android:id="@+id/base_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.liangmayong.base.widget.layouts.SwipeLayout>
 </LinearLayout>
