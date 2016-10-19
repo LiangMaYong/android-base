@@ -8,6 +8,7 @@ android {
         minSdkVersion 9
         versionCode 1
         versionName "1.0"
+        resourcePrefix "base_res_"
     }
     buildTypes {
         release {

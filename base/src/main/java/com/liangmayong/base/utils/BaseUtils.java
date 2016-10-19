@@ -19,7 +19,8 @@ public class BaseUtils {
     /**
      * goTo
      *
-     * @param cls cls
+     * @param context context
+     * @param cls     cls
      */
     public static void goTo(Context context, Class<? extends Activity> cls) {
         goTo(context, cls, null);
@@ -28,8 +29,9 @@ public class BaseUtils {
     /**
      * goTo
      *
-     * @param cls    cls
-     * @param extras extras
+     * @param context context
+     * @param cls     cls
+     * @param extras  extras
      */
     public static void goTo(Context context, Class<? extends Activity> cls, Bundle extras) {
         Intent intent = new Intent(context, cls);
@@ -42,13 +44,43 @@ public class BaseUtils {
     /**
      * goTo
      *
-     * @param title title
-     * @param url   url
+     * @param context context
+     * @param title   title
+     * @param url     url
      */
     public static void goTo(Context context, String title, String url) {
         Bundle extras = new Bundle();
         extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
         extras.putString(BaseInterface.WEB_EXTRA_URL, url);
         goTo(context, WebActivity.class, extras);
+    }
+
+
+    /**
+     * goTo
+     *
+     * @param context   context
+     * @param className className
+     */
+    public static void goTo(Context context, String className) {
+        goTo(context, className, new Bundle());
+    }
+
+    /**
+     * goTo
+     *
+     * @param context   context
+     * @param className className
+     * @param extras    extras
+     */
+    public static void goTo(Context context, String className, Bundle extras) {
+        try {
+            Intent intent = new Intent(context, Class.forName(className));
+            if (extras != null) {
+                intent.putExtras(extras);
+            }
+            context.startActivity(intent);
+        } catch (ClassNotFoundException e) {
+        }
     }
 }
