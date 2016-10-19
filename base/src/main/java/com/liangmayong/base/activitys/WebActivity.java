@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 
 import com.liangmayong.base.fragments.WebFragment;
 import com.liangmayong.base.interfaces.BaseInterface;
+import com.liangmayong.base.interfaces.BaseWebJavascriptInterface;
 import com.liangmayong.base.sub.BaseSubActivity;
 import com.liangmayong.base.sub.BaseSubFragment;
+import com.liangmayong.preferences.Preferences;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,6 +72,54 @@ public class WebActivity extends BaseSubActivity {
         @Override
         protected Map<String, String> generateHeaders() {
             return HEADERS;
+        }
+
+        @Override
+        protected BaseWebJavascriptInterface generateWebJavascriptInterface() {
+            return new BaseWebJavascriptInterface() {
+                @Override
+                public void toast(String msg) {
+                    showToast(msg);
+                }
+
+                @Override
+                public void setPrefercens(String key, String value) {
+                    Preferences.getPreferences("BaseWeb").setString(key, value);
+                }
+
+                @Override
+                public String getPrefercens(String key) {
+                    return Preferences.getPreferences("BaseWeb").getString(key);
+                }
+
+                @Override
+                public void open(String title, String url) {
+                    WebActFragment.this.open(new WebActFragment(title, url));
+                }
+
+                @Override
+                public void setHeader(String key, String value) {
+                    addHeader(key, value);
+                }
+
+                @Override
+                public String getHeader(String key) {
+                    if (HEADERS.containsKey(key)) {
+                        return HEADERS.get(key);
+                    }
+                    return "";
+                }
+
+                @Override
+                public void finish() {
+                    getActivity().finish();
+                }
+
+                @Override
+                public void close() {
+                    WebActFragment.this.finish();
+                }
+            };
         }
     }
 }

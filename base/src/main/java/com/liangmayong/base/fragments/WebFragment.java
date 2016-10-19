@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.liangmayong.base.R;
+import com.liangmayong.base.interfaces.BaseWebJavascriptInterface;
 import com.liangmayong.base.sub.BaseSubFragment;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.layouts.SwipeLayout;
@@ -160,8 +161,8 @@ public class WebFragment extends BaseSubFragment {
      *
      * @return web Interface
      */
-    protected Object generateWebJavascriptInterface() {
-        return new BaseWebJavascriptInterface();
+    protected BaseWebJavascriptInterface generateWebJavascriptInterface() {
+        return null;
     }
 
     /**
@@ -244,9 +245,6 @@ public class WebFragment extends BaseSubFragment {
             return false;
         }
 
-    }
-
-    private class BaseWebJavascriptInterface {
     }
 
     /**
