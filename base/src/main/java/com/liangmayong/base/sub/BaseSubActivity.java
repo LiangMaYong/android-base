@@ -8,14 +8,13 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.liangmayong.base.BaseActivity;
 import com.liangmayong.base.R;
+import com.liangmayong.base.widget.iconfont.Icon;
 
 import java.util.LinkedList;
 
@@ -24,12 +23,18 @@ import java.util.LinkedList;
  * Created by LiangMaYong on 2016/10/17.
  */
 public abstract class BaseSubActivity extends BaseActivity {
-    //mBackgroundColor
-    private int mBackgroundColor = 0xffeeeeee;
-    //mRootView
-    private RelativeLayout mRootView = null;
-    //mFrameView
-    private FrameLayout mFrameView = null;
+    //mWatermark
+    private static String mWatermark = "";
+
+    /**
+     * setWatermarkText
+     *
+     * @param watermark watermark
+     */
+    public static void setWatermarkText(String watermark) {
+        BaseSubActivity.mWatermark = mWatermark;
+    }
+
     //mFrameView
     private BaseSubFragmentManager mSubManager;
 
@@ -49,24 +54,14 @@ public abstract class BaseSubActivity extends BaseActivity {
         } else {
             throw new IllegalArgumentException("generateSubFragment return can't is NULL");
         }
-    }
-
-    /**
-     * getRootView
-     *
-     * @return mRootView
-     */
-    public RelativeLayout getRootView() {
-        return mRootView;
-    }
-
-    /**
-     * getFrameView
-     *
-     * @return mFrameView
-     */
-    public FrameLayout getFrameView() {
-        return mFrameView;
+        if (getDefualtToolbar() != null) {
+            getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+        }
     }
 
     public abstract BaseSubFragment generateSubFragment();
@@ -77,20 +72,16 @@ public abstract class BaseSubActivity extends BaseActivity {
      * @return id
      */
     protected int generateFragmentId() {
-        return 0xff01;
+        return R.id.base_sub_fragment_frame;
     }
 
     /**
      * generateInitView
      */
     protected void generateContentView() {
-        mRootView = new RelativeLayout(this);
-        mFrameView = new FrameLayout(this);
-        mFrameView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        mFrameView.setId(generateFragmentId());
-        mFrameView.setBackgroundColor(mBackgroundColor);
-        mRootView.addView(mFrameView);
-        setContentView(mRootView);
+        setContentView(R.layout.base_defualt_sub_activity);
+        TextView base_sub_watermark = (TextView) findViewById(R.id.base_sub_watermark);
+        base_sub_watermark.setText(mWatermark);
     }
 
     @Override

@@ -27,7 +27,9 @@ public class SubFrag extends BaseSubReListFragment {
         getDefualtToolbar().rightOne().text("百度").clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                open(new WebFragment("百度一下", "http://www.baidu.com"));
+                showToast("百度一下");
+                goTo("百度一下", "http://www.baidu.com");
+               // open(new WebFragment("百度一下", "http://www.baidu.com"));
             }
         });
         for (int i = 0; i < 50; i++) {

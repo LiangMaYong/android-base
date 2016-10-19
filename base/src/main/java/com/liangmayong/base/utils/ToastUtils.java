@@ -93,13 +93,13 @@ public class ToastUtils {
         LinearLayout linearLayout = new LinearLayout(getApplication());
         linearLayout.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         linearLayout.setGravity(Gravity.CENTER);
-        linearLayout.setPadding(20, 10, 20, 10);
-        linearLayout.setBackgroundDrawable(new RoundColorDrawable(15, 0x99333333));
+        linearLayout.setPadding(25, 15, 25, 15);
+        linearLayout.setBackgroundDrawable(new RoundColorDrawable(50, 0x99333333));
 
         TextView tv = new TextView(getApplication());
         linearLayout.addView(tv);
         tv.setTextColor(0xffffffff);
-        tv.setTextSize(14);
+        tv.setTextSize(16);
         tv.setText(text);
         mToast.setView(linearLayout);
         mHandler.postDelayed(run, duration);

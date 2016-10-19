@@ -8,6 +8,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -77,6 +79,9 @@ public class WebFragment extends BaseSubFragment {
         }
         base_webview.setWebViewClient(new BaseWebViewClient());
         base_webview.getSettings().setJavaScriptEnabled(true);
+        base_webview.getSettings().setDomStorageEnabled(true);
+        base_webview.getSettings().setUseWideViewPort(true);
+        base_webview.getSettings().setDatabaseEnabled(true);
         base_webview.getSettings().setAppCacheEnabled(true);
         Object webInterface = generateWebJavascriptInterface();
         if (webInterface != null) {
@@ -130,13 +135,13 @@ public class WebFragment extends BaseSubFragment {
      * @return false
      */
     protected boolean generateRefreshEnabled() {
-        return true;
+        return false;
     }
 
     @Override
     public void onRefreshSkin(Skin skin) {
         super.onRefreshSkin(skin);
-        if(base_refresh_layout != null){
+        if (base_refresh_layout != null) {
             base_refresh_layout.setColorSchemeColors(skin.getThemeColor());
         }
     }
@@ -214,6 +219,31 @@ public class WebFragment extends BaseSubFragment {
             }
             return true;
         }
+
+        @Override
+        public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
+            if (isMp4(url)) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    return new WebResourceResponse(null, null, null);
+                }
+            }
+            return super.shouldInterceptRequest(view, url);
+        }
+
+        @Override
+        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                if (isMp4(request.getUrl().toString())) {
+                    return new WebResourceResponse(null, null, null);
+                }
+            }
+            return super.shouldInterceptRequest(view, request);
+        }
+
+        private boolean isMp4(String url) {
+            return false;
+        }
+
     }
 
     private class BaseWebJavascriptInterface {
