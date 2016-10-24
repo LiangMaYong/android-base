@@ -32,7 +32,7 @@ public abstract class BaseSubActivity extends BaseActivity {
      * @param watermark watermark
      */
     public static void setWatermarkText(String watermark) {
-        BaseSubActivity.mWatermark = mWatermark;
+        BaseSubActivity.mWatermark = watermark;
     }
 
     //mFrameView
@@ -66,6 +66,10 @@ public abstract class BaseSubActivity extends BaseActivity {
 
     public abstract BaseSubFragment generateSubFragment();
 
+    protected String generateWatermarkText() {
+        return null;
+    }
+
     /**
      * generateFragmentId
      *
@@ -81,7 +85,12 @@ public abstract class BaseSubActivity extends BaseActivity {
     protected void generateContentView() {
         setContentView(R.layout.base_defualt_sub_activity);
         TextView base_sub_watermark = (TextView) findViewById(R.id.base_sub_watermark);
-        base_sub_watermark.setText(mWatermark);
+        String water = generateWatermarkText();
+        if (water == null) {
+            base_sub_watermark.setText(mWatermark);
+        } else {
+            base_sub_watermark.setText(water);
+        }
     }
 
     @Override
