@@ -1,4 +1,4 @@
-package com.liangmayong.base.widget.relistview;
+package com.liangmayong.base.widget.superlistview;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
+import com.liangmayong.base.viewbinding.ViewBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.List;
 /**
  * Created by LiangMaYong on 2016/8/24.
  */
-public class ReListView extends RelativeLayout {
+public class SuperListView extends RelativeLayout {
 
     /**
      * OnReListViewRetryListener
@@ -486,12 +487,12 @@ public class ReListView extends RelativeLayout {
         }
     };
 
-    public ReListView(Context context) {
+    public SuperListView(Context context) {
         super(context);
         initView();
     }
 
-    public ReListView(Context context, AttributeSet attrs) {
+    public SuperListView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
@@ -604,7 +605,7 @@ public class ReListView extends RelativeLayout {
      * @param size size
      */
     public void setDecorationSize(int size) {
-        setItemDecoration(new ReDecoration(size));
+        setItemDecoration(new SuperDecoration(size));
     }
 
     /**
@@ -745,7 +746,7 @@ public class ReListView extends RelativeLayout {
         // items
         private final List<Item> items = new ArrayList<Item>();
         // adapter
-        private final ReAdapter adapter;
+        private final SuperAdapter adapter;
         //tag
         private Object tag;
         //recyclerView
@@ -754,7 +755,7 @@ public class ReListView extends RelativeLayout {
         private boolean isAttach = false;
 
         private Pool() {
-            adapter = new ReAdapter(this);
+            adapter = new SuperAdapter(this);
         }
 
 
@@ -842,6 +843,28 @@ public class ReListView extends RelativeLayout {
             items.add(item);
         }
 
+
+        /**
+         * remove
+         *
+         * @param position position
+         */
+        public void remove(int position) {
+            items.remove(position);
+        }
+
+
+        /**
+         * remove
+         *
+         * @param item item
+         */
+        public void remove(Item item) {
+            if (items.contains(item)) {
+                items.remove(item);
+            }
+        }
+
         /**
          * addAll
          *
@@ -882,14 +905,14 @@ public class ReListView extends RelativeLayout {
     }
 
     /**
-     * ReAdapter
+     * SuperAdapter
      */
-    private static class ReAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static class SuperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         // pool
         private final Pool pool;
 
-        public ReAdapter(Pool pool) {
+        public SuperAdapter(Pool pool) {
             this.pool = pool;
         }
 
@@ -956,9 +979,33 @@ public class ReListView extends RelativeLayout {
         private int position = 0;
         //pool
         private Pool pool = null;
+        //clickListener
+        private OnClickListener clickListener;
+        //longClickListener
+        private OnLongClickListener longClickListener;
+
+        /**
+         * setOnClickListener
+         *
+         * @param clickListener clickListener
+         */
+        public void setOnClickListener(OnClickListener clickListener) {
+            this.clickListener = clickListener;
+        }
+
+        public void setOnLongClickListener(OnLongClickListener longClickListener) {
+            this.longClickListener = longClickListener;
+        }
 
         public Item(Data data) {
             this.data = data;
+        }
+
+        /**
+         * notifyChanged
+         */
+        public void notifyChanged() {
+            getPool().notifyItemChanged(getPosition());
         }
 
         /**
@@ -1031,7 +1078,9 @@ public class ReListView extends RelativeLayout {
          */
         private final RecyclerView.ViewHolder proxyNewView(ViewGroup parent) {
             View itemView = newView(LayoutInflater.from(parent.getContext()), parent);
-            itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            if (itemView != null) {
+                itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            }
             ItemHolder holder = new ItemHolder(itemView);
             return holder;
         }
@@ -1040,6 +1089,15 @@ public class ReListView extends RelativeLayout {
          * proxyBindView
          */
         private final void proxyBindView(View itemView) {
+            if (itemView != null) {
+                ViewBinding.parserClassByView(this, itemView);
+                if (clickListener != null) {
+                    itemView.setOnClickListener(clickListener);
+                }
+                if (longClickListener != null) {
+                    itemView.setOnLongClickListener(longClickListener);
+                }
+            }
             bindView(itemView, data);
         }
 
@@ -1055,13 +1113,13 @@ public class ReListView extends RelativeLayout {
     }
 
     /**
-     * ReDecoration
+     * SuperDecoration
      */
-    private static class ReDecoration extends RecyclerView.ItemDecoration {
+    private static class SuperDecoration extends RecyclerView.ItemDecoration {
         //space
         private int space = 0;
 
-        public ReDecoration(int spacingInPixels) {
+        public SuperDecoration(int spacingInPixels) {
             this.space = spacingInPixels / 2;
         }
 

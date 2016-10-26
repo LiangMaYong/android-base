@@ -15,21 +15,21 @@ import android.widget.EditText;
 import com.liangmayong.base.BasePresenter;
 import com.liangmayong.base.activitys.WebActivity;
 import com.liangmayong.base.interfaces.BaseInterface;
+import com.liangmayong.base.presenter.BindP;
+import com.liangmayong.base.presenter.Presenter;
+import com.liangmayong.base.presenter.PresenterBind;
+import com.liangmayong.base.presenter.PresenterHolder;
 import com.liangmayong.base.utils.ToastUtils;
+import com.liangmayong.base.viewbinding.ViewBinding;
+import com.liangmayong.base.viewbinding.interfaces.TitleBindInterface;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
-import com.liangmayong.presenter.BindP;
-import com.liangmayong.presenter.Presenter;
-import com.liangmayong.presenter.PresenterBind;
-import com.liangmayong.presenter.PresenterHolder;
 import com.liangmayong.skin.Skin;
-import com.liangmayong.viewbinding.ViewBinding;
-import com.liangmayong.viewbinding.interfaces.AnnotationTitleInterface;
 
 /**
  * Created by LiangMaYong on 2016/8/22.
  */
 @BindP({BasePresenter.class})
-public abstract class AppboxFragment extends ContextThemeWrapper implements BaseInterface, AnnotationTitleInterface {
+public abstract class AppboxFragment extends ContextThemeWrapper implements BaseInterface, TitleBindInterface {
     //holder
     private PresenterHolder holder = null;
     //defualtToolbar

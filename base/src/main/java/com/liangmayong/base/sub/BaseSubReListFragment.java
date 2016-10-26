@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.widget.layouts.SwipeLayout;
-import com.liangmayong.base.widget.relistview.ReListView;
+import com.liangmayong.base.widget.superlistview.SuperListView;
 import com.liangmayong.skin.Skin;
 
 /**
@@ -16,7 +16,7 @@ import com.liangmayong.skin.Skin;
 public abstract class BaseSubReListFragment extends BaseSubFragment {
 
 
-    private ReListView reListView = null;
+    private SuperListView reListView = null;
     private SwipeRefreshLayout refreshLayout = null;
 
     /**
@@ -24,7 +24,7 @@ public abstract class BaseSubReListFragment extends BaseSubFragment {
      *
      * @return listView
      */
-    public ReListView getListView() {
+    public SuperListView getListView() {
         return reListView;
     }
 
@@ -39,8 +39,8 @@ public abstract class BaseSubReListFragment extends BaseSubFragment {
 
     @Override
     protected final void initSubView(View rootView) {
-        reListView = (ReListView) rootView.findViewById(R.id.base_reListView);
-        refreshLayout = (SwipeLayout) rootView.findViewById(R.id.base_refreshLayout);
+        reListView = (SuperListView) rootView.findViewById(R.id.base_superListView);
+        refreshLayout = (SwipeLayout) rootView.findViewById(R.id.base_swipeLayout);
         refreshLayout.setColorSchemeColors(Skin.get().getThemeColor());
         refreshLayout.setEnabled(refreshEnabled());
         ((SwipeLayout) refreshLayout).setViewGroup(reListView);
@@ -55,7 +55,7 @@ public abstract class BaseSubReListFragment extends BaseSubFragment {
         }
     }
 
-    protected abstract void initListView(ReListView listView, SwipeRefreshLayout refreshLayout);
+    protected abstract void initListView(SuperListView listView, SwipeRefreshLayout refreshLayout);
 
     /**
      * refreshEnabled

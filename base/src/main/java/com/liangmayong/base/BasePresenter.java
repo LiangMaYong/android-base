@@ -1,7 +1,7 @@
 package com.liangmayong.base;
 
 import com.liangmayong.base.interfaces.BaseInterface;
-import com.liangmayong.presenter.Presenter;
+import com.liangmayong.base.presenter.Presenter;
 
 
 /**

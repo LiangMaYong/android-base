@@ -8,8 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -46,7 +44,7 @@ public class WebFragment extends BaseSubFragment {
     @Override
     protected void initSubView(View rootView) {
         base_webview = (WebView) rootView.findViewById(R.id.base_webview);
-        base_refresh_layout = (SwipeLayout) rootView.findViewById(R.id.base_refreshLayout);
+        base_refresh_layout = (SwipeLayout) rootView.findViewById(R.id.base_swipeLayout);
         base_refresh_layout.setEnabled(generateRefreshEnabled());
         base_refresh_layout.setColorSchemeColors(Skin.get().getThemeColor());
         base_refresh_layout.setViewGroup(base_webview);
@@ -220,31 +218,6 @@ public class WebFragment extends BaseSubFragment {
             }
             return true;
         }
-
-        @Override
-        public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-            if (isMp4(url)) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    return new WebResourceResponse(null, null, null);
-                }
-            }
-            return super.shouldInterceptRequest(view, url);
-        }
-
-        @Override
-        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                if (isMp4(request.getUrl().toString())) {
-                    return new WebResourceResponse(null, null, null);
-                }
-            }
-            return super.shouldInterceptRequest(view, request);
-        }
-
-        private boolean isMp4(String url) {
-            return false;
-        }
-
     }
 
     /**

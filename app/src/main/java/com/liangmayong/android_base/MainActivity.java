@@ -2,7 +2,7 @@ package com.liangmayong.android_base;
 
 import com.liangmayong.base.sub.BaseSubActivity;
 import com.liangmayong.base.sub.BaseSubFragment;
-import com.liangmayong.viewbinding.annotations.BindTitle;
+import com.liangmayong.base.viewbinding.annotations.BindTitle;
 
 @BindTitle("AndroidBase")
 public class MainActivity extends BaseSubActivity {

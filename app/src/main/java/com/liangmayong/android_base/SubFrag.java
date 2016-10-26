@@ -4,12 +4,11 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
-import com.liangmayong.base.fragments.WebFragment;
 import com.liangmayong.base.sub.BaseSubReListFragment;
 import com.liangmayong.base.utils.DimenUtils;
-import com.liangmayong.base.widget.relistview.ReListView;
+import com.liangmayong.base.widget.superlistview.SuperListView;
 import com.liangmayong.skin.Skin;
-import com.liangmayong.viewbinding.annotations.BindTitle;
+import com.liangmayong.base.viewbinding.annotations.BindTitle;
 
 /**
  * Created by LiangMaYong on 2016/10/17.
@@ -23,7 +22,7 @@ public class SubFrag extends BaseSubReListFragment {
     private int index = 0;
 
     @Override
-    protected void initListView(ReListView listView, SwipeRefreshLayout refreshLayout) {
+    protected void initListView(SuperListView listView, SwipeRefreshLayout refreshLayout) {
         getDefualtToolbar().rightOne().text("百度").clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

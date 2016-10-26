@@ -4,12 +4,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.liangmayong.base.widget.relistview.ReListView;
+import com.liangmayong.base.widget.superlistview.SuperListView;
 
 /**
  * Created by LiangMaYong on 2016/9/25.
  */
-public class ViewItem extends ReListView.Item<String> {
+public class ViewItem extends SuperListView.Item<String> {
 
     public ViewItem(String s) {
         super(s);

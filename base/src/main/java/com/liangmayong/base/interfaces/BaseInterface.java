@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import com.liangmayong.base.presenter.Presenter;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
-import com.liangmayong.presenter.Presenter;
 import com.liangmayong.skin.OnSkinRefreshListener;
 
 /**
