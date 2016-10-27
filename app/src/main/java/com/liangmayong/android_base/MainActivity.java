@@ -14,6 +14,11 @@ public class MainActivity extends BaseSubActivity {
 
     @Override
     protected String generateWatermarkText() {
-        return "AndroidBase";
+        return "Powered by LiangMaYong";
+    }
+
+    @Override
+    protected boolean isThinStatusBar() {
+        return super.isThinStatusBar();
     }
 }

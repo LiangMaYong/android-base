@@ -5,6 +5,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.liangmayong.base.BaseFragment;
+import com.liangmayong.base.activitys.WebActivity;
+import com.liangmayong.base.fragments.DefualtWebFragment;
 import com.liangmayong.base.widget.iconfont.Icon;
 
 /**
@@ -112,5 +114,10 @@ public abstract class BaseSubFragment extends BaseFragment {
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubManager().closeFragment(fragment);
         }
+    }
+
+    @Override
+    public void goTo(String title, String url) {
+        open(new DefualtWebFragment(title, url));
     }
 }

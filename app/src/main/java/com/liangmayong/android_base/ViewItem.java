@@ -3,6 +3,7 @@ package com.liangmayong.android_base;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.liangmayong.base.widget.superlistview.SuperListView;
 
@@ -22,6 +23,6 @@ public class ViewItem extends SuperListView.Item<String> {
 
     @Override
     protected void bindView(View itemView, String s) {
-
+        ((TextView) itemView.findViewById(R.id.textView)).setText(s);
     }
 }

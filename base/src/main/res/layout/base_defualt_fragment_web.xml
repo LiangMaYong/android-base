@@ -11,9 +11,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <WebView
-            android:id="@+id/base_webview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </com.liangmayong.base.widget.layouts.SwipeLayout>
 </LinearLayout>

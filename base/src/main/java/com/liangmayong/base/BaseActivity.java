@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -137,12 +138,21 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     }
 
     /**
-     * isTranslucentStatus
+     * isTranslucentStatusBar
      *
      * @return true or false
      */
-    protected boolean isTranslucentStatus() {
+    protected boolean isTranslucentStatusBar() {
         return false;
+    }
+
+    /**
+     * isThinStatusBar
+     *
+     * @return true or false
+     */
+    protected boolean isThinStatusBar() {
+        return true;
     }
 
     /**
@@ -169,7 +179,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     }
 
     @TargetApi(19)
-    private void setTranslucentStatus(boolean on) {
+    private void setTranslucentStatusBar(boolean on) {
         Window win = getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
         final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
@@ -218,12 +228,18 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
 
     @Override
     public void onRefreshSkin(Skin skin) {
-        if (isTranslucentStatus() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
+        if (isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatusBar(true);
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 Window window = getWindow();
-                window.setStatusBarColor(skin.getThemeColor());
+                if (isThinStatusBar()) {
+                    int themeColor = skin.getThemeColor();
+                    int color = Color.argb(Color.alpha(themeColor), Color.red(themeColor) - 0x11, Color.green(themeColor) - 0x11, Color.blue(themeColor) - 0x11);
+                    window.setStatusBarColor(color);
+                } else {
+                    window.setStatusBarColor(skin.getThemeColor());
+                }
             }
         }
     }

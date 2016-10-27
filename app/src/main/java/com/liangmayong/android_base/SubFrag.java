@@ -6,9 +6,9 @@ import android.view.View;
 
 import com.liangmayong.base.sub.BaseSubReListFragment;
 import com.liangmayong.base.utils.DimenUtils;
+import com.liangmayong.base.viewbinding.annotations.BindTitle;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 import com.liangmayong.skin.Skin;
-import com.liangmayong.base.viewbinding.annotations.BindTitle;
 
 /**
  * Created by LiangMaYong on 2016/10/17.
@@ -17,22 +17,20 @@ import com.liangmayong.base.viewbinding.annotations.BindTitle;
 public class SubFrag extends BaseSubReListFragment {
 
     // colors
-    private int[] colors = {0xff336666, 0xff663366, 0xff3399ff, 0xffff6858, 0xfffcb815};
+    private int[] colors = {0xff000000, 0xff663366, 0xff3399ff, 0xffff6858, 0xfffcb815};
     // index
     private int index = 0;
 
     @Override
     protected void initListView(SuperListView listView, SwipeRefreshLayout refreshLayout) {
-        getDefualtToolbar().rightOne().text("百度").clicked(new View.OnClickListener() {
+        getDefualtToolbar().rightOne().text("Github").clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showToast("百度一下");
-                goTo("百度一下", "http://www.baidu.com");
-               // open(new WebFragment("百度一下", "http://www.baidu.com"));
+                goTo("LiangMaYong", "https://github.com/LiangMaYong");
             }
         });
         for (int i = 0; i < 50; i++) {
-            listView.getPool().add(new ViewItem(""));
+            listView.getPool().add(new ViewItem("Item" + (i + 1)));
         }
         listView.getPool().notifyDataSetChanged();
         listView.setDecorationSize(DimenUtils.dip2px(getActivity(), 2));
