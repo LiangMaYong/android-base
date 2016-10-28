@@ -2,6 +2,9 @@
 this is android base
 
 [![LatestVersion](https://img.shields.io/badge/LatestVersion-1.1.0-brightgreen.svg?style=plastic) ](https://github.com/LiangMaYong/android-base/releases/)
+
+download demo:[demo-1.1.0.apk](https://raw.githubusercontent.com/LiangMaYong/android-base/release/apk/demo-1.1.0.apk)
+
 ## Gradle
 ```
 compile 'com.liangmayong.android:base:$LatestVersion'
