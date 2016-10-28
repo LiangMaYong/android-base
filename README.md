@@ -3,7 +3,7 @@ this is android base
 
 [![LatestVersion](https://img.shields.io/badge/LatestVersion-1.1.0-brightgreen.svg?style=plastic) ](https://github.com/LiangMaYong/android-base/releases/)
 
-download demo:[demo-1.1.0.apk](https://github.com/LiangMaYong/android-base/blob/master/release/apk/demo-1.1.0.apk?raw=true)
+download demo : [demo-1.1.0.apk](https://raw.githubusercontent.com/LiangMaYong/android-base/master/release/apk/demo-1.1.0.apk)
 
 ## Gradle
 ```
