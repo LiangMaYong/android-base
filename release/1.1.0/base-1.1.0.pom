@@ -41,15 +41,15 @@
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>com.liangmayong.android</groupId>
-      <artifactId>skin</artifactId>
-      <version>1.0.0</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
       <groupId>com.facebook.fresco</groupId>
       <artifactId>fresco</artifactId>
       <version>0.14.1</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.liangmayong.android</groupId>
+      <artifactId>skin</artifactId>
+      <version>1.0.0</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
