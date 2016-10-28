@@ -518,11 +518,11 @@ public class SuperListView extends RelativeLayout {
      */
     private void initView() {
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        //add contentLayout
+        //insert contentLayout
         contentLayout = new LinearLayout(getContext());
         contentLayout.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         contentLayout.setOrientation(LinearLayout.VERTICAL);
-        //add headLayout
+        //insert headLayout
         headLayout = new LinearLayout(getContext());
         headLayout.setOrientation(LinearLayout.VERTICAL);
         headLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
@@ -537,13 +537,13 @@ public class SuperListView extends RelativeLayout {
         pool.attachTo(recyclerView);
         contentLayout.addView(recyclerView);
 
-        //add footLayout
+        //insert footLayout
         footLayout = new LinearLayout(getContext());
         footLayout.setOrientation(LinearLayout.VERTICAL);
         footLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contentLayout.addView(footLayout);
         super.addView(contentLayout);
-        //add emptyLayout
+        //insert emptyLayout
         emptyLayout = new RelativeLayout(getContext()) {
             @Override
             public boolean canScrollVertically(int direction) {
@@ -555,7 +555,7 @@ public class SuperListView extends RelativeLayout {
         emptyLayout.setVisibility(GONE);
         setDefualtEmpty("", 0);
 
-        //add loadingLayout
+        //insert loadingLayout
         loadingLayout = new RelativeLayout(getContext()) {
             @Override
             public boolean canScrollVertically(int direction) {
@@ -567,7 +567,7 @@ public class SuperListView extends RelativeLayout {
         loadingLayout.setVisibility(GONE);
         setDefualtLoading("", 0);
 
-        //add errorLayout
+        //insert errorLayout
         errorLayout = new RelativeLayout(getContext()) {
             @Override
             public boolean canScrollVertically(int direction) {
@@ -835,7 +835,7 @@ public class SuperListView extends RelativeLayout {
         }
 
         /**
-         * add
+         * insert
          *
          * @param item item
          */
@@ -866,7 +866,7 @@ public class SuperListView extends RelativeLayout {
         }
 
         /**
-         * addAll
+         * insertList
          *
          * @param items items
          */

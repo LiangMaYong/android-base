@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
+import com.liangmayong.base.database.DataPreferences;
 import com.liangmayong.base.sub.BaseSubReListFragment;
 import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.viewbinding.annotations.BindTitle;
@@ -17,7 +18,7 @@ import com.liangmayong.skin.Skin;
 public class SubFrag extends BaseSubReListFragment {
 
     // colors
-    private int[] colors = {0xff000000, 0xff663366, 0xff3399ff, 0xffff6858, 0xfffcb815};
+    private int[] colors = {0xff333333, 0xff663366, 0xff3399ff, 0xffff6858, 0xfffcb815};
     // index
     private int index = 0;
 

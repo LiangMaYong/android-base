@@ -9,7 +9,6 @@ public abstract class Presenter<V> {
     //isAttached
     private boolean isAttached = false;
 
-
     /**
      * getViewInstance
      *

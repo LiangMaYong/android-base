@@ -17,4 +17,5 @@ public class WebActivity extends BaseSubActivity {
         String url = getIntent().getStringExtra(BaseInterface.WEB_EXTRA_URL);
         return new DefualtWebFragment(title, url);
     }
+
 }

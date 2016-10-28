@@ -13,8 +13,8 @@ import com.liangmayong.skin.OnSkinRefreshListener;
  */
 public interface BaseInterface extends OnSkinRefreshListener {
 
-    String WEB_EXTRA_URL = "url";
-    String WEB_EXTRA_TITLE = "title";
+    String WEB_EXTRA_URL = "web_extra_url";
+    String WEB_EXTRA_TITLE = "web_extra_title";
 
     /**
      * showToast

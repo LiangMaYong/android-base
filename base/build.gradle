@@ -27,8 +27,6 @@ dependencies {
     compile 'com.liangmayong.android:skin:1.0.0'
     //fresco
     compile 'com.facebook.fresco:fresco:0.14.1'
-    //preferences
-    compile 'com.liangmayong.android:preferences:1.0.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/LiangMaYong/android-gradlepublish/master/library.gradle'

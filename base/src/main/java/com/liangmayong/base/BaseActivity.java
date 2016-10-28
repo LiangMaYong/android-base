@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.liangmayong.base.activitys.WebActivity;
+import com.liangmayong.base.fixbug.AndroidBug5497Workaround;
 import com.liangmayong.base.interfaces.BaseInterface;
 import com.liangmayong.base.presenter.BindP;
 import com.liangmayong.base.presenter.Presenter;
@@ -102,6 +103,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AndroidBug5497Workaround.assistActivity(this);
         inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         ViewBinding.parserActivity(this);
@@ -235,7 +237,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
                 Window window = getWindow();
                 if (isThinStatusBar()) {
                     int themeColor = skin.getThemeColor();
-                    int color = Color.argb(Color.alpha(themeColor), Color.red(themeColor) - 0x11, Color.green(themeColor) - 0x11, Color.blue(themeColor) - 0x11);
+                    int color = Color.argb(Color.alpha(themeColor), Math.abs(Color.red(themeColor) - 0x11), Math.abs(Color.green(themeColor) - 0x11), Math.abs(Color.blue(themeColor) - 0x11));
                     window.setStatusBarColor(color);
                 } else {
                     window.setStatusBarColor(skin.getThemeColor());
