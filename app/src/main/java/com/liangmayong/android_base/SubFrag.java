@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
-import com.liangmayong.base.database.DataPreferences;
 import com.liangmayong.base.sub.BaseSubReListFragment;
 import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.viewbinding.annotations.BindTitle;
@@ -27,7 +26,7 @@ public class SubFrag extends BaseSubReListFragment {
         getDefualtToolbar().rightOne().text("Github").clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goTo("LiangMaYong", "https://github.com/LiangMaYong");
+                goTo("Github", "https://github.com/LiangMaYong/android-base");
             }
         });
         for (int i = 0; i < 50; i++) {
@@ -35,7 +34,7 @@ public class SubFrag extends BaseSubReListFragment {
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    goTo(ItemActivity.class);
+                    open(new ItemFrag());
                 }
             });
             listView.getPool().add(item);
