@@ -140,10 +140,19 @@ public abstract class DataTable {
     /**
      * getList
      *
+     * @return list
+     */
+    public List<DataModel> getList() {
+        return getDataHandler().getList(null, null, null);
+    }
+
+    /**
+     * getList
+     *
      * @param where   where
      * @param orderBy orderBy
      * @param limit   limit
-     * @return DataModel
+     * @return list
      */
     public List<DataModel> getList(String where, String orderBy, String limit) {
         return getDataHandler().getList(where, orderBy, limit);

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,6 +47,20 @@ public class DataPreferences {
      */
     public static DataPreferences getDefaultPreferences() {
         return getPreferences(DEFAULT_DATABASE_PREFERENCES_NAME);
+    }
+
+    /**
+     * getPreferences
+     *
+     * @return preferences
+     */
+    public Map<String, String> getPreferences() {
+        Map<String, String> map = new HashMap<String, String>();
+        List<DataModel> dataModels = mPreferencesTable.getList();
+        for (int i = 0; i < dataModels.size(); i++) {
+            map.put(dataModels.get(i).getString("skey"), dataModels.get(i).getString("svalue"));
+        }
+        return map;
     }
 
     /**
