@@ -3,7 +3,6 @@ package com.liangmayong.base.fixbug;
 import android.app.Activity;
 import android.graphics.Rect;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
@@ -25,7 +24,7 @@ public class AndroidBug5497Workaround {
 
     private AndroidBug5497Workaround(Activity activity) {
         try {
-            ViewGroup content = (ViewGroup) activity.getWindow().getDecorView();
+            FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
             mChildOfContent = content.getChildAt(0);
             mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 public void onGlobalLayout() {
