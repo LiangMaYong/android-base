@@ -237,7 +237,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
                 Window window = getWindow();
                 if (isThinStatusBar()) {
                     int themeColor = skin.getThemeColor();
-                    int color = Color.argb(Color.alpha(themeColor), Math.abs(Color.red(themeColor) - 0x11), Math.abs(Color.green(themeColor) - 0x11), Math.abs(Color.blue(themeColor) - 0x11));
+                    int color = Color.argb(Color.alpha(themeColor), Math.abs(Color.red(themeColor) - 0x15), Math.abs(Color.green(themeColor) - 0x15), Math.abs(Color.blue(themeColor) - 0x15));
                     window.setStatusBarColor(color);
                 } else {
                     window.setStatusBarColor(skin.getThemeColor());

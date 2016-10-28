@@ -31,7 +31,14 @@ public class SubFrag extends BaseSubReListFragment {
             }
         });
         for (int i = 0; i < 50; i++) {
-            listView.getPool().add(new ViewItem("Item" + (i + 1)));
+            ViewItem item = new ViewItem("Item" + (i + 1));
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goTo(ItemActivity.class);
+                }
+            });
+            listView.getPool().add(item);
         }
         listView.getPool().notifyDataSetChanged();
         listView.setDecorationSize(DimenUtils.dip2px(getActivity(), 2));
