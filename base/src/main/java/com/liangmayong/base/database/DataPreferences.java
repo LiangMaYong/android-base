@@ -19,6 +19,8 @@ import java.util.Map;
  */
 public class DataPreferences {
 
+    // perferencesMap
+    private static final Map<String, DataPreferences> perferencesMap = new HashMap<String, DataPreferences>();
     //DATABASE_NAME
     public static final String DATABASE_NAME = "base_database_preferences.db";
     //DEFAULT_DATABASE_PREFERENCES_NAME
@@ -26,6 +28,7 @@ public class DataPreferences {
     //mPreferencesTable
     private PreferencesTable mPreferencesTable;
 
+    //DataPreferences
     private DataPreferences(String tablename) {
         mPreferencesTable = new PreferencesTable(getApplication(), tablename);
     }
@@ -37,7 +40,17 @@ public class DataPreferences {
      * @return preferences
      */
     public static DataPreferences getPreferences(String tablename) {
-        return new DataPreferences("pref_" + tablename);
+        if (tablename == null || "".equals(tablename)) {
+            tablename = DEFAULT_DATABASE_PREFERENCES_NAME;
+        }
+        tablename = "pref_" + tablename;
+        if (perferencesMap.containsKey(tablename)) {
+            return perferencesMap.get(tablename);
+        } else {
+            DataPreferences preferences = new DataPreferences(tablename);
+            perferencesMap.put(tablename, preferences);
+            return preferences;
+        }
     }
 
     /**

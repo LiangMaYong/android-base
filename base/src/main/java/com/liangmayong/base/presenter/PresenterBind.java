@@ -43,7 +43,7 @@ public class PresenterBind {
     }
 
     /**
-     * addPresenter
+     * bind
      *
      * @param handler    holder
      * @param presenters presenters

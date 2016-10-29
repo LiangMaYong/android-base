@@ -26,6 +26,7 @@ import java.util.List;
  */
 public class Skin {
 
+
     /**
      * SkinType
      */
@@ -68,7 +69,6 @@ public class Skin {
         }
     }
 
-    private static final String SKIN_PREFERENCES_NAME = "android_skin_preferences";
     private static final String SKIN_RECEIVER_ACTION = ".android_skin_refresh_action";
     private static volatile Skin skin = null;
     private static volatile Editor editor = null;
@@ -107,11 +107,11 @@ public class Skin {
     }
 
     /**
-     * getSharedPreferences
+     * getDataPreferences
      *
      * @return preferences
      */
-    private static DataPreferences getSharedPreferences() {
+    private static DataPreferences getDataPreferences() {
         return DataPreferences.getDefaultPreferences();
     }
 
@@ -200,17 +200,17 @@ public class Skin {
             String current = getCurrentProcessName(context) + "@" + Skin.get().hashCode();
             if (process != null && !process.equals(current)) {
                 boolean flag = false;
-                flag = flag || getSharedPreferences().getInt("themeColor", themeColor) != themeColor;
-                flag = flag || getSharedPreferences().getInt("primaryColor", primaryColor) != primaryColor;
-                flag = flag || getSharedPreferences().getInt("successColor", successColor) != successColor;
-                flag = flag || getSharedPreferences().getInt("infoColor", infoColor) != infoColor;
-                flag = flag || getSharedPreferences().getInt("warningColor", warningColor) != warningColor;
-                flag = flag || getSharedPreferences().getInt("themeTextColor", themeTextColor) != themeTextColor;
-                flag = flag || getSharedPreferences().getInt("primaryTextColor", primaryTextColor) != primaryTextColor;
-                flag = flag || getSharedPreferences().getInt("successTextColor", successTextColor) != successTextColor;
-                flag = flag || getSharedPreferences().getInt("infoTextColor", infoTextColor) != infoTextColor;
-                flag = flag || getSharedPreferences().getInt("warningTextColor", warningTextColor) != warningTextColor;
-                flag = flag || getSharedPreferences().getInt("dangerTextColor", dangerTextColor) != dangerTextColor;
+                flag = flag || getDataPreferences().getInt("themeColor", themeColor) != themeColor;
+                flag = flag || getDataPreferences().getInt("primaryColor", primaryColor) != primaryColor;
+                flag = flag || getDataPreferences().getInt("successColor", successColor) != successColor;
+                flag = flag || getDataPreferences().getInt("infoColor", infoColor) != infoColor;
+                flag = flag || getDataPreferences().getInt("warningColor", warningColor) != warningColor;
+                flag = flag || getDataPreferences().getInt("themeTextColor", themeTextColor) != themeTextColor;
+                flag = flag || getDataPreferences().getInt("primaryTextColor", primaryTextColor) != primaryTextColor;
+                flag = flag || getDataPreferences().getInt("successTextColor", successTextColor) != successTextColor;
+                flag = flag || getDataPreferences().getInt("infoTextColor", infoTextColor) != infoTextColor;
+                flag = flag || getDataPreferences().getInt("warningTextColor", warningTextColor) != warningTextColor;
+                flag = flag || getDataPreferences().getInt("dangerTextColor", dangerTextColor) != dangerTextColor;
                 if (flag) {
                     initColorValue();
                     refreshSkin();
@@ -252,7 +252,7 @@ public class Skin {
         warningTextColor = 0xffffffff;
         //dangerColor
         dangerTextColor = 0xffffffff;
-        getSharedPreferences().setInt("grayColor", grayColor)
+        getDataPreferences().setInt("grayColor", grayColor)
                 .setInt("grayTextColor", grayTextColor)
                 .setInt("themeColor", themeColor)
                 .setInt("primaryColor", primaryColor)
@@ -270,22 +270,22 @@ public class Skin {
 
     private void initColorValue() {
         //colors
-        themeColor = getSharedPreferences().getInt("themeColor", themeColor);
-        primaryColor = getSharedPreferences().getInt("primaryColor", primaryColor);
-        successColor = getSharedPreferences().getInt("successColor", successColor);
-        infoColor = getSharedPreferences().getInt("infoColor", infoColor);
-        warningColor = getSharedPreferences().getInt("warningColor", warningColor);
-        dangerColor = getSharedPreferences().getInt("dangerColor", dangerColor);
-        grayColor = getSharedPreferences().getInt("grayColor", grayColor);
+        themeColor = getDataPreferences().getInt("themeColor", themeColor);
+        primaryColor = getDataPreferences().getInt("primaryColor", primaryColor);
+        successColor = getDataPreferences().getInt("successColor", successColor);
+        infoColor = getDataPreferences().getInt("infoColor", infoColor);
+        warningColor = getDataPreferences().getInt("warningColor", warningColor);
+        dangerColor = getDataPreferences().getInt("dangerColor", dangerColor);
+        grayColor = getDataPreferences().getInt("grayColor", grayColor);
 
         //text colors
-        themeTextColor = getSharedPreferences().getInt("themeTextColor", themeTextColor);
-        primaryTextColor = getSharedPreferences().getInt("primaryTextColor", primaryTextColor);
-        successTextColor = getSharedPreferences().getInt("successTextColor", successTextColor);
-        infoTextColor = getSharedPreferences().getInt("infoTextColor", infoTextColor);
-        warningTextColor = getSharedPreferences().getInt("warningTextColor", warningTextColor);
-        dangerTextColor = getSharedPreferences().getInt("dangerTextColor", dangerTextColor);
-        grayTextColor = getSharedPreferences().getInt("grayTextColor", grayTextColor);
+        themeTextColor = getDataPreferences().getInt("themeTextColor", themeTextColor);
+        primaryTextColor = getDataPreferences().getInt("primaryTextColor", primaryTextColor);
+        successTextColor = getDataPreferences().getInt("successTextColor", successTextColor);
+        infoTextColor = getDataPreferences().getInt("infoTextColor", infoTextColor);
+        warningTextColor = getDataPreferences().getInt("warningTextColor", warningTextColor);
+        dangerTextColor = getDataPreferences().getInt("dangerTextColor", dangerTextColor);
+        grayTextColor = getDataPreferences().getInt("grayTextColor", grayTextColor);
     }
 
     private int grayColor = 0;
@@ -443,7 +443,7 @@ public class Skin {
      * @return value
      */
     public int getExtraColor(String key) {
-        int color = getSharedPreferences().contains("color_" + key) ? getSharedPreferences().getInt("color_" + key, 0) : 0;
+        int color = getDataPreferences().contains("color_" + key) ? getDataPreferences().getInt("color_" + key, 0) : 0;
         return color;
     }
 
@@ -454,7 +454,7 @@ public class Skin {
      * @return value
      */
     public String getExtraString(String key) {
-        return getSharedPreferences().contains("string_" + key) ? getSharedPreferences().getString("string_" + key, "") : "";
+        return getDataPreferences().contains("string_" + key) ? getDataPreferences().getString("string_" + key, "") : "";
     }
 
     /**
@@ -701,7 +701,7 @@ public class Skin {
          */
         public Editor setThemeColor(int themeColor, int themeTextColor) {
             Skin.get().setThemeColor(themeColor, themeTextColor);
-            DataPreferences editor = getSharedPreferences();
+            DataPreferences editor = getDataPreferences();
             editor.setInt("themeColor", themeColor);
             editor.setInt("themeTextColor", themeTextColor);
             return this;
@@ -716,7 +716,7 @@ public class Skin {
          */
         public Editor setPrimaryColor(int primaryColor, int primaryTextColor) {
             Skin.get().setPrimaryColor(primaryColor, primaryTextColor);
-            DataPreferences editor = getSharedPreferences();
+            DataPreferences editor = getDataPreferences();
             editor.setInt("primaryColor", primaryColor);
             editor.setInt("primaryTextColor", primaryTextColor);
             return this;
@@ -731,7 +731,7 @@ public class Skin {
          */
         public Editor setSuccessColor(int successColor, int successTextColor) {
             Skin.get().setSuccessColor(successColor, successTextColor);
-            DataPreferences editor = getSharedPreferences();
+            DataPreferences editor = getDataPreferences();
             editor.setInt("successColor", successColor);
             editor.setInt("successTextColor", successTextColor);
             return this;
@@ -746,7 +746,7 @@ public class Skin {
          */
         public Editor setGrayColor(int grayColor, int grayTextColor) {
             Skin.get().setGrayColor(grayColor, grayTextColor);
-            DataPreferences editor = getSharedPreferences();
+            DataPreferences editor = getDataPreferences();
             editor.setInt("grayColor", grayColor);
             editor.setInt("grayTextColor", grayTextColor);
             return this;
@@ -761,7 +761,7 @@ public class Skin {
          */
         public Editor setInfoColor(int infoColor, int infoTextColor) {
             Skin.get().setInfoColor(infoColor, infoTextColor);
-            DataPreferences editor = getSharedPreferences();
+            DataPreferences editor = getDataPreferences();
             editor.setInt("infoColor", infoColor);
             editor.setInt("infoTextColor", infoTextColor);
             return this;
@@ -776,7 +776,7 @@ public class Skin {
          */
         public Editor setWarningColor(int warningColor, int warningTextColor) {
             Skin.get().setWarningColor(warningColor, warningTextColor);
-            DataPreferences editor = getSharedPreferences();
+            DataPreferences editor = getDataPreferences();
             editor.setInt("warningColor", warningColor);
             editor.setInt("warningTextColor", warningTextColor);
             return this;
@@ -791,7 +791,7 @@ public class Skin {
          */
         public Editor setDangerColor(int dangerColor, int dangerTextColor) {
             Skin.get().setDangerColor(dangerColor, dangerTextColor);
-            DataPreferences editor = getSharedPreferences();
+            DataPreferences editor = getDataPreferences();
             editor.setInt("dangerColor", dangerColor);
             editor.setInt("dangerTextColor", dangerTextColor);
             return this;
@@ -804,7 +804,7 @@ public class Skin {
          * @param value value
          */
         public Editor setExtraColor(String key, int value) {
-            DataPreferences editor = getSharedPreferences();
+            DataPreferences editor = getDataPreferences();
             editor.setInt("color_" + key, value);
             return this;
         }
@@ -816,7 +816,7 @@ public class Skin {
          * @param value value
          */
         public Editor setExtraString(String key, String value) {
-            DataPreferences editor = getSharedPreferences();
+            DataPreferences editor = getDataPreferences();
             editor.setString("string_" + key, value);
             return this;
         }

@@ -8,19 +8,19 @@ package com.liangmayong.base.database;
  */
 public class DataType {
 
-    public static DataType TEXT() {
+    public static final DataType TEXT() {
         return new DataType(Type.TEXT);
     }
 
-    public static DataType INTEGER() {
+    public static final DataType INTEGER() {
         return new DataType(Type.INTEGER);
     }
 
-    public static DataType FLOAT() {
+    public static final DataType FLOAT() {
         return new DataType(Type.FLOAT);
     }
 
-    public static DataType BLOB() {
+    public static final DataType BLOB() {
         return new DataType(Type.BLOB);
     }
 
