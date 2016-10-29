@@ -91,6 +91,8 @@ public abstract class BaseSubFragment extends BaseFragment {
     public void finish() {
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubManager().closeFragment(this);
+        } else {
+            getActivity().finish();
         }
     }
 

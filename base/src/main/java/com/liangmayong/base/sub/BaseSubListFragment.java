@@ -13,7 +13,7 @@ import com.liangmayong.base.widget.skin.Skin;
  * Created by LiangMaYong on 2016/10/17.
  */
 @SuppressLint("ValidFragment")
-public abstract class BaseSubReListFragment extends BaseSubFragment {
+public abstract class BaseSubListFragment extends BaseSubFragment {
 
 
     private SuperListView reListView = null;

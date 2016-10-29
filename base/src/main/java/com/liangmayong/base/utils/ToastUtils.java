@@ -2,17 +2,13 @@ package com.liangmayong.base.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.WindowManager.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.liangmayong.base.utils.toast.RadiusDrawable;
 import com.liangmayong.base.utils.toast.ToastCompat;
 
 import java.lang.ref.WeakReference;
@@ -94,7 +90,7 @@ public class ToastUtils {
         linearLayout.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         linearLayout.setGravity(Gravity.CENTER);
         linearLayout.setPadding(25, 15, 25, 15);
-        linearLayout.setBackgroundDrawable(new RoundColorDrawable(50, 0x99333333));
+        linearLayout.setBackgroundDrawable(new RadiusDrawable(50, 0x99333333));
 
         TextView tv = new TextView(getApplication());
         linearLayout.addView(tv);
@@ -106,44 +102,4 @@ public class ToastUtils {
         mToast.show();
     }
 
-    /**
-     * RoundColorDrawable
-     *
-     * @author LiangMaYong
-     * @version 1.0
-     */
-    private static class RoundColorDrawable extends ColorDrawable {
-
-        private int round;
-
-        public RoundColorDrawable(int round, int color) {
-            super(color);
-            this.round = round;
-        }
-
-        @Override
-        public void draw(Canvas canvas) {
-            super.draw(new RoundCanvas(canvas, round));
-        }
-
-        private class RoundCanvas extends Canvas {
-
-            private int round;
-            private Canvas canvas;
-
-            public RoundCanvas(Canvas canvas, int round) {
-                this.round = round;
-                this.canvas = canvas;
-            }
-
-            @Override
-            public void drawRect(Rect r, Paint paint) {
-                RectF rectF = new RectF(r);
-                paint.setAntiAlias(true);
-                canvas.drawRoundRect(rectF, round, round, paint);
-            }
-
-        }
-
-    }
 }
