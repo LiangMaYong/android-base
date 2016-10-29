@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.liangmayong.skin.SkinLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.liangmayong.base.widget.skin.SkinLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:skin="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +7,7 @@
 
     <include layout="@layout/base_defualt_toolbar" />
 
-    <com.liangmayong.skin.SkinButton
+    <com.liangmayong.base.widget.skin.SkinButton
         android:id="@+id/sbutton"
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -29,4 +29,4 @@
             android:background="#ffffff"
             android:orientation="vertical" />
     </com.liangmayong.base.widget.pullrefresh.PullRefreshLayout>
-</com.liangmayong.skin.SkinLinearLayout>
+</com.liangmayong.base.widget.skin.SkinLinearLayout>

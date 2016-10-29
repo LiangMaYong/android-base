@@ -7,7 +7,7 @@ import android.view.View;
 import com.liangmayong.base.R;
 import com.liangmayong.base.widget.layouts.SwipeLayout;
 import com.liangmayong.base.widget.superlistview.SuperListView;
-import com.liangmayong.skin.Skin;
+import com.liangmayong.base.widget.skin.Skin;
 
 /**
  * Created by LiangMaYong on 2016/10/17.

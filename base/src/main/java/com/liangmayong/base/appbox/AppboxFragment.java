@@ -23,7 +23,7 @@ import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.viewbinding.ViewBinding;
 import com.liangmayong.base.viewbinding.interfaces.TitleBindInterface;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
-import com.liangmayong.skin.Skin;
+import com.liangmayong.base.widget.skin.Skin;
 
 /**
  * Created by LiangMaYong on 2016/8/22.

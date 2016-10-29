@@ -22,7 +22,6 @@ public class AnyRetryManager {
         AnyRetryManager.DEFAULT_LISTENER = defualtListener;
     }
 
-
     public OnAnyRetryListener defualtListener = new OnAnyRetryListener() {
         @Override
         public void setRetryEvent(View retryView) {
@@ -30,7 +29,7 @@ public class AnyRetryManager {
         }
     };
 
-    public AnyRetryManager(Object activityOrFragmentOrView, OnAnyRetryListener listener) {
+    private AnyRetryManager(Object activityOrFragmentOrView, OnAnyRetryListener listener) {
         if (listener == null) {
             listener = DEFAULT_LISTENER;
         }

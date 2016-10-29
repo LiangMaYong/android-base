@@ -25,8 +25,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.2.1'
     //fresco
     compile 'com.facebook.fresco:fresco:0.14.1'
-    //skin
-    compile 'com.liangmayong.android:skin:1.0.0'
 }
 
 apply from: 'https://raw.githubusercontent.com/LiangMaYong/android-gradlepublish/master/library.gradle'

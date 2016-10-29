@@ -8,7 +8,7 @@ import com.liangmayong.base.sub.BaseSubReListFragment;
 import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.viewbinding.annotations.BindTitle;
 import com.liangmayong.base.widget.superlistview.SuperListView;
-import com.liangmayong.skin.Skin;
+import com.liangmayong.base.widget.skin.Skin;
 
 /**
  * Created by LiangMaYong on 2016/10/17.
@@ -26,10 +26,10 @@ public class SubFrag extends BaseSubReListFragment {
         getDefualtToolbar().rightOne().text("Github").clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goTo("Github", "https://github.com/LiangMaYong/android-base");
+                goTo("Github · LiangMaYong", "https://github.com/LiangMaYong/android-base");
             }
         });
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 500; i++) {
             ViewItem item = new ViewItem("Item" + (i + 1));
             item.setOnClickListener(new View.OnClickListener() {
                 @Override

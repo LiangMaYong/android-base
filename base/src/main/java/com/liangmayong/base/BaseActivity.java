@@ -28,8 +28,9 @@ import com.liangmayong.base.presenter.PresenterHolder;
 import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.viewbinding.ViewBinding;
 import com.liangmayong.base.viewbinding.interfaces.TitleBindInterface;
+import com.liangmayong.base.widget.statusbar.StatusBarCompat;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
-import com.liangmayong.skin.Skin;
+import com.liangmayong.base.widget.skin.Skin;
 
 
 /**
@@ -231,17 +232,14 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     @Override
     public void onRefreshSkin(Skin skin) {
         if (isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatusBar(true);
+            StatusBarCompat.translucentStatusBar(this, true);
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                Window window = getWindow();
-                if (isThinStatusBar()) {
-                    int themeColor = skin.getThemeColor();
-                    int color = Color.argb(Color.alpha(themeColor), Math.abs(Color.red(themeColor) - 0x15), Math.abs(Color.green(themeColor) - 0x15), Math.abs(Color.blue(themeColor) - 0x15));
-                    window.setStatusBarColor(color);
-                } else {
-                    window.setStatusBarColor(skin.getThemeColor());
-                }
+            int themeColor = skin.getThemeColor();
+            if (isThinStatusBar()) {
+                int color = Color.argb(Color.alpha(themeColor), Math.abs(Color.red(themeColor) - 0x15), Math.abs(Color.green(themeColor) - 0x15), Math.abs(Color.blue(themeColor) - 0x15));
+                StatusBarCompat.setStatusBarColor(this, color);
+            } else {
+                StatusBarCompat.setStatusBarColor(this, themeColor);
             }
         }
     }

@@ -10,7 +10,7 @@ import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.viewbinding.annotations.BindLayout;
 import com.liangmayong.base.viewbinding.annotations.BindTitle;
 import com.liangmayong.base.widget.superlistview.SuperListView;
-import com.liangmayong.skin.Skin;
+import com.liangmayong.base.widget.skin.Skin;
 
 /**
  * Created by LiangMaYong on 2016/10/17.

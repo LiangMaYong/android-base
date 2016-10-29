@@ -14,6 +14,7 @@ import java.util.Map;
  */
 
 public class UserTable extends DataTable {
+
     /**
      * @param context context
      */

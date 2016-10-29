@@ -20,7 +20,7 @@ import com.liangmayong.base.interfaces.BaseWebJavascriptInterface;
 import com.liangmayong.base.utils.LogUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.layouts.SwipeLayout;
-import com.liangmayong.skin.Skin;
+import com.liangmayong.base.widget.skin.Skin;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

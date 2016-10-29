@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import com.liangmayong.base.presenter.Presenter;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
-import com.liangmayong.skin.OnSkinRefreshListener;
+import com.liangmayong.base.widget.skin.OnSkinRefreshListener;
 
 /**
  * Created by LiangMaYong on 2016/9/14.
