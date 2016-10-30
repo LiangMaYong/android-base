@@ -155,7 +155,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
      * @return true or false
      */
     protected boolean isThinStatusBar() {
-        return true;
+        return false;
     }
 
     /**

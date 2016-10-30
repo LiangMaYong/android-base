@@ -82,7 +82,6 @@ public class SkinLinearLayout extends LinearLayout implements SkinInterface {
     }
 
     protected void initBG(final Context context, final AttributeSet attrs) {
-        if (isInEditMode()) return;
         int color = 0xff333333;
         mPressedColor = 0xff333333;
         if (attrs != null) {
@@ -127,13 +126,15 @@ public class SkinLinearLayout extends LinearLayout implements SkinInterface {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
+        if (isInEditMode()) return;
         com.liangmayong.base.widget.skin.Skin.registerSkinRefresh(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
-        com.liangmayong.base.widget.skin.Skin.unregisterSkinRefresh(this);
         super.onDetachedFromWindow();
+        if (isInEditMode()) return;
+        com.liangmayong.base.widget.skin.Skin.unregisterSkinRefresh(this);
     }
 
     @Override
