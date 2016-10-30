@@ -13,6 +13,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 public class EntryList extends JPanel {
@@ -45,6 +47,7 @@ public class EntryList extends JPanel {
         }
 
         setPreferredSize(new Dimension(740, 360));
+        setMaximumSize(new Dimension(800, 800));
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         addInjections();
@@ -106,19 +109,24 @@ public class EntryList extends JPanel {
             mEntries.add(entry);
         }
         injectionsPanel.add(Box.createVerticalGlue());
-        injectionsPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        if (mElements.size() < 10) {
+            int count = 10 - mElements.size();
+            injectionsPanel.add(Box.createRigidArea(new Dimension(0, count * 20)));
+        } else {
+            injectionsPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        }
         return new JBScrollPane(injectionsPanel);
     }
 
     private void addButtons() {
-
-        // Bind
+        // Annotation
         mBindCheck = new JCheckBox();
         mBindCheck.setPreferredSize(new Dimension(32, 26));
         mBindCheck.setSelected(true);
         mBindCheck.addChangeListener(new CheckBindListener());
         JLabel mBindLabel = new JLabel();
-        mBindLabel.setText("Use @Bind");
+        mBindLabel.setText("Use Annotation");
+        mBindLabel.addMouseListener(new ClickBindListener());
 
         // create viewholder
         mHolderCheck = new JCheckBox();
@@ -128,6 +136,7 @@ public class EntryList extends JPanel {
         mHolderCheck.addChangeListener(new CheckHolderListener());
         JLabel mHolderLabel = new JLabel();
         mHolderLabel.setText("Create ViewHolder");
+        mHolderLabel.addMouseListener(new ClickHolderListener());
 
         // check all
         mAllCheck = new JCheckBox();
@@ -137,6 +146,7 @@ public class EntryList extends JPanel {
 
         JLabel mAllLabel = new JLabel();
         mAllLabel.setText("Check All");
+        mAllLabel.addMouseListener(new ClickAllListener());
 
         JPanel holderPanel = new JPanel();
         holderPanel.setLayout(new BoxLayout(holderPanel, BoxLayout.LINE_AXIS));
@@ -178,7 +188,6 @@ public class EntryList extends JPanel {
 
     private void refresh() {
         revalidate();
-
         if (mConfirm != null) {
             mConfirm.setVisible(mElements.size() > 0);
         }
@@ -207,6 +216,38 @@ public class EntryList extends JPanel {
         }
     }
 
+    private class ClickHolderListener implements MouseListener {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (mHolderCheck.isSelected()) {
+                mHolderCheck.setSelected(false);
+            } else {
+                mHolderCheck.setSelected(true);
+            }
+            mCreateHolder = mHolderCheck.isSelected();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+    }
+
     private class CheckAllListener implements ChangeListener {
 
         public void stateChanged(ChangeEvent event) {
@@ -214,10 +255,74 @@ public class EntryList extends JPanel {
         }
     }
 
+    private class ClickAllListener implements MouseListener {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (mAllCheck.isSelected()) {
+                mAllCheck.setSelected(false);
+            } else {
+                mAllCheck.setSelected(true);
+            }
+            checkAll(mAllCheck.isSelected());
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+    }
+
     private class CheckBindListener implements ChangeListener {
 
         public void stateChanged(ChangeEvent event) {
             mBind = mBindCheck.isSelected();
+        }
+    }
+
+    private class ClickBindListener implements MouseListener {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (mBindCheck.isSelected()) {
+                mBindCheck.setSelected(false);
+            } else {
+                mBindCheck.setSelected(true);
+            }
+            mBind = mBindCheck.isSelected();
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
         }
     }
 

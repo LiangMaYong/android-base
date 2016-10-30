@@ -1,11 +1,11 @@
 package com.liangmayong.base.sub;
 
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.liangmayong.base.BaseFragment;
-import com.liangmayong.base.activitys.WebActivity;
 import com.liangmayong.base.fragments.DefualtWebFragment;
 import com.liangmayong.base.widget.iconfont.Icon;
 
@@ -102,6 +102,19 @@ public abstract class BaseSubFragment extends BaseFragment {
      * @param fragment fragment
      */
     public void open(BaseSubFragment fragment) {
+        if (getActivity() instanceof BaseSubActivity) {
+            ((BaseSubActivity) getActivity()).getSubManager().addFragment(fragment);
+        }
+    }
+
+    /**
+     * open
+     *
+     * @param fragment fragment
+     * @param extras   extras
+     */
+    public void open(BaseSubFragment fragment, Bundle extras) {
+        fragment.setArguments(extras);
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubManager().addFragment(fragment);
         }

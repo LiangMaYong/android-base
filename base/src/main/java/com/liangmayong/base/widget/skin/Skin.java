@@ -186,7 +186,6 @@ public class Skin {
     };
 
     private Skin() {
-        resetColorValue();
         initColorValue();
         IntentFilter filter = new IntentFilter();
         filter.addAction(getApplication().getPackageName() + SKIN_RECEIVER_ACTION);

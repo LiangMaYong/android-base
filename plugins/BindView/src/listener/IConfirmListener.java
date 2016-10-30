@@ -8,5 +8,5 @@ import java.util.ArrayList;
 
 public interface IConfirmListener {
 
-    void onConfirm(Project project, Editor editor, ArrayList<Element> elements, String mPrefix,boolean mBind, boolean mCreateHolder);
+    void onConfirm(Project project, Editor editor, ArrayList<Element> elements, String mPrefix, boolean mBind, boolean mCreateHolder);
 }

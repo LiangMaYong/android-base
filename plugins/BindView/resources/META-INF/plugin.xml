@@ -1,12 +1,11 @@
-<idea-plugin version="14">
-    <id>com.liangmayong.plugin.bindlayout</id>
-    <name>BindLayout</name>
+<idea-plugin version="2">
+    <id>com.liangmayong.android.base.plugin</id>
+    <name>BindView</name>
     <version>1.0</version>
     <vendor email="ibeam@qq.com" url="https://github.com/LiangMaYong/android-base">Github</vendor>
 
     <description><![CDATA[
     基于Android-Base项目自动生成布局注解<br/>
-    本插件基于LayoutCreator1.4源码修改
     ]]></description>
 
     <change-notes><![CDATA[
@@ -14,18 +13,25 @@
     ]]>
     </change-notes>
 
-    <idea-version since-build="103.0"/>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="141.0"/>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
     </extensions>
 
     <actions>
-        <action id="Base.LayoutCreator" class="action.LayoutCreatorAction" text="BindLayout"
+        <action id="Base.BindView" class="action.BindViewAction" text="BindView"
                 description="auto create bind layout code for Activity/Fragment/Adapter etc.">
             <add-to-group group-id="CodeMenu" anchor="last"/>
             <add-to-group group-id="GenerateGroup" anchor="last"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl SLASH"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl BACK_SLASH"/>
         </action>
     </actions>
 

@@ -30,7 +30,7 @@ public class EntryHeader extends JPanel {
 
         mVarNameType = new ButtonGroup();
         mType1 = new JRadioButtonMenuItem("aa_bb_cc");
-        mType1.setPreferredSize(new Dimension(70, 26));
+        mType1.setPreferredSize(new Dimension(120, 26));
         mType1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onTypeSelected.onTypeSelected(1);
@@ -40,7 +40,7 @@ public class EntryHeader extends JPanel {
         mVarNameType.add(mType1);
 
         mType2 = new JRadioButtonMenuItem("aaBbCc");
-        mType2.setPreferredSize(new Dimension(60, 26));
+        mType2.setPreferredSize(new Dimension(120, 26));
         mType2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onTypeSelected.onTypeSelected(2);
@@ -49,7 +49,7 @@ public class EntryHeader extends JPanel {
         mVarNameType.add(mType2);
 
         mType3 = new JRadioButtonMenuItem("mAaBbCc");
-        mType3.setPreferredSize(new Dimension(60, 26));
+        mType3.setPreferredSize(new Dimension(120, 26));
         mType3.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onTypeSelected.onTypeSelected(3);
@@ -58,6 +58,9 @@ public class EntryHeader extends JPanel {
         mVarNameType.add(mType3);
 
         setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+        setMaximumSize(new Dimension(Short.MAX_VALUE, 54));
+        setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        add(Box.createHorizontalGlue());
         add(Box.createRigidArea(new Dimension(52, 0)));
         add(mType);
         add(Box.createRigidArea(new Dimension(12, 0)));
@@ -68,7 +71,6 @@ public class EntryHeader extends JPanel {
         add(mType1);
         add(mType2);
         add(mType3);
-        add(Box.createHorizontalGlue());
     }
 
     public interface OnTypeSelected {

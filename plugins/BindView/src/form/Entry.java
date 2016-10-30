@@ -1,7 +1,6 @@
 package form;
 
 
-
 import entity.Element;
 
 import javax.swing.*;
@@ -10,7 +9,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.ArrayList;
 
 public class Entry extends JPanel {
 
@@ -68,6 +66,7 @@ public class Entry extends JPanel {
         add(Box.createHorizontalGlue());
 
         checkState();
+        setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
     }
 
     public Element syncElement() {

@@ -1,5 +1,6 @@
 package com.liangmayong.android_base;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
@@ -7,8 +8,8 @@ import android.view.View;
 import com.liangmayong.base.sub.BaseSubListFragment;
 import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.viewbinding.annotations.BindTitle;
-import com.liangmayong.base.widget.superlistview.SuperListView;
 import com.liangmayong.base.widget.skin.Skin;
+import com.liangmayong.base.widget.superlistview.SuperListView;
 
 /**
  * Created by LiangMaYong on 2016/10/17.
@@ -30,11 +31,13 @@ public class SubFrag extends BaseSubListFragment {
             }
         });
         for (int i = 0; i < 500; i++) {
-            ViewItem item = new ViewItem("Item" + (i + 1));
+            final ViewItem item = new ViewItem("Item" + (i + 1));
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    open(new ItemFrag());
+                    Bundle extras = new Bundle();
+                    extras.putString("title", item.getData());
+                    open(new ItemFrag(), extras);
                 }
             });
             listView.getPool().add(item);

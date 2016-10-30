@@ -16,23 +16,23 @@ import form.EntryList;
 import listener.ICancelListener;
 import listener.IConfirmListener;
 import utils.Definitions;
-import utils.LayoutCreator;
+import utils.BindView;
 import utils.Utils;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
-public class LayoutCreatorAction extends BaseGenerateAction implements IConfirmListener, ICancelListener {
+public class BindViewAction extends BaseGenerateAction implements IConfirmListener, ICancelListener {
 
     protected JFrame mDialog;
 
     @SuppressWarnings("unused")
-    public LayoutCreatorAction() {
+    public BindViewAction() {
         super(null);
     }
 
     @SuppressWarnings("unused")
-    public LayoutCreatorAction(CodeInsightActionHandler handler) {
+    public BindViewAction(CodeInsightActionHandler handler) {
         super(handler);
     }
 
@@ -83,7 +83,7 @@ public class LayoutCreatorAction extends BaseGenerateAction implements IConfirmL
             if (layout == null) {
                 return;
             }
-            new LayoutCreator(file, getTargetClass(editor, file), "Generate Injections", elements, layout.getName(), fieldNamePrefix, mBind, createHolder).execute();
+            new BindView(file, getTargetClass(editor, file), "Generate Injections", elements, layout.getName(), fieldNamePrefix, mBind, createHolder).execute();
 
             if (cnt == 1) {
                 Utils.showInfoNotification(project, "One injection added to " + file.getName());
@@ -124,6 +124,7 @@ public class LayoutCreatorAction extends BaseGenerateAction implements IConfirmL
         EntryList panel = new EntryList(project, editor, elements, createHolder, this, this);
 
         mDialog = new JFrame();
+        mDialog.setTitle("BindView");
         mDialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         mDialog.getRootPane().setDefaultButton(panel.getConfirmButton());
         mDialog.getContentPane().add(panel);
