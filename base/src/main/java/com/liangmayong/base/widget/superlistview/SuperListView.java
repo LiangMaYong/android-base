@@ -743,6 +743,9 @@ public class SuperListView extends RelativeLayout {
 
     }
 
+    /**
+     * Pool
+     */
     public static class Pool {
         // items
         private final List<Item> items = new ArrayList<Item>();
@@ -874,6 +877,15 @@ public class SuperListView extends RelativeLayout {
 
 
         /**
+         * insertList
+         *
+         * @param items items
+         */
+        public void addAll(List<Item> items) {
+            items.addAll(items);
+        }
+
+        /**
          * remove
          *
          * @param item item
@@ -882,15 +894,6 @@ public class SuperListView extends RelativeLayout {
             if (items.contains(item)) {
                 items.remove(item);
             }
-        }
-
-        /**
-         * insertList
-         *
-         * @param items items
-         */
-        public void addAll(List<Item> items) {
-            items.addAll(items);
         }
 
         /**
