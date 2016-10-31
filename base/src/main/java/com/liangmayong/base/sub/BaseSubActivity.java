@@ -42,7 +42,7 @@ public abstract class BaseSubActivity extends BaseActivity {
         BaseSubFragment fragment = generateSubFragment();
         if (fragment != null) {
             mSubManager = new BaseSubFragmentManager(this, generateFragmentId(), fragment);
-            mSubManager.setAnim(R.anim.base_anim_next_in, R.anim.base_anim_next_out, R.anim.base_anim_quit_in, R.anim.base_anim_quit_out);
+            // mSubManager.setAnim(R.anim.base_anim_next_in, R.anim.base_anim_next_out, R.anim.base_anim_quit_in, R.anim.base_anim_quit_out);
         } else {
             throw new IllegalArgumentException("generateSubFragment return can't is NULL");
         }

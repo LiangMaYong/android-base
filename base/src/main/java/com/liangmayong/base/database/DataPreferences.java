@@ -77,6 +77,15 @@ public class DataPreferences {
     }
 
     /**
+     * clear
+     *
+     * @return count
+     */
+    public int clear() {
+        return mPreferencesTable.deleteAll();
+    }
+
+    /**
      * set
      *
      * @param skey   skey

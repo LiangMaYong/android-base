@@ -518,6 +518,7 @@ public class SuperListView extends RelativeLayout {
      * initView
      */
     private void initView() {
+        if (isInEditMode()) return;
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         //insert contentLayout
         contentLayout = new LinearLayout(getContext());
