@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
+import com.liangmayong.base.utils.Md5Utils;
 import com.liangmayong.base.viewbinding.ViewBinding;
 
 import java.util.ArrayList;
@@ -797,11 +798,29 @@ public class SuperListView extends RelativeLayout {
          * @param position position
          * @return Item
          */
-        public Item<?> get(int position) {
+        public Item<?> getItem(int position) {
             if (items == null) {
                 return null;
             }
             return items.get(position);
+        }
+
+        /**
+         * getByItemIype
+         *
+         * @param type type
+         * @return Item
+         */
+        public Item<?> getItemByIype(int type) {
+            if (items == null) {
+                return null;
+            }
+            for (int i = 0; i < items.size(); i++) {
+                if (items.get(i).getItemType() == type) {
+                    return items.get(i);
+                }
+            }
+            return null;
         }
 
         /**
@@ -875,16 +894,6 @@ public class SuperListView extends RelativeLayout {
         }
 
         /**
-         * getItems
-         *
-         * @return items
-         */
-        public List<Item> getItems() {
-            return items;
-        }
-
-
-        /**
          * getItemCount
          *
          * @return count
@@ -917,10 +926,8 @@ public class SuperListView extends RelativeLayout {
         }
 
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
-            Item item = pool.get(position);
-            item.setPosition(position);
-            item.setPool(pool);
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int itemType) {
+            Item item = pool.getItemByIype(itemType);
             if (item != null) {
                 return item.proxyNewView(parent);
             }
@@ -929,7 +936,7 @@ public class SuperListView extends RelativeLayout {
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            Item item = pool.get(position);
+            Item item = pool.getItem(position);
             item.setPosition(position);
             item.setPool(pool);
             if (item != null) {
@@ -944,7 +951,7 @@ public class SuperListView extends RelativeLayout {
 
         @Override
         public int getItemViewType(int position) {
-            return position;
+            return pool.getItem(position).getItemType();
         }
 
         public void proxyNotifyDataSetChanged() {
@@ -977,6 +984,8 @@ public class SuperListView extends RelativeLayout {
         private Data data;
         //position
         private int position = 0;
+        //itemType
+        private int itemType = 0;
         //pool
         private Pool pool = null;
         //clickListener
@@ -1060,6 +1069,29 @@ public class SuperListView extends RelativeLayout {
          */
         protected abstract void bindView(View itemView, Data data);
 
+
+        /**
+         * getItemType
+         *
+         * @return get type
+         */
+        public int getItemType() {
+            if (itemType == 0) {
+                String string = getClass().getName();
+                String md5 = Md5Utils.encrypt(string);
+                String hex1 = md5.substring(0, 2) + md5.substring(10, 12) + md5.substring(20, 22) + md5.substring(30, 32);
+                String hex2 = md5.substring(2, 4) + md5.substring(12, 14) + md5.substring(22, 24);
+                String hex3 = md5.substring(4, 6) + md5.substring(14, 16) + md5.substring(24, 26);
+                String hex4 = md5.substring(6, 8) + md5.substring(16, 18) + md5.substring(26, 28);
+                String hex5 = md5.substring(8, 10) + md5.substring(18, 20) + md5.substring(28, 30);
+                long type = Long.parseLong(hex1, 16) + Long.parseLong(hex2, 16) + Long.parseLong(hex3, 16) + Long.parseLong(hex4, 16) + Long.parseLong(hex5, 16);
+                while (type > Integer.MAX_VALUE) {
+                    type = type / 2;
+                }
+                itemType = (int) type;
+            }
+            return itemType;
+        }
 
         /**
          * getData
