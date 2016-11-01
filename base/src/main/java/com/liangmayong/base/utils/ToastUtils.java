@@ -75,6 +75,15 @@ public class ToastUtils {
     }
 
     /**
+     * showToast
+     *
+     * @param stringId stringId
+     */
+    public static void showToast(int stringId) {
+        showToast(getApplication().getString(stringId), 1500);
+    }
+
+    /**
      * show toast
      *
      * @param text     text

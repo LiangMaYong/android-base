@@ -69,7 +69,7 @@ public class Skin {
         }
     }
 
-    private static final String SKIN_RECEIVER_ACTION = ".android_skin_refresh_action";
+    private static final String SKIN_RECEIVER_ACTION = ".android_base_skin_refresh_action";
     private static volatile Skin skin = null;
     private static volatile Editor editor = null;
     private static final List<OnSkinRefreshListener> SKIN_REFRESH_LISTENERS = new ArrayList<OnSkinRefreshListener>();

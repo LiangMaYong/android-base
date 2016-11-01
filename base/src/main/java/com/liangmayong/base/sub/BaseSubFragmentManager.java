@@ -20,9 +20,6 @@ public class BaseSubFragmentManager {
     private final FragmentActivity mActivity;
     private BaseSubFragment mCurrentFragment = null;
     private LinkedList<BaseSubFragment> mFragments = new LinkedList<BaseSubFragment>();
-    private int nextIn;
-    private int nextOut;
-    private Animation quit_In, quit_Out;
     @IdRes
     private final int id;
 
@@ -59,7 +56,7 @@ public class BaseSubFragmentManager {
         }
         boolean flag = mCurrentFragment.onBackPressed();
         if (!flag) {
-            closeFragment(mCurrentFragment);
+            closeFragment(mCurrentFragment, 0, 0);
         }
     }
 
@@ -84,13 +81,13 @@ public class BaseSubFragmentManager {
      *
      * @param mTargetFragment next fragment
      */
-    public void addFragment(BaseSubFragment mTargetFragment) {
+    public void addFragment(BaseSubFragment mTargetFragment, int enterAnim, int exitAnim) {
         if (mLock) {
             return;
         }
         FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
-        if (nextIn != 0 && nextOut != 0) {
-            transaction.setCustomAnimations(nextIn, nextOut);
+        if (enterAnim != 0 && exitAnim != 0) {
+            transaction.setCustomAnimations(enterAnim, exitAnim);
         }
         transaction.add(id, mTargetFragment, mTargetFragment.getClass().getName()).hide(mCurrentFragment).commit();
         mCurrentFragment = mTargetFragment;
@@ -102,7 +99,7 @@ public class BaseSubFragmentManager {
      *
      * @param mTargetFragment fragment
      */
-    public void closeFragment(final BaseSubFragment mTargetFragment) {
+    public void closeFragment(final BaseSubFragment mTargetFragment, int popEnter, int popExit) {
         if (mLock) {
             return;
         }
@@ -119,40 +116,19 @@ public class BaseSubFragmentManager {
                 mCurrentFragment = mFragments.get(mFragments.size() - 1);
                 transaction.show(mCurrentFragment).commit();
                 View fromVie = mTargetFragment.getView();
-                if (fromVie != null && quit_Out != null) {
-                    fromVie.startAnimation(quit_Out);
-                    quit_Out.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
-                            transaction.remove(mTargetFragment).commit();
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                } else {
-                    mActivity.getSupportFragmentManager().beginTransaction().remove(mTargetFragment).commit();
-                }
-                if (mCurrentFragment != null) {
-                    View toView = mCurrentFragment.getView();
-                    if (toView != null && quit_In != null) {
-                        toView.startAnimation(quit_In);
-                        quit_In.setAnimationListener(new Animation.AnimationListener() {
+                if (popExit != 0 && popEnter != 0) {
+                    Animation quit_Out = AnimationUtils.loadAnimation(mActivity, popExit);
+                    if (fromVie != null && quit_Out != null) {
+                        fromVie.startAnimation(quit_Out);
+                        quit_Out.setAnimationListener(new Animation.AnimationListener() {
                             @Override
                             public void onAnimationStart(Animation animation) {
-                                mLock = true;
                             }
 
                             @Override
                             public void onAnimationEnd(Animation animation) {
-                                mLock = false;
+                                FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
+                                transaction.remove(mTargetFragment).commit();
                             }
 
                             @Override
@@ -161,27 +137,38 @@ public class BaseSubFragmentManager {
                             }
                         });
                     }
+                } else {
+                    mActivity.getSupportFragmentManager().beginTransaction().remove(mTargetFragment).commit();
+                }
+                if (mCurrentFragment != null) {
+                    View toView = mCurrentFragment.getView();
+                    if (popEnter != 0 && popExit != 0) {
+                        Animation quit_In = AnimationUtils.loadAnimation(mActivity, popEnter);
+                        if (toView != null && quit_In != null) {
+                            toView.startAnimation(quit_In);
+                            quit_In.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+                                    mLock = true;
+                                }
+
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    mLock = false;
+                                }
+
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+
+                                }
+                            });
+                        }
+                    }
                 }
             } else {
                 transaction.remove(mTargetFragment).commit();
             }
         }
-    }
-
-
-    /**
-     * Set page switch animation
-     *
-     * @param nextIn  The next page to enter the animation
-     * @param nextOut The next page out of the animation
-     * @param quitIn  The current page into the animation
-     * @param quitOut Exit animation for the current page
-     */
-    public void setAnim(int nextIn, int nextOut, int quitIn, int quitOut) {
-        this.nextIn = nextIn;
-        this.nextOut = nextOut;
-        quit_In = AnimationUtils.loadAnimation(mActivity, quitIn);
-        quit_Out = AnimationUtils.loadAnimation(mActivity, quitOut);
     }
 
     /**

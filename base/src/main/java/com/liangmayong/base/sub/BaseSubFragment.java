@@ -37,6 +37,12 @@ public abstract class BaseSubFragment extends BaseFragment {
 
     protected abstract void initSubView(View rootView);
 
+
+    @Override
+    public BaseSubFragment initArguments(Bundle extras) {
+        return (BaseSubFragment) super.initArguments(extras);
+    }
+
     @Override
     protected void createView() {
         super.createView();
@@ -89,12 +95,26 @@ public abstract class BaseSubFragment extends BaseFragment {
      * finish
      */
     public void finish() {
+        hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
-            ((BaseSubActivity) getActivity()).getSubManager().closeFragment(this);
+            ((BaseSubActivity) getActivity()).getSubManager().closeFragment(this, 0, 0);
         } else {
             getActivity().finish();
         }
     }
+
+    /**
+     * finish
+     */
+    public void finish(int popEnter, int popExit) {
+        hideSoftKeyBoard();
+        if (getActivity() instanceof BaseSubActivity) {
+            ((BaseSubActivity) getActivity()).getSubManager().closeFragment(this, popEnter, popExit);
+        } else {
+            getActivity().finish();
+        }
+    }
+
 
     /**
      * open
@@ -102,8 +122,9 @@ public abstract class BaseSubFragment extends BaseFragment {
      * @param fragment fragment
      */
     public void open(BaseSubFragment fragment) {
+        hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
-            ((BaseSubActivity) getActivity()).getSubManager().addFragment(fragment);
+            ((BaseSubActivity) getActivity()).getSubManager().addFragment(fragment, 0, 0);
         }
     }
 
@@ -111,12 +132,11 @@ public abstract class BaseSubFragment extends BaseFragment {
      * open
      *
      * @param fragment fragment
-     * @param extras   extras
      */
-    public void open(BaseSubFragment fragment, Bundle extras) {
-        fragment.setArguments(extras);
+    public void open(BaseSubFragment fragment, int enterAnim, int exitAnim) {
+        hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
-            ((BaseSubActivity) getActivity()).getSubManager().addFragment(fragment);
+            ((BaseSubActivity) getActivity()).getSubManager().addFragment(fragment, enterAnim, exitAnim);
         }
     }
 
@@ -127,7 +147,7 @@ public abstract class BaseSubFragment extends BaseFragment {
      */
     public void close(BaseSubFragment fragment) {
         if (getActivity() instanceof BaseSubActivity) {
-            ((BaseSubActivity) getActivity()).getSubManager().closeFragment(fragment);
+            ((BaseSubActivity) getActivity()).getSubManager().closeFragment(fragment, 0, 0);
         }
     }
 

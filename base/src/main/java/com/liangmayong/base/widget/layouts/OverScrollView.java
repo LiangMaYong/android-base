@@ -29,8 +29,8 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
 
     static final int ANIMATED_SCROLL_GAP = 250;
 
-    static final float MAX_SCROLL_FACTOR = 0.5f;
-    static final float OVERSHOOT_TENSION = 0.75f;
+    static final float MAX_SCROLL_FACTOR = 0.2f;
+    static final float OVERSHOOT_TENSION = 1.4f;
 
     private long mLastScroll;
 
@@ -49,6 +49,10 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
     DisplayMetrics metrics;
     LayoutInflater inflater;
     protected View child;
+    private int oldPaddingL = 0;
+    private int oldPaddingT = 0;
+    private int oldPaddingR = 0;
+    private int oldPaddingB = 0;
 
     private Runnable overScrollerSpringbackTask;
 
@@ -183,8 +187,11 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
 
     public void initChildPointer() {
         child = getChildAt(0);
-        child.setPadding(0, 1500, 0, 1500);
-
+        oldPaddingL = child.getPaddingLeft() - oldPaddingL;
+        oldPaddingR = child.getPaddingRight() - oldPaddingR;
+        oldPaddingT = child.getPaddingTop() - oldPaddingT;
+        oldPaddingB = child.getPaddingBottom() - oldPaddingB;
+        child.setPadding(oldPaddingL, 1500 + oldPaddingT, oldPaddingR, 1500 + oldPaddingB);
     }
 
     @Override
@@ -240,7 +247,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
         post(new Runnable() {
             @Override
             public void run() {
-                scrollTo(0, child.getPaddingTop());
+                scrollTo(0, child.getPaddingTop() - oldPaddingT);
             }
         });
     }
@@ -449,14 +456,14 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
 
         switch (action & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_MOVE: {
-			/*
-			 * mIsBeingDragged == false, otherwise the shortcut would have
+            /*
+             * mIsBeingDragged == false, otherwise the shortcut would have
 			 * caught it. Check whether the user has moved far enough from his
 			 * original down touch.
 			 */
 
 			/*
-			 * Locally do absolute value. mLastMotionY is set to the y value of
+             * Locally do absolute value. mLastMotionY is set to the y value of
 			 * the down event.
 			 */
                 final int activePointerId = mActivePointerId;
@@ -484,14 +491,14 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
                 }
 
 			/*
-			 * Remember location of down touch. ACTION_DOWN always refers to
+             * Remember location of down touch. ACTION_DOWN always refers to
 			 * pointer index 0.
 			 */
                 mLastMotionY = y;
                 mActivePointerId = ev.getPointerId(0);
 
 			/*
-			 * If being flinged and user touches the screen, initiate drag;
+             * If being flinged and user touches the screen, initiate drag;
 			 * otherwise don't. mScroller.isFinished should be false when being
 			 * flinged.
 			 */
@@ -501,7 +508,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
 
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
-			/* Release the drag */
+            /* Release the drag */
                 mIsBeingDragged = false;
                 mActivePointerId = INVALID_POINTER;
                 break;
@@ -511,7 +518,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
         }
 
 		/*
-		 * The only time we want to intercept motion events is if we are in the
+         * The only time we want to intercept motion events is if we are in the
 		 * drag mode.
 		 */
         return mIsBeingDragged;
@@ -542,7 +549,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
                 }
 
 			/*
-			 * If being flinged and user touches, stop the fling. isFinished
+             * If being flinged and user touches, stop the fling. isFinished
 			 * will be false if being flinged.
 			 */
                 if (!mScroller.isFinished()) {
@@ -608,7 +615,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
     }
 
     public boolean isOverScrolled() {
-        return (getScrollY() < child.getPaddingTop() || getScrollY() > child.getBottom() - child.getPaddingBottom()
+        return (getScrollY() < child.getPaddingTop() - oldPaddingT || getScrollY() > child.getBottom() - child.getPaddingBottom() - oldPaddingB
                 - getHeight());
     }
 
@@ -618,7 +625,6 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
         if (pointerId == mActivePointerId) {
             // This was our active pointer going up. Choose a new
             // active pointer and adjust accordingly.
-            // TODO: Make this decision more intelligent.
             final int newPointerIndex = pointerIndex == 0 ? 1 : 0;
             mLastMotionY = ev.getY(newPointerIndex);
             mActivePointerId = ev.getPointerId(newPointerIndex);
@@ -646,8 +652,8 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
      * found
      */
     private View findFocusableViewInMyBounds(final boolean topFocus, final int top, View preferredFocusable) {
-		/*
-		 * The fading edge's transparent side should be considered for focus
+        /*
+         * The fading edge's transparent side should be considered for focus
 		 * since it's mostly visible, so we divide the actual fading edge length
 		 * by 2.
 		 */
@@ -982,11 +988,11 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
     }
 
     public final void smoothScrollToTop() {
-        smoothScrollTo(0, child.getPaddingTop());
+        smoothScrollTo(0, child.getPaddingTop() - oldPaddingT);
     }
 
     public final void smoothScrollToBottom() {
-        smoothScrollTo(0, child.getHeight() - child.getPaddingTop() - getHeight());
+        smoothScrollTo(0, child.getHeight() - child.getPaddingTop() - oldPaddingT - getHeight());
     }
 
     /**
@@ -1288,7 +1294,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
         post(new Runnable() {
             @Override
             public void run() {
-                scrollTo(0, child.getPaddingTop());
+                scrollTo(0, child.getPaddingTop() - oldPaddingT);
             }
         });
     }
@@ -1316,8 +1322,8 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
     protected void onScrollChanged(int leftOfVisibleView, int topOfVisibleView, int oldLeftOfVisibleView,
                                    int oldTopOfVisibleView) {
         int displayHeight = getHeight();
-        int paddingTop = child.getPaddingTop();
-        int contentBottom = child.getHeight() - child.getPaddingBottom();
+        int paddingTop = child.getPaddingTop() - oldPaddingT;
+        int contentBottom = child.getHeight() - child.getPaddingBottom() - oldPaddingB;
 
         if (isInFlingMode) {
 
@@ -1444,9 +1450,9 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
         // The height of scroll view, in pixels
         int displayHeight = getHeight();
         // The top of content view, in pixels.
-        int contentTop = child.getPaddingTop();
+        int contentTop = child.getPaddingTop() - oldPaddingT;
         // The top of content view, in pixels.
-        int contentBottom = child.getHeight() - child.getPaddingBottom();
+        int contentBottom = child.getHeight() - child.getPaddingBottom() - oldPaddingB;
         // The scrolled top position of scroll view, in pixels.
         int currScrollY = getScrollY();
 
@@ -1459,7 +1465,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
             scrollBy = contentTop - currScrollY;
         } else if (currScrollY + displayHeight > contentBottom) {
             // Scroll to content top
-            if (child.getHeight() - child.getPaddingTop() - child.getPaddingBottom() < displayHeight) {
+            if (child.getHeight() - child.getPaddingTop() - oldPaddingT - child.getPaddingBottom() - oldPaddingB < displayHeight) {
 
                 scrollBy = contentTop - currScrollY;
             }

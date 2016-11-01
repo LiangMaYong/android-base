@@ -6,13 +6,81 @@
 
     <include layout="@layout/base_defualt_toolbar" />
 
-    <TextView
-        android:id="@+id/ll_name"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Item"
-        android:textColor="#919191"
-        android:textSize="30sp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <com.liangmayong.base.widget.layouts.OverScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Title"
+                    android:textColor="#313131"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#eeeeee" />
+
+
+                <TextView
+                    android:id="@+id/et_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="50dp"
+                    android:text="\n
+梦游天姥吟留别 / 别东鲁诸公\n
+\n
+【作者】李白 【朝代】唐代\n
+海客谈瀛洲，烟涛微茫信难求；\n
+越人语天姥，云霞明灭或可睹。\n
+天姥连天向天横，势拔五岳掩赤城。\n
+天台四万八千丈，对此欲倒东南倾。\n
+我欲因之梦吴越，一夜飞度镜湖月。\n
+湖月照我影，送我至剡溪。\n
+谢公宿处今尚在，渌水荡漾清猿啼。\n
+脚著谢公屐，身登青云梯。\n
+半壁见海日，空中闻天鸡。\n
+千岩万转路不定，迷花倚石忽已暝。\n
+熊咆龙吟殷岩泉，栗深林兮惊层巅。\n
+云青青兮欲雨，水澹澹兮生烟。\n
+列缺霹雳，丘峦崩摧。\n
+洞天石扉，訇然中开。\n
+青冥浩荡不见底，日月照耀金银台。\n
+霓为衣兮风为马，云之君兮纷纷而来下。\n
+虎鼓瑟兮鸾回车，仙之人兮列如麻。\n
+忽魂悸以魄动，恍惊起而长嗟。\n
+惟觉时之枕席，失向来之烟霞。\n
+世间行乐亦如此，古来万事东流水。\n
+别君去兮何时还？且放白鹿青崖间。须行即骑访名山。\n
+安能摧眉折腰事权贵，使我不得开心颜!"
+                    android:textColor="#313131"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </com.liangmayong.base.widget.layouts.OverScrollView>
+    </LinearLayout>
+
+    <com.liangmayong.base.widget.skin.SkinButton
+        android:id="@+id/btn_test"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="10dp"
+        android:text="百度" />
 
 </LinearLayout>

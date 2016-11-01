@@ -1,11 +1,11 @@
-package com.liangmayong.android_base;
+package com.liangmayong.android_base.demo;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.liangmayong.base.sub.BaseSubListFragment;
+import com.liangmayong.base.utils.BundleBuider;
 import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.viewbinding.annotations.BindTitle;
 import com.liangmayong.base.widget.skin.Skin;
@@ -14,8 +14,8 @@ import com.liangmayong.base.widget.superlistview.SuperListView;
 /**
  * Created by LiangMaYong on 2016/10/17.
  */
-@BindTitle("TestSub")
-public class SubFrag extends BaseSubListFragment {
+@BindTitle("AndroidBase")
+public class DemoListFrag extends BaseSubListFragment {
 
     // colors
     private int[] colors = {0xff333333, 0xff663366, 0xff3399ff, 0xffff6858, 0xfffcb815};
@@ -24,23 +24,19 @@ public class SubFrag extends BaseSubListFragment {
 
     @Override
     protected void initListView(SuperListView listView, SwipeRefreshLayout refreshLayout) {
-        getDefualtToolbar().rightOne().text("Github").clicked(new View.OnClickListener() {
+        getDefualtToolbar().rightOne().text("Blog").clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goTo("Github · LiangMaYong", "https://github.com/LiangMaYong/android-base");
+                goTo("LiangMaYong", "https://www.baidu.com");
             }
         });
         for (int i = 0; i < 500; i++) {
-            final ViewItem item = new ViewItem("Item" + (i + 1));
-            item.setOnClickListener(new View.OnClickListener() {
+            listView.getPool().add(new DemoItemView("Item" + (i + 1)).setOnItemClickListener(new SuperListView.OnItemClickListener<String>() {
                 @Override
-                public void onClick(View v) {
-                    Bundle extras = new Bundle();
-                    extras.putString("title", item.getData());
-                    open(new ItemFrag(), extras);
+                public void onClick(SuperListView.Item<String> item, int position, View itemView) {
+                    open(new DemoContentFragment().initArguments(new BundleBuider().put("title", item.getData()).buider()));
                 }
-            });
-            listView.getPool().add(item);
+            }));
         }
         listView.getPool().notifyDataSetChanged();
         listView.setDecorationSize(DimenUtils.dip2px(getActivity(), 2));
@@ -62,4 +58,5 @@ public class SubFrag extends BaseSubListFragment {
             }
         });
     }
+
 }

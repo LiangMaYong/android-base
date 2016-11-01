@@ -13,7 +13,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_marginRight="@dimen/base_toolbar_height"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/base_toolbar_height">
 
             <com.liangmayong.base.widget.iconfont.IconView
                 android:id="@+id/default_toolbar_left_one"
@@ -85,7 +87,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:orientation="horizontal">
+            android:layout_marginLeft="@dimen/base_toolbar_height"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/base_toolbar_height">
 
             <com.liangmayong.base.widget.iconfont.IconView
                 android:id="@+id/default_toolbar_right_four"
@@ -162,7 +166,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/base_toolbar_height"
+            android:paddingRight="@dimen/base_toolbar_height">
 
             <TextView
                 android:id="@+id/default_toolbar_title"
@@ -189,7 +195,6 @@
                 android:lines="1"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text=""
                 android:textColor="@color/base_toolbar_item_text_color"
                 android:textSize="@dimen/base_toolbar_subtitle_size"
                 android:visibility="gone" />

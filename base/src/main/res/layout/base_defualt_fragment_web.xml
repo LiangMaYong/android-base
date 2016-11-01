@@ -9,7 +9,5 @@
     <com.liangmayong.base.widget.layouts.SwipeLayout
         android:id="@+id/base_swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </com.liangmayong.base.widget.layouts.SwipeLayout>
+        android:layout_height="match_parent" />
 </LinearLayout>

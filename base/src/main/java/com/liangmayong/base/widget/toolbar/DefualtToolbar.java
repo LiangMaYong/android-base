@@ -3,6 +3,7 @@ package com.liangmayong.base.widget.toolbar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -32,16 +33,18 @@ public class DefualtToolbar {
         @Override
         public void onRefreshSkin(Skin skin) {
             if (toolbar_layout != null) {
-                leftOne().getIconView().setTextColor(skin.getTextColor(skinType));
-                leftTwo().getIconView().setTextColor(skin.getTextColor(skinType));
-                leftThree().getIconView().setTextColor(skin.getTextColor(skinType));
-                leftFour().getIconView().setTextColor(skin.getTextColor(skinType));
-                rightOne().getIconView().setTextColor(skin.getTextColor(skinType));
-                rightTwo().getIconView().setTextColor(skin.getTextColor(skinType));
-                rightThree().getIconView().setTextColor(skin.getTextColor(skinType));
-                rightFour().getIconView().setTextColor(skin.getTextColor(skinType));
-                toolbar_title.setTextColor(skin.getTextColor(skinType));
-                toolbar_subtitle.setTextColor(skin.getTextColor(skinType));
+                int textColor = skin.getTextColor(skinType);
+                int textPreColor = Color.argb(Color.alpha(textColor), Math.abs(Color.red(textColor) - 0x15), Math.abs(Color.green(textColor) - 0x15), Math.abs(Color.blue(textColor) - 0x15));
+                leftOne().getIconView().setTextColor(textColor, textPreColor);
+                leftTwo().getIconView().setTextColor(textColor, textPreColor);
+                leftThree().getIconView().setTextColor(textColor, textPreColor);
+                leftFour().getIconView().setTextColor(textColor, textPreColor);
+                rightOne().getIconView().setTextColor(textColor, textPreColor);
+                rightTwo().getIconView().setTextColor(textColor, textPreColor);
+                rightThree().getIconView().setTextColor(textColor, textPreColor);
+                rightFour().getIconView().setTextColor(textColor, textPreColor);
+                toolbar_title.setTextColor(textColor);
+                toolbar_subtitle.setTextColor(textColor);
             }
         }
     };

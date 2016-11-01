@@ -26,14 +26,26 @@ public class PermissionUtils {
 
 
     /**
-     * requestCameraPermissions
+     * cameraPermissions
      *
      * @param activity activity
      * @param id       id
      * @param listener listener
      */
-    public static void requestCameraPermissions(Activity activity, int id, OnPermissionListener listener) {
+    public static void cameraPermissions(Activity activity, int id, OnPermissionListener listener) {
         String[] permissionsNeeded = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+        requestPermissions(activity, id, permissionsNeeded, listener);
+    }
+
+    /**
+     * locationPermissions
+     *
+     * @param activity activity
+     * @param id       id
+     * @param listener listener
+     */
+    public static void locationPermissions(Activity activity, int id, OnPermissionListener listener) {
+        String[] permissionsNeeded = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
         requestPermissions(activity, id, permissionsNeeded, listener);
     }
 
@@ -135,13 +147,13 @@ public class PermissionUtils {
     }
 
     /**
-     * handlePermissionsResult
+     * handleResult
      *
      * @param requestCode  requestCode
      * @param permissions  permissions
      * @param grantResults grantResults
      */
-    public static void handlePermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public static void handleResult(int requestCode, String[] permissions, int[] grantResults) {
         if (integerRequestMap.containsKey(requestCode)) {
             PermissionRequest request = integerRequestMap.get(requestCode);
             if (request.getPermissionListener() != null) {

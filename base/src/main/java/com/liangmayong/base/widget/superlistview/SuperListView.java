@@ -977,6 +977,25 @@ public class SuperListView extends RelativeLayout {
         }
     }
 
+
+    /**
+     * OnItemClickListener
+     *
+     * @param <Data> data type
+     */
+    public interface OnItemClickListener<Data> {
+        void onClick(Item<Data> item, int position, View itemView);
+    }
+
+    /**
+     * OnItemLongClickListener
+     *
+     * @param <Data> data type
+     */
+    public interface OnItemLongClickListener<Data> {
+        boolean onLongClick(Item<Data> item, int position, View itemView);
+    }
+
     /**
      * Item
      *
@@ -993,21 +1012,23 @@ public class SuperListView extends RelativeLayout {
         //pool
         private Pool pool = null;
         //clickListener
-        private OnClickListener clickListener;
+        private OnItemClickListener<Data> clickListener;
         //longClickListener
-        private OnLongClickListener longClickListener;
+        private OnItemLongClickListener<Data> longClickListener;
 
         /**
          * setOnClickListener
          *
          * @param clickListener clickListener
          */
-        public void setOnClickListener(OnClickListener clickListener) {
+        public Item<Data> setOnItemClickListener(OnItemClickListener<Data> clickListener) {
             this.clickListener = clickListener;
+            return this;
         }
 
-        public void setOnLongClickListener(OnLongClickListener longClickListener) {
+        public Item<Data> setOnItemLongClickListener(OnItemLongClickListener<Data> longClickListener) {
             this.longClickListener = longClickListener;
+            return this;
         }
 
         public Item(Data data) {
@@ -1117,10 +1138,20 @@ public class SuperListView extends RelativeLayout {
             if (itemView != null) {
                 ViewBinding.parserClassByView(this, itemView);
                 if (clickListener != null) {
-                    itemView.setOnClickListener(clickListener);
+                    itemView.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            clickListener.onClick(Item.this, getPosition(), v);
+                        }
+                    });
                 }
                 if (longClickListener != null) {
-                    itemView.setOnLongClickListener(longClickListener);
+                    itemView.setOnLongClickListener(new OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            return longClickListener.onLongClick(Item.this, getPosition(), v);
+                        }
+                    });
                 }
             }
             bindView(itemView, data);

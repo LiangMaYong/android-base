@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -28,9 +29,9 @@ import com.liangmayong.base.presenter.PresenterHolder;
 import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.viewbinding.ViewBinding;
 import com.liangmayong.base.viewbinding.interfaces.TitleBindInterface;
+import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.statusbar.StatusBarCompat;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
-import com.liangmayong.base.widget.skin.Skin;
 
 
 /**
@@ -110,6 +111,11 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
         ViewBinding.parserActivity(this);
         holder = PresenterBind.bind(this);
         Skin.registerSkinRefresh(this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -214,6 +220,12 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
         Skin.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        hideSoftKeyBoard();
     }
 
     @Override

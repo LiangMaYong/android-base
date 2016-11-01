@@ -20,10 +20,10 @@ import com.liangmayong.base.presenter.Presenter;
 import com.liangmayong.base.presenter.PresenterBind;
 import com.liangmayong.base.presenter.PresenterHolder;
 import com.liangmayong.base.utils.ToastUtils;
-import com.liangmayong.base.widget.toolbar.DefualtToolbar;
-import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.viewbinding.ViewBinding;
 import com.liangmayong.base.viewbinding.interfaces.TitleBindInterface;
+import com.liangmayong.base.widget.skin.Skin;
+import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 
 /**
  * Created by LiangMaYong on 2016/8/22.
@@ -42,6 +42,17 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     private String title = "";
     //inputManager
     private InputMethodManager inputManager = null;
+
+    /**
+     * extras
+     *
+     * @param extras extras
+     * @return
+     */
+    public BaseFragment initArguments(Bundle extras) {
+        setArguments(extras);
+        return this;
+    }
 
     /**
      * postDelayed

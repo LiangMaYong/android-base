@@ -7,7 +7,7 @@
 **/
 var AndroidJavascriptInjection = function() {
     this.init = function() {
-        //TODO:java
+        //TODO:javascript
     };
 };
 if(!AndroidJavascript){
