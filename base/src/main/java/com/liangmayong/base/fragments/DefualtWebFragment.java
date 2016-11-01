@@ -1,10 +1,14 @@
 package com.liangmayong.base.fragments;
 
 import android.annotation.SuppressLint;
+import android.view.View;
 
 import com.liangmayong.base.sub.BaseSubWebFragment;
+import com.liangmayong.base.sub.webkit.BaseWebWidget;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +24,40 @@ public class DefualtWebFragment extends BaseSubWebFragment {
 
     // HEADERS
     private static final Map<String, String> HEADERS = new HashMap<String, String>();
+    // HEADERS
+    private static final List<BaseWebWidget> WIDGETS = new ArrayList<BaseWebWidget>();
+
+    @Override
+    protected void initWebView(View rootView) {
+        super.initWebView(rootView);
+    }
+
+    /**
+     * setWebWidget
+     *
+     * @param scheme    scheme
+     * @param webWidget webWidget
+     */
+    public static void setWebWidget(String scheme, BaseWebWidget webWidget) {
+        removeWebWidget(scheme);
+        if (webWidget != null) {
+            webWidget.setSchemeName(scheme);
+            WIDGETS.add(webWidget);
+        }
+    }
+
+    /**
+     * removeWebWidget
+     *
+     * @param scheme scheme
+     */
+    public static void removeWebWidget(String scheme) {
+        for (int i = 0; i < WIDGETS.size(); i++) {
+            if (WIDGETS.get(i).getSchemeName().equals(scheme)) {
+                WIDGETS.remove(i);
+            }
+        }
+    }
 
     /**
      * addHeader
@@ -58,6 +96,11 @@ public class DefualtWebFragment extends BaseSubWebFragment {
     @Override
     protected Map<String, String> generateHeaders() {
         return HEADERS;
+    }
+
+    @Override
+    protected List<BaseWebWidget> generateWidgets() {
+        return WIDGETS;
     }
 
 }

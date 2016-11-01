@@ -80,14 +80,14 @@ public class DefualtToolbar {
     /**
      * gone
      */
-    private void gone() {
+    public void gone() {
         toolbar_layout.setVisibility(View.GONE);
     }
 
     /**
      * visible
      */
-    private void visible() {
+    public void visible() {
         toolbar_layout.setVisibility(View.VISIBLE);
     }
 

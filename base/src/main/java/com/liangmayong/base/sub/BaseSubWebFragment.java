@@ -18,12 +18,14 @@ import android.webkit.WebView;
 import com.liangmayong.base.R;
 import com.liangmayong.base.interfaces.BaseWebJavascriptInterface;
 import com.liangmayong.base.sub.webkit.BaseWebViewClient;
+import com.liangmayong.base.sub.webkit.BaseWebWidget;
 import com.liangmayong.base.utils.LogUtils;
 import com.liangmayong.base.utils.StringUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.layouts.SwipeLayout;
 import com.liangmayong.base.widget.skin.Skin;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +60,14 @@ public class BaseSubWebFragment extends BaseSubFragment {
     private String url = "";
     //webViewClient
     private BaseWebViewClient webViewClient = null;
+
+    /**
+     * initWebView
+     *
+     * @param rootView rootView
+     */
+    protected void initWebView(View rootView) {
+    }
 
     @Override
     protected void initSubView(View rootView) {
@@ -169,6 +179,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
         base_webview.loadUrl(url, generateHeaders());
         setToolbarTitle(title);
         removeSearchBoxJavaBridgeInterface();
+        initWebView(rootView);
     }
 
     /**
@@ -243,6 +254,15 @@ public class BaseSubWebFragment extends BaseSubFragment {
     }
 
     /**
+     * generateWeigets
+     *
+     * @return weiget
+     */
+    protected List<BaseWebWidget> generateWidgets() {
+        return null;
+    }
+
+    /**
      * getHeaders
      *
      * @return headers
@@ -288,6 +308,11 @@ public class BaseSubWebFragment extends BaseSubFragment {
             @Override
             protected Map<String, String> generateHeaders() {
                 return BaseSubWebFragment.this.generateHeaders();
+            }
+
+            @Override
+            protected List<BaseWebWidget> generateWidgets() {
+                return BaseSubWebFragment.this.generateWidgets();
             }
         };
     }

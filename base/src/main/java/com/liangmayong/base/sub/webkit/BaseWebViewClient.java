@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +24,15 @@ public class BaseWebViewClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            List<BaseWebWidget> widgets = generateWidgets();
+            if (widgets != null && widgets.size() > 0) {
+                for (int i = 0; i < widgets.size(); i++) {
+                    if (request.getUrl().toString().startsWith(widgets.get(i).getSchemeName(), widgets.get(i).getToffset())) {
+                        widgets.get(i).overrideUrlLoading(view, request.getUrl().toString());
+                        return true;
+                    }
+                }
+            }
             if (request.getUrl().toString().startsWith("http:") || request.getUrl().toString().startsWith("https:")) {
                 view.loadUrl(request.getUrl().toString(), generateHeaders());
                 return true;
@@ -34,11 +44,20 @@ public class BaseWebViewClient extends WebViewClient {
                 return true;
             }
         }
-        return super.shouldOverrideUrlLoading(view, request);
+        return true;
     }
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        List<BaseWebWidget> widgets = generateWidgets();
+        if (widgets != null && widgets.size() > 0) {
+            for (int i = 0; i < widgets.size(); i++) {
+                if (url.startsWith(widgets.get(i).getSchemeName(), widgets.get(i).getToffset())) {
+                    widgets.get(i).overrideUrlLoading(view, url);
+                    return true;
+                }
+            }
+        }
         if (url.startsWith("http:") || url.startsWith("https:")) {
             view.loadUrl(url, generateHeaders());
             return true;
@@ -49,7 +68,7 @@ public class BaseWebViewClient extends WebViewClient {
             view.getContext().startActivity(intent);
             return true;
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -93,6 +112,15 @@ public class BaseWebViewClient extends WebViewClient {
      * @return headers
      */
     protected Map<String, String> generateHeaders() {
+        return null;
+    }
+
+    /**
+     * getHeaders
+     *
+     * @return headers
+     */
+    protected List<BaseWebWidget> generateWidgets() {
         return null;
     }
 
