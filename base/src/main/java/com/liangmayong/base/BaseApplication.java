@@ -16,8 +16,21 @@ public class BaseApplication extends Application {
         initialize(this);
     }
 
+    /**
+     * initialize
+     *
+     * @param application application
+     */
     public static void initialize(Application application) {
         FrescoUtils.initialize(application);
     }
 
+    /**
+     * getBaseVersion
+     *
+     * @return base
+     */
+    public static String getBaseVersion() {
+        return "1.1.0";
+    }
 }
