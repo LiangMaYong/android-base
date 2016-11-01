@@ -24,7 +24,7 @@ public class DefualtWebFragment extends BaseSubWebFragment {
 
     // HEADERS
     private static final Map<String, String> HEADERS = new HashMap<String, String>();
-    // HEADERS
+    // WIDGETS
     private static final List<BaseWebWidget> WIDGETS = new ArrayList<BaseWebWidget>();
 
     @Override
