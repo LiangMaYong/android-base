@@ -16,7 +16,11 @@ public abstract class BaseWebWidget {
     }
 
     public void setSchemeName(String schemeName) {
-        this.schemeName = schemeName;
+        if (schemeName != null) {
+            this.schemeName = schemeName.toLowerCase();
+        } else {
+            this.schemeName = "";
+        }
     }
 
     public int getToffset() {
@@ -27,5 +31,5 @@ public abstract class BaseWebWidget {
         this.toffset = toffset;
     }
 
-    public abstract void overrideUrlLoading(WebView web, String url);
+    public abstract boolean overrideUrlLoading(WebView web, String url);
 }

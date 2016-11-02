@@ -13,7 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 
-import com.liangmayong.base.database.DataPreferences;
+import com.liangmayong.base.widget.database.DataPreferences;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;

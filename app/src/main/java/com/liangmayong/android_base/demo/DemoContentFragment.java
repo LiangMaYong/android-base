@@ -5,10 +5,10 @@ import android.widget.TextView;
 
 import com.liangmayong.android_base.R;
 import com.liangmayong.base.sub.BaseSubFragment;
-import com.liangmayong.base.viewbinding.annotations.BindLayout;
-import com.liangmayong.base.viewbinding.annotations.BindOnClick;
-import com.liangmayong.base.viewbinding.annotations.BindTitle;
-import com.liangmayong.base.viewbinding.annotations.BindView;
+import com.liangmayong.base.widget.binding.annotations.BindLayout;
+import com.liangmayong.base.widget.binding.annotations.BindOnClick;
+import com.liangmayong.base.widget.binding.annotations.BindTitle;
+import com.liangmayong.base.widget.binding.annotations.BindView;
 import com.liangmayong.base.widget.skin.SkinButton;
 
 /**
@@ -33,7 +33,7 @@ public class DemoContentFragment extends BaseSubFragment {
     private void bindOnClick(View v) {
         switch (v.getId()) {
             case R.id.btn_test:
-                goTo("百度一下", "http://test.jiaopeiquan.vitabee.cn/");
+                goTo("百度一下", "http://www.baidu.com");
                 break;
         }
     }

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
+import android.util.Log;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -24,22 +25,25 @@ public class BaseWebViewClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            String url = request.getUrl().toString().toLowerCase();
             List<BaseWebWidget> widgets = generateWidgets();
             if (widgets != null && widgets.size() > 0) {
                 for (int i = 0; i < widgets.size(); i++) {
-                    if (request.getUrl().toString().startsWith(widgets.get(i).getSchemeName(), widgets.get(i).getToffset())) {
-                        widgets.get(i).overrideUrlLoading(view, request.getUrl().toString());
-                        return true;
+                    if (url.startsWith(widgets.get(i).getSchemeName(), widgets.get(i).getToffset())) {
+                        boolean flag = widgets.get(i).overrideUrlLoading(view, url);
+                        if (flag) {
+                            return true;
+                        }
                     }
                 }
             }
-            if (request.getUrl().toString().startsWith("http:") || request.getUrl().toString().startsWith("https:")) {
-                view.loadUrl(request.getUrl().toString(), generateHeaders());
+            if (url.startsWith("http:") || url.startsWith("https:")) {
+                view.loadUrl(url, generateHeaders());
                 return true;
             }
             // Otherwise allow the OS to handle things like tel, mailto, etc.
-            if (request.getUrl().toString().startsWith("tel:") || request.getUrl().toString().startsWith("email:")) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(request.getUrl().toString()));
+            if (url.startsWith("tel:") || url.startsWith("email:")) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 view.getContext().startActivity(intent);
                 return true;
             }
@@ -49,12 +53,15 @@ public class BaseWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        url = url.toLowerCase();
         List<BaseWebWidget> widgets = generateWidgets();
         if (widgets != null && widgets.size() > 0) {
             for (int i = 0; i < widgets.size(); i++) {
                 if (url.startsWith(widgets.get(i).getSchemeName(), widgets.get(i).getToffset())) {
-                    widgets.get(i).overrideUrlLoading(view, url);
-                    return true;
+                    boolean flag = widgets.get(i).overrideUrlLoading(view, url);
+                    if (flag) {
+                        return true;
+                    }
                 }
             }
         }

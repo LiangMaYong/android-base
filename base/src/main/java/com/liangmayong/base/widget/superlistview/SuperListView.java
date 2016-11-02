@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.utils.Md5Utils;
-import com.liangmayong.base.viewbinding.ViewBinding;
+import com.liangmayong.base.widget.binding.ViewBinding;
 
 import java.util.ArrayList;
 import java.util.List;

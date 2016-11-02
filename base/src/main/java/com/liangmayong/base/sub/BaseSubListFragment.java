@@ -1,12 +1,11 @@
 package com.liangmayong.base.sub;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.widget.layouts.SwipeLayout;
+import com.liangmayong.base.widget.layout.SwipeLayout;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 

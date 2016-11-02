@@ -13,7 +13,7 @@
         android:allowBackup="true"
         android:supportsRtl="true">
         <activity
-            android:name="com.liangmayong.base.activitys.WebActivity"
+            android:name=".ui.activitys.WebActivity"
             android:screenOrientation="portrait" />
     </application>
 

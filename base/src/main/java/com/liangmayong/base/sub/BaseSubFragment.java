@@ -6,7 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.liangmayong.base.BaseFragment;
-import com.liangmayong.base.fragments.DefualtWebFragment;
+import com.liangmayong.base.ui.fragments.DefualtWebFragment;
 import com.liangmayong.base.widget.iconfont.Icon;
 
 /**

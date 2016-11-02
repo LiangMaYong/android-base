@@ -19,16 +19,16 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.liangmayong.base.activitys.WebActivity;
-import com.liangmayong.base.fixbug.AndroidBug5497Workaround;
-import com.liangmayong.base.interfaces.BaseInterface;
-import com.liangmayong.base.presenter.BindP;
-import com.liangmayong.base.presenter.Presenter;
-import com.liangmayong.base.presenter.PresenterBind;
-import com.liangmayong.base.presenter.PresenterHolder;
+import com.liangmayong.base.ui.activitys.WebActivity;
+import com.liangmayong.base.utils.fixbug.Android5497Workaround;
+import com.liangmayong.base.widget.interfaces.BaseInterface;
+import com.liangmayong.base.widget.binding.annotations.BindP;
+import com.liangmayong.base.widget.binding.Presenter;
+import com.liangmayong.base.widget.binding.PresenterBind;
+import com.liangmayong.base.widget.binding.PresenterHolder;
 import com.liangmayong.base.utils.ToastUtils;
-import com.liangmayong.base.viewbinding.ViewBinding;
-import com.liangmayong.base.viewbinding.interfaces.TitleBindInterface;
+import com.liangmayong.base.widget.binding.ViewBinding;
+import com.liangmayong.base.widget.binding.interfaces.TitleBindInterface;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.statusbar.StatusBarCompat;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
@@ -105,7 +105,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AndroidBug5497Workaround.assistActivity(this);
+        Android5497Workaround.assistActivity(this);
         inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         ViewBinding.parserActivity(this);

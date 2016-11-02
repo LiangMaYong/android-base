@@ -7,7 +7,7 @@ import android.view.View;
 import com.liangmayong.base.sub.BaseSubListFragment;
 import com.liangmayong.base.utils.BundleBuider;
 import com.liangmayong.base.utils.DimenUtils;
-import com.liangmayong.base.viewbinding.annotations.BindTitle;
+import com.liangmayong.base.widget.binding.annotations.BindTitle;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 

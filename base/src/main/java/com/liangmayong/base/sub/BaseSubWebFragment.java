@@ -19,14 +19,14 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.interfaces.BaseWebJavascriptInterface;
+import com.liangmayong.base.widget.interfaces.BaseWebJavascriptInterface;
 import com.liangmayong.base.sub.webkit.BaseWebViewClient;
 import com.liangmayong.base.sub.webkit.BaseWebWidget;
 import com.liangmayong.base.utils.LogUtils;
 import com.liangmayong.base.utils.ShareUtils;
 import com.liangmayong.base.utils.StringUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
-import com.liangmayong.base.widget.layouts.SwipeLayout;
+import com.liangmayong.base.widget.layout.SwipeLayout;
 import com.liangmayong.base.widget.skin.Skin;
 
 import java.util.List;

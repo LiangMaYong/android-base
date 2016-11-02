@@ -4,11 +4,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.liangmayong.android_base.R;
-import com.liangmayong.base.appbox.AppboxFragment;
-import com.liangmayong.base.viewbinding.annotations.BindLayout;
-import com.liangmayong.base.viewbinding.annotations.BindOnClick;
-import com.liangmayong.base.viewbinding.annotations.BindTitle;
-import com.liangmayong.base.viewbinding.annotations.BindView;
+import com.liangmayong.base.widget.appbox.AppboxFragment;
+import com.liangmayong.base.widget.binding.annotations.BindLayout;
+import com.liangmayong.base.widget.binding.annotations.BindOnClick;
+import com.liangmayong.base.widget.binding.annotations.BindTitle;
+import com.liangmayong.base.widget.binding.annotations.BindView;
 import com.liangmayong.base.widget.skin.SkinButton;
 
 /**

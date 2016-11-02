@@ -16,7 +16,6 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 /**
  * Created by LiangMaYong on 2016/10/26.
  */
-
 public class FrescoUtils {
 
     private static boolean isInit = false;
@@ -30,20 +29,23 @@ public class FrescoUtils {
      * @param resizeHeightDp resizeHeight
      */
     public static void showThumb(SimpleDraweeView draweeView, String url, int resizeWidthDp, int resizeHeightDp) {
-        if (url == null || "".equals(url))
-            return;
-        if (draweeView == null)
-            return;
-        initialize(draweeView.getContext());
-        ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url))
-                .setResizeOptions(new ResizeOptions(DimenUtils.dip2px(draweeView.getContext(), resizeWidthDp), DimenUtils.dip2px(draweeView.getContext(), resizeHeightDp)))
-                .build();
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setImageRequest(request)
-                .setOldController(draweeView.getController())
-                .setControllerListener(new BaseControllerListener<ImageInfo>())
-                .build();
-        draweeView.setController(controller);
+        try {
+            if (url == null || "".equals(url))
+                return;
+            if (draweeView == null)
+                return;
+            initialize(draweeView.getContext());
+            ImageRequest request = ImageRequestBuilder.newBuilderWithSource(Uri.parse(url))
+                    .setResizeOptions(new ResizeOptions(DimenUtils.dip2px(draweeView.getContext(), resizeWidthDp), DimenUtils.dip2px(draweeView.getContext(), resizeHeightDp)))
+                    .build();
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setImageRequest(request)
+                    .setOldController(draweeView.getController())
+                    .setControllerListener(new BaseControllerListener<ImageInfo>())
+                    .build();
+            draweeView.setController(controller);
+        } catch (Exception e) {
+        }
     }
 
     /**
@@ -52,12 +54,15 @@ public class FrescoUtils {
      * @param context context
      */
     public static void initialize(Context context) {
-        if (isInit)
-            return;
-        ImagePipelineConfig config = ImagePipelineConfig.newBuilder(context)
-                .setDownsampleEnabled(true)
-                .build();
-        Fresco.initialize(context, config);
-        isInit = true;
+        try {
+            if (isInit)
+                return;
+            ImagePipelineConfig config = ImagePipelineConfig.newBuilder(context)
+                    .setDownsampleEnabled(true)
+                    .build();
+            Fresco.initialize(context, config);
+            isInit = true;
+        } catch (Exception e) {
+        }
     }
 }

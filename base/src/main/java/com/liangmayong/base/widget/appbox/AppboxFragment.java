@@ -1,4 +1,4 @@
-package com.liangmayong.base;
+package com.liangmayong.base.widget.appbox;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.liangmayong.base.BasePresenter;
 import com.liangmayong.base.ui.activitys.WebActivity;
 import com.liangmayong.base.widget.interfaces.BaseInterface;
 import com.liangmayong.base.widget.binding.annotations.BindP;
@@ -22,14 +22,14 @@ import com.liangmayong.base.widget.binding.PresenterHolder;
 import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.binding.ViewBinding;
 import com.liangmayong.base.widget.binding.interfaces.TitleBindInterface;
-import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
+import com.liangmayong.base.widget.skin.Skin;
 
 /**
  * Created by LiangMaYong on 2016/8/22.
  */
 @BindP({BasePresenter.class})
-public abstract class BaseFragment extends Fragment implements BaseInterface, TitleBindInterface {
+public abstract class AppboxFragment extends ContextThemeWrapper implements BaseInterface, TitleBindInterface {
     //holder
     private PresenterHolder holder = null;
     //defualtToolbar
@@ -42,17 +42,6 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     private String title = "";
     //inputManager
     private InputMethodManager inputManager = null;
-
-    /**
-     * extras
-     *
-     * @param extras extras
-     * @return
-     */
-    public BaseFragment initArguments(Bundle extras) {
-        setArguments(extras);
-        return this;
-    }
 
     /**
      * postDelayed
@@ -106,23 +95,18 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
         return null;
     }
 
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         holder = PresenterBind.bind(this);
         Skin.registerSkinRefresh(this);
     }
 
-    @Nullable
-    @Override
-    public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        createView();
+    public final View onCreateView(Context context, LayoutInflater inflater) {
         rootView = null;
         if (generateContainerViewId() > 0) {
             rootView = inflater.inflate(generateContainerViewId(), null);
             ViewBinding.parserClassByView(this, rootView);
         } else {
-            rootView = ViewBinding.parserFragment(this, container);
+            rootView = ViewBinding.parserClass(this, getContext());
         }
         try {
             defualtToolbar = new DefualtToolbar(rootView);
@@ -130,7 +114,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
         } catch (Exception e) {
             defualtToolbar = null;
         }
-        inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager = (InputMethodManager) getHostActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         initView(rootView);
         onRefreshSkin(Skin.get());
         return rootView;
@@ -160,12 +144,6 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
      * @param rootView rootView
      */
     protected abstract void initView(View rootView);
-
-    /**
-     * createView
-     */
-    protected void createView() {
-    }
 
     @Override
     public final void showToast(CharSequence text) {
@@ -204,21 +182,27 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     public void onRefreshSkin(Skin skin) {
     }
 
-    @Override
     public void onDestroy() {
-        super.onDestroy();
         Skin.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
     }
 
+    @Override
     public void goTo(Class<? extends Activity> cls) {
-        goToForResult(cls, null, -1);
+        Intent intent = new Intent(this, cls);
+        startActivity(intent);
     }
 
+    @Override
     public void goTo(Class<? extends Activity> cls, Bundle extras) {
-        goToForResult(cls, extras, -1);
+        Intent intent = new Intent(this, cls);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        startActivity(intent);
     }
 
+    @Override
     public void goHome() {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
@@ -226,29 +210,40 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
         startActivity(intent);
     }
 
+    @Override
     public void goTo(String title, String url) {
         Bundle extras = new Bundle();
         extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
         extras.putString(BaseInterface.WEB_EXTRA_URL, url);
-        goTo(WebActivity.class, extras);
-    }
-
-    public void goToForResult(Class<? extends Activity> cls, int requestCode) {
-        goToForResult(cls, null, requestCode);
-    }
-
-    public void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
-        Intent intent = new Intent(getActivity(), cls);
+        Intent intent = new Intent(this, WebActivity.class);
         if (extras != null) {
             intent.putExtras(extras);
         }
-        getActivity().startActivityForResult(intent, requestCode);
+        startActivity(intent);
     }
 
+    @Override
+    @Deprecated
+    public void goToForResult(Class<? extends Activity> cls, int requestCode) {
+        Intent intent = new Intent(this, cls);
+        startActivity(intent);
+    }
+
+    @Override
+    @Deprecated
+    public void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
+        Intent intent = new Intent(this, cls);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        startActivity(intent);
+    }
+
+
     public void hideSoftKeyBoard() {
-        if (inputManager.isActive() && getActivity().getCurrentFocus() != null) {
-            if (getActivity().getCurrentFocus().getWindowToken() != null) {
-                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (inputManager.isActive() && getHostActivity().getCurrentFocus() != null) {
+            if (getHostActivity().getCurrentFocus().getWindowToken() != null) {
+                inputManager.hideSoftInputFromWindow(getHostActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }
     }
@@ -260,5 +255,118 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
                 inputManager.showSoftInput(editText, 0);
             }
         }, 500);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // mActivity
+    private Activity mActivity;
+    // mView
+    private View mView;
+    // mExtras
+    private Bundle mExtras;
+
+    @Override
+    protected final void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+    }
+
+    /**
+     * attachActivity
+     *
+     * @param activity activity
+     */
+    protected void onAttach(Activity activity) {
+        this.mActivity = activity;
+    }
+
+    /**
+     * setArguments
+     *
+     * @param extras extras
+     */
+    public final void setArguments(Bundle extras) {
+        this.mExtras = extras;
+    }
+
+    /**
+     * getArguments
+     *
+     * @return extras
+     */
+    protected Bundle getArguments() {
+        if (mExtras == null) {
+            return new Bundle();
+        }
+        return new Bundle(mExtras);
+    }
+
+    /**
+     * getHostActivity
+     *
+     * @return activity
+     */
+    protected final Activity getHostActivity() {
+        return mActivity;
+    }
+
+    /**
+     * getContext
+     *
+     * @return context
+     */
+    public Context getContext() {
+        return this;
+    }
+
+    /**
+     * getView
+     *
+     * @return view
+     */
+    public final View getView() {
+        if (mView == null) {
+            LayoutInflater layoutInflater = LayoutInflater.from(getHostActivity()).cloneInContext(this);
+            mView = onCreateView(this, layoutInflater);
+        }
+        return mView;
+    }
+
+    /**
+     * onStart
+     */
+    public void onStart() {
+    }
+
+    /**
+     * onStart
+     */
+    public void onResume() {
+    }
+
+    /**
+     * onStart
+     */
+    public void onPause() {
+    }
+
+    /**
+     * onStop
+     */
+    public void onStop() {
+    }
+
+    /**
+     * onDetach
+     */
+    public void onDetach() {
+        mActivity = null;
+        mExtras = null;
+    }
+
+    /**
+     * onDestroyView
+     */
+    public void onDestroyView() {
+        mView = null;
     }
 }
