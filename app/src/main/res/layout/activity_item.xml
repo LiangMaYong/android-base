@@ -76,6 +76,11 @@
         </ScrollView>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#eeeeee" />
+
     <com.liangmayong.base.widget.skin.SkinButton
         android:id="@+id/btn_test"
         android:layout_width="match_parent"
