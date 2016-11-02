@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
-import android.util.Log;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -110,7 +109,9 @@ public class BaseWebViewClient extends WebViewClient {
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        injectionAssetsJS(view, "javascript/base.js");
+        if(!view.getSettings().getLoadsImagesAutomatically()) {
+            view.getSettings().setLoadsImagesAutomatically(true);
+        }
     }
 
     /**

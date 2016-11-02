@@ -19,13 +19,13 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.widget.interfaces.BaseWebJavascriptInterface;
 import com.liangmayong.base.sub.webkit.BaseWebViewClient;
 import com.liangmayong.base.sub.webkit.BaseWebWidget;
 import com.liangmayong.base.utils.LogUtils;
 import com.liangmayong.base.utils.ShareUtils;
 import com.liangmayong.base.utils.StringUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
+import com.liangmayong.base.widget.interfaces.BaseWebJavascriptInterface;
 import com.liangmayong.base.widget.layout.SwipeLayout;
 import com.liangmayong.base.widget.skin.Skin;
 
@@ -118,6 +118,11 @@ public class BaseSubWebFragment extends BaseSubFragment {
         base_webview.getSettings().setDatabaseEnabled(true);
         base_webview.getSettings().setBuiltInZoomControls(false);
         base_webview.getSettings().setAppCacheEnabled(true);
+        if(Build.VERSION.SDK_INT >= 19) {
+            base_webview.getSettings().setLoadsImagesAutomatically(true);
+        } else {
+            base_webview.getSettings().setLoadsImagesAutomatically(false);
+        }
         Object webInterface = generateWebJavascriptInterface();
         if (webInterface != null) {
             base_webview.addJavascriptInterface(webInterface, generateWebJavascriptInterfaceName());
@@ -130,6 +135,8 @@ public class BaseSubWebFragment extends BaseSubFragment {
                 if (newProgress == 100) {
                     getDefualtToolbar().setProgress(0);
                     setToolbarTitle(view.getTitle());
+                    // injection ja
+                    injectionAssetsJS("javascript/base.js");
                 } else {
                     getDefualtToolbar().setProgress(newProgress);
                 }

@@ -55,6 +55,15 @@ README: [English](https://github.com/LiangMaYong/android-base/blob/master/README
 Android studio -> file -> settings -> plugins -> Install plugins in disk...
 ```
 
+## Fresco
+
+移除Fresco库
+```
+compile(project(':base')) {
+    exclude group: 'com.facebook.fresco'
+}
+```
+
 ## Skin控件属性
 ```
 <declare-styleable name="SkinStyleable">

@@ -56,6 +56,15 @@ Install bindView plugins
 Android studio -> file -> settings -> plugins -> Install plugins in disk...
 ```
 
+## Fresco
+
+Exclude Fresco library
+```
+compile(project(':base')) {
+    exclude group: 'com.facebook.fresco'
+}
+```
+
 ## Skin Styleable
 ```
 <declare-styleable name="SkinStyleable">

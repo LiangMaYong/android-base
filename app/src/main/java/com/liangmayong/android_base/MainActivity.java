@@ -19,6 +19,7 @@ public class MainActivity extends BaseSubActivity {
     @Override
     protected void onCreateActivity(Bundle savedInstanceState) {
         super.onCreateActivity(savedInstanceState);
+        //URL拦截
         DefualtWebFragment.addWebWidget("appbox://", new BaseWebWidget() {
             @Override
             public boolean overrideUrlLoading(WebView web, String url) {
