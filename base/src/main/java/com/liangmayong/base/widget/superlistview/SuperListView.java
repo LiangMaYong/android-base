@@ -910,6 +910,16 @@ public class SuperListView extends RelativeLayout {
         }
 
         /**
+         * replaceDatas
+         *
+         * @param items items
+         */
+        public void replaceDatas(List<Item> items) {
+            this.items.removeAll(this.items);
+            this.items.addAll(items);
+        }
+
+        /**
          * clear
          */
         public void clear() {

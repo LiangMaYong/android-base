@@ -53,6 +53,10 @@ public abstract class BaseSubActivity extends BaseActivity {
                 }
             });
         }
+        onCreateActivity(savedInstanceState);
+    }
+
+    protected void onCreateActivity(Bundle savedInstanceState) {
     }
 
     public abstract BaseSubFragment generateSubFragment();

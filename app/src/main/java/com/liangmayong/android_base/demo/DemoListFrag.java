@@ -27,7 +27,7 @@ public class DemoListFrag extends BaseSubListFragment {
         getDefualtToolbar().rightOne().text("Blog").clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goTo("LiangMaYong", "https://www.baidu.com");
+                goTo("LiangMaYong", "http://blog.csdn.net/stepalone");
             }
         });
         for (int i = 0; i < 500; i++) {

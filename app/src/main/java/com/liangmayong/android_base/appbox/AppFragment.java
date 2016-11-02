@@ -17,6 +17,7 @@ import com.liangmayong.base.widget.skin.SkinButton;
 @BindLayout(R.layout.activity_item)
 @BindTitle("AppFragment")
 public class AppFragment extends AppboxFragment {
+
     @BindView(R.id.tv_title)
     private TextView tv_title;
     @BindView(R.id.et_content)
@@ -33,9 +34,9 @@ public class AppFragment extends AppboxFragment {
     private void bindOnClick(View v) {
         switch (v.getId()) {
             case R.id.btn_test:
-                // TODO do something
                 goTo("百度一下", "http://www.baidu.com");
                 break;
         }
     }
+
 }

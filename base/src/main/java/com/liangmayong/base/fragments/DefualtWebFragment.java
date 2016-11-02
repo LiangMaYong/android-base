@@ -33,12 +33,12 @@ public class DefualtWebFragment extends BaseSubWebFragment {
     }
 
     /**
-     * setWebWidget
+     * addWebWidget
      *
      * @param scheme    scheme
      * @param webWidget webWidget
      */
-    public static void setWebWidget(String scheme, BaseWebWidget webWidget) {
+    public static void addWebWidget(String scheme, BaseWebWidget webWidget) {
         removeWebWidget(scheme);
         if (webWidget != null) {
             webWidget.setSchemeName(scheme);

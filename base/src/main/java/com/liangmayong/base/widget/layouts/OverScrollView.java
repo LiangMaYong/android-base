@@ -187,10 +187,10 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
 
     public void initChildPointer() {
         child = getChildAt(0);
-        oldPaddingL = child.getPaddingLeft() - oldPaddingL;
-        oldPaddingR = child.getPaddingRight() - oldPaddingR;
-        oldPaddingT = child.getPaddingTop() - oldPaddingT;
-        oldPaddingB = child.getPaddingBottom() - oldPaddingB;
+        oldPaddingL = child.getPaddingLeft();
+        oldPaddingR = child.getPaddingRight();
+        oldPaddingT = child.getPaddingTop();
+        oldPaddingB = child.getPaddingBottom();
         child.setPadding(oldPaddingL, 1500 + oldPaddingT, oldPaddingR, 1500 + oldPaddingB);
     }
 
@@ -690,7 +690,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
         View focusCandidate = null;
 
 		/*
-		 * A fully contained focusable is one where its top is below the bound's
+         * A fully contained focusable is one where its top is below the bound's
 		 * top, and its bottom is above the bound's bottom. A partially
 		 * contained focusable is one where some part of it is within the
 		 * bounds, but it also has some part that is not within bounds. A fully
@@ -705,7 +705,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
             int viewBottom = view.getBottom();
 
             if (top < viewBottom && viewTop < bottom) {
-				/*
+                /*
 				 * the focusable is in the target area, it is a candidate for
 				 * focusing
 				 */

@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.ConsoleMessage;
 import android.webkit.DownloadListener;
 import android.webkit.GeolocationPermissions;
@@ -14,12 +15,14 @@ import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.RelativeLayout;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.interfaces.BaseWebJavascriptInterface;
 import com.liangmayong.base.sub.webkit.BaseWebViewClient;
 import com.liangmayong.base.sub.webkit.BaseWebWidget;
 import com.liangmayong.base.utils.LogUtils;
+import com.liangmayong.base.utils.ShareUtils;
 import com.liangmayong.base.utils.StringUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.layouts.SwipeLayout;
@@ -72,6 +75,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
     @Override
     protected void initSubView(View rootView) {
         base_webview = new WebView(getActivity());
+        base_webview.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         base_refresh_layout = (SwipeLayout) rootView.findViewById(R.id.base_swipeLayout);
         base_refresh_layout.addView(base_webview);
         base_refresh_layout.setEnabled(generateRefreshEnabled());
@@ -189,12 +193,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
      * @param url   url
      */
     public void showShareDialog(String title, String url) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, title);
-        intent.putExtra(Intent.EXTRA_TEXT, url);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(Intent.createChooser(intent, null));
+        ShareUtils.shareText(getContext(), null, url);
     }
 
     /**

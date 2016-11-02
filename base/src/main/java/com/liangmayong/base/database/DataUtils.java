@@ -1,6 +1,5 @@
 package com.liangmayong.base.database;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -32,7 +31,12 @@ public class DataUtils {
         return deleteFile(new File(dbFileName));
     }
 
-    @SuppressLint("SdCardPath")
+    /**
+     * getDatabaseDir
+     *
+     * @param context context
+     * @return database dir
+     */
     private static String getDatabaseDir(Context context) {
         return context.getApplicationInfo().dataDir + "/databases/";
     }
