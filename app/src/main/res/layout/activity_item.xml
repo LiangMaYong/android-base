@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.liangmayong.base.widget.layouts.OverScrollView
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -43,7 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="50dp"
-                    android:text="\n
+                    android:text="
 梦游天姥吟留别 / 别东鲁诸公\n
 \n
 【作者】李白 【朝代】唐代\n
@@ -73,7 +73,7 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-        </com.liangmayong.base.widget.layouts.OverScrollView>
+        </ScrollView>
     </LinearLayout>
 
     <com.liangmayong.base.widget.skin.SkinButton

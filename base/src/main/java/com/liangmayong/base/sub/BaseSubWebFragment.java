@@ -1,6 +1,7 @@
 package com.liangmayong.base.sub;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -98,11 +99,11 @@ public class BaseSubWebFragment extends BaseSubFragment {
                     onBackPressed();
                 }
             });
-            if (generateShareEnabled()) {
-                getDefualtToolbar().rightOne().iconToLeft(Icon.icon_share).clicked(new View.OnClickListener() {
+            if (generateShowMoreMenu()) {
+                getDefualtToolbar().rightOne().iconToLeft(Icon.icon_more).clicked(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        showShareDialog(base_webview.getTitle(), base_webview.getUrl());
+                        showMoreDialog(v);
                     }
                 });
             }
@@ -193,7 +194,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
      * @param url   url
      */
     public void showShareDialog(String title, String url) {
-        ShareUtils.shareText(getContext(), null, url);
+        ShareUtils.shareText(getContext(), getString(R.string.base_web_share), url);
     }
 
     /**
@@ -201,6 +202,31 @@ public class BaseSubWebFragment extends BaseSubFragment {
      */
     public void reload() {
         base_webview.reload();
+    }
+
+
+    /**
+     * showMoreDialog
+     *
+     * @param view view
+     */
+    protected void showMoreDialog(View view) {
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        builder.setItems(new String[]{getString(R.string.base_web_refresh), getString(R.string.base_web_share)}, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) {
+                    reload();
+                } else {
+                    if (StringUtils.isEmpty(base_webview.getUrl())) {
+                        showShareDialog(base_webview.getTitle(), base_webview.getUrl());
+                    } else {
+                        showShareDialog(base_webview.getTitle(), base_webview.getUrl());
+                    }
+                }
+            }
+        });
+        builder.show();
     }
 
     /**
@@ -236,11 +262,20 @@ public class BaseSubWebFragment extends BaseSubFragment {
     }
 
     /**
-     * generateShareEnabled
+     * generateCloseEnabled
+     *
+     * @return false
+     */
+    protected boolean generateCloseEnabled() {
+        return true;
+    }
+
+    /**
+     * generateShowMoreMenu
      *
      * @return true
      */
-    protected boolean generateShareEnabled() {
+    protected boolean generateShowMoreMenu() {
         return true;
     }
 
@@ -398,7 +433,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
     public boolean onBackPressed() {
         if (base_webview != null && base_webview.canGoBack()) {
             base_webview.goBack();
-            if (getDefualtToolbar() != null) {
+            if (generateCloseEnabled() && getDefualtToolbar() != null) {
                 getDefualtToolbar().rightTwo().iconToLeft(Icon.icon_close).clicked(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
