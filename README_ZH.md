@@ -1,12 +1,13 @@
 ﻿# android-base
 README: [English](https://github.com/LiangMaYong/android-base/blob/master/README.md) | [中文](https://github.com/LiangMaYong/android-base/blob/master/README_ZH.md)
-this is android base
 
-download demo : [demo-1.1.0.apk](https://raw.githubusercontent.com/LiangMaYong/android-base/master/release/apk/demo-1.1.0.apk)
+这是一个Android基础框架
 
-download aar : [base-1.1.0.aar](https://raw.githubusercontent.com/LiangMaYong/android-base/master/release/1.1.0/base-1.1.0.aar)
+下载DEMO : [demo-1.1.0.apk](https://raw.githubusercontent.com/LiangMaYong/android-base/master/release/apk/demo-1.1.0.apk)
 
-## Function
+下载AAR : [base-1.1.0.aar](https://raw.githubusercontent.com/LiangMaYong/android-base/master/release/1.1.0/base-1.1.0.aar)
+
+## 功能
 1,Database
 
 2,Http
@@ -27,7 +28,7 @@ download aar : [base-1.1.0.aar](https://raw.githubusercontent.com/LiangMaYong/an
 
 10,Annotation
 
-## Annotations
+## 注解
 
 @BindLayout -> Activity and Fragment Layout
 
@@ -45,16 +46,16 @@ download aar : [base-1.1.0.aar](https://raw.githubusercontent.com/LiangMaYong/an
 
 @BindP -> Presenter
 
-## BindView Plugins
+## BindView插件
 
-download plugins : [BindView1.0.jar](https://raw.githubusercontent.com/LiangMaYong/android-base/master/plugins/BindView1.0.jar)
+下载插件 : [BindView1.0.jar](https://raw.githubusercontent.com/LiangMaYong/android-base/master/plugins/BindView1.0.jar)
 
-Install bindView plugins
+安装BindView插件
 ```
 Android studio -> file -> settings -> plugins -> Install plugins in disk...
 ```
 
-## Skin Styleable
+## Skin控件属性
 ```
 <declare-styleable name="SkinStyleable">
 <attr name="pressed_color" format="color" />
