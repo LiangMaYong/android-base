@@ -25,7 +25,6 @@ import com.liangmayong.base.utils.LogUtils;
 import com.liangmayong.base.utils.ShareUtils;
 import com.liangmayong.base.utils.StringUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
-import com.liangmayong.base.widget.interfaces.BaseWebJavascriptInterface;
 import com.liangmayong.base.widget.layout.SwipeLayout;
 import com.liangmayong.base.widget.skin.Skin;
 
@@ -73,6 +72,15 @@ public class BaseSubWebFragment extends BaseSubFragment {
     protected void initWebView(View rootView) {
     }
 
+    /**
+     * getWebView
+     *
+     * @return base_webview
+     */
+    public WebView getWebView() {
+        return base_webview;
+    }
+
     @Override
     protected void initSubView(View rootView) {
         base_webview = new WebView(getActivity());
@@ -118,14 +126,10 @@ public class BaseSubWebFragment extends BaseSubFragment {
         base_webview.getSettings().setDatabaseEnabled(true);
         base_webview.getSettings().setBuiltInZoomControls(false);
         base_webview.getSettings().setAppCacheEnabled(true);
-        if(Build.VERSION.SDK_INT >= 19) {
+        if (Build.VERSION.SDK_INT >= 19) {
             base_webview.getSettings().setLoadsImagesAutomatically(true);
         } else {
             base_webview.getSettings().setLoadsImagesAutomatically(false);
-        }
-        Object webInterface = generateWebJavascriptInterface();
-        if (webInterface != null) {
-            base_webview.addJavascriptInterface(webInterface, generateWebJavascriptInterfaceName());
         }
         base_webview.loadData("", "text/html", null);
         base_webview.getSettings().setDefaultTextEncodingName("UTF-8");
@@ -310,24 +314,6 @@ public class BaseSubWebFragment extends BaseSubFragment {
      */
     protected Map<String, String> generateHeaders() {
         return null;
-    }
-
-    /**
-     * getWebJavascriptInterface
-     *
-     * @return web Interface
-     */
-    protected BaseWebJavascriptInterface generateWebJavascriptInterface() {
-        return null;
-    }
-
-    /**
-     * getWebInterfaceName
-     *
-     * @return web Interface
-     */
-    protected String generateWebJavascriptInterfaceName() {
-        return "AndroidJS";
     }
 
     /**
