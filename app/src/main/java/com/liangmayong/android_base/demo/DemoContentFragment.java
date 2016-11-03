@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.liangmayong.android_base.R;
 import com.liangmayong.base.sub.BaseSubFragment;
+import com.liangmayong.base.utils.BaseUtils;
 import com.liangmayong.base.widget.binding.annotations.BindLayout;
 import com.liangmayong.base.widget.binding.annotations.BindOnClick;
 import com.liangmayong.base.widget.binding.annotations.BindTitle;
@@ -33,7 +34,7 @@ public class DemoContentFragment extends BaseSubFragment {
     private void bindOnClick(View v) {
         switch (v.getId()) {
             case R.id.btn_test:
-                goTo("百度一下", "http://www.baidu.com");
+                BaseUtils.goTo(getContext(), "百度一下", "http://www.baidu.com");
                 break;
         }
     }

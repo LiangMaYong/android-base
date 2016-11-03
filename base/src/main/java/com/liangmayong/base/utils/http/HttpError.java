@@ -18,7 +18,7 @@ public class HttpError {
 	public static final String NETWORK_ERROR = "NETWORK_ERROR";
 	// Coding format error
 	public static final String PARSE_ERROR = "PARSE_ERROR";
-	// A mistake of the server's response, most likely 4 or 5 xx xx HTTP status
+	// A mistake of the server's call, most likely 4 or 5 xx xx HTTP status
 	// code.
 	public static final String SERVER_ERROR = "SERVER_ERROR";
 	// Connect to the server timed out

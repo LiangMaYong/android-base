@@ -225,7 +225,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
     }
 
     /**
-     * @return The maximum amount this scroll view will scroll in response to an
+     * @return The maximum amount this scroll view will scroll in call to an
      * arrow event.
      */
     public int getMaxScrollAmount() {
@@ -754,7 +754,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
 
     /**
      * <p>
-     * Handles scrolling in response to a "page up/down" shortcut press. This
+     * Handles scrolling in call to a "page up/down" shortcut press. This
      * method will scroll the view by one page up or down and give the focus to
      * the topmost/bottommost component in the new visible area. If no component
      * is a good candidate for focus, this scrollview reclaims the focus.
@@ -791,7 +791,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
 
     /**
      * <p>
-     * Handles scrolling in response to a "home/end" shortcut press. This method
+     * Handles scrolling in call to a "home/end" shortcut press. This method
      * will scroll the view to the top or bottom and give the focus to the
      * topmost/bottommost component in the new visible area. If no component is
      * a good candidate for focus, this scrollview reclaims the focus.
@@ -864,7 +864,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
     }
 
     /**
-     * Handle scrolling in response to an up or down arrow click.
+     * Handle scrolling in call to an up or down arrow click.
      *
      * @param direction The direction corresponding to the arrow key that was pressed
      * @return True if we consumed the event, false otherwise
