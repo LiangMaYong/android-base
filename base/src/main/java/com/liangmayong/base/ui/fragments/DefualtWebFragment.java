@@ -1,9 +1,9 @@
 package com.liangmayong.base.ui.fragments;
 
 import android.annotation.SuppressLint;
-import android.view.View;
 
 import com.liangmayong.base.sub.BaseSubWebFragment;
+import com.liangmayong.base.sub.webkit.BaseWebView;
 import com.liangmayong.base.sub.webkit.BaseWebWidget;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class DefualtWebFragment extends BaseSubWebFragment {
     private static final List<BaseWebWidget> WIDGETS = new ArrayList<BaseWebWidget>();
 
     @Override
-    protected void initWebView(View rootView) {
+    protected void initWebView(BaseWebView rootView) {
         super.initWebView(rootView);
     }
 
@@ -94,12 +94,12 @@ public class DefualtWebFragment extends BaseSubWebFragment {
     }
 
     @Override
-    protected Map<String, String> generateHeaders() {
+    protected Map<String, String> getHeaders() {
         return HEADERS;
     }
 
     @Override
-    protected List<BaseWebWidget> generateWidgets() {
+    protected List<BaseWebWidget> getWidgets() {
         return WIDGETS;
     }
 

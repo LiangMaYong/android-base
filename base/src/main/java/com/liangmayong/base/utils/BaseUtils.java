@@ -55,6 +55,17 @@ public class BaseUtils {
         goTo(context, WebActivity.class, extras);
     }
 
+    /**
+     * goHome
+     *
+     * @param context context
+     */
+    public static void goHome(Context context) {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 
     /**
      * goTo
@@ -82,5 +93,32 @@ public class BaseUtils {
             context.startActivity(intent);
         } catch (ClassNotFoundException e) {
         }
+    }
+
+    /**
+     * goToForResult
+     *
+     * @param activity    activity
+     * @param cls         cls
+     * @param requestCode requestCode
+     */
+    public static void goToForResult(Activity activity, Class<? extends Activity> cls, int requestCode) {
+        goToForResult(activity, cls, null, requestCode);
+    }
+
+    /**
+     * goToForResult
+     *
+     * @param activity    activity
+     * @param cls         cls
+     * @param extras      extras
+     * @param requestCode requestCode
+     */
+    public static void goToForResult(Activity activity, Class<? extends Activity> cls, Bundle extras, int requestCode) {
+        Intent intent = new Intent(activity, cls);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        activity.startActivityForResult(intent, requestCode);
     }
 }

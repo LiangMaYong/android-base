@@ -18,8 +18,8 @@ public abstract class BaseSubActivity extends BaseActivity {
     //mFrameViewgradlew
     private BaseSubFragmentManager mSubManager;
 
-    //getSubManager
-    public BaseSubFragmentManager getSubManager() {
+    //getSubFragmentManager
+    public BaseSubFragmentManager getSubFragmentManager() {
         return mSubManager;
     }
 
@@ -29,7 +29,7 @@ public abstract class BaseSubActivity extends BaseActivity {
         generateContainerView();
         BaseSubFragment fragment = generateSubFragment();
         if (fragment != null) {
-            mSubManager = new BaseSubFragmentManager(this, generateContainerViewId(), fragment);
+            mSubManager = new BaseSubFragmentManager(this, generateFragmentContainerId(), fragment);
         } else {
             throw new IllegalArgumentException("generateSubFragment return can't is NULL");
         }
@@ -50,11 +50,11 @@ public abstract class BaseSubActivity extends BaseActivity {
     public abstract BaseSubFragment generateSubFragment();
 
     /**
-     * generateContainerViewId
+     * generateFragmentContainerId
      *
      * @return id
      */
-    protected int generateContainerViewId() {
+    protected int generateFragmentContainerId() {
         return R.id.base_sub_fragment;
     }
 

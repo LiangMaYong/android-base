@@ -335,14 +335,14 @@ public class SkinLinearLayout extends LinearLayout implements SkinInterface {
 
 
     @Override
-    public void onRefreshSkin(com.liangmayong.base.widget.skin.Skin skin) {
+    public void onSkinRefresh(com.liangmayong.base.widget.skin.Skin skin) {
         if (mSetSkinColor) {
             setUnpressedColor(mSkinColor);
         } else {
             setUnpressedColor(skin.getColor(skinType));
         }
         if (skinRefreshListener != null) {
-            skinRefreshListener.onRefreshSkin(skin);
+            skinRefreshListener.onSkinRefresh(skin);
         }
     }
 

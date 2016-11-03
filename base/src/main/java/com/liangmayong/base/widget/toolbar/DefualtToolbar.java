@@ -31,7 +31,7 @@ public class DefualtToolbar {
     private Skin.SkinType skinType = Skin.SkinType.defualt;
     private OnSkinRefreshListener skinRefreshListener = new OnSkinRefreshListener() {
         @Override
-        public void onRefreshSkin(Skin skin) {
+        public void onSkinRefresh(Skin skin) {
             if (toolbar_layout != null) {
                 int textColor = skin.getTextColor(skinType);
                 int textPreColor = Color.argb(Color.alpha(textColor), Math.abs(Color.red(textColor) - 0x15), Math.abs(Color.green(textColor) - 0x15), Math.abs(Color.blue(textColor) - 0x15));

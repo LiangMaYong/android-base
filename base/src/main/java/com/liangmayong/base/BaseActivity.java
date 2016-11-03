@@ -3,7 +3,6 @@ package com.liangmayong.base;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,16 +18,16 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.liangmayong.base.ui.activitys.WebActivity;
+import com.liangmayong.base.utils.BaseUtils;
+import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.utils.fixbug.Android5497Workaround;
-import com.liangmayong.base.widget.interfaces.BaseInterface;
-import com.liangmayong.base.widget.binding.annotations.BindP;
 import com.liangmayong.base.widget.binding.Presenter;
 import com.liangmayong.base.widget.binding.PresenterBind;
 import com.liangmayong.base.widget.binding.PresenterHolder;
-import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.binding.ViewBinding;
+import com.liangmayong.base.widget.binding.annotations.BindP;
 import com.liangmayong.base.widget.binding.interfaces.TitleBindInterface;
+import com.liangmayong.base.widget.interfaces.BaseInterface;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.statusbar.StatusBarCompat;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
@@ -242,7 +241,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     }
 
     @Override
-    public void onRefreshSkin(Skin skin) {
+    public void onSkinRefresh(Skin skin) {
         if (isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             StatusBarCompat.translucentStatusBar(this, true);
         } else {
@@ -257,37 +256,27 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     }
 
     public void goTo(Class<? extends Activity> cls) {
-        goToForResult(cls, null, -1);
+        BaseUtils.goTo(this, cls);
     }
 
     public void goTo(Class<? extends Activity> cls, Bundle extras) {
-        goToForResult(cls, extras, -1);
+        BaseUtils.goTo(this, cls, extras);
     }
 
     public void goHome() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        BaseUtils.goHome(this);
     }
 
     public void goTo(String title, String url) {
-        Bundle extras = new Bundle();
-        extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
-        extras.putString(BaseInterface.WEB_EXTRA_URL, url);
-        goTo(WebActivity.class, extras);
+        BaseUtils.goTo(this, title, url);
     }
 
     public void goToForResult(Class<? extends Activity> cls, int requestCode) {
-        goToForResult(cls, null, requestCode);
+        BaseUtils.goToForResult(this, cls, null, requestCode);
     }
 
     public void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
-        Intent intent = new Intent(this, cls);
-        if (extras != null) {
-            intent.putExtras(extras);
-        }
-        this.startActivityForResult(intent, requestCode);
+        BaseUtils.goToForResult(this, cls, extras, requestCode);
     }
 
     public void hideSoftKeyBoard() {

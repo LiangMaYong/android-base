@@ -116,7 +116,7 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements Base
         }
         inputManager = (InputMethodManager) getHostActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         initView(rootView);
-        onRefreshSkin(Skin.get());
+        onSkinRefresh(Skin.get());
         return rootView;
     }
 
@@ -130,7 +130,7 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements Base
     }
 
     /**
-     * generateContainerViewId
+     * generateFragmentContainerId
      *
      * @return containerViewId
      */
@@ -179,7 +179,7 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements Base
     }
 
     @Override
-    public void onRefreshSkin(Skin skin) {
+    public void onSkinRefresh(Skin skin) {
     }
 
     public void onDestroy() {

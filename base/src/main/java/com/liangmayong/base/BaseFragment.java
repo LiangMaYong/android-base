@@ -2,7 +2,6 @@ package com.liangmayong.base;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -13,15 +12,15 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.liangmayong.base.ui.activitys.WebActivity;
-import com.liangmayong.base.widget.interfaces.BaseInterface;
-import com.liangmayong.base.widget.binding.annotations.BindP;
+import com.liangmayong.base.utils.BaseUtils;
+import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.binding.Presenter;
 import com.liangmayong.base.widget.binding.PresenterBind;
 import com.liangmayong.base.widget.binding.PresenterHolder;
-import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.binding.ViewBinding;
+import com.liangmayong.base.widget.binding.annotations.BindP;
 import com.liangmayong.base.widget.binding.interfaces.TitleBindInterface;
+import com.liangmayong.base.widget.interfaces.BaseInterface;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 
@@ -132,7 +131,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
         }
         inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         initView(rootView);
-        onRefreshSkin(Skin.get());
+        onSkinRefresh(Skin.get());
         return rootView;
     }
 
@@ -146,7 +145,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     }
 
     /**
-     * generateContainerViewId
+     * generateFragmentContainerId
      *
      * @return containerViewId
      */
@@ -201,7 +200,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     }
 
     @Override
-    public void onRefreshSkin(Skin skin) {
+    public void onSkinRefresh(Skin skin) {
     }
 
     @Override
@@ -212,37 +211,27 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     }
 
     public void goTo(Class<? extends Activity> cls) {
-        goToForResult(cls, null, -1);
+        BaseUtils.goTo(getContext(), cls);
     }
 
     public void goTo(Class<? extends Activity> cls, Bundle extras) {
-        goToForResult(cls, extras, -1);
+        BaseUtils.goTo(getContext(), cls, extras);
     }
 
     public void goHome() {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        BaseUtils.goHome(getContext());
     }
 
     public void goTo(String title, String url) {
-        Bundle extras = new Bundle();
-        extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
-        extras.putString(BaseInterface.WEB_EXTRA_URL, url);
-        goTo(WebActivity.class, extras);
+        BaseUtils.goTo(getContext(), title, url);
     }
 
     public void goToForResult(Class<? extends Activity> cls, int requestCode) {
-        goToForResult(cls, null, requestCode);
+        BaseUtils.goToForResult(getActivity(), cls, null, requestCode);
     }
 
     public void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
-        Intent intent = new Intent(getActivity(), cls);
-        if (extras != null) {
-            intent.putExtras(extras);
-        }
-        getActivity().startActivityForResult(intent, requestCode);
+        BaseUtils.goToForResult(getActivity(), cls, extras, requestCode);
     }
 
     public void hideSoftKeyBoard() {

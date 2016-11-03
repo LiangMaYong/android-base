@@ -1,27 +1,22 @@
 package com.liangmayong.base.sub;
 
 import android.annotation.SuppressLint;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.ConsoleMessage;
-import android.webkit.DownloadListener;
-import android.webkit.GeolocationPermissions;
-import android.webkit.JsPromptResult;
-import android.webkit.JsResult;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.liangmayong.base.R;
+import com.liangmayong.base.sub.webkit.BaseWebChromeClient;
+import com.liangmayong.base.sub.webkit.BaseWebView;
 import com.liangmayong.base.sub.webkit.BaseWebViewClient;
 import com.liangmayong.base.sub.webkit.BaseWebWidget;
-import com.liangmayong.base.utils.LogUtils;
 import com.liangmayong.base.utils.ShareUtils;
 import com.liangmayong.base.utils.StringUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
@@ -38,16 +33,6 @@ import java.util.Map;
 @SuppressLint("ValidFragment")
 public class BaseSubWebFragment extends BaseSubFragment {
 
-    /**
-     * Java call js function format with parameters
-     */
-    private static final String FUNC_FORMAT_WITH_PARAMETERS = "javascript:window.%s('%s')";
-
-    /**
-     * Java call js function format without parameters
-     */
-    private static final String FUNC_FORMAT = "javascript:window.%s()";
-
     public BaseSubWebFragment(String title, String url) {
         this.title = title;
         this.url = url;
@@ -56,20 +41,26 @@ public class BaseSubWebFragment extends BaseSubFragment {
     //base_refresh_layout
     private SwipeLayout base_refresh_layout;
     //base_webview
-    private WebView base_webview;
+    private BaseWebView base_webview;
     //title
     private String title = "";
     //url
     private String url = "";
-    //webViewClient
-    private BaseWebViewClient webViewClient = null;
+    //refreshEnabled
+    private boolean refreshEnabled = false;
+    //closeEnabled
+    private boolean closeEnabled = true;
+    //copyEnabled
+    private boolean copyEnabled = false;
+    //showMoreEnabled
+    private boolean showMoreEnabled = true;
 
     /**
      * initWebView
      *
      * @param rootView rootView
      */
-    protected void initWebView(View rootView) {
+    protected void initWebView(BaseWebView rootView) {
     }
 
     /**
@@ -82,44 +73,36 @@ public class BaseSubWebFragment extends BaseSubFragment {
     }
 
     @Override
-    protected void initSubView(View rootView) {
-        base_webview = new WebView(getActivity());
+    protected final void initSubView(View rootView) {
+        base_webview = new BaseWebView(getActivity());
         base_webview.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         base_refresh_layout = (SwipeLayout) rootView.findViewById(R.id.base_swipeLayout);
         base_refresh_layout.addView(base_webview);
-        base_refresh_layout.setEnabled(generateRefreshEnabled());
+        base_refresh_layout.setEnabled(refreshEnabled);
         base_refresh_layout.setColorSchemeColors(Skin.get().getThemeColor());
         base_refresh_layout.setViewGroup(base_webview);
         base_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                reload();
                 base_refresh_layout.setRefreshing(false);
+                reload();
             }
         });
         if (Build.VERSION.SDK_INT >= 9) {
             base_webview.setOverScrollMode(View.OVER_SCROLL_NEVER);
         }
-        if (getDefualtToolbar() != null) {
-            getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onBackPressed();
-                }
-            });
-            if (generateShowMoreMenu()) {
-                getDefualtToolbar().rightOne().iconToLeft(Icon.icon_more).clicked(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showMoreDialog(v);
-                    }
-                });
+        initDefualtToolbar();
+        base_webview.setWebViewClient(new BaseWebViewClient() {
+            @Override
+            protected Map<String, String> generateHeaders() {
+                return BaseSubWebFragment.this.getHeaders();
             }
-        }
-        webViewClient = generateWebViewClient();
-        if (webViewClient != null) {
-            base_webview.setWebViewClient(webViewClient);
-        }
+
+            @Override
+            protected List<BaseWebWidget> generateWidgets() {
+                return BaseSubWebFragment.this.getWidgets();
+            }
+        });
         base_webview.getSettings().setJavaScriptEnabled(true);
         base_webview.getSettings().setDomStorageEnabled(true);
         base_webview.getSettings().setUseWideViewPort(true);
@@ -133,79 +116,33 @@ public class BaseSubWebFragment extends BaseSubFragment {
         }
         base_webview.loadData("", "text/html", null);
         base_webview.getSettings().setDefaultTextEncodingName("UTF-8");
-        base_webview.setWebChromeClient(new WebChromeClient() {
+        base_webview.setWebChromeClient(new BaseWebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
                     getDefualtToolbar().setProgress(0);
                     setToolbarTitle(view.getTitle());
                     // injection ja
-                    injectionAssetsJS("javascript/base.js");
+                    base_webview.injectionAssetsJS("javascript/base.js");
                 } else {
                     getDefualtToolbar().setProgress(newProgress);
                 }
                 super.onProgressChanged(view, newProgress);
             }
-
-            @Override
-            public boolean onJsAlert(WebView view, String url, String message,
-                                     JsResult result) {
-                result.confirm();
-                return true;
-            }
-
-            @Override
-            public boolean onJsConfirm(WebView view, String url,
-                                       String message, JsResult result) {
-                result.confirm();
-                return true;
-            }
-
-            @Override
-            public boolean onJsPrompt(WebView view, String url,
-                                      String message, String defaultValue,
-                                      JsPromptResult result) {
-                result.confirm();
-                return true;
-            }
-
-            @Override
-            public void onGeolocationPermissionsShowPrompt(String origin,
-                                                           GeolocationPermissions.Callback callback) {
-                callback.invoke(origin, true, false);
-            }
-
-            @Override
-            public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
-                LogUtils.get("WebConsole").i(consoleMessage.message());
-                return super.onConsoleMessage(consoleMessage);
-            }
-
-            @Override
-            public void onConsoleMessage(String message, int lineNumber, String sourceID) {
-                super.onConsoleMessage(message, lineNumber, sourceID);
-                LogUtils.get("WebConsole").i(message);
-            }
-
         });
-        DownloadListener downloadListener = generateDownLoadListener();
-        if (downloadListener != null) {
-            base_webview.setDownloadListener(new BaseWebViewDownLoadListener());
-        }
-        base_webview.loadUrl(url, generateHeaders());
-        setToolbarTitle(title);
-        removeSearchBoxJavaBridgeInterface();
-        initWebView(rootView);
+        base_webview.loadUrl(url, getHeaders());
+        initData();
+        initWebView(base_webview);
     }
 
     /**
-     * showShareDialog
-     *
-     * @param title title
-     * @param url   url
+     * initData
      */
-    public void showShareDialog(String title, String url) {
-        ShareUtils.shareText(getContext(), getString(R.string.base_web_share), url);
+    private void initData() {
+        if (url == null || "".equals(url) || "null".equals(url)) {
+            url = "about:blank";
+        }
+        setToolbarTitle(title);
     }
 
     /**
@@ -215,29 +152,62 @@ public class BaseSubWebFragment extends BaseSubFragment {
         base_webview.reload();
     }
 
-
     /**
      * showMoreDialog
      *
      * @param view view
      */
-    protected void showMoreDialog(View view) {
+    protected void showMoreDialog(final View view) {
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
-        builder.setItems(new String[]{getString(R.string.base_web_refresh), getString(R.string.base_web_share)}, new DialogInterface.OnClickListener() {
+        String items[] = null;
+        if (copyEnabled) {
+            items = new String[]{getString(R.string.base_web_refresh), getString(R.string.base_web_copylink), getString(R.string.base_web_share)};
+        } else {
+            items = new String[]{getString(R.string.base_web_refresh), getString(R.string.base_web_share)};
+        }
+        builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (which == 0) {
-                    reload();
-                } else {
-                    if (StringUtils.isEmpty(base_webview.getUrl())) {
-                        showShareDialog(base_webview.getTitle(), base_webview.getUrl());
+                String mUrl = url;
+                if (!StringUtils.isEmpty(base_webview.getUrl())) {
+                    mUrl = base_webview.getUrl();
+                }
+                if (copyEnabled) {
+                    if (which == 0) {
+                        reload();
+                    } else if (which == 1) {
+                        ClipboardManager cmb = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                            cmb.setText(mUrl);
+                        } else {
+                            android.text.ClipboardManager c = (android.text.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                            c.setText(mUrl);
+                        }
+                        showToast(getString(R.string.base_web_copylink_success));
                     } else {
-                        showShareDialog(base_webview.getTitle(), base_webview.getUrl());
+                        showShareDialog(view, base_webview.getTitle(), mUrl);
+                    }
+                } else {
+                    if (which == 0) {
+                        reload();
+                    } else {
+                        showShareDialog(view, base_webview.getTitle(), mUrl);
                     }
                 }
             }
         });
         builder.show();
+    }
+
+    /**
+     * showShareDialog
+     *
+     * @param view  view
+     * @param title title
+     * @param url   url
+     */
+    public void showShareDialog(View view, String title, String url) {
+        ShareUtils.shareText(getContext(), getString(R.string.base_web_share), url);
     }
 
     /**
@@ -263,36 +233,100 @@ public class BaseSubWebFragment extends BaseSubFragment {
         return R.layout.base_defualt_fragment_web;
     }
 
+
     /**
-     * generateRefreshEnabled
+     * isCloseEnabled
      *
-     * @return false
+     * @return closeEnabled
      */
-    protected boolean generateRefreshEnabled() {
-        return false;
+    public boolean isCloseEnabled() {
+        return closeEnabled;
     }
 
     /**
-     * generateCloseEnabled
+     * isRefreshEnabled
      *
-     * @return false
+     * @return refreshEnabled
      */
-    protected boolean generateCloseEnabled() {
-        return true;
+    public boolean isRefreshEnabled() {
+        return refreshEnabled;
     }
 
     /**
-     * generateShowMoreMenu
+     * isShowMoreEnabled
      *
-     * @return true
+     * @return showMoreEnabled
      */
-    protected boolean generateShowMoreMenu() {
-        return true;
+    public boolean isShowMoreEnabled() {
+        return showMoreEnabled;
+    }
+
+    public boolean isCopyEnabled() {
+        return copyEnabled;
+    }
+
+    /**
+     * setRefreshEnabled
+     *
+     * @param refreshEnabled refreshEnabled
+     */
+    public void setRefreshEnabled(boolean refreshEnabled) {
+        this.refreshEnabled = refreshEnabled;
+        if (base_refresh_layout != null) {
+            base_refresh_layout.setEnabled(refreshEnabled);
+        }
+    }
+
+    /**
+     * setCopyEnabled
+     *
+     * @param copyEnabled copyEnabled
+     */
+    public void setCopyEnabled(boolean copyEnabled) {
+        this.copyEnabled = copyEnabled;
+    }
+
+    /**
+     * setCloseEnabled
+     *
+     * @param closeEnabled closeEnabled
+     */
+    public void setCloseEnabled(boolean closeEnabled) {
+        this.closeEnabled = closeEnabled;
+        if (getDefualtToolbar() != null) {
+            if (!closeEnabled) {
+                getDefualtToolbar().rightTwo().gone();
+            }
+        }
+    }
+
+    public void setShowMoreEnabled(boolean showMoreEnabled) {
+        this.showMoreEnabled = showMoreEnabled;
+        initDefualtToolbar();
+    }
+
+    private void initDefualtToolbar() {
+        if (getDefualtToolbar() != null) {
+            getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onBackPressed();
+                }
+            });
+            if (showMoreEnabled) {
+                getDefualtToolbar().rightOne().iconToLeft(Icon.icon_more).clicked(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showMoreDialog(v);
+                    }
+                });
+            }
+        }
     }
 
     @Override
-    public void onRefreshSkin(Skin skin) {
-        super.onRefreshSkin(skin);
+    public void onSkinRefresh(Skin skin) {
+        super.onSkinRefresh(skin);
         if (base_refresh_layout != null) {
             base_refresh_layout.setColorSchemeColors(skin.getThemeColor());
         }
@@ -303,7 +337,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
      *
      * @return weiget
      */
-    protected List<BaseWebWidget> generateWidgets() {
+    protected List<BaseWebWidget> getWidgets() {
         return null;
     }
 
@@ -312,121 +346,15 @@ public class BaseSubWebFragment extends BaseSubFragment {
      *
      * @return headers
      */
-    protected Map<String, String> generateHeaders() {
+    protected Map<String, String> getHeaders() {
         return null;
-    }
-
-    /**
-     * getDownLoadListener
-     *
-     * @return DownloadListener
-     */
-    protected DownloadListener generateDownLoadListener() {
-        return new BaseWebViewDownLoadListener();
-    }
-
-    /**
-     * getWebViewClient
-     *
-     * @return WebViewClient
-     */
-    protected BaseWebViewClient generateWebViewClient() {
-        return new BaseWebViewClient() {
-            @Override
-            protected Map<String, String> generateHeaders() {
-                return BaseSubWebFragment.this.generateHeaders();
-            }
-
-            @Override
-            protected List<BaseWebWidget> generateWidgets() {
-                return BaseSubWebFragment.this.generateWidgets();
-            }
-        };
-    }
-
-    /**
-     * initData
-     */
-    private void initData() {
-        if (url == null || "".equals(url) || "null".equals(url)) {
-            url = "about:blank";
-        }
-        getDefualtToolbar().setTitle(title);
-    }
-
-    @SuppressLint("NewApi")
-    private void removeSearchBoxJavaBridgeInterface() {
-        if (hasHoneycomb() && !hasJellyBeanMR1()) {
-            base_webview.removeJavascriptInterface("searchBoxJavaBridge_");
-        }
-    }
-
-    private boolean hasHoneycomb() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
-    }
-
-    private boolean hasJellyBeanMR1() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
-    }
-
-    /**
-     * injectionAssetsJS
-     *
-     * @param filename filename
-     */
-    public void injectionAssetsJS(String filename) {
-        if (webViewClient != null) {
-            webViewClient.injectionAssetsJS(base_webview, filename);
-        }
-    }
-
-    /**
-     * BaseWebViewDownLoadListener
-     */
-    private class BaseWebViewDownLoadListener implements DownloadListener {
-        @Override
-        public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,
-                                    long contentLength) {
-            Uri uri = Uri.parse(url);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-        }
-    }
-
-
-    /**
-     * callFunction
-     *
-     * @param functionName functionName
-     */
-    public void callFunction(String functionName) {
-        callFunction(functionName, null);
-    }
-
-    /**
-     * callFunction
-     *
-     * @param functionName functionName
-     * @param jsonString   jsonString
-     */
-    public void callFunction(String functionName, String jsonString) {
-        if (StringUtils.isEmpty(functionName)) {
-            return;
-        }
-        if (StringUtils.isEmpty(jsonString)) {
-            base_webview.loadUrl(String.format(FUNC_FORMAT, functionName));
-        } else {
-            jsonString = jsonString.replaceAll("(\\\\)([^utrn])", "\\\\\\\\$1$2");
-            jsonString = jsonString.replaceAll("(?<=[^\\\\])(\")", "\\\\\"");
-            base_webview.loadUrl(String.format(FUNC_FORMAT_WITH_PARAMETERS, functionName, jsonString));
-        }
     }
 
     @Override
     public boolean onBackPressed() {
         if (base_webview != null && base_webview.canGoBack()) {
             base_webview.goBack();
-            if (generateCloseEnabled() && getDefualtToolbar() != null) {
+            if (closeEnabled && getDefualtToolbar() != null) {
                 getDefualtToolbar().rightTwo().iconToLeft(Icon.icon_close).clicked(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

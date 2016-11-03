@@ -353,7 +353,7 @@ public class SkinButton extends Button implements SkinInterface {
 
 
     @Override
-    public void onRefreshSkin(Skin skin) {
+    public void onSkinRefresh(Skin skin) {
         if (mSetSkinColor) {
             setUnpressedColor(mSkinColor);
         } else {
@@ -373,7 +373,7 @@ public class SkinButton extends Button implements SkinInterface {
             }
         }
         if (skinRefreshListener != null) {
-            skinRefreshListener.onRefreshSkin(skin);
+            skinRefreshListener.onSkinRefresh(skin);
         }
     }
 

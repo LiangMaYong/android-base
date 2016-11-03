@@ -332,14 +332,14 @@ public class SkinView extends View implements SkinInterface {
 
 
     @Override
-    public void onRefreshSkin(Skin skin) {
+    public void onSkinRefresh(Skin skin) {
         if (mSetSkinColor) {
             setUnpressedColor(mSkinColor);
         } else {
             setUnpressedColor(skin.getColor(skinType));
         }
         if (skinRefreshListener != null) {
-            skinRefreshListener.onRefreshSkin(skin);
+            skinRefreshListener.onSkinRefresh(skin);
         }
     }
 

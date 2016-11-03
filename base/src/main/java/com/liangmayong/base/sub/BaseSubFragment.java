@@ -97,7 +97,7 @@ public abstract class BaseSubFragment extends BaseFragment {
     public void finish() {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
-            ((BaseSubActivity) getActivity()).getSubManager().closeFragment(this, 0, 0);
+            ((BaseSubActivity) getActivity()).getSubFragmentManager().closeFragment(this, 0, 0);
         } else {
             getActivity().finish();
         }
@@ -109,7 +109,7 @@ public abstract class BaseSubFragment extends BaseFragment {
     public void finish(int popEnter, int popExit) {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
-            ((BaseSubActivity) getActivity()).getSubManager().closeFragment(this, popEnter, popExit);
+            ((BaseSubActivity) getActivity()).getSubFragmentManager().closeFragment(this, popEnter, popExit);
         } else {
             getActivity().finish();
         }
@@ -124,7 +124,7 @@ public abstract class BaseSubFragment extends BaseFragment {
     public void open(BaseSubFragment fragment) {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
-            ((BaseSubActivity) getActivity()).getSubManager().addFragment(fragment, 0, 0);
+            ((BaseSubActivity) getActivity()).getSubFragmentManager().addFragment(fragment, 0, 0);
         }
     }
 
@@ -136,7 +136,7 @@ public abstract class BaseSubFragment extends BaseFragment {
     public void open(BaseSubFragment fragment, int enterAnim, int exitAnim) {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
-            ((BaseSubActivity) getActivity()).getSubManager().addFragment(fragment, enterAnim, exitAnim);
+            ((BaseSubActivity) getActivity()).getSubFragmentManager().addFragment(fragment, enterAnim, exitAnim);
         }
     }
 
@@ -147,7 +147,7 @@ public abstract class BaseSubFragment extends BaseFragment {
      */
     public void close(BaseSubFragment fragment) {
         if (getActivity() instanceof BaseSubActivity) {
-            ((BaseSubActivity) getActivity()).getSubManager().closeFragment(fragment, 0, 0);
+            ((BaseSubActivity) getActivity()).getSubFragmentManager().closeFragment(fragment, 0, 0);
         }
     }
 

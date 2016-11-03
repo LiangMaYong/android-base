@@ -1,5 +1,7 @@
 <resources>
     <string name="base_app_name">AndroidBase</string>
     <string name="base_web_refresh">刷新</string>
+    <string name="base_web_copylink">复制链接</string>
+    <string name="base_web_copylink_success">复制成功</string>
     <string name="base_web_share">分享到</string>
 </resources>

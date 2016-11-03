@@ -345,7 +345,7 @@ public class SkinTextView extends TextView implements SkinInterface {
 
 
     @Override
-    public void onRefreshSkin(com.liangmayong.base.widget.skin.Skin skin) {
+    public void onSkinRefresh(com.liangmayong.base.widget.skin.Skin skin) {
         if (mSetSkinColor) {
             setUnpressedColor(mSkinColor);
         } else {
@@ -365,7 +365,7 @@ public class SkinTextView extends TextView implements SkinInterface {
             }
         }
         if (skinRefreshListener != null) {
-            skinRefreshListener.onRefreshSkin(skin);
+            skinRefreshListener.onSkinRefresh(skin);
         }
     }
 

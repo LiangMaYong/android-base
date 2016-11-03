@@ -1,5 +1,6 @@
 package com.liangmayong.base.sub.webkit;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -10,9 +11,6 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -109,7 +107,7 @@ public class BaseWebViewClient extends WebViewClient {
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        if(!view.getSettings().getLoadsImagesAutomatically()) {
+        if (!view.getSettings().getLoadsImagesAutomatically()) {
             view.getSettings().setLoadsImagesAutomatically(true);
         }
     }
@@ -130,30 +128,5 @@ public class BaseWebViewClient extends WebViewClient {
      */
     protected List<BaseWebWidget> generateWidgets() {
         return null;
-    }
-
-    /**
-     * injectionAssetsJS
-     *
-     * @param filename filename
-     */
-    public void injectionAssetsJS(WebView view, String filename) {
-        try {
-            InputStream in = view.getContext().getAssets().open(filename);
-            byte buff[] = new byte[1024];
-            int numread = 0;
-            ByteArrayOutputStream fromFile = new ByteArrayOutputStream();
-            do {
-                numread = in.read(buff);
-                if (numread <= 0) {
-                    break;
-                }
-                fromFile.write(buff, 0, numread);
-            } while (true);
-            String wholeJS = fromFile.toString();
-            view.loadUrl("javascript:" + wholeJS);
-            fromFile.close();
-        } catch (IOException e) {
-        }
     }
 }

@@ -48,8 +48,8 @@ public abstract class BaseSubListFragment extends BaseSubFragment {
     }
 
     @Override
-    public void onRefreshSkin(Skin skin) {
-        super.onRefreshSkin(skin);
+    public void onSkinRefresh(Skin skin) {
+        super.onSkinRefresh(skin);
         if (refreshLayout != null) {
             refreshLayout.setColorSchemeColors(skin.getThemeColor());
         }
