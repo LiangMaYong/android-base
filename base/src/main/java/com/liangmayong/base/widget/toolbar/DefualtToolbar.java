@@ -380,26 +380,6 @@ public class DefualtToolbar {
         }
 
         /**
-         * hideBackground
-         *
-         * @return toolbar
-         */
-        public ToolbarItem hideBackground() {
-            getIconView().setBackgroundColor(0x00ffffff);
-            return this;
-        }
-
-        /**
-         * showBackground
-         *
-         * @return toolbar
-         */
-        public ToolbarItem showBackground() {
-            getIconView().setBackgroundResource(R.drawable.base_defualt_item_selector);
-            return this;
-        }
-
-        /**
          * getIconView
          *
          * @return iconview
@@ -436,7 +416,7 @@ public class DefualtToolbar {
          * text
          *
          * @param text text
-         * @return ToolbarItem
+         * @return icon bar
          */
         public ToolbarItem text(CharSequence text) {
             this.getIconView().setText(text, null);
@@ -479,9 +459,9 @@ public class DefualtToolbar {
         }
 
         /**
-         * IBActionButton VIEW
+         * get view
          *
-         * @return IBActionButton
+         * @return icon bar
          */
         public IconView getView() {
             return getIconView();
@@ -491,9 +471,9 @@ public class DefualtToolbar {
          * setPaddingLeft
          *
          * @param left left
-         * @return ToolbarItem
+         * @return icon bar
          */
-        public ToolbarItem setPaddingLeft(int left) {
+        public ToolbarItem paddingLeft(int left) {
             getIconView().setPadding(left, getIconView().getPaddingTop(), getIconView().getPaddingRight(),
                     getIconView().getPaddingBottom());
             return this;
@@ -503,9 +483,9 @@ public class DefualtToolbar {
          * setPaddingLeftDip
          *
          * @param left left
-         * @return ToolbarItem
+         * @return icon bar
          */
-        public ToolbarItem setPaddingLeftDip(int left) {
+        public ToolbarItem paddingLeftDip(int left) {
             getIconView().setPadding(dip2Px(left), getIconView().getPaddingTop(), getIconView().getPaddingRight(),
                     getIconView().getPaddingBottom());
             return this;
@@ -515,9 +495,9 @@ public class DefualtToolbar {
          * setPaddingRight
          *
          * @param right right
-         * @return ToolbarItem
+         * @return icon bar
          */
-        public ToolbarItem setPaddingRight(int right) {
+        public ToolbarItem paddingRight(int right) {
             getIconView().setPadding(getIconView().getPaddingLeft(), getIconView().getPaddingTop(), right,
                     getIconView().getPaddingBottom());
             return this;
@@ -527,9 +507,9 @@ public class DefualtToolbar {
          * setPaddingRightDip
          *
          * @param right right
-         * @return ToolbarItem
+         * @return icon bar
          */
-        public ToolbarItem setPaddingRightDip(int right) {
+        public ToolbarItem paddingRightDip(int right) {
             getIconView().setPadding(getIconView().getPaddingLeft(), getIconView().getPaddingTop(), dip2Px(right),
                     getIconView().getPaddingBottom());
             return this;
@@ -567,7 +547,7 @@ public class DefualtToolbar {
          * @param rightdrawable rightdrawable
          * @return icon bar
          */
-        public ToolbarItem drawable(Drawable leftdrawable, Drawable rightdrawable) {
+        private ToolbarItem drawable(Drawable leftdrawable, Drawable rightdrawable) {
             if (leftdrawable != null) {
                 leftdrawable.setBounds(0, 0, leftdrawable.getMinimumWidth(), leftdrawable.getMinimumHeight());
             }
@@ -575,6 +555,41 @@ public class DefualtToolbar {
                 rightdrawable.setBounds(0, 0, rightdrawable.getMinimumWidth(), rightdrawable.getMinimumHeight());
             }
             getIconView().setCompoundDrawables(leftdrawable, rightdrawable, null, null);
+            return this;
+        }
+
+
+        /**
+         * drawableToRight
+         *
+         * @param resId resId
+         * @return icon bar
+         */
+        public ToolbarItem drawableToRight(int resId) {
+            Drawable drawable = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                drawable = getIconView().getContext().getDrawable(resId);
+            } else {
+                drawable = getIconView().getContext().getResources().getDrawable(resId);
+            }
+            drawable(null, drawable);
+            return this;
+        }
+
+        /**
+         * drawableToRight
+         *
+         * @param resId resId
+         * @return icon bar
+         */
+        public ToolbarItem drawableToLeft(int resId) {
+            Drawable drawable = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                drawable = getIconView().getContext().getDrawable(resId);
+            } else {
+                drawable = getIconView().getContext().getResources().getDrawable(resId);
+            }
+            drawable(drawable, null);
             return this;
         }
 
