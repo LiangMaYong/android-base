@@ -57,11 +57,17 @@ public class SkinRippleButton extends SkinButton {
 
     public SkinRippleButton(Context context, AttributeSet attrs) {
         super(context, attrs);
+        if (isInEditMode()) {
+            return;
+        }
         init(context);
     }
 
     public SkinRippleButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        if (isInEditMode()) {
+            return;
+        }
         init(context);
     }
 
@@ -84,6 +90,9 @@ public class SkinRippleButton extends SkinButton {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        if (isInEditMode()) {
+            return;
+        }
         if (mRipplePaint == null) {
             return;
         }
