@@ -79,7 +79,7 @@ public class SuperListView extends RelativeLayout {
     // columnCount
     private int columnCount = 1;
     // staggeredEnable
-    private boolean staggeredEnable = false;
+    private boolean staggeredEnable = true;
     //recyclerView
     private ProxyRecyclerView recyclerView;
 
@@ -438,7 +438,7 @@ public class SuperListView extends RelativeLayout {
      *
      * @return headLayout
      */
-    public LinearLayout getHeadLayout() {
+    private LinearLayout getHeadLayout() {
         return headLayout;
     }
 
@@ -447,9 +447,55 @@ public class SuperListView extends RelativeLayout {
      *
      * @return footLayout
      */
-    public LinearLayout getFootLayout() {
+    private LinearLayout getFootLayout() {
         return footLayout;
     }
+
+    /**
+     * setHeaderView
+     *
+     * @param view view
+     */
+    public void setHeaderView(View view) {
+        getHeadLayout().removeAllViews();
+        getHeadLayout().addView(view);
+    }
+
+    /**
+     * setFooterView
+     *
+     * @param view view
+     */
+    public void setFooterView(View view) {
+        getFootLayout().removeAllViews();
+        getFootLayout().addView(view);
+    }
+
+
+    /**
+     * getHeaderView
+     *
+     * @return header view
+     */
+    public View getHeaderView() {
+        if (getHeadLayout().getChildCount() > 0) {
+            return getHeadLayout().getChildAt(0);
+        }
+        return null;
+    }
+
+    /**
+     * getFooterView
+     *
+     * @return footer view
+     */
+    public View getFooterView() {
+        if (getFootLayout().getChildCount() > 0) {
+            return getFootLayout().getChildAt(0);
+        }
+        return null;
+    }
+
 
     /**
      * setOnLastItemVisibleListener
@@ -533,7 +579,7 @@ public class SuperListView extends RelativeLayout {
         if (Build.VERSION.SDK_INT >= 9) {
             recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         }
-        recyclerView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        recyclerView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
         recyclerView.addOnScrollListener(scrollListener);
         pool = new Pool();
         pool.attachTo(recyclerView);
@@ -1025,6 +1071,24 @@ public class SuperListView extends RelativeLayout {
         private OnItemClickListener<Data> clickListener;
         //longClickListener
         private OnItemLongClickListener<Data> longClickListener;
+
+        /**
+         * getOnClickListener
+         *
+         * @return clickListener
+         */
+        protected OnItemClickListener<Data> getOnClickListener() {
+            return clickListener;
+        }
+
+        /**
+         * getOnLongClickListener
+         *
+         * @return longClickListener
+         */
+        protected OnItemLongClickListener<Data> getOnLongClickListener() {
+            return longClickListener;
+        }
 
         /**
          * setOnClickListener

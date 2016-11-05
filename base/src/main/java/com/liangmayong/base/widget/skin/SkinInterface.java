@@ -1,8 +1,5 @@
 package com.liangmayong.base.widget.skin;
 
-import com.liangmayong.base.widget.skin.OnSkinRefreshListener;
-import com.liangmayong.base.widget.skin.Skin;
-
 /**
  * Created by LiangMaYong on 2016/9/28.
  */
@@ -18,9 +15,7 @@ public interface SkinInterface extends com.liangmayong.base.widget.skin.OnSkinRe
 
     void setSkinType(Skin.SkinType skinType);
 
-    void setSkinColor(int mSkinColor);
-
-    void setSkinTextColor(int mSkinTextColor);
+    void setSkinColor(int skinColor, int skinTextColor);
 
     int getRadius();
 

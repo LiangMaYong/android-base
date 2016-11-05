@@ -81,6 +81,7 @@ public class SkinButton extends Button implements SkinInterface {
     }
 
     protected void initBG(final Context context, final AttributeSet attrs) {
+        setTextColor(0xffffffff);
         int color = 0xff333333;
         mPressedColor = 0xff333333;
         if (attrs != null) {
@@ -104,6 +105,19 @@ public class SkinButton extends Button implements SkinInterface {
                 mSetSkinTextColor = true;
             }
             typedArray.recycle();
+        }
+        if (isInEditMode()) {
+            if (!mSetSkinColor) {
+                this.mSkinColor = mPressedColor;
+                this.mSkinTextColor = 0xffffffff;
+                this.mSetSkinColor = true;
+                this.mSetSkinTextColor = true;
+            }
+            if (mShapeType == SHAPE_TYPE_STROKE || mShapeType == SHAPE_TYPE_TRANSPARENT) {
+                setTextColor(mSkinColor);
+            } else {
+                setTextColor(mSkinTextColor);
+            }
         }
         mBackgroundPaint = new Paint();
         mBackgroundPaint.setAntiAlias(true);
@@ -391,14 +405,10 @@ public class SkinButton extends Button implements SkinInterface {
         setShapeType(mShapeType);
     }
 
-    public void setSkinColor(int mSkinColor) {
-        this.mSkinColor = mSkinColor;
+    public void setSkinColor(int skinColor, int skinTextColor) {
+        this.mSkinColor = skinColor;
+        this.mSkinTextColor = skinTextColor;
         this.mSetSkinColor = true;
-        setShapeType(mShapeType);
-    }
-
-    public void setSkinTextColor(int mSkinTextColor) {
-        this.mSkinTextColor = mSkinTextColor;
         this.mSetSkinTextColor = true;
         setShapeType(mShapeType);
     }

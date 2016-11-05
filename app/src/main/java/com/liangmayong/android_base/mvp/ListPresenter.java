@@ -9,9 +9,13 @@ import com.liangmayong.base.widget.binding.Presenter;
  * Created by LiangMaYong on 2016/11/3.
  */
 
+/**
+ * 这是一个Presenter演示
+ */
 public class ListPresenter extends Presenter<ListPresenter.IView> {
 
     public interface IView {
+
         Context getContext();
 
         void loadDataSuccess(String data);
@@ -23,7 +27,7 @@ public class ListPresenter extends Presenter<ListPresenter.IView> {
             public void run() {
                 getViewInstance().loadDataSuccess("String");
             }
-        }, 5000);
+        }, 2000);
     }
 
 }

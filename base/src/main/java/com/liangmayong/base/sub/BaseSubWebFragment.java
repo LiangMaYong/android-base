@@ -81,6 +81,9 @@ public class BaseSubWebFragment extends BaseSubFragment {
         base_refresh_layout.setEnabled(refreshEnabled);
         base_refresh_layout.setColorSchemeColors(Skin.get().getThemeColor());
         base_refresh_layout.setViewGroup(base_webview);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            base_webview.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
         base_refresh_layout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
