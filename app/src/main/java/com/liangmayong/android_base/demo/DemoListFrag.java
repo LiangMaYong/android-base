@@ -9,8 +9,11 @@ import com.liangmayong.base.sub.BaseSubListFragment;
 import com.liangmayong.base.utils.BundleBuider;
 import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.widget.binding.annotations.BindTitle;
+import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
+import com.liangmayong.base.widget.superlistview.item.DefualtSuperData;
+import com.liangmayong.base.widget.superlistview.item.DefualtSuperItem;
 
 /**
  * Created by LiangMaYong on 2016/10/17.
@@ -79,6 +82,12 @@ public class DemoListFrag extends BaseSubListFragment {
     }
 
     private void add_data() {
+        getListView().getPool().add(new DefualtSuperItem("AndroidBase Item", "defualt view").setIcon(Icon.icon_camera).setOnItemClickListener(new SuperListView.OnItemClickListener<DefualtSuperData>() {
+            @Override
+            public void onClick(SuperListView.Item<DefualtSuperData> item, int position, View itemView) {
+
+            }
+        }));
         for (int i = 0; i < 500; i++) {
             if (i % 3 == 0) {
                 getListView().getPool().add(new DemoItemView("Item" + (i + 1)));

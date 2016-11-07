@@ -31,6 +31,7 @@ public final class ViewBinding {
      * parserActivity
      *
      * @param act Activity
+     * @return view
      */
     public static View parserActivity(Activity act) {
         if (null == act)
@@ -79,10 +80,30 @@ public final class ViewBinding {
     }
 
     /**
+     * parserLayout
+     *
+     * @param obj     obj
+     * @param context context
+     * @return view
+     */
+    public static View parserLayout(Object obj, Context context) {
+        if (null == obj || null == context)
+            return null;
+        Class<?> cl = obj.getClass();
+        View root = null;
+        if (isLayout(cl)) {
+            BindLayout layout = cl.getAnnotation(BindLayout.class);
+            root = LayoutInflater.from(context).inflate(layout.value(), null);
+        }
+        return root;
+    }
+
+    /**
      * parserClass
      *
      * @param obj     obj
      * @param context context
+     * @return view
      */
     public static View parserClass(Object obj, Context context) {
         if (null == obj || null == context)

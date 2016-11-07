@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.utils.Md5Utils;
-import com.liangmayong.base.widget.binding.ViewBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -1067,6 +1066,10 @@ public class SuperListView extends RelativeLayout {
         private int itemType = 0;
         //pool
         private Pool pool = null;
+        //clickable
+        private boolean clickable = true;
+        //longclickable
+        private boolean longClickable = true;
         //clickListener
         private OnItemClickListener<Data> clickListener;
         //longClickListener
@@ -1094,12 +1097,19 @@ public class SuperListView extends RelativeLayout {
          * setOnClickListener
          *
          * @param clickListener clickListener
+         * @return item
          */
         public Item<Data> setOnItemClickListener(OnItemClickListener<Data> clickListener) {
             this.clickListener = clickListener;
             return this;
         }
 
+        /**
+         * setOnItemLongClickListener
+         *
+         * @param longClickListener longClickListener
+         * @return item
+         */
         public Item<Data> setOnItemLongClickListener(OnItemLongClickListener<Data> longClickListener) {
             this.longClickListener = longClickListener;
             return this;
@@ -1150,6 +1160,41 @@ public class SuperListView extends RelativeLayout {
          */
         public int getPosition() {
             return position;
+        }
+
+        /**
+         * setClickable
+         *
+         * @param clickable clickable
+         */
+        public void setClickable(boolean clickable) {
+            this.clickable = clickable;
+        }
+
+        /**
+         * setLongClickable
+         *
+         * @param longClickable longClickable
+         */
+        public void setLongClickable(boolean longClickable) {
+            this.longClickable = longClickable;
+        }
+
+
+        /**
+         * isClickable
+         * @return clickable
+         */
+        public boolean isClickable() {
+            return clickable;
+        }
+
+        /**
+         * isLongClickable
+         * @return longClickable
+         */
+        public boolean isLongClickable() {
+            return longClickable;
         }
 
         /**
@@ -1210,22 +1255,33 @@ public class SuperListView extends RelativeLayout {
          */
         private final void proxyBindView(View itemView) {
             if (itemView != null) {
-                ViewBinding.parserClassByView(this, itemView);
-                if (clickListener != null) {
+                if (clickListener != null && clickable) {
                     itemView.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            if (!clickable) {
+                                return;
+                            }
                             clickListener.onClick(Item.this, getPosition(), v);
                         }
                     });
+                } else {
+                    itemView.setOnClickListener(null);
+                    itemView.setClickable(false);
                 }
-                if (longClickListener != null) {
+                if (longClickListener != null && longClickable) {
                     itemView.setOnLongClickListener(new OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
+                            if (!longClickable) {
+                                return false;
+                            }
                             return longClickListener.onLongClick(Item.this, getPosition(), v);
                         }
                     });
+                } else {
+                    itemView.setOnLongClickListener(null);
+                    itemView.setClickable(false);
                 }
             }
             bindView(itemView, data);

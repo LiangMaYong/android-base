@@ -13,8 +13,29 @@ import java.util.ArrayList;
  */
 
 public class BundleBuider {
+
+    public BundleBuider() {
+    }
+
+    public BundleBuider(Bundle extras) {
+        if (extras != null) {
+            if (this.extras == null) {
+                this.extras = new Bundle();
+            }
+            this.extras.putAll(extras);
+        }
+    }
+
     // extras
     private Bundle extras = null;
+
+    public BundleBuider put(String key, CharSequence value) {
+        if (extras == null) {
+            extras = new Bundle();
+        }
+        extras.putCharSequence(key, value);
+        return this;
+    }
 
     public BundleBuider put(String key, String value) {
         if (extras == null) {
