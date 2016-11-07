@@ -28,11 +28,11 @@ public class DemoItem2View extends SuperItem<String> {
     protected void onBindView(View itemView, String s) {
         tv_txt.setText(s);
         setClickable(false);
-        if (getOnClickListener() != null) {
+        if (getOnItemClickListener() != null) {
             btn_show.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    getOnClickListener().onClick(DemoItem2View.this, getPosition(), v);
+                    getOnItemClickListener().onClick(DemoItem2View.this, getPosition(), v);
                 }
             });
         }

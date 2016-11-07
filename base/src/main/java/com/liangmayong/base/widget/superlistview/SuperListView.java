@@ -1076,20 +1076,20 @@ public class SuperListView extends RelativeLayout {
         private OnItemLongClickListener<Data> longClickListener;
 
         /**
-         * getOnClickListener
+         * getOnItemClickListener
          *
          * @return clickListener
          */
-        protected OnItemClickListener<Data> getOnClickListener() {
+        protected OnItemClickListener<Data> getOnItemClickListener() {
             return clickListener;
         }
 
         /**
-         * getOnLongClickListener
+         * getOnItemLongClickListener
          *
          * @return longClickListener
          */
-        protected OnItemLongClickListener<Data> getOnLongClickListener() {
+        protected OnItemLongClickListener<Data> getOnItemLongClickListener() {
             return longClickListener;
         }
 
@@ -1183,6 +1183,7 @@ public class SuperListView extends RelativeLayout {
 
         /**
          * isClickable
+         *
          * @return clickable
          */
         public boolean isClickable() {
@@ -1191,6 +1192,7 @@ public class SuperListView extends RelativeLayout {
 
         /**
          * isLongClickable
+         *
          * @return longClickable
          */
         public boolean isLongClickable() {

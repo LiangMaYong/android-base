@@ -51,7 +51,7 @@ public final class DefualtSuperItem extends SuperListView.Item<DefualtSuperData>
         } else {
             holder.base_defualt_adapter_sub.setVisibility(View.GONE);
         }
-        if (getOnClickListener() == null || !isClickable()) {
+        if (getOnItemClickListener() == null || !isClickable()) {
             holder.base_defualt_adapter_arrow.setVisibility(View.GONE);
             holder.base_defualt_adapter_ripple.setClickable(false);
         } else {
