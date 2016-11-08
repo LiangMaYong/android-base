@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.liangmayong.android_base.R;
 import com.liangmayong.base.sub.BaseSubListFragment;
-import com.liangmayong.base.utils.BundleBuider;
+import com.liangmayong.base.utils.BundleBuilder;
 import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.utils.lifecycle.ActivityLifeCycle;
 import com.liangmayong.base.widget.binding.annotations.BindTitle;
@@ -96,7 +96,7 @@ public class DemoListFrag extends BaseSubListFragment {
                 getListView().getPool().add(new DemoItem2View("Item" + (i + 1)).setOnItemClickListener(new SuperListView.OnItemClickListener<String>() {
                     @Override
                     public void onClick(SuperListView.Item<String> item, int position, View itemView) {
-                        open(new DemoContentFragment().initArguments(new BundleBuider().put("title", item.getData()).buider()));
+                        open(new DemoContentFragment().initArguments(new BundleBuilder().put("title", item.getData()).buider()));
                     }
                 }));
             }

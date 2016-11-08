@@ -12,12 +12,12 @@ import java.util.ArrayList;
  * Created by LiangMaYong on 2016/11/1.
  */
 
-public class BundleBuider {
+public class BundleBuilder {
 
-    public BundleBuider() {
+    public BundleBuilder() {
     }
 
-    public BundleBuider(Bundle extras) {
+    public BundleBuilder(Bundle extras) {
         if (extras != null) {
             if (this.extras == null) {
                 this.extras = new Bundle();
@@ -29,7 +29,7 @@ public class BundleBuider {
     // extras
     private Bundle extras = null;
 
-    public BundleBuider put(String key, CharSequence value) {
+    public BundleBuilder put(String key, CharSequence value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -37,7 +37,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, String value) {
+    public BundleBuilder put(String key, String value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -45,7 +45,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, String[] value) {
+    public BundleBuilder put(String key, String[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -53,7 +53,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, int value) {
+    public BundleBuilder put(String key, int value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -62,7 +62,7 @@ public class BundleBuider {
     }
 
 
-    public BundleBuider put(String key, boolean value) {
+    public BundleBuilder put(String key, boolean value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -71,7 +71,7 @@ public class BundleBuider {
     }
 
 
-    public BundleBuider put(String key, boolean[] value) {
+    public BundleBuilder put(String key, boolean[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -79,7 +79,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, IBinder value) {
+    public BundleBuilder put(String key, IBinder value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -90,7 +90,7 @@ public class BundleBuider {
     }
 
 
-    public BundleBuider put(String key, Bundle value) {
+    public BundleBuilder put(String key, Bundle value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -99,7 +99,7 @@ public class BundleBuider {
     }
 
 
-    public BundleBuider put(String key, byte value) {
+    public BundleBuilder put(String key, byte value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -107,7 +107,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, byte[] value) {
+    public BundleBuilder put(String key, byte[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -115,7 +115,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, char value) {
+    public BundleBuilder put(String key, char value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -123,7 +123,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, char[] value) {
+    public BundleBuilder put(String key, char[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -131,7 +131,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, CharSequence[] value) {
+    public BundleBuilder put(String key, CharSequence[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -139,7 +139,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, float value) {
+    public BundleBuilder put(String key, float value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -147,7 +147,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, float[] value) {
+    public BundleBuilder put(String key, float[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -155,7 +155,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, Parcelable value) {
+    public BundleBuilder put(String key, Parcelable value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -163,7 +163,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, Parcelable[] value) {
+    public BundleBuilder put(String key, Parcelable[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -171,7 +171,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, Serializable value) {
+    public BundleBuilder put(String key, Serializable value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -179,7 +179,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, int[] value) {
+    public BundleBuilder put(String key, int[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -187,7 +187,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, double value) {
+    public BundleBuilder put(String key, double value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -195,7 +195,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, double[] value) {
+    public BundleBuilder put(String key, double[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -203,7 +203,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, long value) {
+    public BundleBuilder put(String key, long value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -211,7 +211,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, long[] value) {
+    public BundleBuilder put(String key, long[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -219,7 +219,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider putParcelableArrayList(String key, ArrayList<Parcelable> value) {
+    public BundleBuilder putParcelableArrayList(String key, ArrayList<Parcelable> value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -227,7 +227,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider putIntegerArrayList(String key, ArrayList<Integer> value) {
+    public BundleBuilder putIntegerArrayList(String key, ArrayList<Integer> value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -235,7 +235,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider putCharSequenceArrayList(String key, ArrayList<CharSequence> value) {
+    public BundleBuilder putCharSequenceArrayList(String key, ArrayList<CharSequence> value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -243,7 +243,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider put(String key, ArrayList<String> value) {
+    public BundleBuilder put(String key, ArrayList<String> value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -251,7 +251,7 @@ public class BundleBuider {
         return this;
     }
 
-    public BundleBuider putAll(Bundle value) {
+    public BundleBuilder putAll(Bundle value) {
         if (extras == null) {
             extras = new Bundle();
         }

@@ -14,15 +14,15 @@ import java.util.ArrayList;
  * Created by LiangMaYong on 2016/11/1.
  */
 
-public class IntentBuider {
+public class IntentBuilder {
     // extras
     private Bundle extras = null;
 
 
-    public IntentBuider() {
+    public IntentBuilder() {
     }
 
-    public IntentBuider(Bundle extras) {
+    public IntentBuilder(Bundle extras) {
         if (extras != null) {
             if (this.extras == null) {
                 this.extras = new Bundle();
@@ -31,7 +31,7 @@ public class IntentBuider {
         }
     }
 
-    public IntentBuider put(String key, CharSequence value) {
+    public IntentBuilder put(String key, CharSequence value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -39,7 +39,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, String value) {
+    public IntentBuilder put(String key, String value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -47,7 +47,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, String[] value) {
+    public IntentBuilder put(String key, String[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -55,7 +55,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, int value) {
+    public IntentBuilder put(String key, int value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -64,7 +64,7 @@ public class IntentBuider {
     }
 
 
-    public IntentBuider put(String key, boolean value) {
+    public IntentBuilder put(String key, boolean value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -73,7 +73,7 @@ public class IntentBuider {
     }
 
 
-    public IntentBuider put(String key, boolean[] value) {
+    public IntentBuilder put(String key, boolean[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -81,7 +81,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, IBinder value) {
+    public IntentBuilder put(String key, IBinder value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -92,7 +92,7 @@ public class IntentBuider {
     }
 
 
-    public IntentBuider put(String key, Bundle value) {
+    public IntentBuilder put(String key, Bundle value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -101,7 +101,7 @@ public class IntentBuider {
     }
 
 
-    public IntentBuider put(String key, byte value) {
+    public IntentBuilder put(String key, byte value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -109,7 +109,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, byte[] value) {
+    public IntentBuilder put(String key, byte[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -117,7 +117,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, char value) {
+    public IntentBuilder put(String key, char value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -125,7 +125,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, char[] value) {
+    public IntentBuilder put(String key, char[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -133,7 +133,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, CharSequence[] value) {
+    public IntentBuilder put(String key, CharSequence[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -141,7 +141,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, float value) {
+    public IntentBuilder put(String key, float value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -149,7 +149,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, float[] value) {
+    public IntentBuilder put(String key, float[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -157,7 +157,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, Parcelable value) {
+    public IntentBuilder put(String key, Parcelable value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -165,7 +165,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, Parcelable[] value) {
+    public IntentBuilder put(String key, Parcelable[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -173,7 +173,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, Serializable value) {
+    public IntentBuilder put(String key, Serializable value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -181,7 +181,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, int[] value) {
+    public IntentBuilder put(String key, int[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -189,7 +189,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, double value) {
+    public IntentBuilder put(String key, double value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -197,7 +197,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, double[] value) {
+    public IntentBuilder put(String key, double[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -205,7 +205,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, long value) {
+    public IntentBuilder put(String key, long value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -213,7 +213,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, long[] value) {
+    public IntentBuilder put(String key, long[] value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -221,7 +221,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider putParcelableArrayList(String key, ArrayList<Parcelable> value) {
+    public IntentBuilder putParcelableArrayList(String key, ArrayList<Parcelable> value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -229,7 +229,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider putIntegerArrayList(String key, ArrayList<Integer> value) {
+    public IntentBuilder putIntegerArrayList(String key, ArrayList<Integer> value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -237,7 +237,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider putCharSequenceArrayList(String key, ArrayList<CharSequence> value) {
+    public IntentBuilder putCharSequenceArrayList(String key, ArrayList<CharSequence> value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -245,7 +245,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider put(String key, ArrayList<String> value) {
+    public IntentBuilder put(String key, ArrayList<String> value) {
         if (extras == null) {
             extras = new Bundle();
         }
@@ -253,7 +253,7 @@ public class IntentBuider {
         return this;
     }
 
-    public IntentBuider putAll(Bundle value) {
+    public IntentBuilder putAll(Bundle value) {
         if (extras == null) {
             extras = new Bundle();
         }
