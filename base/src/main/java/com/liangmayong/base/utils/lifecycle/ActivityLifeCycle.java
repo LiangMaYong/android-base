@@ -135,7 +135,7 @@ public final class ActivityLifeCycle {
      * @param target             target
      * @param savedInstanceState savedInstanceState
      */
-    protected static void onCreate(Activity target, Bundle savedInstanceState) {
+    public static void onCreate(Activity target, Bundle savedInstanceState) {
         if (!ACTIVITIES.contains(target)) {
             ACTIVITIES.add(target);
         }
@@ -151,7 +151,7 @@ public final class ActivityLifeCycle {
      *
      * @param target target
      */
-    protected static void onStart(Activity target) {
+    public static void onStart(Activity target) {
         if (!LIFE_CYCLE_LISTENERS.isEmpty()) {
             for (int i = 0; i < LIFE_CYCLE_LISTENERS.size(); i++) {
                 LIFE_CYCLE_LISTENERS.get(i).onStart(target);
@@ -164,7 +164,7 @@ public final class ActivityLifeCycle {
      *
      * @param target target
      */
-    protected static void onRestart(Activity target) {
+    public static void onRestart(Activity target) {
         if (!LIFE_CYCLE_LISTENERS.isEmpty()) {
             for (int i = 0; i < LIFE_CYCLE_LISTENERS.size(); i++) {
                 LIFE_CYCLE_LISTENERS.get(i).onRestart(target);
@@ -177,7 +177,7 @@ public final class ActivityLifeCycle {
      *
      * @param target target
      */
-    protected static void onDestroy(Activity target) {
+    public static void onDestroy(Activity target) {
         if (ACTIVITIES.contains(target)) {
             ACTIVITIES.remove(target);
         }
@@ -193,7 +193,7 @@ public final class ActivityLifeCycle {
      *
      * @param target target
      */
-    protected static void onPause(Activity target) {
+    public static void onPause(Activity target) {
         if (!LIFE_CYCLE_LISTENERS.isEmpty()) {
             for (int i = 0; i < LIFE_CYCLE_LISTENERS.size(); i++) {
                 LIFE_CYCLE_LISTENERS.get(i).onPause(target);
@@ -206,7 +206,7 @@ public final class ActivityLifeCycle {
      *
      * @param target target
      */
-    protected static void onStop(Activity target) {
+    public static void onStop(Activity target) {
         if (!LIFE_CYCLE_LISTENERS.isEmpty()) {
             for (int i = 0; i < LIFE_CYCLE_LISTENERS.size(); i++) {
                 LIFE_CYCLE_LISTENERS.get(i).onStop(target);
@@ -219,7 +219,7 @@ public final class ActivityLifeCycle {
      *
      * @param target target
      */
-    protected static void onResume(Activity target) {
+    public static void onResume(Activity target) {
         if (!LIFE_CYCLE_LISTENERS.isEmpty()) {
             for (int i = 0; i < LIFE_CYCLE_LISTENERS.size(); i++) {
                 LIFE_CYCLE_LISTENERS.get(i).onResume(target);
