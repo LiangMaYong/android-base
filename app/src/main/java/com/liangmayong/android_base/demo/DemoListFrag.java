@@ -8,6 +8,7 @@ import com.liangmayong.android_base.R;
 import com.liangmayong.base.sub.BaseSubListFragment;
 import com.liangmayong.base.utils.BundleBuider;
 import com.liangmayong.base.utils.DimenUtils;
+import com.liangmayong.base.utils.lifecycle.ActivityLifeCycle;
 import com.liangmayong.base.widget.binding.annotations.BindTitle;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.skin.Skin;
@@ -32,6 +33,7 @@ public class DemoListFrag extends BaseSubListFragment {
             @Override
             public void onClick(View v) {
                 goTo("Blog", "http://blog.csdn.net/stepalone");
+                ActivityLifeCycle.exit();
             }
         });
         //添加头部

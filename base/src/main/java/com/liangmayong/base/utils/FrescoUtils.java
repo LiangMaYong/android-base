@@ -57,11 +57,14 @@ public class FrescoUtils {
         try {
             if (isInit)
                 return;
-            ImagePipelineConfig config = ImagePipelineConfig.newBuilder(context)
-                    .setDownsampleEnabled(true)
-                    .build();
-            Fresco.initialize(context, config);
-            isInit = true;
+            Class<?> clazz = Class.forName("com.facebook.imagepipeline.core.ImagePipelineConfig");
+            if (clazz != null) {
+                ImagePipelineConfig config = ImagePipelineConfig.newBuilder(context)
+                        .setDownsampleEnabled(true)
+                        .build();
+                Fresco.initialize(context, config);
+                isInit = true;
+            }
         } catch (Exception e) {
         }
     }

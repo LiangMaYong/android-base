@@ -244,14 +244,14 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     @Override
     public void onSkinRefresh(Skin skin) {
         if (isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            StatusBarCompat.translucentStatusBar(this, true);
+            StatusBarCompat.setTranslucent(this);
         } else {
             int themeColor = skin.getThemeColor();
             if (isThinStatusBar()) {
                 int color = Color.argb(Color.alpha(themeColor), Math.abs(Color.red(themeColor) - 0x15), Math.abs(Color.green(themeColor) - 0x15), Math.abs(Color.blue(themeColor) - 0x15));
-                StatusBarCompat.setStatusBarColor(this, color);
+                StatusBarCompat.setColor(this, color);
             } else {
-                StatusBarCompat.setStatusBarColor(this, themeColor);
+                StatusBarCompat.setColor(this, themeColor);
             }
         }
     }

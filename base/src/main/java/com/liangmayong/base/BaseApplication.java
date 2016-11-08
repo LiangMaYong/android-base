@@ -3,6 +3,7 @@ package com.liangmayong.base;
 import android.app.Application;
 
 import com.liangmayong.base.utils.FrescoUtils;
+import com.liangmayong.base.utils.lifecycle.ActivityLifeCycle;
 
 
 /**
@@ -22,6 +23,7 @@ public class BaseApplication extends Application {
      * @param application application
      */
     public static void initialize(Application application) {
+        ActivityLifeCycle.initialize(application);
         FrescoUtils.initialize(application);
     }
 
