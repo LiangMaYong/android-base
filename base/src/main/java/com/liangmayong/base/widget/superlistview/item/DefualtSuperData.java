@@ -48,4 +48,14 @@ public final class DefualtSuperData {
     public void setTag(Object tag) {
         this.tag = tag;
     }
+
+    @Override
+    public String toString() {
+        return "DefualtSuperData{" +
+                "title='" + title + '\'' +
+                ", sub='" + sub + '\'' +
+                ", tag=" + tag +
+                ", icon=" + icon +
+                '}';
+    }
 }

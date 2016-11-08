@@ -246,6 +246,9 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
         postDelayed(new Runnable() {
             @Override
             public void run() {
+                editText.setFocusable(true);
+                editText.setFocusableInTouchMode(true);
+                editText.requestFocus();
                 inputManager.showSoftInput(editText, 0);
             }
         }, 500);

@@ -43,6 +43,8 @@ public class SuperListView extends RelativeLayout {
     private boolean isLast = false;
     // lastItemVisibleListener
     private OnLastItemVisibleListener lastItemVisibleListener = null;
+    //itemMoveVisibleListener
+    private OnItemMoveVisibleListener itemMoveVisibleListener = null;
     // lastCount
     private int lastCount = 5;
     // lastDelay
@@ -75,6 +77,8 @@ public class SuperListView extends RelativeLayout {
     private boolean isLoading = false;
     // is content
     private boolean isContent = true;
+    // currentPosition
+    private int currentPosition = 0;
     // columnCount
     private int columnCount = 1;
     // staggeredEnable
@@ -495,7 +499,6 @@ public class SuperListView extends RelativeLayout {
         return null;
     }
 
-
     /**
      * setOnLastItemVisibleListener
      *
@@ -503,6 +506,15 @@ public class SuperListView extends RelativeLayout {
      */
     public void setOnLastItemVisibleListener(OnLastItemVisibleListener lastItemVisibleListener) {
         this.lastItemVisibleListener = lastItemVisibleListener;
+    }
+
+    /**
+     * setOnItemMoveVisibleListener
+     *
+     * @param itemMoveVisibleListener itemMoveVisibleListener
+     */
+    public void setOnItemMoveVisibleListener(OnItemMoveVisibleListener itemMoveVisibleListener) {
+        this.itemMoveVisibleListener = itemMoveVisibleListener;
     }
 
     //scrollListener
@@ -522,6 +534,14 @@ public class SuperListView extends RelativeLayout {
                 } else {
                     if (isLast) {
                         isLast = false;
+                    }
+                }
+
+                if (itemMoveVisibleListener != null) {
+                    int position = getRecyclerListView().getFristVisiblePosition();
+                    if (currentPosition != position) {
+                        currentPosition = position;
+                        itemMoveVisibleListener.onItemMoveVisible(recyclerView, currentPosition, getRecyclerListView().getLastVisiblePosition());
                     }
                 }
             }
@@ -694,6 +714,13 @@ public class SuperListView extends RelativeLayout {
     }
 
     /**
+     * OnLastItemVisibleListener
+     */
+    public interface OnItemMoveVisibleListener {
+        void onItemMoveVisible(RecyclerView recyclerView, int fristPosition, int lastPosition);
+    }
+
+    /**
      * ProxyRecyclerView
      */
     private static class ProxyRecyclerView extends RecyclerView {
@@ -795,6 +822,8 @@ public class SuperListView extends RelativeLayout {
     public static class Pool {
         // items
         private final List<Item> items = new ArrayList<Item>();
+        // types
+        private final List<Item> types = new ArrayList<Item>();
         // adapter
         private final SuperAdapter adapter;
         //tag
@@ -864,8 +893,15 @@ public class SuperListView extends RelativeLayout {
             if (items == null) {
                 return null;
             }
+            for (int i = 0; i < types.size(); i++) {
+                if (types.get(i).getItemType() == type) {
+                    return types.get(i);
+                }
+            }
             for (int i = 0; i < items.size(); i++) {
                 if (items.get(i).getItemType() == type) {
+                    Item item = items.get(i);
+                    types.add(item);
                     return items.get(i);
                 }
             }

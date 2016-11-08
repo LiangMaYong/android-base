@@ -43,7 +43,6 @@ public class DemoListFrag extends BaseSubListFragment {
         initSkin();
         getListView().setColumnCount(index);
         listView.setStaggeredEnable(true);
-        listView.getPool().notifyDataSetChanged();
         listView.setDecorationSize(DimenUtils.dip2px(getActivity(), 2));
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -100,5 +99,6 @@ public class DemoListFrag extends BaseSubListFragment {
                 }));
             }
         }
+        getListView().getPool().notifyDataSetChanged();
     }
 }
