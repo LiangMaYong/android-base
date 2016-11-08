@@ -262,11 +262,11 @@ public class IntentBuilder {
     }
 
     /**
-     * buider
+     * builder
      *
      * @return intent
      */
-    public Intent buider() {
+    public Intent builder() {
         Intent intent = new Intent();
         if (extras == null) {
             return intent;
@@ -276,11 +276,11 @@ public class IntentBuilder {
     }
 
     /**
-     * buider
+     * builder
      *
      * @return intent
      */
-    public Intent buider(Context context, Class<?> cls) {
+    public Intent builder(Context context, Class<?> cls) {
         Intent intent = new Intent(context, cls);
         if (extras == null) {
             return intent;

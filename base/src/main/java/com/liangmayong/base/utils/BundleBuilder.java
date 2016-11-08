@@ -260,11 +260,11 @@ public class BundleBuilder {
     }
 
     /**
-     * buider
+     * builder
      *
      * @return extras
      */
-    public Bundle buider() {
+    public Bundle builder() {
         if (extras == null) {
             return new Bundle();
         }
