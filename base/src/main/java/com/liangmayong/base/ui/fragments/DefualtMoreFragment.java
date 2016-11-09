@@ -14,6 +14,7 @@ import android.view.Window;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
+import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.widget.skin.SkinRippleButton;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 
@@ -157,6 +158,7 @@ public class DefualtMoreFragment extends DialogFragment {
             this.base_more_list.setStaggeredEnable(true);
             this.base_more_list.setOrientation(SuperListView.HORIZONTAL);
             this.base_more_list.setColumnCount(1);
+            this.base_more_list.setDecorationSize(DimenUtils.dip2px(rootView.getContext(), 10));
             this.base_more_close_btn = (SkinRippleButton) rootView.findViewById(R.id.base_more_close_btn);
             this.base_more_close_btn.setOnClickListener(new View.OnClickListener() {
                 @Override

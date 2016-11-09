@@ -88,7 +88,7 @@ public class SuperListView extends RelativeLayout {
     private int columnCount = 1;
     // staggeredEnable
     private boolean staggeredEnable = true;
-    //recyclerView
+    //superListView
     private ProxyRecyclerView recyclerView;
     //orientation
     private int orientation = VERTICAL;
@@ -609,7 +609,7 @@ public class SuperListView extends RelativeLayout {
         recyclerView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
         recyclerView.addOnScrollListener(scrollListener);
         pool = new Pool();
-        pool.attachTo(recyclerView);
+        pool.attachTo(this);
         contentLayout.addView(recyclerView);
 
         //insert footLayout
@@ -672,6 +672,9 @@ public class SuperListView extends RelativeLayout {
     public void setOrientation(int orientation) {
         if (getRecyclerListView().getLayoutManager() instanceof LinearLayoutManager) {
             ((LinearLayoutManager) getRecyclerListView().getLayoutManager()).setOrientation(orientation);
+            if (orientation == HORIZONTAL) {
+                ((LinearLayoutManager) getRecyclerListView().getLayoutManager()).setReverseLayout(false);
+            }
         } else if (getRecyclerListView().getLayoutManager() instanceof GridLayoutManager) {
             ((GridLayoutManager) getRecyclerListView().getLayoutManager()).setOrientation(orientation);
         } else if (getRecyclerListView().getLayoutManager() instanceof StaggeredGridLayoutManager) {
@@ -681,9 +684,18 @@ public class SuperListView extends RelativeLayout {
     }
 
     /**
+     * getOrientation
+     *
+     * @return orientation
+     */
+    public int getOrientation() {
+        return orientation;
+    }
+
+    /**
      * getRecyclerListView
      *
-     * @return recyclerView
+     * @return superListView
      */
     private ProxyRecyclerView getRecyclerListView() {
         return recyclerView;
@@ -852,8 +864,8 @@ public class SuperListView extends RelativeLayout {
         private final SuperAdapter adapter;
         //tag
         private Object tag;
-        //recyclerView
-        private RecyclerView recyclerView;
+        //superListView
+        private SuperListView superListView;
         // isAttach
         private boolean isAttach = false;
 
@@ -861,6 +873,14 @@ public class SuperListView extends RelativeLayout {
             adapter = new SuperAdapter(this);
         }
 
+        /**
+         * getSuperListView
+         *
+         * @return superListView
+         */
+        public SuperListView getSuperListView() {
+            return superListView;
+        }
 
         /**
          * setTag
@@ -884,12 +904,12 @@ public class SuperListView extends RelativeLayout {
         /**
          * attachTo
          *
-         * @param recyclerView recyclerView
+         * @param recyclerView superListView
          */
-        private void attachTo(RecyclerView recyclerView) {
+        private void attachTo(SuperListView recyclerView) {
             if (recyclerView != null) {
-                this.recyclerView = recyclerView;
-                this.recyclerView.setAdapter(adapter);
+                this.superListView = recyclerView;
+                this.superListView.getRecyclerListView().setAdapter(adapter);
                 isAttach = true;
             }
         }
@@ -1345,6 +1365,13 @@ public class SuperListView extends RelativeLayout {
                     itemView.setClickable(false);
                 }
             }
+            if (itemView != null) {
+                if (getPool().getSuperListView().getOrientation() == HORIZONTAL) {
+                    itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                } else {
+                    itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                }
+            }
             bindView(itemView, data);
         }
 
@@ -1362,26 +1389,40 @@ public class SuperListView extends RelativeLayout {
     /**
      * SuperDecoration
      */
-    private static class SuperDecoration extends RecyclerView.ItemDecoration {
+    public static class SuperDecoration extends RecyclerView.ItemDecoration {
         //space
         private int space = 0;
+        private boolean full = false;
 
         public SuperDecoration(int spacingInPixels) {
             this.space = spacingInPixels / 2;
+        }
+
+        public SuperDecoration(int spacingInPixels, boolean full) {
+            this(spacingInPixels);
+            this.full = full;
         }
 
         @Override
         public void getItemOffsets(Rect outRect, View view,
                                    RecyclerView parent, RecyclerView.State state) {
             // Add top margin only for the first item to avoid double space between items
-            if (parent.getLayoutManager() instanceof GridLayoutManager || parent.getLayoutManager() instanceof StaggeredGridLayoutManager) {
+            if (full || parent.getLayoutManager() instanceof GridLayoutManager || parent.getLayoutManager() instanceof StaggeredGridLayoutManager) {
                 outRect.left = space;
                 outRect.right = space;
                 outRect.bottom = space;
                 outRect.top = space;
                 parent.setPadding(space, space, space, space);
             } else {
-                outRect.bottom = space;
+                int or = VERTICAL;
+                if (parent.getLayoutManager() instanceof LinearLayoutManager) {
+                    or = ((LinearLayoutManager) (parent.getLayoutManager())).getOrientation();
+                }
+                if (or == VERTICAL) {
+                    outRect.bottom = space;
+                } else {
+                    outRect.right = space;
+                }
             }
         }
     }

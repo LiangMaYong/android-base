@@ -36,6 +36,7 @@ public final class Icon {
     public static final IconValue icon_share = new IconValue(FONT_PATH, 0xe609);
     public static final IconValue icon_my = new IconValue(FONT_PATH, 0xe603);
     public static final IconValue icon_camera = new IconValue(FONT_PATH, 0xe60f);
+    public static final IconValue icon_copy = new IconValue(FONT_PATH, 0xe707);
     public static final IconValue icon_search = new IconValue(FONT_PATH, 0xe618);
     public static final IconValue icon_location = new IconValue(FONT_PATH, 0xe616);
     public static final IconValue icon_filtrate = new IconValue(FONT_PATH, 0xe60d);

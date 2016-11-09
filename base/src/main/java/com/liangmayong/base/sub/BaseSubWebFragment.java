@@ -16,14 +16,16 @@ import com.liangmayong.base.sub.webkit.BaseWebViewClient;
 import com.liangmayong.base.sub.webkit.BaseWebWidget;
 import com.liangmayong.base.ui.fragments.DefualtMoreFragment;
 import com.liangmayong.base.ui.fragments.items.MoreItem;
+import com.liangmayong.base.utils.ClipboardUtils;
 import com.liangmayong.base.utils.ShareUtils;
 import com.liangmayong.base.utils.StringUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
-import com.liangmayong.base.widget.iconfont.IconValue;
 import com.liangmayong.base.widget.layout.SwipeLayout;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +55,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
     //closeEnabled
     private boolean closeEnabled = true;
     //copyEnabled
-    private boolean copyEnabled = false;
+    private boolean copyEnabled = true;
     //showMoreEnabled
     private boolean showMoreEnabled = true;
 
@@ -158,30 +160,54 @@ public class BaseSubWebFragment extends BaseSubFragment {
     }
 
     /**
+     * getUrlHost
+     *
+     * @param url
+     * @return
+     */
+    public static String getUrlHost(String url) {
+    }
+
+    /**
      * showMoreDialog
      *
      * @param view view
      */
     protected void showMoreDialog(final View view) {
         List<SuperListView.Item> menus = new ArrayList<>();
-        menus.add(new MoreItem(Icon.icon_refresh).setOnItemClickListener(new SuperListView.OnItemClickListener<IconValue>() {
+
+        menus.add(new MoreItem(new MoreItem.Menu(Icon.icon_refresh, getString(R.string.base_web_refresh))).setOnItemClickListener(new SuperListView.OnItemClickListener<MoreItem.Menu>() {
             @Override
-            public void onClick(SuperListView.Item<IconValue> item, int position, View itemView) {
+            public void onClick(SuperListView.Item<MoreItem.Menu> item, int position, View itemView) {
                 reload();
                 DefualtMoreFragment.cancel(getActivity());
             }
         }));
+        String mUrl = url;
+        if (!StringUtils.isEmpty(base_webview.getUrl())) {
+            mUrl = base_webview.getUrl();
+        }
+        try {
+            mUrl = new URL(mUrl).getHost();
+        } catch (MalformedURLException e) {
+        }
         if (copyEnabled) {
-            menus.add(new MoreItem(Icon.icon_camera).setOnItemClickListener(new SuperListView.OnItemClickListener<IconValue>() {
+            menus.add(new MoreItem(new MoreItem.Menu(Icon.icon_copy, getString(R.string.base_web_share))).setOnItemClickListener(new SuperListView.OnItemClickListener<MoreItem.Menu>() {
                 @Override
-                public void onClick(SuperListView.Item<IconValue> item, int position, View itemView) {
+                public void onClick(SuperListView.Item<MoreItem.Menu> item, int position, View itemView) {
+                    String mUrl = url;
+                    if (!StringUtils.isEmpty(base_webview.getUrl())) {
+                        mUrl = base_webview.getUrl();
+                    }
+                    ClipboardUtils.copyText(getContext(), mUrl);
+                    showToast(getString(R.string.base_web_copylink_success));
                     DefualtMoreFragment.cancel(getActivity());
                 }
             }));
         }
-        menus.add(new MoreItem(Icon.icon_share).setOnItemClickListener(new SuperListView.OnItemClickListener<IconValue>() {
+        menus.add(new MoreItem(new MoreItem.Menu(Icon.icon_share, getString(R.string.base_web_share))).setOnItemClickListener(new SuperListView.OnItemClickListener<MoreItem.Menu>() {
             @Override
-            public void onClick(SuperListView.Item<IconValue> item, int position, View itemView) {
+            public void onClick(SuperListView.Item<MoreItem.Menu> item, int position, View itemView) {
                 String mUrl = url;
                 if (!StringUtils.isEmpty(base_webview.getUrl())) {
                     mUrl = base_webview.getUrl();
@@ -190,7 +216,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
                 DefualtMoreFragment.cancel(getActivity());
             }
         }));
-        DefualtMoreFragment.show(getActivity(), "页面由www.baidu.com提供！！！", menus);
+        DefualtMoreFragment.show(getActivity(), mUrl, menus);
     }
 
     /**

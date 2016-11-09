@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1478504100207'); /* IE9*/
-  src: url('iconfont.eot?t=1478504100207#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1478504100207') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1478504100207') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1478504100207#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1478679417804'); /* IE9*/
+  src: url('iconfont.eot?t=1478679417804#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1478679417804') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1478679417804') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1478679417804#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -45,6 +45,8 @@
 .icon-icon_message:before { content: "\e60a"; }
 
 .icon-icon_refresh:before { content: "\e604"; }
+
+.icon-icon_copy:before { content: "\e707"; }
 
 .icon-icon_about:before { content: "\e607"; }
 

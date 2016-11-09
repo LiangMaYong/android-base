@@ -122,32 +122,35 @@ public class SkinRippleLinearLayout extends SkinLinearLayout {
      * Draw ripple effect
      */
     private void drawFillCircle(Canvas canvas) {
-        if (canvas != null && pointX >= 0 && pointY >= 0) {
-            int rbX = canvas.getWidth();
-            int rbY = canvas.getHeight();
-            float x_max = Math.max(pointX, Math.abs(rbX - pointX));
-            float y_max = Math.max(pointY, Math.abs(rbY - pointY));
-            float longDis = (float) Math.sqrt(x_max * x_max + y_max * y_max);
-            if (mRippleRadius > longDis) {
-                onCompleteDrawRipple();
-                return;
-            }
-            final float drawSpeed = longDis / mRippleDuration * 35;
-            mRippleRadius += drawSpeed;
+        try {
+            if (canvas != null && pointX >= 0 && pointY >= 0) {
+                int rbX = canvas.getWidth();
+                int rbY = canvas.getHeight();
+                float x_max = Math.max(pointX, Math.abs(rbX - pointX));
+                float y_max = Math.max(pointY, Math.abs(rbY - pointY));
+                float longDis = (float) Math.sqrt(x_max * x_max + y_max * y_max);
+                if (mRippleRadius > longDis) {
+                    onCompleteDrawRipple();
+                    return;
+                }
+                final float drawSpeed = longDis / mRippleDuration * 35;
+                mRippleRadius += drawSpeed;
 
-            canvas.save();
-            // canvas.translate(0, 0);//保持原点
-            mPath.reset();
-            canvas.clipPath(mPath);
-            if (mShapeType == 0) {
-                mPath.addCircle(rbX / 2, rbY / 2, mWidth / 2, Path.Direction.CCW);
-            } else {
-                mRectF.set(0, 0, mWidth, mHeight);
-                mPath.addRoundRect(mRectF, mRoundRadius, mRoundRadius, Path.Direction.CCW);
+                canvas.save();
+                // canvas.translate(0, 0);
+                mPath.reset();
+                canvas.clipPath(mPath);
+                if (mShapeType == 0) {
+                    mPath.addCircle(rbX / 2, rbY / 2, mWidth / 2, Path.Direction.CCW);
+                } else {
+                    mRectF.set(0, 0, mWidth, mHeight);
+                    mPath.addRoundRect(mRectF, mRoundRadius, mRoundRadius, Path.Direction.CCW);
+                }
+                canvas.clipPath(mPath, Region.Op.REPLACE);
+                canvas.drawCircle(pointX, pointY, mRippleRadius, mRipplePaint);
+                canvas.restore();
             }
-            canvas.clipPath(mPath, Region.Op.REPLACE);
-            canvas.drawCircle(pointX, pointY, mRippleRadius, mRipplePaint);
-            canvas.restore();
+        } catch (Exception e) {
         }
     }
 

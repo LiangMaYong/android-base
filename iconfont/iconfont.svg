@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Mon Nov  7 15:35:00 2016
+Created by FontForge 20120731 at Wed Nov  9 16:16:57 2016
  By admin
 </metadata>
 <defs>
@@ -19,7 +19,7 @@ Created by FontForge 20120731 at Mon Nov  7 15:35:00 2016
     bbox="-0.0250015 -128.025 1256 896.025"
     underline-thickness="0"
     underline-position="0"
-    unicode-range="U+0078-E61A"
+    unicode-range="U+0078-E707"
   />
 <missing-glyph 
  />
@@ -72,6 +72,8 @@ d="M116 -12v792h1117v-792h-1117zM210 82h930v518l-462 -285l-3 4l-2 -3l-463 296v-5
     <glyph glyph-name="icon_refresh" unicode="&#xe604;" 
 d="M512 748q-99 0 -183 -49.5t-132 -132.5h-102q54 122 166.5 197.5t250.5 75.5t250.5 -75.5t166.5 -197.5h-102q-48 83 -132 132.5t-183 49.5zM148 384l-137 182h273zM876 384l137 -182h-273zM512 20q99 0 183 49.5t132 132.5h102q-54 -122 -166.5 -197.5t-250.5 -75.5
 t-250.5 75.5t-166.5 197.5h102q48 -83 132 -132.5t183 -49.5z" />
+    <glyph glyph-name="icon_copy" unicode="&#xe707;" 
+d="M832 -128h-768v896h768v-896zM768 704h-640v-768h640v768zM320 896h-64v-128h64v128zM640 512h-384v-64h384v64zM640 320h-384v-64h384v64zM640 128h-384v-64h384v64zM960 896h-640v-64h640v64zM960 832h-64v-768h64v768zM896 128h-64v-64h64v64z" />
     <glyph glyph-name="icon_about" unicode="&#xe607;" horiz-adv-x="1025" 
 d="M505 896q-104 -1 -198.5 -43t-162 -111.5t-106.5 -165t-38 -199.5t43 -198.5t111.5 -162t165 -106.5t199.5 -38t198.5 43t162 111.5t106.5 165t38 199.5t-43 198.5t-111.5 162t-165 106.5t-199.5 38v0v0zM562 725q67 0 67 -64q0 -34 -25.5 -58.5t-67.5 -24.5
 q-37 0 -55 17t-17 48q0 31 25.5 56.5t72.5 25.5v0zM428 64q-67 0 -36 117l41 168q9 38 0 38t-37 -12t-48 -25l-17 29q61 51 127.5 82.5t100.5 31.5q26 0 32 -29t-8 -77l-47 -177q-11 -42 4 -42q10 0 33 10.5t47 28.5l20 -27q-57 -56 -117.5 -86t-94.5 -30v0v0zM428 64z" />
