@@ -22,6 +22,7 @@ public class ShareUtils {
     public static void shareText(Context context, String dialogTitle, String content) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, content);
         intent.putExtra(Intent.EXTRA_TEXT, content);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(Intent.createChooser(intent, dialogTitle));
@@ -44,6 +45,7 @@ public class ShareUtils {
         } else {
             shareIntent.setType("text/plain");
         }
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, content);
         shareIntent.putExtra(Intent.EXTRA_TEXT, content);
         context.startActivity(Intent.createChooser(shareIntent, dialogTitle));
     }

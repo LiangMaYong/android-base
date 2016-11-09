@@ -43,7 +43,6 @@ public class DemoListFrag extends BaseSubListFragment {
         initSkin();
         getListView().setColumnCount(index);
         listView.setStaggeredEnable(false);
-        listView.setOrientation(SuperListView.HORIZONTAL);
         listView.setDecorationSize(DimenUtils.dip2px(getActivity(), 2));
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

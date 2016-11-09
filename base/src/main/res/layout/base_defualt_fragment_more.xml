@@ -5,11 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.liangmayong.base.widget.skin.SkinLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        skin:radius="10dp"
+        skin:skin_type="white">
 
         <TextView
             android:id="@+id/base_more_title"
@@ -29,16 +31,17 @@
             android:layout_height="80dp"
             android:layout_margin="10dp" />
 
-        <View
+        <com.liangmayong.base.widget.skin.SkinView
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#b1b1b1" />
+            skin:skin_type="gray" />
 
         <com.liangmayong.base.widget.skin.SkinRippleButton
             android:id="@+id/base_more_close_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="取消"
+            android:text="@string/base_web_cancel"
+            skin:radius="10dp"
             skin:skin_type="white" />
-    </LinearLayout>
+    </com.liangmayong.base.widget.skin.SkinLinearLayout>
 </LinearLayout>

@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="menu"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 skin:skin_type="gray" />
         </com.liangmayong.base.widget.skin.SkinLinearLayout>
     </com.liangmayong.base.widget.skin.SkinSquareLayout>

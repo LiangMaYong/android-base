@@ -160,15 +160,6 @@ public class BaseSubWebFragment extends BaseSubFragment {
     }
 
     /**
-     * getUrlHost
-     *
-     * @param url
-     * @return
-     */
-    public static String getUrlHost(String url) {
-    }
-
-    /**
      * showMoreDialog
      *
      * @param view view
@@ -192,42 +183,31 @@ public class BaseSubWebFragment extends BaseSubFragment {
         } catch (MalformedURLException e) {
         }
         if (copyEnabled) {
-            menus.add(new MoreItem(new MoreItem.Menu(Icon.icon_copy, getString(R.string.base_web_share))).setOnItemClickListener(new SuperListView.OnItemClickListener<MoreItem.Menu>() {
+            menus.add(new MoreItem(new MoreItem.Menu(Icon.icon_copy, getString(R.string.base_web_copylink))).setOnItemClickListener(new SuperListView.OnItemClickListener<MoreItem.Menu>() {
                 @Override
                 public void onClick(SuperListView.Item<MoreItem.Menu> item, int position, View itemView) {
+                    DefualtMoreFragment.cancel(getActivity());
                     String mUrl = url;
                     if (!StringUtils.isEmpty(base_webview.getUrl())) {
                         mUrl = base_webview.getUrl();
                     }
                     ClipboardUtils.copyText(getContext(), mUrl);
                     showToast(getString(R.string.base_web_copylink_success));
-                    DefualtMoreFragment.cancel(getActivity());
                 }
             }));
         }
         menus.add(new MoreItem(new MoreItem.Menu(Icon.icon_share, getString(R.string.base_web_share))).setOnItemClickListener(new SuperListView.OnItemClickListener<MoreItem.Menu>() {
             @Override
             public void onClick(SuperListView.Item<MoreItem.Menu> item, int position, View itemView) {
+                DefualtMoreFragment.cancel(getActivity());
                 String mUrl = url;
                 if (!StringUtils.isEmpty(base_webview.getUrl())) {
                     mUrl = base_webview.getUrl();
                 }
-                showShareDialog(view, base_webview.getTitle(), mUrl);
-                DefualtMoreFragment.cancel(getActivity());
+                ShareUtils.shareText(getContext(), getString(R.string.base_web_share), mUrl);
             }
         }));
         DefualtMoreFragment.show(getActivity(), mUrl, menus);
-    }
-
-    /**
-     * showShareDialog
-     *
-     * @param view  view
-     * @param title title
-     * @param url   url
-     */
-    public void showShareDialog(View view, String title, String url) {
-        ShareUtils.shareText(getContext(), getString(R.string.base_web_share), url);
     }
 
     /**

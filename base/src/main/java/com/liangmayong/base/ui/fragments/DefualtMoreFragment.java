@@ -1,5 +1,6 @@
 package com.liangmayong.base.ui.fragments;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -57,6 +58,10 @@ public class DefualtMoreFragment extends DialogFragment {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    @SuppressLint("ValidFragment")
+    private DefualtMoreFragment() {
     }
 
     private List<SuperListView.Item> items = null;
