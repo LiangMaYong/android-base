@@ -1,9 +1,6 @@
 package com.liangmayong.base.sub;
 
 import android.annotation.SuppressLint;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Gravity;
@@ -17,12 +14,17 @@ import com.liangmayong.base.sub.webkit.BaseWebChromeClient;
 import com.liangmayong.base.sub.webkit.BaseWebView;
 import com.liangmayong.base.sub.webkit.BaseWebViewClient;
 import com.liangmayong.base.sub.webkit.BaseWebWidget;
+import com.liangmayong.base.ui.fragments.DefualtMoreFragment;
+import com.liangmayong.base.ui.fragments.items.MoreItem;
 import com.liangmayong.base.utils.ShareUtils;
 import com.liangmayong.base.utils.StringUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
+import com.liangmayong.base.widget.iconfont.IconValue;
 import com.liangmayong.base.widget.layout.SwipeLayout;
 import com.liangmayong.base.widget.skin.Skin;
+import com.liangmayong.base.widget.superlistview.SuperListView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -161,45 +163,34 @@ public class BaseSubWebFragment extends BaseSubFragment {
      * @param view view
      */
     protected void showMoreDialog(final View view) {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
-        String items[] = null;
-        if (copyEnabled) {
-            items = new String[]{getString(R.string.base_web_refresh), getString(R.string.base_web_copylink), getString(R.string.base_web_share)};
-        } else {
-            items = new String[]{getString(R.string.base_web_refresh), getString(R.string.base_web_share)};
-        }
-        builder.setItems(items, new DialogInterface.OnClickListener() {
+        List<SuperListView.Item> menus = new ArrayList<>();
+        menus.add(new MoreItem(Icon.icon_refresh).setOnItemClickListener(new SuperListView.OnItemClickListener<IconValue>() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(SuperListView.Item<IconValue> item, int position, View itemView) {
+                reload();
+                DefualtMoreFragment.cancel(getActivity());
+            }
+        }));
+        if (copyEnabled) {
+            menus.add(new MoreItem(Icon.icon_camera).setOnItemClickListener(new SuperListView.OnItemClickListener<IconValue>() {
+                @Override
+                public void onClick(SuperListView.Item<IconValue> item, int position, View itemView) {
+                    DefualtMoreFragment.cancel(getActivity());
+                }
+            }));
+        }
+        menus.add(new MoreItem(Icon.icon_share).setOnItemClickListener(new SuperListView.OnItemClickListener<IconValue>() {
+            @Override
+            public void onClick(SuperListView.Item<IconValue> item, int position, View itemView) {
                 String mUrl = url;
                 if (!StringUtils.isEmpty(base_webview.getUrl())) {
                     mUrl = base_webview.getUrl();
                 }
-                if (copyEnabled) {
-                    if (which == 0) {
-                        reload();
-                    } else if (which == 1) {
-                        ClipboardManager cmb = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                            cmb.setText(mUrl);
-                        } else {
-                            android.text.ClipboardManager c = (android.text.ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                            c.setText(mUrl);
-                        }
-                        showToast(getString(R.string.base_web_copylink_success));
-                    } else {
-                        showShareDialog(view, base_webview.getTitle(), mUrl);
-                    }
-                } else {
-                    if (which == 0) {
-                        reload();
-                    } else {
-                        showShareDialog(view, base_webview.getTitle(), mUrl);
-                    }
-                }
+                showShareDialog(view, base_webview.getTitle(), mUrl);
+                DefualtMoreFragment.cancel(getActivity());
             }
-        });
-        builder.show();
+        }));
+        DefualtMoreFragment.show(getActivity(), "页面由www.baidu.com提供！！！", menus);
     }
 
     /**
@@ -264,6 +255,11 @@ public class BaseSubWebFragment extends BaseSubFragment {
         return showMoreEnabled;
     }
 
+    /**
+     * isCopyEnabled
+     *
+     * @return isCopyEnabled
+     */
     public boolean isCopyEnabled() {
         return copyEnabled;
     }

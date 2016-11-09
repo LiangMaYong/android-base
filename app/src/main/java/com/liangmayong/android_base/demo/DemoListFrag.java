@@ -8,7 +8,6 @@ import com.liangmayong.android_base.R;
 import com.liangmayong.base.sub.BaseSubListFragment;
 import com.liangmayong.base.utils.BundleBuilder;
 import com.liangmayong.base.utils.DimenUtils;
-import com.liangmayong.base.utils.lifecycle.ActivityLifeCycle;
 import com.liangmayong.base.widget.binding.annotations.BindTitle;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.skin.Skin;
@@ -33,7 +32,6 @@ public class DemoListFrag extends BaseSubListFragment {
             @Override
             public void onClick(View v) {
                 goTo("Blog", "http://blog.csdn.net/stepalone");
-                ActivityLifeCycle.exit();
             }
         });
         //添加头部
@@ -44,7 +42,8 @@ public class DemoListFrag extends BaseSubListFragment {
         add_data();
         initSkin();
         getListView().setColumnCount(index);
-        listView.setStaggeredEnable(true);
+        listView.setStaggeredEnable(false);
+        listView.setOrientation(SuperListView.HORIZONTAL);
         listView.setDecorationSize(DimenUtils.dip2px(getActivity(), 2));
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

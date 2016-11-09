@@ -35,6 +35,11 @@ public class SuperListView extends RelativeLayout {
         void setRetryView(View retryView);
     }
 
+
+    // HORIZONTAL
+    public static final int HORIZONTAL = LinearLayoutManager.HORIZONTAL;
+    // VERTICAL
+    public static final int VERTICAL = LinearLayoutManager.VERTICAL;
     // pool
     private Pool pool = null;
     // itemDecoration
@@ -85,6 +90,8 @@ public class SuperListView extends RelativeLayout {
     private boolean staggeredEnable = true;
     //recyclerView
     private ProxyRecyclerView recyclerView;
+    //orientation
+    private int orientation = VERTICAL;
 
     //errorRetryListener
     private OnReListViewRetryListener errorRetryListener;
@@ -409,6 +416,7 @@ public class SuperListView extends RelativeLayout {
                 setLayoutManager(new GridLayoutManager(getContext(), this.columnCount));
             }
         }
+        setOrientation(orientation);
     }
 
     /**
@@ -568,7 +576,7 @@ public class SuperListView extends RelativeLayout {
      *
      * @param layoutManager layoutManager
      */
-    private void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
+    public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
         if (layoutManager != null) {
             getRecyclerListView().setLayoutManager(layoutManager);
         }
@@ -654,6 +662,22 @@ public class SuperListView extends RelativeLayout {
      */
     public Pool getPool() {
         return pool;
+    }
+
+    /**
+     * setOrientation
+     *
+     * @return pool
+     */
+    public void setOrientation(int orientation) {
+        if (getRecyclerListView().getLayoutManager() instanceof LinearLayoutManager) {
+            ((LinearLayoutManager) getRecyclerListView().getLayoutManager()).setOrientation(orientation);
+        } else if (getRecyclerListView().getLayoutManager() instanceof GridLayoutManager) {
+            ((GridLayoutManager) getRecyclerListView().getLayoutManager()).setOrientation(orientation);
+        } else if (getRecyclerListView().getLayoutManager() instanceof StaggeredGridLayoutManager) {
+            ((StaggeredGridLayoutManager) getRecyclerListView().getLayoutManager()).setOrientation(orientation);
+        }
+        this.orientation = orientation;
     }
 
     /**
@@ -964,7 +988,7 @@ public class SuperListView extends RelativeLayout {
          * @param items items
          */
         public void addAll(List<Item> items) {
-            items.addAll(items);
+            this.items.addAll(items);
         }
 
         /**
@@ -1250,7 +1274,6 @@ public class SuperListView extends RelativeLayout {
          * @param data data
          */
         protected abstract void bindView(View itemView, Data data);
-
 
         /**
          * getItemType

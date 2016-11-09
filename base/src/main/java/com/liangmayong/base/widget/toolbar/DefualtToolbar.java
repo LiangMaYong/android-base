@@ -554,7 +554,7 @@ public class DefualtToolbar {
             if (rightdrawable != null) {
                 rightdrawable.setBounds(0, 0, rightdrawable.getMinimumWidth(), rightdrawable.getMinimumHeight());
             }
-            getIconView().setCompoundDrawables(leftdrawable, rightdrawable, null, null);
+            getIconView().setCompoundDrawables(leftdrawable, null, rightdrawable, null);
             return this;
         }
 

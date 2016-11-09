@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.liangmayong.base.widget.skin.SkinSquareLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:skin="http://schemas.android.com/apk/res-auto"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    skin:skin_type="white">
+
+    <com.liangmayong.base.widget.skin.SkinLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        skin:radius="10dp"
+        skin:shape_type="stroke"
+        skin:skin_type="gray">
+
+        <com.liangmayong.base.widget.skin.SkinIconView
+            android:id="@+id/base_more_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="+"
+            android:textSize="30sp"
+            skin:skin_type="gray" />
+    </com.liangmayong.base.widget.skin.SkinLinearLayout>
+</com.liangmayong.base.widget.skin.SkinSquareLayout>
