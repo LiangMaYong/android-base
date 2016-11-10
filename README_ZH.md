@@ -54,7 +54,34 @@ README: [English](https://github.com/LiangMaYong/android-base/blob/master/README
 ```
 Android studio -> file -> settings -> plugins -> Install plugins in disk...
 ```
+## Presenter文件模板
+添加Presenter文件模板
+```
+Android studio -> new -> Edit File Templates...-> Add
+```
+模板内容
+```
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+import com.liangmayong.base.widget.binding.Presenter;
+#parse("File Header.java")
+public class ${NAME} extends Presenter<${NAME}.IView> {
 
+    public interface IView {
+        /**
+         * test result
+         */
+        void test_result();
+    }
+
+    /**
+     * test presenter method
+     */
+    public void test() {
+        getViewInstance().test_result();
+    }
+
+}
+```
 ## Fresco
 
 移除Fresco库

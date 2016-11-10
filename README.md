@@ -64,7 +64,34 @@ compile(project(':base')) {
     exclude group: 'com.facebook.fresco'
 }
 ```
+## Presenter File Templates
+add Presenter File Templates
+```
+Android studio -> new -> Edit File Templates...-> Add
+```
+file templates
+```
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+import com.liangmayong.base.widget.binding.Presenter;
+#parse("File Header.java")
+public class ${NAME} extends Presenter<${NAME}.IView> {
 
+    public interface IView {
+        /**
+         * test result
+         */
+        void test_result();
+    }
+
+    /**
+     * test presenter method
+     */
+    public void test() {
+        getViewInstance().test_result();
+    }
+
+}
+```
 ## Skin Styleable
 ```
 <declare-styleable name="SkinStyleable">
