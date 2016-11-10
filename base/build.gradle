@@ -23,6 +23,8 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     //recyclerview
     compile 'com.android.support:recyclerview-v7:24.2.1'
+    //design
+    compile 'com.android.support:design:+'
     //fresco
     compile 'com.facebook.fresco:fresco:0.14.1'
 }

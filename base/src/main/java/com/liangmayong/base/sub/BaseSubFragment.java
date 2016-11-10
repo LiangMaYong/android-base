@@ -5,6 +5,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.liangmayong.base.BaseDrawerActivity;
 import com.liangmayong.base.BaseFragment;
 import com.liangmayong.base.ui.fragments.DefualtWebFragment;
 import com.liangmayong.base.widget.iconfont.Icon;
@@ -24,12 +25,21 @@ public abstract class BaseSubFragment extends BaseFragment {
             return;
         }
         if (getDefualtToolbar() != null) {
-            getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+            if (getActivity() instanceof BaseSubActivity) {
+                getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        finish();
+                    }
+                });
+            } else if (getActivity() instanceof BaseDrawerActivity) {
+                getDefualtToolbar().leftOne().iconToLeft(Icon.icon_menu).clicked(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ((BaseDrawerActivity) getActivity()).openDrawer();
+                    }
+                });
+            }
         }
         isInitView = true;
         initSubView(rootView);
@@ -56,7 +66,7 @@ public abstract class BaseSubFragment extends BaseFragment {
      * @param event   event
      * @return event flag
      */
-    protected boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         return false;
     }
 
@@ -68,7 +78,7 @@ public abstract class BaseSubFragment extends BaseFragment {
      * @param event   event
      * @return event flag
      */
-    protected boolean onKeyUp(int keyCode, KeyEvent event) {
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
         return false;
     }
 
@@ -78,7 +88,7 @@ public abstract class BaseSubFragment extends BaseFragment {
      * @param event event
      * @return event flag
      */
-    protected boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) {
         return false;
     }
 
@@ -87,7 +97,7 @@ public abstract class BaseSubFragment extends BaseFragment {
      *
      * @return event flag
      */
-    protected boolean onBackPressed() {
+    public boolean onBackPressed() {
         return false;
     }
 
@@ -98,6 +108,8 @@ public abstract class BaseSubFragment extends BaseFragment {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubFragmentManager().closeFragment(this, 0, 0);
+        } else if (getActivity() instanceof BaseDrawerActivity) {
+            ((BaseDrawerActivity) getActivity()).getSubFragmentManager().closeFragment(this, 0, 0);
         } else {
             getActivity().finish();
         }
@@ -110,6 +122,8 @@ public abstract class BaseSubFragment extends BaseFragment {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubFragmentManager().closeFragment(this, popEnter, popExit);
+        } else if (getActivity() instanceof BaseDrawerActivity) {
+            ((BaseDrawerActivity) getActivity()).getSubFragmentManager().closeFragment(this, popEnter, popExit);
         } else {
             getActivity().finish();
         }
@@ -125,6 +139,8 @@ public abstract class BaseSubFragment extends BaseFragment {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubFragmentManager().addFragment(fragment, 0, 0);
+        } else if (getActivity() instanceof BaseDrawerActivity) {
+            ((BaseDrawerActivity) getActivity()).getSubFragmentManager().addFragment(fragment, 0, 0);
         }
     }
 
@@ -137,6 +153,8 @@ public abstract class BaseSubFragment extends BaseFragment {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubFragmentManager().addFragment(fragment, enterAnim, exitAnim);
+        } else if (getActivity() instanceof BaseDrawerActivity) {
+            ((BaseDrawerActivity) getActivity()).getSubFragmentManager().addFragment(fragment, 0, 0);
         }
     }
 
@@ -148,11 +166,19 @@ public abstract class BaseSubFragment extends BaseFragment {
     public void close(BaseSubFragment fragment) {
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubFragmentManager().closeFragment(fragment, 0, 0);
+        } else if (getActivity() instanceof BaseDrawerActivity) {
+            ((BaseDrawerActivity) getActivity()).getSubFragmentManager().closeFragment(fragment, 0, 0);
         }
     }
 
     @Override
     public void goTo(String title, String url) {
-        open(new DefualtWebFragment(title, url));
+        if (getActivity() instanceof BaseSubActivity) {
+            open(new DefualtWebFragment(title, url));
+        } else if (getActivity() instanceof BaseDrawerActivity) {
+            open(new DefualtWebFragment(title, url));
+        } else {
+            super.goTo(title, url);
+        }
     }
 }

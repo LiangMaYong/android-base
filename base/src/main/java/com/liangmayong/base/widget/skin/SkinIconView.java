@@ -125,7 +125,7 @@ public class SkinIconView extends IconView implements SkinInterface {
                         mPressedColor = 0xffffffff;
                         break;
                     case defualt:
-                        mPressedColor = 0xff428bca;
+                        mPressedColor = getContext().getResources().getColor(R.color.colorPrimary);
                         break;
                 }
             }

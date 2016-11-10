@@ -2,8 +2,8 @@
 <resources>
 
     <!--theme-->
-    <color name="colorPrimary">#fcb815</color>
-    <color name="colorPrimaryDark">#fcb815</color>
+    <color name="colorPrimary">#3399ff</color>
+    <color name="colorPrimaryDark">#3399ff</color>
     <color name="colorAccent">#3399ff</color>
 
     <color name="base_defualt_image_bg_color">#dddddd</color>

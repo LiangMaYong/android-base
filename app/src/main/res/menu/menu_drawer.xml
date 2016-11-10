@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_mon"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Mon" />
+        <item
+            android:id="@+id/menu_tues"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Tues" />
+        <item
+            android:id="@+id/menu_wed"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Wed" />
+        <item
+            android:id="@+id/menu_thurs"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Thurs" />
+        <item
+            android:id="@+id/menu_fri"
+            android:icon="@mipmap/ic_launcher"
+            android:title="Fri" />
+    </group>
+
+    <!--二级菜单-->
+    <item android:title="weekend">
+        <menu>
+            <item
+                android:id="@+id/menu_sat"
+                android:title="Sat" />
+            <item
+                android:id="@+id/menu_sun"
+                android:title="Sun" />
+        </menu>
+    </item>
+</menu>

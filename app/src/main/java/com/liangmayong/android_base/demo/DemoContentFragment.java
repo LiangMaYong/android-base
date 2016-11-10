@@ -25,8 +25,8 @@ public class DemoContentFragment extends BaseSubFragment {
 
     @Override
     protected void initSubView(View rootView) {
-        getDefualtToolbar().setTitle(getArguments().getString("title"));
-        tv_title.setText(getArguments().getString("title"));
+        //getDefualtToolbar().setTitle(getArguments().getString("title"));
+        //tv_title.setText(getArguments().getString("title"));
     }
 
     @BindOnClick({R.id.btn_test})

@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 
+import com.liangmayong.base.R;
 import com.liangmayong.base.widget.database.DataPreferences;
 
 import java.lang.ref.WeakReference;
@@ -224,10 +225,6 @@ public class Skin {
         grayColor = 0xffb1b1b1;
         //grayTextColor
         grayTextColor = 0xffffffff;
-        //themeColor
-        themeColor = 0xff428bca;
-        //themeTextColor
-        themeTextColor = 0xffffffff;
         //primaryColor
         primaryColor = 0xff428bca;
         //successColor
@@ -249,6 +246,14 @@ public class Skin {
         warningTextColor = 0xffffffff;
         //dangerColor
         dangerTextColor = 0xffffffff;
+        //themeColor
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            themeColor = getApplication().getColor(R.color.colorPrimary);
+        } else {
+            themeColor = getApplication().getResources().getColor(R.color.colorPrimary);
+        }
+        //themeTextColor
+        themeTextColor = 0xffffffff;
     }
 
     /**
