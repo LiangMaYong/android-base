@@ -65,7 +65,7 @@ public final class ActivityLifeCycle {
 
 
     //currentActivity
-    private static Activity currentActivity = null;
+    private static volatile Activity currentActivity = null;
 
     /**
      * getCurrentActivity
@@ -144,6 +144,7 @@ public final class ActivityLifeCycle {
                 LIFE_CYCLE_LISTENERS.get(i).onCreate(target, savedInstanceState);
             }
         }
+        currentActivity = target;
     }
 
     /**
@@ -199,6 +200,7 @@ public final class ActivityLifeCycle {
                 LIFE_CYCLE_LISTENERS.get(i).onPause(target);
             }
         }
+        currentActivity = null;
     }
 
     /**

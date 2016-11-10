@@ -8,6 +8,7 @@
     <com.liangmayong.base.widget.skin.SkinSquareLayout
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:padding="2dp"
         skin:skin_type="white">
 
         <com.liangmayong.base.widget.skin.SkinLinearLayout
@@ -25,13 +26,14 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="+"
-                android:textSize="30sp"
+                android:textSize="26sp"
                 skin:skin_type="gray" />
 
             <com.liangmayong.base.widget.skin.SkinTextView
                 android:id="@+id/base_more_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="menu"
                 android:textSize="14sp"

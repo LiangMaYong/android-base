@@ -123,7 +123,7 @@ public class DefualtMoreFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View view = inflater.inflate(R.layout.base_defualt_fragment_more, null);
+        View view = inflater.inflate(R.layout.base_defualt_dialog_more, null);
         viewHolder = new ViewHolder(view);
         setItems(items);
         setTitle(title);
