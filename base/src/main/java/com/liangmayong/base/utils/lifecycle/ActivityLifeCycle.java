@@ -91,6 +91,27 @@ public final class ActivityLifeCycle {
     }
 
     /**
+     * exitWithout
+     *
+     * @param clazz clazz
+     */
+    public static void exitWithout(Class<?> clazz) {
+        if (!getActivities().isEmpty()) {
+            boolean with = false;
+            for (int i = 0; i < getActivities().size(); i++) {
+                if (!with && clazz != null && clazz.getName().equals(getActivities().get(i).getClass().getName())) {
+                    with = true;
+                } else {
+                    try {
+                        getActivities().get(i).finish();
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * getActivities
      *
      * @return ACTIVITIES

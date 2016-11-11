@@ -18,7 +18,7 @@ import android.os.IBinder;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-import com.liangmayong.base.utils.ReflectMethod;
+import com.liangmayong.base.utils.ReflectUtils;
 
 /**
  * Created by liangmayong on 2016/9/18.
@@ -324,44 +324,24 @@ public class ProxyInstrumentation extends Instrumentation {
         return mInstrumentation.getUiAutomation();
     }
 
-
     public ActivityResult execStartActivity(Context who, IBinder contextThread, IBinder token, Activity target,
-                                            Intent intent, int requestCode) {
-        return execStartActivity(who, contextThread, token, target, intent, requestCode, null);
+                                            Intent intent, int requestCode) throws Exception {
+        return ReflectUtils.on(mInstrumentation).call("execStartActivity", who, contextThread, token, target, intent, requestCode).get();
     }
 
-
     public ActivityResult execStartActivity(Context who, IBinder contextThread, IBinder token, Activity target,
-                                            Intent intent, int requestCode, Bundle options) {
-        try {
-            return proxyExecStartActivity(who, contextThread, token, target, intent, requestCode, options);
-        } catch (Exception error) {
-            return null;
-        }
+                                            Intent intent, int requestCode, Bundle options) throws Exception {
+        return ReflectUtils.on(mInstrumentation).call("execStartActivity", who, contextThread, token, target, intent, requestCode, options).get();
     }
 
     public ActivityResult execStartActivity(Context who, IBinder contextThread, IBinder token, Fragment fragment,
-                                            Intent intent, int requestCode) {
-        return execStartActivity(who, contextThread, token, fragment, intent, requestCode, null);
+                                            Intent intent, int requestCode) throws Exception {
+        return ReflectUtils.on(mInstrumentation).call("execStartActivity", who, contextThread, token, fragment, intent, requestCode).get();
     }
 
     public ActivityResult execStartActivity(Context who, IBinder contextThread, IBinder token, Fragment fragment,
                                             Intent intent, int requestCode, Bundle options) {
-        try {
-            ReflectMethod method = new ReflectMethod(Instrumentation.class, mInstrumentation, "execStartActivity", Context.class, IBinder.class, IBinder.class, Fragment.class, Intent.class, int.class, Bundle.class);
-            return method.invoke(who, contextThread, token, fragment, intent, requestCode, options);
-        } catch (Exception error) {
-            return null;
-        }
+        return ReflectUtils.on(mInstrumentation).call("execStartActivity", who, contextThread, token, fragment, intent, requestCode, options).get();
     }
 
-    private ActivityResult proxyExecStartActivity(Context who, IBinder contextThread, IBinder token, Activity target,
-                                                  Intent intent, int requestCode, Bundle options) throws Exception {
-        try {
-            ReflectMethod method = new ReflectMethod(Instrumentation.class, mInstrumentation, "execStartActivity", Context.class, IBinder.class, IBinder.class, Activity.class, Intent.class, int.class, Bundle.class);
-            return method.invoke(who, contextThread, token, target, intent, requestCode, options);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
 }
