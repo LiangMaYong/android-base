@@ -291,6 +291,7 @@ public class ProxyInstrumentation extends Instrumentation {
         mInstrumentation.callActivityOnPause(target);
     }
 
+    @TargetApi(Build.VERSION_CODES.CUPCAKE)
     @Override
     public void callActivityOnUserLeaving(Activity target) {
         mInstrumentation.callActivityOnUserLeaving(target);
