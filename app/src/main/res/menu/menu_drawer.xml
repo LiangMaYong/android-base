@@ -1,38 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <group android:checkableBehavior="single">
+    <group>
         <item
-            android:id="@+id/menu_mon"
+            android:id="@+id/menu_home"
             android:icon="@mipmap/ic_launcher"
-            android:title="Mon" />
+            android:checked="true"
+            android:title="首页" />
         <item
-            android:id="@+id/menu_tues"
+            android:id="@+id/menu_record"
             android:icon="@mipmap/ic_launcher"
-            android:title="Tues" />
+            android:title="我的记录" />
         <item
-            android:id="@+id/menu_wed"
+            android:id="@+id/menu_event"
             android:icon="@mipmap/ic_launcher"
-            android:title="Wed" />
+            android:title="我的事件" />
         <item
-            android:id="@+id/menu_thurs"
+            android:id="@+id/menu_friend"
             android:icon="@mipmap/ic_launcher"
-            android:title="Thurs" />
+            android:title="好友聊天" />
         <item
-            android:id="@+id/menu_fri"
+            android:id="@+id/menu_setting"
             android:icon="@mipmap/ic_launcher"
-            android:title="Fri" />
+            android:title="设置" />
+        <item
+            android:id="@+id/menu_logout"
+            android:icon="@mipmap/ic_launcher"
+            android:title="退出登录" />
     </group>
-
-    <!--二级菜单-->
-    <item android:title="weekend">
-        <menu>
-            <item
-                android:id="@+id/menu_sat"
-                android:title="Sat" />
-            <item
-                android:id="@+id/menu_sun"
-                android:title="Sun" />
-        </menu>
-    </item>
 </menu>

@@ -30,11 +30,7 @@ public class DrawerActivity extends BaseDrawerActivity {
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         showToast(item.getTitle() + "");
-        switch (item.getItemId()) {
-            case R.id.menu_thurs:
-                goTo(MainActivity.class);
-                break;
-        }
+        goTo(MainActivity.class);
         return false;
     }
 }
