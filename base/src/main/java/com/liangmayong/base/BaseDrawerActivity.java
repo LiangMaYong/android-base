@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 
 import com.liangmayong.base.sub.BaseSubFragment;
 import com.liangmayong.base.sub.BaseSubFragmentManager;
+import com.liangmayong.base.ui.fragments.DefualtWebFragment;
 
 /**
  * Created by LiangMaYong on 2016/11/10.
@@ -61,7 +62,57 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     protected void onCreateActivity(@Nullable Bundle savedInstanceState) {
     }
 
-    ;
+    /**
+     * open
+     *
+     * @param fragment fragment
+     */
+    public void open(BaseSubFragment fragment) {
+        hideSoftKeyBoard();
+        getSubFragmentManager().addFragment(fragment, 0, 0);
+    }
+
+    /**
+     * open
+     *
+     * @param fragment  fragment
+     * @param enterAnim enterAnim
+     * @param exitAnim  exitAnim
+     */
+    public void open(BaseSubFragment fragment, int enterAnim, int exitAnim) {
+        hideSoftKeyBoard();
+        getSubFragmentManager().addFragment(fragment, 0, 0);
+    }
+
+    @Override
+    public void goTo(String title, String url) {
+        hideSoftKeyBoard();
+        open(new DefualtWebFragment(title, url));
+    }
+
+
+    /**
+     * replace
+     *
+     * @param fragment  fragment
+     * @param enterAnim enterAnim
+     * @param exitAnim  exitAnim
+     */
+    public void replace(BaseSubFragment fragment, int enterAnim, int exitAnim) {
+        hideSoftKeyBoard();
+        getSubFragmentManager().replaceFragment(fragment, enterAnim, exitAnim);
+    }
+
+
+    /**
+     * open
+     *
+     * @param fragment fragment
+     */
+    public void replace(BaseSubFragment fragment) {
+        hideSoftKeyBoard();
+        getSubFragmentManager().replaceFragment(fragment, 0, 0);
+    }
 
     /**
      * openDrawer

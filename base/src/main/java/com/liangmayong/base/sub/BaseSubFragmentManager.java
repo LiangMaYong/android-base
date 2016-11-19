@@ -29,6 +29,10 @@ public class BaseSubFragmentManager {
         setFragment(fristFragment);
     }
 
+    public int getFragmentCount() {
+        return mFragments.size();
+    }
+
     public BaseSubFragment getVisibleFragment() {
         return mCurrentFragment;
     }
@@ -92,6 +96,17 @@ public class BaseSubFragmentManager {
         transaction.add(id, mTargetFragment, mTargetFragment.getClass().getName()).hide(mCurrentFragment).commit();
         mCurrentFragment = mTargetFragment;
         mFragments.add(mTargetFragment);
+    }
+
+    /**
+     * Jump to the specified fragment
+     *
+     * @param mTargetFragment next fragment
+     */
+    public void replaceFragment(BaseSubFragment mTargetFragment, int enterAnim, int exitAnim) {
+        BaseSubFragment fragment = mCurrentFragment;
+        addFragment(mTargetFragment, enterAnim, exitAnim);
+        closeFragment(fragment, 0, 0);
     }
 
     /**

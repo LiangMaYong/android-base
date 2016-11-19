@@ -33,12 +33,21 @@ public abstract class BaseSubFragment extends BaseFragment {
                     }
                 });
             } else if (getActivity() instanceof BaseDrawerActivity) {
-                getDefualtToolbar().leftOne().iconToLeft(Icon.icon_menu).clicked(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ((BaseDrawerActivity) getActivity()).openDrawer();
-                    }
-                });
+                if (((BaseDrawerActivity) getActivity()).getSubFragmentManager().getFragmentCount() > 1) {
+                    getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            finish();
+                        }
+                    });
+                } else {
+                    getDefualtToolbar().leftOne().iconToLeft(Icon.icon_menu).clicked(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ((BaseDrawerActivity) getActivity()).openDrawer();
+                        }
+                    });
+                }
             }
         }
         isInitView = true;
@@ -117,6 +126,9 @@ public abstract class BaseSubFragment extends BaseFragment {
 
     /**
      * finish
+     *
+     * @param popEnter popEnter
+     * @param popExit  popExit
      */
     public void finish(int popEnter, int popExit) {
         hideSoftKeyBoard();
@@ -147,14 +159,47 @@ public abstract class BaseSubFragment extends BaseFragment {
     /**
      * open
      *
-     * @param fragment fragment
+     * @param fragment  fragment
+     * @param enterAnim enterAnim
+     * @param exitAnim  exitAnim
      */
     public void open(BaseSubFragment fragment, int enterAnim, int exitAnim) {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubFragmentManager().addFragment(fragment, enterAnim, exitAnim);
         } else if (getActivity() instanceof BaseDrawerActivity) {
-            ((BaseDrawerActivity) getActivity()).getSubFragmentManager().addFragment(fragment, 0, 0);
+            ((BaseDrawerActivity) getActivity()).getSubFragmentManager().addFragment(fragment, enterAnim, exitAnim);
+        }
+    }
+
+    /**
+     * replace
+     *
+     * @param fragment  fragment
+     * @param enterAnim enterAnim
+     * @param exitAnim  exitAnim
+     */
+    public void replace(BaseSubFragment fragment, int enterAnim, int exitAnim) {
+        hideSoftKeyBoard();
+        if (getActivity() instanceof BaseSubActivity) {
+            ((BaseSubActivity) getActivity()).getSubFragmentManager().replaceFragment(fragment, enterAnim, exitAnim);
+        } else if (getActivity() instanceof BaseDrawerActivity) {
+            ((BaseDrawerActivity) getActivity()).getSubFragmentManager().replaceFragment(fragment, enterAnim, exitAnim);
+        }
+    }
+
+
+    /**
+     * open
+     *
+     * @param fragment fragment
+     */
+    public void replace(BaseSubFragment fragment) {
+        hideSoftKeyBoard();
+        if (getActivity() instanceof BaseSubActivity) {
+            ((BaseSubActivity) getActivity()).getSubFragmentManager().replaceFragment(fragment, 0, 0);
+        } else if (getActivity() instanceof BaseDrawerActivity) {
+            ((BaseDrawerActivity) getActivity()).getSubFragmentManager().replaceFragment(fragment, 0, 0);
         }
     }
 
