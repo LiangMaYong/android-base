@@ -87,7 +87,7 @@ public abstract class BaseSubActivity extends BaseActivity {
     }
 
     @Override
-    public final boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 if (getVisibleFragment() != null) {

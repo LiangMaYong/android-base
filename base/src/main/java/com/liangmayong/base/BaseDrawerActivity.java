@@ -213,7 +213,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     }
 
     @Override
-    public final boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (isOpenDrawer()) {
             closeDrawer();
             return true;

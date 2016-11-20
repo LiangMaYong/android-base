@@ -51,26 +51,30 @@ public class BaseSubFragmentManager {
         if (mLock) {
             return;
         }
-        int count = mFragments.size();
-        if (count == 1) {
-            boolean flag = mCurrentFragment.onBackPressed();
-            if (!flag) {
+        try {
+            int count = mFragments.size();
+            if (count == 1) {
+                boolean flag = mCurrentFragment.onBackPressed();
+                if (!flag) {
+                    closeAllFragment();
+                    mActivity.finish();
+                    mCurrentFragment = null;
+                    return;
+                } else {
+                    return;
+                }
+            } else if (count < 1) {
                 closeAllFragment();
                 mActivity.finish();
                 mCurrentFragment = null;
                 return;
             } else {
-                return;
+                boolean flag = mCurrentFragment.onBackPressed();
+                if (!flag) {
+                    closeFragment(mCurrentFragment, 0, 0);
+                }
             }
-        } else if (count < 1) {
-            closeAllFragment();
-            mActivity.finish();
-            mCurrentFragment = null;
-            return;
-        }
-        boolean flag = mCurrentFragment.onBackPressed();
-        if (!flag) {
-            closeFragment(mCurrentFragment, 0, 0);
+        } catch (Exception e) {
         }
     }
 
