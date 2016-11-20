@@ -22,6 +22,10 @@ public class DefualtWebFragment extends BaseSubWebFragment {
         super(title, url);
     }
 
+    public DefualtWebFragment(String title, String url, boolean moreEnabled) {
+        super(title, url, moreEnabled);
+    }
+
     // HEADERS
     private static final Map<String, String> HEADERS = new HashMap<String, String>();
     // WIDGETS

@@ -23,6 +23,7 @@ import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.layout.SwipeLayout;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
+import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -42,6 +43,12 @@ public class BaseSubWebFragment extends BaseSubFragment {
         this.url = url;
     }
 
+    public BaseSubWebFragment(String title, String url, boolean moreEnabled) {
+        this.title = title;
+        this.url = url;
+        this.moreEnabled = moreEnabled;
+    }
+
     //base_refresh_layout
     private SwipeLayout base_refresh_layout;
     //base_webview
@@ -56,8 +63,8 @@ public class BaseSubWebFragment extends BaseSubFragment {
     private boolean closeEnabled = true;
     //copyEnabled
     private boolean copyEnabled = true;
-    //showMoreEnabled
-    private boolean showMoreEnabled = true;
+    //moreEnabled
+    private boolean moreEnabled = false;
 
     /**
      * initWebView
@@ -112,7 +119,6 @@ public class BaseSubWebFragment extends BaseSubFragment {
         });
         base_webview.getSettings().setJavaScriptEnabled(true);
         base_webview.getSettings().setDomStorageEnabled(true);
-        base_webview.getSettings().setUseWideViewPort(true);
         base_webview.getSettings().setDatabaseEnabled(true);
         base_webview.getSettings().setBuiltInZoomControls(false);
         base_webview.getSettings().setAppCacheEnabled(true);
@@ -253,12 +259,12 @@ public class BaseSubWebFragment extends BaseSubFragment {
     }
 
     /**
-     * isShowMoreEnabled
+     * isMoreEnabled
      *
-     * @return showMoreEnabled
+     * @return moreEnabled
      */
-    public boolean isShowMoreEnabled() {
-        return showMoreEnabled;
+    public boolean isMoreEnabled() {
+        return moreEnabled;
     }
 
     /**
@@ -305,8 +311,8 @@ public class BaseSubWebFragment extends BaseSubFragment {
         }
     }
 
-    public void setShowMoreEnabled(boolean showMoreEnabled) {
-        this.showMoreEnabled = showMoreEnabled;
+    public void setMoreEnabled(boolean moreEnabled) {
+        this.moreEnabled = moreEnabled;
         initDefualtToolbar();
     }
 
@@ -318,7 +324,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
                     onBackPressed();
                 }
             });
-            if (showMoreEnabled) {
+            if (isMoreEnabled()) {
                 getDefualtToolbar().rightOne().iconToLeft(Icon.icon_more).clicked(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -326,6 +332,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
                     }
                 });
             }
+            getDefualtToolbar().rightTwo().text("");
         }
     }
 
@@ -360,7 +367,13 @@ public class BaseSubWebFragment extends BaseSubFragment {
         if (base_webview != null && base_webview.canGoBack()) {
             base_webview.goBack();
             if (closeEnabled && getDefualtToolbar() != null) {
-                getDefualtToolbar().rightTwo().iconToLeft(Icon.icon_close).clicked(new View.OnClickListener() {
+                DefualtToolbar.ToolbarItem item = null;
+                if (isMoreEnabled()) {
+                    item = getDefualtToolbar().rightTwo();
+                } else {
+                    item = getDefualtToolbar().rightOne();
+                }
+                item.iconToLeft(Icon.icon_close).clicked(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         try {

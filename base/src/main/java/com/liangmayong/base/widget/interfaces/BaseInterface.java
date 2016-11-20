@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.liangmayong.base.widget.binding.Presenter;
-import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 import com.liangmayong.base.widget.skin.OnSkinRefreshListener;
+import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 
 /**
  * Created by LiangMaYong on 2016/9/14.
@@ -14,6 +14,7 @@ import com.liangmayong.base.widget.skin.OnSkinRefreshListener;
 public interface BaseInterface extends OnSkinRefreshListener {
 
     String WEB_EXTRA_URL = "web_extra_url";
+    String WEB_EXTRA_MORE = "web_extra_more";
     String WEB_EXTRA_TITLE = "web_extra_title";
 
     /**
@@ -60,6 +61,14 @@ public interface BaseInterface extends OnSkinRefreshListener {
      * @param url   url
      */
     void goTo(String title, String url);
+
+    /**
+     * goWeb
+     *
+     * @param title title
+     * @param url   url
+     */
+    void goToWeb(String title, String url);
 
     /**
      * goHome

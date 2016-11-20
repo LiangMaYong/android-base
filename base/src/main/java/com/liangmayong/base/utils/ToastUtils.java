@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.widget.Toast;
 
+import com.liangmayong.base.utils.toast.IToast;
 import com.liangmayong.base.utils.toast.ToastCompat;
 
 import java.lang.ref.WeakReference;
@@ -49,6 +50,8 @@ public class ToastUtils {
         }
         return application.get();
     }
+
+    private static IToast mToast = null;
 
     /**
      * showToast

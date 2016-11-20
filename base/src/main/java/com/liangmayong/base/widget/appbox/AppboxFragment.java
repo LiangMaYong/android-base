@@ -14,16 +14,16 @@ import android.widget.EditText;
 
 import com.liangmayong.base.BasePresenter;
 import com.liangmayong.base.ui.activitys.WebActivity;
-import com.liangmayong.base.widget.interfaces.BaseInterface;
-import com.liangmayong.base.widget.binding.annotations.BindP;
+import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.binding.Presenter;
 import com.liangmayong.base.widget.binding.PresenterBind;
 import com.liangmayong.base.widget.binding.PresenterHolder;
-import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.binding.ViewBinding;
+import com.liangmayong.base.widget.binding.annotations.BindP;
 import com.liangmayong.base.widget.binding.interfaces.TitleBindInterface;
-import com.liangmayong.base.widget.toolbar.DefualtToolbar;
+import com.liangmayong.base.widget.interfaces.BaseInterface;
 import com.liangmayong.base.widget.skin.Skin;
+import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 
 /**
  * Created by LiangMaYong on 2016/8/22.
@@ -215,6 +215,19 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements Base
         Bundle extras = new Bundle();
         extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
         extras.putString(BaseInterface.WEB_EXTRA_URL, url);
+        Intent intent = new Intent(this, WebActivity.class);
+        if (extras != null) {
+            intent.putExtras(extras);
+        }
+        startActivity(intent);
+    }
+
+    @Override
+    public void goToWeb(String title, String url) {
+        Bundle extras = new Bundle();
+        extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
+        extras.putString(BaseInterface.WEB_EXTRA_URL, url);
+        extras.putString(BaseInterface.WEB_EXTRA_MORE, "true");
         Intent intent = new Intent(this, WebActivity.class);
         if (extras != null) {
             intent.putExtras(extras);

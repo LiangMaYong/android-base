@@ -24,7 +24,7 @@ public class ToastCompat implements IToast {
         this(context, null, -1);
     }
 
-    ToastCompat(Context context, String text, int duration) {
+    private ToastCompat(Context context, CharSequence text, int duration) {
         if (checkNotification == -1) {
             checkNotification = isNotificationEnabled(context) ? 0 : 1;
         }
@@ -36,7 +36,7 @@ public class ToastCompat implements IToast {
         }
     }
 
-    public static IToast makeText(Context context, String text, int duration) {
+    public static IToast makeText(Context context, CharSequence text, int duration) {
         return new ToastCompat(context, text, duration);
     }
 
@@ -61,7 +61,7 @@ public class ToastCompat implements IToast {
     }
 
     @Override
-    public IToast setText(String text) {
+    public IToast setText(CharSequence text) {
         return mIToast.setText(text);
     }
 

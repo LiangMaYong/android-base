@@ -186,7 +186,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
 
     @Override
     public final void showToast(int stringId) {
-        ToastUtils.showToast(getString(stringId));
+        ToastUtils.showToast(stringId);
     }
 
     @Override
@@ -237,6 +237,10 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
 
     public void goTo(String title, String url) {
         BaseUtils.goTo(getContext(), title, url);
+    }
+
+    public void goToWeb(String title, String url) {
+        BaseUtils.goToWeb(getContext(), title, url);
     }
 
     public void goToForResult(Class<? extends Activity> cls, int requestCode) {

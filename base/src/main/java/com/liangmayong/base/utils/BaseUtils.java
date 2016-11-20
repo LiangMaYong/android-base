@@ -52,6 +52,22 @@ public class BaseUtils {
         Bundle extras = new Bundle();
         extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
         extras.putString(BaseInterface.WEB_EXTRA_URL, url);
+        extras.putString(BaseInterface.WEB_EXTRA_MORE, "false");
+        goTo(context, WebActivity.class, extras);
+    }
+
+    /**
+     * goToWeb
+     *
+     * @param context context
+     * @param title   title
+     * @param url     url
+     */
+    public static void goToWeb(Context context, String title, String url) {
+        Bundle extras = new Bundle();
+        extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
+        extras.putString(BaseInterface.WEB_EXTRA_URL, url);
+        extras.putString(BaseInterface.WEB_EXTRA_MORE, "true");
         goTo(context, WebActivity.class, extras);
     }
 

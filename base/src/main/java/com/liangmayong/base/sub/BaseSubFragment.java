@@ -55,6 +55,7 @@ public abstract class BaseSubFragment extends BaseFragment {
         BaseSubFragment authFragment = generateAuthFragment();
         if (authFragment != null) {
             if (!BaseAuthManager.getInstance().isAuth()) {
+                onStartAuthFragment();
                 replace(authFragment);
                 return;
             }
@@ -62,8 +63,19 @@ public abstract class BaseSubFragment extends BaseFragment {
         initSubView(rootView);
     }
 
+    /**
+     * generateAuthFragment
+     *
+     * @return auth Fragment
+     */
     protected BaseSubFragment generateAuthFragment() {
         return null;
+    }
+
+    /**
+     * onStartAuthFragment
+     */
+    protected void onStartAuthFragment() {
     }
 
     protected abstract void initSubView(View rootView);
@@ -234,6 +246,17 @@ public abstract class BaseSubFragment extends BaseFragment {
             open(new DefualtWebFragment(title, url));
         } else if (getActivity() instanceof BaseDrawerActivity) {
             open(new DefualtWebFragment(title, url));
+        } else {
+            super.goTo(title, url);
+        }
+    }
+
+    @Override
+    public void goToWeb(String title, String url) {
+        if (getActivity() instanceof BaseSubActivity) {
+            open(new DefualtWebFragment(title, url, true));
+        } else if (getActivity() instanceof BaseDrawerActivity) {
+            open(new DefualtWebFragment(title, url, true));
         } else {
             super.goTo(title, url);
         }

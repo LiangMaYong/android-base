@@ -50,6 +50,16 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
         BaseSubFragment fragment = getContentFragment();
         if (fragment != null) {
             mSubManager = new BaseSubFragmentManager(this, R.id.base_drawer_fragment, fragment);
+            mSubManager.setCountListener(new BaseSubFragmentManager.OnFragmentCountListener() {
+                @Override
+                public void onFragmentCount(int count) {
+                    if (count <= 1) {
+                        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+                    } else {
+                        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                    }
+                }
+            });
         }
         onCreateActivity(savedInstanceState);
     }
@@ -119,6 +129,17 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
      */
     public void openDrawer() {
         mDrawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    /**
+     * closeDrawer
+     */
+    public void closeDrawer() {
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+    }
+
+    public boolean isOpenDrawer() {
+        return getDrawerLayout().isDrawerOpen(GravityCompat.START);
     }
 
     /**
@@ -193,6 +214,10 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
 
     @Override
     public final boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (isOpenDrawer()) {
+            closeDrawer();
+            return true;
+        }
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
                 if (getVisibleFragment() != null) {

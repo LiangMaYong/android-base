@@ -1,7 +1,6 @@
 package com.liangmayong.base.utils.toast;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,7 +13,7 @@ public class SystemToast implements IToast {
 
     private Context mContext;
 
-    public static IToast makeText(Context context, String text, long duration) {
+    public static IToast makeText(Context context, CharSequence text, long duration) {
         return new SystemToast(context)
                 .setText(text)
                 .setDuration(duration);
@@ -50,7 +49,7 @@ public class SystemToast implements IToast {
     }
 
     @Override
-    public IToast setText(String text) {
+    public IToast setText(CharSequence text) {
         mToast.setText(text);
         return this;
     }

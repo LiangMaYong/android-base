@@ -15,7 +15,7 @@ public interface IToast {
 
     IToast setMargin(float horizontalMargin, float verticalMargin);
 
-    IToast setText(String text);
+    IToast setText(CharSequence text);
 
     void show();
 

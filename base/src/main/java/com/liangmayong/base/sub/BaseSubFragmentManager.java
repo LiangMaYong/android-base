@@ -29,6 +29,16 @@ public class BaseSubFragmentManager {
         setFragment(fristFragment);
     }
 
+    public interface OnFragmentCountListener {
+        void onFragmentCount(int count);
+    }
+
+    private OnFragmentCountListener countListener;
+
+    public void setCountListener(OnFragmentCountListener countListener) {
+        this.countListener = countListener;
+    }
+
     public int getFragmentCount() {
         return mFragments.size();
     }
@@ -96,6 +106,9 @@ public class BaseSubFragmentManager {
         transaction.add(id, mTargetFragment, mTargetFragment.getClass().getName()).hide(mCurrentFragment).commit();
         mCurrentFragment = mTargetFragment;
         mFragments.add(mTargetFragment);
+        if (countListener != null) {
+            countListener.onFragmentCount(getFragmentCount());
+        }
     }
 
     /**
@@ -107,6 +120,9 @@ public class BaseSubFragmentManager {
         BaseSubFragment fragment = mCurrentFragment;
         addFragment(mTargetFragment, enterAnim, exitAnim);
         closeFragment(fragment, 0, 0);
+        if (countListener != null) {
+            countListener.onFragmentCount(getFragmentCount());
+        }
     }
 
     /**
@@ -184,6 +200,9 @@ public class BaseSubFragmentManager {
                 transaction.remove(mTargetFragment).commit();
             }
         }
+        if (countListener != null) {
+            countListener.onFragmentCount(getFragmentCount());
+        }
     }
 
     /**
@@ -197,6 +216,9 @@ public class BaseSubFragmentManager {
         for (int i = 0; i < backStackCount; i++) {
             int backStackId = mActivity.getSupportFragmentManager().getBackStackEntryAt(i).getId();
             mActivity.getSupportFragmentManager().popBackStack(backStackId, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        if (countListener != null) {
+            countListener.onFragmentCount(getFragmentCount());
         }
     }
 }

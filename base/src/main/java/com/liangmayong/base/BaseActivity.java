@@ -20,12 +20,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.liangmayong.base.utils.BaseUtils;
 import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.utils.fixbug.Android5497Workaround;
-import com.liangmayong.base.utils.toast.ToastCompat;
 import com.liangmayong.base.widget.binding.Presenter;
 import com.liangmayong.base.widget.binding.PresenterBind;
 import com.liangmayong.base.widget.binding.PresenterHolder;
@@ -211,18 +209,17 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
 
     @Override
     public final void showToast(CharSequence text) {
-        ToastCompat.makeText(this, text + "", Toast.LENGTH_LONG).show();
+        ToastUtils.showToast(text);
     }
 
     @Override
     public final void showToast(int stringId) {
-        showToast(getString(stringId));
+        ToastUtils.showToast(stringId);
     }
 
     @Override
     public final void showToast(CharSequence text, int duration) {
         ToastUtils.showToast(text, duration);
-        ToastCompat.makeText(this, text + "", duration).show();
     }
 
     @Override
@@ -280,6 +277,10 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
 
     public void goTo(String title, String url) {
         BaseUtils.goTo(this, title, url);
+    }
+
+    public void goToWeb(String title, String url) {
+        BaseUtils.goToWeb(this, title, url);
     }
 
     public void goToForResult(Class<? extends Activity> cls, int requestCode) {

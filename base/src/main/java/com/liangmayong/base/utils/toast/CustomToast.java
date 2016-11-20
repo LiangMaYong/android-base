@@ -9,8 +9,11 @@ import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.liangmayong.base.utils.DimenUtils;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -37,11 +40,11 @@ public class CustomToast implements IToast {
 
     private Context mContext;
 
-    public static IToast makeText(Context context, String text, long duration) {
+    public static IToast makeText(Context context, CharSequence text, long duration) {
         return new CustomToast(context)
                 .setText(text)
                 .setDuration(duration)
-                .setGravity(Gravity.CENTER, 0, 0);
+                .setGravity(Gravity.BOTTOM, 0, 0);
     }
 
     /**
@@ -59,7 +62,7 @@ public class CustomToast implements IToast {
         mParams.setTitle("Toast");
         mParams.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
-        mParams.gravity = Gravity.BOTTOM;
+        mParams.gravity = Gravity.CENTER;
     }
 
     /**
@@ -121,12 +124,15 @@ public class CustomToast implements IToast {
         return this;
     }
 
-    public IToast setText(String text) {
+    public IToast setText(CharSequence text) {
         View view = Toast.makeText(mContext, text, Toast.LENGTH_SHORT).getView();
         if (view != null) {
+            LinearLayout linearLayout = new LinearLayout(mContext);
+            linearLayout.setPadding(0, DimenUtils.dip2px(mContext, 60), 0, DimenUtils.dip2px(mContext, 60));
             TextView tv = (TextView) view.findViewById(android.R.id.message);
             tv.setText(text);
-            setView(view);
+            linearLayout.addView(view);
+            setView(linearLayout);
         }
         return this;
     }
