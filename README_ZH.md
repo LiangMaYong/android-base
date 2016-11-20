@@ -3,9 +3,9 @@ README: [English](https://github.com/LiangMaYong/android-base/blob/master/README
 
 这是一个Android基础框架
 
-下载DEMO : [demo-1.1.0.apk](https://raw.githubusercontent.com/LiangMaYong/android-base/master/release/apk/demo-1.1.0.apk)
+下载DEMO : [demo-1.2.0.apk](https://raw.githubusercontent.com/LiangMaYong/android-base/master/release/apk/demo-1.2.0.apk)
 
-下载AAR : [base-1.1.0.aar](https://raw.githubusercontent.com/LiangMaYong/android-base/master/release/1.1.0/base-1.1.0.aar)
+下载AAR : [base-1.2.0.aar](https://raw.githubusercontent.com/LiangMaYong/android-base/master/release/1.2.0/base-1.2.0.aar)
 
 ## 功能
 1,Database
