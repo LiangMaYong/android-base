@@ -91,6 +91,6 @@ public class ToastCompat implements IToast {
             }
         } catch (Exception e) {
         }
-        return false;
+        return true;
     }
 }

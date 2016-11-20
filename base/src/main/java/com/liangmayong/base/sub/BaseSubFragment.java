@@ -5,6 +5,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.liangmayong.base.BaseAuthManager;
 import com.liangmayong.base.BaseDrawerActivity;
 import com.liangmayong.base.BaseFragment;
 import com.liangmayong.base.ui.fragments.DefualtWebFragment;
@@ -51,7 +52,18 @@ public abstract class BaseSubFragment extends BaseFragment {
             }
         }
         isInitView = true;
+        BaseSubFragment authFragment = generateAuthFragment();
+        if (authFragment != null) {
+            if (!BaseAuthManager.getInstance().isAuth()) {
+                replace(authFragment);
+                return;
+            }
+        }
         initSubView(rootView);
+    }
+
+    protected BaseSubFragment generateAuthFragment() {
+        return null;
     }
 
     protected abstract void initSubView(View rootView);

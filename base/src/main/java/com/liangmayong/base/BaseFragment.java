@@ -43,6 +43,19 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     private InputMethodManager inputManager = null;
 
     /**
+     * getFragmentId
+     *
+     * @return fragmentId
+     */
+    public int getFragmentId() {
+        try {
+            return ((View) getView().getParent()).getId();
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
+    /**
      * extras
      *
      * @param extras extras

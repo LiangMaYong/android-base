@@ -412,9 +412,15 @@ public class StatusBarCompat {
      */
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private static void setRootView(Activity activity) {
-        ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
-        rootView.setFitsSystemWindows(true);
-        rootView.setClipToPadding(true);
+        try {
+            ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.findViewById(android.R.id.content)).getChildAt(0);
+            rootView.setFitsSystemWindows(true);
+            rootView.setClipToPadding(true);
+        } catch (Exception e) {
+            ViewGroup rootView = (ViewGroup) ((ViewGroup) activity.getWindow().getDecorView()).getChildAt(0);
+            rootView.setFitsSystemWindows(true);
+            //rootView.setPadding(0, getStatusBarHeight(activity), 0, 0);
+        }
     }
 
     /**

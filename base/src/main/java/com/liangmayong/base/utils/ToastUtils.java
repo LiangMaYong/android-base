@@ -2,13 +2,8 @@ package com.liangmayong.base.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
-import android.os.Handler;
-import android.view.Gravity;
-import android.view.WindowManager.LayoutParams;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.liangmayong.base.utils.toast.RadiusDrawable;
 import com.liangmayong.base.utils.toast.ToastCompat;
 
 import java.lang.ref.WeakReference;
@@ -55,23 +50,13 @@ public class ToastUtils {
         return application.get();
     }
 
-    // mToast
-    private static ToastCompat mToast = null;
-    private static Handler mHandler = new Handler();
-    private static Runnable run = new Runnable() {
-        @Override
-        public void run() {
-            mToast.cancel();
-        }
-    };
-
     /**
      * showToast
      *
      * @param text text
      */
     public static void showToast(CharSequence text) {
-        showToast(text, 1500);
+        ToastCompat.makeText(getApplication(), text + "", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -80,7 +65,7 @@ public class ToastUtils {
      * @param stringId stringId
      */
     public static void showToast(int stringId) {
-        showToast(getApplication().getString(stringId), 1500);
+        ToastCompat.makeText(getApplication(), getApplication().getString(stringId) + "", Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -91,24 +76,7 @@ public class ToastUtils {
      */
     @SuppressWarnings("deprecation")
     public static void showToast(CharSequence text, int duration) {
-        mHandler.removeCallbacks(run);
-        if (mToast == null) {
-            mToast = new ToastCompat(getApplication());
-        }
-        LinearLayout linearLayout = new LinearLayout(getApplication());
-        linearLayout.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        linearLayout.setGravity(Gravity.CENTER);
-        linearLayout.setPadding(25, 15, 25, 15);
-        linearLayout.setBackgroundDrawable(new RadiusDrawable(50, 0x99333333));
-
-        TextView tv = new TextView(getApplication());
-        linearLayout.addView(tv);
-        tv.setTextColor(0xffffffff);
-        tv.setTextSize(16);
-        tv.setText(text);
-        mToast.setView(linearLayout);
-        mHandler.postDelayed(run, duration);
-        mToast.show();
+        ToastCompat.makeText(getApplication(), text + "", duration).show();
     }
 
 }

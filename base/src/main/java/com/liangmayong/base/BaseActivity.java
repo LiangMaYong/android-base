@@ -11,6 +11,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.liangmayong.base.utils.BaseUtils;
 import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.utils.fixbug.Android5497Workaround;
+import com.liangmayong.base.utils.toast.ToastCompat;
 import com.liangmayong.base.widget.binding.Presenter;
 import com.liangmayong.base.widget.binding.PresenterBind;
 import com.liangmayong.base.widget.binding.PresenterHolder;
@@ -40,6 +44,7 @@ import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 @BindP({BasePresenter.class})
 public class BaseActivity extends AppCompatActivity implements BaseInterface, TitleBindInterface {
 
+    private FrameLayout frameLayout = null;
     //holder
     private PresenterHolder holder = null;
     //defualtToolbar
@@ -105,6 +110,9 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        View view = LayoutInflater.from(this).inflate(R.layout.base_defualt_activity, null);
+        frameLayout = (FrameLayout) view.findViewById(R.id.content);
+        super.setContentView(view);
         Android5497Workaround.assistActivity(this);
         inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -120,19 +128,20 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
-        super.setContentView(layoutResID);
+        View view = LayoutInflater.from(this).inflate(layoutResID, null);
+        frameLayout.addView(view);
         initToolbar();
     }
 
     @Override
     public void setContentView(View view) {
-        super.setContentView(view);
+        frameLayout.addView(view);
         initToolbar();
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
-        super.setContentView(view, params);
+        frameLayout.addView(view, params);
         initToolbar();
     }
 
@@ -202,17 +211,18 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
 
     @Override
     public final void showToast(CharSequence text) {
-        ToastUtils.showToast(text);
+        ToastCompat.makeText(this, text + "", Toast.LENGTH_LONG).show();
     }
 
     @Override
     public final void showToast(int stringId) {
-        ToastUtils.showToast(getString(stringId));
+        showToast(getString(stringId));
     }
 
     @Override
     public final void showToast(CharSequence text, int duration) {
         ToastUtils.showToast(text, duration);
+        ToastCompat.makeText(this, text + "", duration).show();
     }
 
     @Override

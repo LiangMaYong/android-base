@@ -45,8 +45,6 @@ public class CustomToast implements IToast {
     }
 
     /**
-     * 参照Toast源码TN()写
-     *
      * @param context
      */
     public CustomToast(Context context) {
@@ -61,8 +59,7 @@ public class CustomToast implements IToast {
         mParams.setTitle("Toast");
         mParams.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
-        // 默认居中
-        mParams.gravity = Gravity.CENTER;
+        mParams.gravity = Gravity.BOTTOM;
     }
 
     /**
@@ -102,9 +99,9 @@ public class CustomToast implements IToast {
             mDurationMillis = 0;
         }
         if (durationMillis == Toast.LENGTH_SHORT) {
-            mDurationMillis = 2000;
+            mDurationMillis = 1500;
         } else if (durationMillis == Toast.LENGTH_LONG) {
-            mDurationMillis = 3500;
+            mDurationMillis = 2500;
         } else {
             mDurationMillis = durationMillis;
         }
