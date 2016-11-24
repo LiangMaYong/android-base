@@ -94,7 +94,7 @@ public class DemoListFrag extends BaseSubListFragment {
                 getListView().getPool().add(new DemoItem2View("Item" + (i + 1)).setOnItemClickListener(new SuperListView.OnItemClickListener<String>() {
                     @Override
                     public void onClick(SuperListView.Item<String> item, int position, View itemView) {
-                        open(new DemoContentFragment().initArguments(new BundleBuilder().put("title", item.getData()).builder()));
+                        openFragment(new DemoContentFragment().initArguments(new BundleBuilder().put("title", item.getData()).builder()));
                     }
                 }));
             }

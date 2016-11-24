@@ -56,7 +56,7 @@ public abstract class BaseSubFragment extends BaseFragment {
         if (authFragment != null) {
             if (!BaseAuthManager.getInstance().isAuth()) {
                 onStartAuthFragment();
-                replace(authFragment);
+                replaceFragment(authFragment);
                 return;
             }
         }
@@ -87,8 +87,8 @@ public abstract class BaseSubFragment extends BaseFragment {
     }
 
     @Override
-    protected void createView() {
-        super.createView();
+    protected void onCreateView() {
+        super.onCreateView();
         isInitView = false;
     }
 
@@ -167,11 +167,11 @@ public abstract class BaseSubFragment extends BaseFragment {
 
 
     /**
-     * open
+     * openFragment
      *
      * @param fragment fragment
      */
-    public void open(BaseSubFragment fragment) {
+    public void openFragment(BaseSubFragment fragment) {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubFragmentManager().addFragment(fragment, 0, 0);
@@ -181,13 +181,13 @@ public abstract class BaseSubFragment extends BaseFragment {
     }
 
     /**
-     * open
+     * openFragment
      *
      * @param fragment  fragment
      * @param enterAnim enterAnim
      * @param exitAnim  exitAnim
      */
-    public void open(BaseSubFragment fragment, int enterAnim, int exitAnim) {
+    public void openFragment(BaseSubFragment fragment, int enterAnim, int exitAnim) {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubFragmentManager().addFragment(fragment, enterAnim, exitAnim);
@@ -197,13 +197,13 @@ public abstract class BaseSubFragment extends BaseFragment {
     }
 
     /**
-     * replace
+     * replaceFragment
      *
      * @param fragment  fragment
      * @param enterAnim enterAnim
      * @param exitAnim  exitAnim
      */
-    public void replace(BaseSubFragment fragment, int enterAnim, int exitAnim) {
+    public void replaceFragment(BaseSubFragment fragment, int enterAnim, int exitAnim) {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubFragmentManager().replaceFragment(fragment, enterAnim, exitAnim);
@@ -214,11 +214,11 @@ public abstract class BaseSubFragment extends BaseFragment {
 
 
     /**
-     * open
+     * openFragment
      *
      * @param fragment fragment
      */
-    public void replace(BaseSubFragment fragment) {
+    public void replaceFragment(BaseSubFragment fragment) {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubFragmentManager().replaceFragment(fragment, 0, 0);
@@ -228,11 +228,11 @@ public abstract class BaseSubFragment extends BaseFragment {
     }
 
     /**
-     * close
+     * closeFragment
      *
      * @param fragment fragment
      */
-    public void close(BaseSubFragment fragment) {
+    public void closeFragment(BaseSubFragment fragment) {
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubFragmentManager().closeFragment(fragment, 0, 0);
         } else if (getActivity() instanceof BaseDrawerActivity) {
@@ -243,9 +243,9 @@ public abstract class BaseSubFragment extends BaseFragment {
     @Override
     public void goTo(String title, String url) {
         if (getActivity() instanceof BaseSubActivity) {
-            open(new DefualtWebFragment(title, url));
+            openFragment(new DefualtWebFragment(title, url));
         } else if (getActivity() instanceof BaseDrawerActivity) {
-            open(new DefualtWebFragment(title, url));
+            openFragment(new DefualtWebFragment(title, url));
         } else {
             super.goTo(title, url);
         }
@@ -254,9 +254,9 @@ public abstract class BaseSubFragment extends BaseFragment {
     @Override
     public void goToWeb(String title, String url) {
         if (getActivity() instanceof BaseSubActivity) {
-            open(new DefualtWebFragment(title, url, true));
+            openFragment(new DefualtWebFragment(title, url, true));
         } else if (getActivity() instanceof BaseDrawerActivity) {
-            open(new DefualtWebFragment(title, url, true));
+            openFragment(new DefualtWebFragment(title, url, true));
         } else {
             super.goTo(title, url);
         }

@@ -73,23 +73,23 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     }
 
     /**
-     * open
+     * openFragment
      *
      * @param fragment fragment
      */
-    public void open(BaseSubFragment fragment) {
+    public void openFragment(BaseSubFragment fragment) {
         hideSoftKeyBoard();
         getSubFragmentManager().addFragment(fragment, 0, 0);
     }
 
     /**
-     * open
+     * openFragment
      *
      * @param fragment  fragment
      * @param enterAnim enterAnim
      * @param exitAnim  exitAnim
      */
-    public void open(BaseSubFragment fragment, int enterAnim, int exitAnim) {
+    public void openFragment(BaseSubFragment fragment, int enterAnim, int exitAnim) {
         hideSoftKeyBoard();
         getSubFragmentManager().addFragment(fragment, 0, 0);
     }
@@ -97,29 +97,29 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     @Override
     public void goTo(String title, String url) {
         hideSoftKeyBoard();
-        open(new DefualtWebFragment(title, url));
+        openFragment(new DefualtWebFragment(title, url));
     }
 
 
     /**
-     * replace
+     * replaceFragment
      *
      * @param fragment  fragment
      * @param enterAnim enterAnim
      * @param exitAnim  exitAnim
      */
-    public void replace(BaseSubFragment fragment, int enterAnim, int exitAnim) {
+    public void replaceFragment(BaseSubFragment fragment, int enterAnim, int exitAnim) {
         hideSoftKeyBoard();
         getSubFragmentManager().replaceFragment(fragment, enterAnim, exitAnim);
     }
 
 
     /**
-     * open
+     * openFragment
      *
      * @param fragment fragment
      */
-    public void replace(BaseSubFragment fragment) {
+    public void replaceFragment(BaseSubFragment fragment) {
         hideSoftKeyBoard();
         getSubFragmentManager().replaceFragment(fragment, 0, 0);
     }

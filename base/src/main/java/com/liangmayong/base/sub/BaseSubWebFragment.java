@@ -20,7 +20,7 @@ import com.liangmayong.base.utils.ClipboardUtils;
 import com.liangmayong.base.utils.ShareUtils;
 import com.liangmayong.base.utils.StringUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
-import com.liangmayong.base.widget.layout.SwipeLayout;
+import com.liangmayong.base.widget.skin.SkinSwipeLayout;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
@@ -50,7 +50,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
     }
 
     //base_refresh_layout
-    private SwipeLayout base_refresh_layout;
+    private SkinSwipeLayout base_refresh_layout;
     //base_webview
     private BaseWebView base_webview;
     //title
@@ -87,7 +87,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
     protected final void initSubView(View rootView) {
         base_webview = new BaseWebView(getActivity());
         base_webview.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        base_refresh_layout = (SwipeLayout) rootView.findViewById(R.id.base_swipeLayout);
+        base_refresh_layout = (SkinSwipeLayout) rootView.findViewById(R.id.base_swipeLayout);
         base_refresh_layout.addView(base_webview);
         base_refresh_layout.setEnabled(refreshEnabled);
         base_refresh_layout.setColorSchemeColors(Skin.get().getThemeColor());

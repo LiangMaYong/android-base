@@ -128,7 +128,7 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     @Nullable
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        createView();
+        onCreateView();
         rootView = null;
         if (generateContainerViewId() > 0) {
             rootView = inflater.inflate(generateContainerViewId(), null);
@@ -174,9 +174,9 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     protected abstract void initView(View rootView);
 
     /**
-     * createView
+     * onCreateView
      */
-    protected void createView() {
+    protected void onCreateView() {
     }
 
     @Override
@@ -252,22 +252,28 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     }
 
     public void hideSoftKeyBoard() {
-        if (inputManager.isActive() && getActivity().getCurrentFocus() != null) {
-            if (getActivity().getCurrentFocus().getWindowToken() != null) {
-                inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        try {
+            if (inputManager.isActive() && getActivity() != null && getActivity().getCurrentFocus() != null) {
+                if (getActivity().getCurrentFocus().getWindowToken() != null) {
+                    inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
             }
+        } catch (Exception e) {
         }
     }
 
     public void showSoftKeyBoard(final EditText editText) {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                editText.setFocusable(true);
-                editText.setFocusableInTouchMode(true);
-                editText.requestFocus();
-                inputManager.showSoftInput(editText, 0);
-            }
-        }, 500);
+        try {
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    editText.setFocusable(true);
+                    editText.setFocusableInTouchMode(true);
+                    editText.requestFocus();
+                    inputManager.showSoftInput(editText, 0);
+                }
+            }, 500);
+        } catch (Exception e) {
+        }
     }
 }

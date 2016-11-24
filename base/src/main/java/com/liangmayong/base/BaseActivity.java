@@ -1,6 +1,5 @@
 package com.liangmayong.base;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -11,15 +10,12 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 
 import com.liangmayong.base.utils.BaseUtils;
 import com.liangmayong.base.utils.ToastUtils;
@@ -42,7 +38,6 @@ import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 @BindP({BasePresenter.class})
 public class BaseActivity extends AppCompatActivity implements BaseInterface, TitleBindInterface {
 
-    private FrameLayout frameLayout = null;
     //holder
     private PresenterHolder holder = null;
     //defualtToolbar
@@ -108,15 +103,13 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = LayoutInflater.from(this).inflate(R.layout.base_defualt_activity, null);
-        frameLayout = (FrameLayout) view.findViewById(R.id.content);
-        super.setContentView(view);
         Android5497Workaround.assistActivity(this);
         inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         ViewBinding.parserActivity(this);
         holder = PresenterBind.bind(this);
         Skin.registerSkinRefresh(this);
+        getWindow().getDecorView().setPadding(0, 0, 0, 0);
     }
 
     @Override
@@ -126,20 +119,19 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
-        View view = LayoutInflater.from(this).inflate(layoutResID, null);
-        frameLayout.addView(view);
+        super.setContentView(layoutResID);
         initToolbar();
     }
 
     @Override
     public void setContentView(View view) {
-        frameLayout.addView(view);
+        super.setContentView(view);
         initToolbar();
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
-        frameLayout.addView(view, params);
+        super.setContentView(view, params);
         initToolbar();
     }
 
@@ -192,19 +184,6 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
             return getPresenterHolder().getPresenter(cls);
         }
         return null;
-    }
-
-    @TargetApi(19)
-    private void setTranslucentStatusBar(boolean on) {
-        Window win = getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
     }
 
     @Override
@@ -292,23 +271,29 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     }
 
     public void hideSoftKeyBoard() {
-        if (inputManager.isActive() && this.getCurrentFocus() != null) {
-            if (this.getCurrentFocus().getWindowToken() != null) {
-                inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        try {
+            if (inputManager.isActive() && this.getCurrentFocus() != null) {
+                if (this.getCurrentFocus().getWindowToken() != null) {
+                    inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }
             }
+        } catch (Exception e) {
         }
     }
 
     public void showSoftKeyBoard(final EditText editText) {
-        postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                editText.setFocusable(true);
-                editText.setFocusableInTouchMode(true);
-                editText.requestFocus();
-                inputManager.showSoftInput(editText, 0);
-            }
-        }, 500);
+        try {
+            postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    editText.setFocusable(true);
+                    editText.setFocusableInTouchMode(true);
+                    editText.requestFocus();
+                    inputManager.showSoftInput(editText, 0);
+                }
+            }, 500);
+        } catch (Exception e) {
+        }
     }
 
     @Override

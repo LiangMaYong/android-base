@@ -6,7 +6,7 @@
 
     <include layout="@layout/base_defualt_toolbar" />
 
-    <com.liangmayong.base.widget.layout.SwipeLayout
+    <com.liangmayong.base.widget.skin.SkinSwipeLayout
         android:id="@+id/base_swipeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

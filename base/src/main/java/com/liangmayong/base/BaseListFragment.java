@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
-import com.liangmayong.base.widget.layout.SwipeLayout;
+import com.liangmayong.base.widget.skin.SkinSwipeLayout;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 
@@ -39,10 +39,10 @@ public abstract class BaseListFragment extends BaseFragment {
     @Override
     protected final void initView(View rootView) {
         reListView = (SuperListView) rootView.findViewById(R.id.base_superListView);
-        refreshLayout = (SwipeLayout) rootView.findViewById(R.id.base_swipeLayout);
+        refreshLayout = (SkinSwipeLayout) rootView.findViewById(R.id.base_swipeLayout);
         refreshLayout.setColorSchemeColors(Skin.get().getThemeColor());
         refreshLayout.setEnabled(refreshEnabled());
-        ((SwipeLayout) refreshLayout).setViewGroup(reListView);
+        ((SkinSwipeLayout) refreshLayout).setViewGroup(reListView);
         initListView(reListView, refreshLayout);
     }
 

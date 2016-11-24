@@ -195,6 +195,15 @@ public class SuperListView extends RelativeLayout {
     }
 
     /**
+     * recyclerView
+     *
+     * @return recyclerView
+     */
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
+    /**
      * setDefualtEmpty
      *
      * @param text       text
@@ -287,6 +296,25 @@ public class SuperListView extends RelativeLayout {
         isError = false;
         isLoading = false;
         isContent = false;
+    }
+
+    /**
+     * smoothToPosition
+     *
+     * @param index index
+     */
+    public void smoothToPosition(int index) {
+        getRecyclerView().smoothScrollToPosition(index);
+    }
+
+    /**
+     * smoothToPosition
+     *
+     * @param dx dx
+     * @param dy dy
+     */
+    public void smoothToPosition(int dx, int dy) {
+        getRecyclerView().smoothScrollBy(dx, dy);
     }
 
     /**
@@ -983,7 +1011,7 @@ public class SuperListView extends RelativeLayout {
         }
 
         /**
-         * insert
+         * add
          *
          * @param item item
          */
@@ -991,6 +1019,15 @@ public class SuperListView extends RelativeLayout {
             items.add(item);
         }
 
+        /**
+         * add
+         *
+         * @param position position
+         * @param item     item
+         */
+        public void add(int position, Item item) {
+            items.add(position, item);
+        }
 
         /**
          * remove
@@ -1003,7 +1040,7 @@ public class SuperListView extends RelativeLayout {
 
 
         /**
-         * insertList
+         * addAll
          *
          * @param items items
          */

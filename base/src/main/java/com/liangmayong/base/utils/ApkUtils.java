@@ -284,7 +284,7 @@ public class ApkUtils {
     public interface OnApkOpenListener {
 
         /**
-         * open app
+         * openFragment app
          */
         void startOpen(String packageName);
 
