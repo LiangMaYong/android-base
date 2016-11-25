@@ -25,6 +25,20 @@ public abstract class BaseSubFragment extends BaseFragment {
         if (isInitView) {
             return;
         }
+        isInitView = true;
+        BaseSubFragment authFragment = generateAuthFragment();
+        if (authFragment != null) {
+            if (!BaseAuthManager.getInstance().isAuth()) {
+                onStartAuthFragment();
+                replaceFragment(authFragment);
+                return;
+            }
+        }
+        initSubView(rootView);
+    }
+
+    @Override
+    protected void initToolbar() {
         if (getDefualtToolbar() != null) {
             if (getActivity() instanceof BaseSubActivity) {
                 getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
@@ -51,16 +65,6 @@ public abstract class BaseSubFragment extends BaseFragment {
                 }
             }
         }
-        isInitView = true;
-        BaseSubFragment authFragment = generateAuthFragment();
-        if (authFragment != null) {
-            if (!BaseAuthManager.getInstance().isAuth()) {
-                onStartAuthFragment();
-                replaceFragment(authFragment);
-                return;
-            }
-        }
-        initSubView(rootView);
     }
 
     /**

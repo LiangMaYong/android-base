@@ -92,6 +92,22 @@ public class DefualtToolbar {
     }
 
     /**
+     * reset
+     */
+    public void reset() {
+        leftOne().reset();
+        leftTwo().reset();
+        leftThree().reset();
+        leftFour().reset();
+        rightOne().reset();
+        rightTwo().reset();
+        rightThree().reset();
+        rightFour().reset();
+        setTitle("");
+        setSubTitle("");
+    }
+
+    /**
      * setSkinType
      *
      * @param skinType skinType
@@ -312,6 +328,16 @@ public class DefualtToolbar {
         public ToolbarItem textColor(int color) {
             this.getIconView().setTextColor(color);
             return this;
+        }
+
+        /**
+         * reset
+         */
+        public void reset() {
+            this.getIconView().setText("");
+            this.iconToLeft(null);
+            this.clicked(null);
+            this.getIconView().setClickable(false);
         }
 
         /**

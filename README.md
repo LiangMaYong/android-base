@@ -77,18 +77,10 @@ import com.liangmayong.base.widget.binding.Presenter;
 public class ${NAME} extends Presenter<${NAME}.IView> {
 
     public interface IView {
-        /**
-         * test result
-         */
-        void test_result();
+        //efine interface
     }
 
-    /**
-     * test presenter method
-     */
-    public void test() {
-        getViewInstance().test_result();
-    }
+    // TODO:Do something
 
 }
 ```

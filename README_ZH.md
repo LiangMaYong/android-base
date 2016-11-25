@@ -67,23 +67,15 @@ import com.liangmayong.base.widget.binding.Presenter;
 public class ${NAME} extends Presenter<${NAME}.IView> {
 
     public interface IView {
-        /**
-         * test result
-         */
-        void test_result();
+        //efine interface
     }
 
-    /**
-     * test presenter method
-     */
-    public void test() {
-        getViewInstance().test_result();
-    }
+    // TODO:Do something
 
 }
 ```
 ## Fresco
-
+默认引入fresco作为图片加载库，不需要可以移除依赖:
 移除Fresco库
 ```
 compile(project(':base')) {

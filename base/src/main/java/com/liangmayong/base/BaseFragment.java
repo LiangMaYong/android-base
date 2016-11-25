@@ -145,7 +145,14 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
         inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         initView(rootView);
         onSkinRefresh(Skin.get());
+        initToolbar();
         return rootView;
+    }
+
+    /**
+     * initToolbar
+     */
+    protected void initToolbar() {
     }
 
     /**
