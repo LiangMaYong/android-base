@@ -3,12 +3,12 @@ package com.liangmayong.base;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Process;
+import android.util.Log;
 
 import com.liangmayong.base.utils.FrescoUtils;
+import com.liangmayong.base.utils.ThreadPoolUtils;
 import com.liangmayong.base.utils.lifecycle.ActivityLifeCycle;
-import com.liangmayong.base.widget.eternal.EternalService;
 
 import java.util.Iterator;
 
@@ -29,12 +29,15 @@ public class BaseApplication extends Application {
      *
      * @param application application
      */
-    public static void initialize(Application application) {
-        ActivityLifeCycle.initialize(application);
-        FrescoUtils.initialize(application);
-        if (application.getPackageName().equals(getCurrentProcessName(application))) {
-            application.startService(new Intent(application, EternalService.class));
-        }
+    public static void initialize(final Application application) {
+        ThreadPoolUtils threadPoolUtils = new ThreadPoolUtils(ThreadPoolUtils.Type.SingleThread, 1);
+        threadPoolUtils.execute(new Runnable() {
+            @Override
+            public void run() {
+                ActivityLifeCycle.initialize(application);
+                FrescoUtils.initialize(application);
+            }
+        });
     }
 
 

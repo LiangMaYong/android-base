@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="BaseLauncher" parent="BaseTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">#30333333</item>
+        <item name="android:windowBackground">@mipmap/base_launcher_background</item>
+    </style>
+
 </resources>

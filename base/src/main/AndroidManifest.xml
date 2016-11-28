@@ -17,9 +17,6 @@
         <activity
             android:name=".ui.activitys.WebActivity"
             android:screenOrientation="portrait" />
-        <service
-            android:name=".widget.eternal.EternalService"
-            android:process=":eternal" />
     </application>
 
 </manifest>

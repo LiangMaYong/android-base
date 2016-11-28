@@ -2,9 +2,12 @@ package com.liangmayong.base.widget.eternal;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.app.Notification;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Process;
 
 import com.liangmayong.base.utils.ContextUtils;
@@ -37,8 +40,30 @@ public class Eternal {
         if (isInited) {
             return;
         }
+        isInited = true;
         IntentFilter intentFilter = new IntentFilter(ACTION);
         getApplication().registerReceiver(broadcastReceiver, intentFilter);
+    }
+
+    /**
+     * setForeground
+     *
+     * @param keepliveService keepliveService
+     * @param innerService    innerService
+     */
+    public static void setForeground(Service keepliveService, Service innerService) {
+        int id = 1;
+        if (keepliveService != null) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                keepliveService.startForeground(id, new Notification());
+            } else {
+                keepliveService.startForeground(id, new Notification());
+                if (innerService != null) {
+                    innerService.startForeground(id, new Notification());
+                    innerService.stopSelf();
+                }
+            }
+        }
     }
 
     /**
