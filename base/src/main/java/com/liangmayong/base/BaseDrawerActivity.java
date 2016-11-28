@@ -35,6 +35,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_defualt_activity_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.base_drawer_layout);
+        mDrawerLayout.setScrimColor(0x20333333);
         mNavigationView = (NavigationView) findViewById(R.id.base_drawer_navigation_view);
         mNavigationView.inflateHeaderView(getDrawerHeadLayoutId());
         mNavigationView.inflateMenu(getDrawerMenuId());

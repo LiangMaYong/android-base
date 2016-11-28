@@ -103,8 +103,6 @@ public class DefualtToolbar {
         rightTwo().reset();
         rightThree().reset();
         rightFour().reset();
-        setTitle("");
-        setSubTitle("");
     }
 
     /**

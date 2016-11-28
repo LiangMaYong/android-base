@@ -40,6 +40,7 @@ public abstract class BaseSubFragment extends BaseFragment {
     @Override
     protected void initToolbar() {
         if (getDefualtToolbar() != null) {
+            getDefualtToolbar().reset();
             if (getActivity() instanceof BaseSubActivity) {
                 getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
                     @Override
