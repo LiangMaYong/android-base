@@ -15,7 +15,7 @@ import com.liangmayong.base.widget.iconfont.Icon;
  * Created by LiangMaYong on 2016/10/17.
  */
 
-public abstract class BaseSubFragment extends BaseFragment {
+public abstract class BaseSubFragment extends BaseFragment implements BaseAuthManager.OnAuthStateChangeListener {
 
     // isInitView
     private boolean isInitView = false;
@@ -30,10 +30,11 @@ public abstract class BaseSubFragment extends BaseFragment {
         if (authFragment != null) {
             if (!BaseAuthManager.getInstance().isAuth()) {
                 onStartAuthFragment();
-                replaceFragment(authFragment);
+                openFragment(authFragment);
                 return;
             }
         }
+        BaseAuthManager.getInstance().addAuthStateChangeListener(this);
         initSubView(rootView);
     }
 
@@ -266,4 +267,20 @@ public abstract class BaseSubFragment extends BaseFragment {
             super.goTo(title, url);
         }
     }
+
+    @Override
+    public void onAuthStateChange(boolean isAuth) {
+        BaseSubFragment authFragment = generateAuthFragment();
+        if (authFragment != null && !isAuth) {
+            onStartAuthFragment();
+            openFragment(authFragment);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        BaseAuthManager.getInstance().removeAuthStateChangeListener(this);
+    }
+
 }

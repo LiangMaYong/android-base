@@ -86,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_margin="10dp"
-        android:text="百度"
-        android:elevation="0dp" />
+        android:elevation="0dp"
+        android:text="百度" />
 
 </LinearLayout>
