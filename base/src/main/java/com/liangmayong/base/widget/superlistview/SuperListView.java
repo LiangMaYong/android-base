@@ -1040,7 +1040,7 @@ public class SuperListView extends RelativeLayout {
 
 
         /**
-         * addAll
+         * insertList
          *
          * @param items items
          */
@@ -1218,7 +1218,6 @@ public class SuperListView extends RelativeLayout {
          */
         public Item<Data> setOnItemClickListener(OnItemClickListener<Data> clickListener) {
             this.clickListener = clickListener;
-            this.longClickable = clickListener != null;
             return this;
         }
 
@@ -1230,7 +1229,6 @@ public class SuperListView extends RelativeLayout {
          */
         public Item<Data> setOnItemLongClickListener(OnItemLongClickListener<Data> longClickListener) {
             this.longClickListener = longClickListener;
-            this.longClickable = longClickListener != null;
             return this;
         }
 
@@ -1280,6 +1278,25 @@ public class SuperListView extends RelativeLayout {
         public int getPosition() {
             return position;
         }
+
+        /**
+         * setClickable
+         *
+         * @param clickable clickable
+         */
+        public void setClickable(boolean clickable) {
+            this.clickable = clickable;
+        }
+
+        /**
+         * setLongClickable
+         *
+         * @param longClickable longClickable
+         */
+        public void setLongClickable(boolean longClickable) {
+            this.longClickable = longClickable;
+        }
+
 
         /**
          * isClickable
@@ -1356,33 +1373,29 @@ public class SuperListView extends RelativeLayout {
          */
         private final void proxyBindView(View itemView) {
             if (itemView != null) {
-                if (isClickable()) {
-                    itemView.setClickable(true);
-                    itemView.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (clickListener != null) {
-                                clickListener.onClick(Item.this, getPosition(), v);
-                            }
+                itemView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!clickable) {
+                            return;
                         }
-                    });
-                } else {
-                    itemView.setClickable(false);
-                }
-                if (isLongClickable()) {
-                    itemView.setLongClickable(true);
-                    itemView.setOnLongClickListener(new OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            if (longClickListener != null) {
-                                return longClickListener.onLongClick(Item.this, getPosition(), v);
-                            }
+                        if (clickListener != null) {
+                            clickListener.onClick(Item.this, getPosition(), v);
+                        }
+                    }
+                });
+                itemView.setOnLongClickListener(new OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View v) {
+                        if (!longClickable) {
                             return false;
                         }
-                    });
-                } else {
-                    itemView.setLongClickable(false);
-                }
+                        if (longClickListener != null) {
+                            return longClickListener.onLongClick(Item.this, getPosition(), v);
+                        }
+                        return false;
+                    }
+                });
             }
             if (itemView != null) {
                 if (getPool().getSuperListView().getOrientation() == HORIZONTAL) {

@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:skin="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.liangmayong.base.widget.skin.SkinRippleLinearLayout
-        android:id="@+id/base_defualt_adapter_ripple"
+    <LinearLayout
+        android:id="@+id/base_defualt_adapter_linear"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:clickable="true"
+        android:background="@drawable/base_defualt_item_selector"
         android:gravity="center"
-        android:orientation="horizontal"
-        skin:pressed_alpha="40"
-        skin:pressed_color="#333333"
-        skin:skin_type="white">
+        android:orientation="horizontal">
 
         <com.liangmayong.base.widget.iconfont.IconView
             android:id="@+id/base_defualt_adapter_icon"
@@ -54,6 +50,29 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/base_defualt_adapter_right_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#676767"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/base_defualt_adapter_right_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#676767"
+                android:textSize="14sp" />
+        </LinearLayout>
+
         <com.liangmayong.base.widget.iconfont.IconView
             android:id="@+id/base_defualt_adapter_arrow"
             android:layout_width="wrap_content"
@@ -69,5 +88,5 @@
             android:text=">"
             android:textColor="#676767"
             android:textSize="@dimen/base_toolbar_item_text_size" />
-    </com.liangmayong.base.widget.skin.SkinRippleLinearLayout>
+    </LinearLayout>
 </RelativeLayout>

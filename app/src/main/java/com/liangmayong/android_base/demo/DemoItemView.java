@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.liangmayong.android_base.R;
 import com.liangmayong.base.widget.binding.annotations.BindLayout;
 import com.liangmayong.base.widget.binding.annotations.BindView;
+import com.liangmayong.base.widget.superlistview.item.SuperItem;
 
 /**
  * Created by LiangMaYong on 2016/9/25.

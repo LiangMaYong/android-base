@@ -84,7 +84,7 @@ public class DemoListFrag extends BaseSubListFragment {
         getListView().getPool().add(new DefualtSuperItem("AndroidBase Item", "defualt view").setIcon(Icon.icon_camera).setOnItemClickListener(new SuperListView.OnItemClickListener<DefualtSuperData>() {
             @Override
             public void onClick(SuperListView.Item<DefualtSuperData> item, int position, View itemView) {
-
+               showToast("sssssssssssss");
             }
         }));
         for (int i = 0; i < 500; i++) {
