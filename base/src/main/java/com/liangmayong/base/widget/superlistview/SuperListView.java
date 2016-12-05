@@ -92,6 +92,8 @@ public class SuperListView extends RelativeLayout {
     private ProxyRecyclerView recyclerView;
     //orientation
     private int orientation = VERTICAL;
+    //stackFromEnd
+    private boolean stackFromEnd = false;
 
     //errorRetryListener
     private OnReListViewRetryListener errorRetryListener;
@@ -123,6 +125,23 @@ public class SuperListView extends RelativeLayout {
      */
     public View getErrorView() {
         return errorView;
+    }
+
+    /**
+     * setStackFromEnd
+     *
+     * @param stackFromEnd stackFromEnd
+     */
+    public void setStackFromEnd(boolean stackFromEnd) {
+        if (recyclerView != null) {
+            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+            setLayoutManager(layoutManager);
+        }
+        this.stackFromEnd = stackFromEnd;
+    }
+
+    public boolean isStackFromEnd() {
+        return stackFromEnd;
     }
 
     /**
@@ -606,6 +625,9 @@ public class SuperListView extends RelativeLayout {
      */
     public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
         if (layoutManager != null) {
+            if (layoutManager instanceof LinearLayoutManager) {
+                ((LinearLayoutManager) layoutManager).setStackFromEnd(isStackFromEnd());
+            }
             getRecyclerListView().setLayoutManager(layoutManager);
         }
     }
@@ -630,7 +652,9 @@ public class SuperListView extends RelativeLayout {
         headLayout.setOrientation(LinearLayout.VERTICAL);
         headLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contentLayout.addView(headLayout);
-        recyclerView = new ProxyRecyclerView(getContext(), new LinearLayoutManager(getContext()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setStackFromEnd(isStackFromEnd());
+        recyclerView = new ProxyRecyclerView(getContext(), linearLayoutManager);
         if (Build.VERSION.SDK_INT >= 9) {
             recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         }

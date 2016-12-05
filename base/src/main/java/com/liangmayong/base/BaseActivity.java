@@ -298,14 +298,14 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
             View v = getCurrentFocus();
             if (isShouldHideKeyboard(v, event)) {
                 hideSoftKeyBoard();
             }
         }
-        return super.onTouchEvent(event);
+        return super.dispatchTouchEvent(event);
     }
 
     private boolean isShouldHideKeyboard(View v, MotionEvent event) {
