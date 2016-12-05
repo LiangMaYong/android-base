@@ -231,23 +231,23 @@ public abstract class BaseFragment extends Fragment implements BaseInterface, Ti
     }
 
     public void goTo(Class<? extends Activity> cls) {
-        BaseUtils.goTo(getContext(), cls);
+        BaseUtils.goTo(getActivity(), cls);
     }
 
     public void goTo(Class<? extends Activity> cls, Bundle extras) {
-        BaseUtils.goTo(getContext(), cls, extras);
+        BaseUtils.goTo(getActivity(), cls, extras);
     }
 
     public void goHome() {
-        BaseUtils.goHome(getContext());
+        BaseUtils.goHome(getActivity());
     }
 
     public void goTo(String title, String url) {
-        BaseUtils.goTo(getContext(), title, url);
+        BaseUtils.goTo(getActivity(), title, url);
     }
 
     public void goToWeb(String title, String url) {
-        BaseUtils.goToWeb(getContext(), title, url);
+        BaseUtils.goToWeb(getActivity(), title, url);
     }
 
     public void goToForResult(Class<? extends Activity> cls, int requestCode) {

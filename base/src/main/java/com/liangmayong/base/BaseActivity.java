@@ -206,6 +206,7 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
         Skin.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
         super.onDestroy();
+        hideSoftKeyBoard();
     }
 
     @Override
@@ -297,14 +298,14 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
-            if (isShouldHideKeyboard(v, ev)) {
+            if (isShouldHideKeyboard(v, event)) {
                 hideSoftKeyBoard();
             }
         }
-        return super.dispatchTouchEvent(ev);
+        return super.onTouchEvent(event);
     }
 
     private boolean isShouldHideKeyboard(View v, MotionEvent event) {

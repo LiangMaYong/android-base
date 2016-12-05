@@ -239,6 +239,7 @@ public abstract class BaseSubFragment extends BaseFragment implements BaseAuthMa
      * @param fragment fragment
      */
     public void closeFragment(BaseSubFragment fragment) {
+        hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
             ((BaseSubActivity) getActivity()).getSubFragmentManager().closeFragment(fragment, 0, 0);
         } else if (getActivity() instanceof BaseDrawerActivity) {
@@ -248,6 +249,7 @@ public abstract class BaseSubFragment extends BaseFragment implements BaseAuthMa
 
     @Override
     public void goTo(String title, String url) {
+        hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
             openFragment(new DefualtWebFragment(title, url));
         } else if (getActivity() instanceof BaseDrawerActivity) {
