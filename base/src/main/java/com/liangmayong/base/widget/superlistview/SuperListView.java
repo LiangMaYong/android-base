@@ -94,6 +94,8 @@ public class SuperListView extends RelativeLayout {
     private int orientation = VERTICAL;
     //stackFromEnd
     private boolean stackFromEnd = false;
+    //reverseLayout
+    private boolean reverseLayout = false;
 
     //errorRetryListener
     private OnReListViewRetryListener errorRetryListener;
@@ -133,15 +135,47 @@ public class SuperListView extends RelativeLayout {
      * @param stackFromEnd stackFromEnd
      */
     public void setStackFromEnd(boolean stackFromEnd) {
-        if (recyclerView != null) {
-            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-            setLayoutManager(layoutManager);
-        }
         this.stackFromEnd = stackFromEnd;
+        if (this.stackFromEnd) {
+            this.reverseLayout = false;
+        }
+        if (recyclerView != null) {
+            setLayoutManager(recyclerView.getLayoutManager());
+        }
     }
 
+
+    /**
+     * setStackFromEnd
+     *
+     * @param reverseLayout reverseLayout
+     */
+    public void setReverseLayout(boolean reverseLayout) {
+        this.reverseLayout = reverseLayout;
+        if (this.reverseLayout) {
+            this.stackFromEnd = false;
+        }
+        if (recyclerView != null) {
+            setLayoutManager(recyclerView.getLayoutManager());
+        }
+    }
+
+    /**
+     * isStackFromEnd
+     *
+     * @return stackFromEnd
+     */
     public boolean isStackFromEnd() {
         return stackFromEnd;
+    }
+
+    /**
+     * isReverseLayout
+     *
+     * @return reverseLayout
+     */
+    public boolean isReverseLayout() {
+        return reverseLayout;
     }
 
     /**
@@ -627,6 +661,7 @@ public class SuperListView extends RelativeLayout {
         if (layoutManager != null) {
             if (layoutManager instanceof LinearLayoutManager) {
                 ((LinearLayoutManager) layoutManager).setStackFromEnd(isStackFromEnd());
+                ((LinearLayoutManager) layoutManager).setReverseLayout(isReverseLayout());
             }
             getRecyclerListView().setLayoutManager(layoutManager);
         }
@@ -652,9 +687,7 @@ public class SuperListView extends RelativeLayout {
         headLayout.setOrientation(LinearLayout.VERTICAL);
         headLayout.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         contentLayout.addView(headLayout);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setStackFromEnd(isStackFromEnd());
-        recyclerView = new ProxyRecyclerView(getContext(), linearLayoutManager);
+        recyclerView = new ProxyRecyclerView(getContext(), new LinearLayoutManager(getContext()));
         if (Build.VERSION.SDK_INT >= 9) {
             recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         }

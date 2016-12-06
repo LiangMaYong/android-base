@@ -34,7 +34,7 @@ public class DemoListFrag extends BaseSubListFragment {
                 goTo("Blog", "http://blog.csdn.net/stepalone");
             }
         });
-        listView.setStackFromEnd(true);
+        listView.setReverseLayout(true);
         //添加头部
         add_head();
         //添加尾部
