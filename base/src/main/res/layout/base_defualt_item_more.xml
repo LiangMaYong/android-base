@@ -21,7 +21,7 @@
             skin:skin_type="gray">
 
             <com.liangmayong.base.widget.skin.SkinIconView
-                android:id="@+id/base_more_icon"
+                android:id="@id/base_more_icon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -30,7 +30,7 @@
                 skin:skin_type="gray" />
 
             <com.liangmayong.base.widget.skin.SkinTextView
-                android:id="@+id/base_more_title"
+                android:id="@id/base_more_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

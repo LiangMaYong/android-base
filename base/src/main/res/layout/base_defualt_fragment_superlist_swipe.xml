@@ -12,12 +12,12 @@
         android:layout_height="match_parent">
 
         <com.liangmayong.base.widget.skin.SkinSwipeLayout
-            android:id="@+id/base_swipeLayout"
+            android:id="@id/base_refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <com.liangmayong.base.widget.superlistview.SuperListView
-                android:id="@+id/base_superListView"
+                android:id="@id/base_superListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical" />

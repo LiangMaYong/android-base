@@ -31,6 +31,9 @@ import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.statusbar.StatusBarCompat;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by LiangMaYong on 2016/8/22.
@@ -48,7 +51,19 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
     private final Handler handler = new Handler();
     //inputManager
     private InputMethodManager inputManager = null;
+    //ignoreHideKeyboard
+    private final List<View> ignoreHideKeyboard = new ArrayList<View>();
 
+    /**
+     * ignoreClickHideKeyboard
+     *
+     * @param view view
+     */
+    public void ignoreClickHideKeyboard(View view) {
+        if (!ignoreHideKeyboard.contains(view)) {
+            ignoreHideKeyboard.add(view);
+        }
+    }
 
     @Override
     public void setTitle(CharSequence title) {
@@ -308,7 +323,28 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
         return super.dispatchTouchEvent(event);
     }
 
-    private boolean isShouldHideKeyboard(View v, MotionEvent event) {
+    /**
+     * isShouldHideKeyboard
+     *
+     * @param v     v
+     * @param event event
+     * @return isShouldHideKeyboard
+     */
+    protected boolean isShouldHideKeyboard(View v, MotionEvent event) {
+        boolean flag = false;
+        for (int i = 0; i < ignoreHideKeyboard.size(); i++) {
+            View view = ignoreHideKeyboard.get(i);
+            if (view != null) {
+                int[] l = {0, 0};
+                view.getLocationInWindow(l);
+                int left = l[0],
+                        top = l[1],
+                        bottom = top + view.getHeight(),
+                        right = left + view.getWidth();
+                flag = flag || (event.getX() > left && event.getX() < right
+                        && event.getY() > top && event.getY() < bottom);
+            }
+        }
         if (v != null && (v instanceof EditText)) {
             int[] l = {0, 0};
             v.getLocationInWindow(l);
@@ -316,9 +352,16 @@ public class BaseActivity extends AppCompatActivity implements BaseInterface, Ti
                     top = l[1],
                     bottom = top + v.getHeight(),
                     right = left + v.getWidth();
-            return !(event.getX() > left && event.getX() < right
+            flag = flag || (event.getX() > left && event.getX() < right
                     && event.getY() > top && event.getY() < bottom);
+            return !flag;
         }
         return false;
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        hideSoftKeyBoard();
     }
 }

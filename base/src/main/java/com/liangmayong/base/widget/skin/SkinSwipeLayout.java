@@ -6,16 +6,15 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 
-import com.liangmayong.base.widget.skin.OnSkinRefreshListener;
-import com.liangmayong.base.widget.skin.Skin;
+import com.liangmayong.base.widget.interfaces.IRefreshLayout;
 
 /**
- * Created by LiangMaYong on 2016/10/18.
+ * Created by LiangMaYong on 2016/12/7.
  */
-public class SkinSwipeLayout extends SwipeRefreshLayout implements OnSkinRefreshListener {
+public class SkinSwipeLayout extends SwipeRefreshLayout implements OnSkinRefreshListener, IRefreshLayout {
 
-    // viewGroup
-    private ViewGroup viewGroup;
+    // childView
+    private ViewGroup childView;
 
     public SkinSwipeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -27,25 +26,44 @@ public class SkinSwipeLayout extends SwipeRefreshLayout implements OnSkinRefresh
 
     @Override
     public boolean onTouchEvent(MotionEvent arg0) {
-        if (viewGroup != null) {
-            if (viewGroup.getScrollY() > 1) {
+        if (childView != null) {
+            if (childView.getScrollY() > 1) {
                 return false;
             }
         }
         return super.onTouchEvent(arg0);
     }
 
-    public ViewGroup getViewGroup() {
-        return viewGroup;
+    public ViewGroup getChildView() {
+        return childView;
     }
 
-    public void setViewGroup(ViewGroup viewGroup) {
-        this.viewGroup = viewGroup;
+    public void setChildView(ViewGroup childView) {
+        this.childView = childView;
     }
 
     @Override
     public void setRefreshing(boolean refreshing) {
         super.setRefreshing(refreshing);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+    }
+
+    @Override
+    public void setOnRefreshListener(final IRefreshLayout.OnRefreshListener listener) {
+        super.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (listener != null) {
+                    listener.onRefresh();
+                } else {
+                    setRefreshing(false);
+                }
+            }
+        });
     }
 
     @Override

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- base_defualt_activity_drawer.xml -->
+    <item name="base_drawer_layout" type="id" />
+    <item name="base_drawer_fragment" type="id" />
+    <item name="base_drawer_navigation_view" type="id" />
+    <!-- base_defualt_fragment_superlist_pull.xml and  base_defualt_fragment_superlist_swipe.xml-->
+    <item name="base_refreshLayout" type="id" />
+    <item name="base_superListView" type="id" />
+    <!-- base_defualt_fragment_web.xml-->
+    <item name="base_web_refreshLayout" type="id" />
+    <!-- base_defualt_dialog_more.xml -->
+    <item name="base_dialog_more_title" type="id" />
+    <item name="base_dialog_more_list" type="id" />
+    <item name="base_dialog_more_close_btn" type="id" />
+    <!-- base_defualt_item_more.xml -->
+    <item name="base_more_title" type="id" />
+    <item name="base_more_icon" type="id" />
+    <!-- base_defualt_item_superview.xml -->
+    <item name="base_defualt_adapter_linear" type="id" />
+    <item name="base_defualt_adapter_icon" type="id" />
+    <item name="base_defualt_adapter_title" type="id" />
+    <item name="base_defualt_adapter_sub" type="id" />
+    <item name="base_defualt_adapter_right_title" type="id" />
+    <item name="base_defualt_adapter_right_sub" type="id" />
+    <item name="base_defualt_adapter_arrow" type="id" />
+    <!-- base_defualt_sub_activity.xml -->
+    <item name="base_sub_fragment" type="id" />
+    <!-- base_defualt_retry_layout.xml -->
+    <item name="base_defualt_retry_img" type="id" />
+    <item name="base_defualt_retry_text" type="id" />
+    <!-- base_defualt_retry_layout.xml -->
+    <item name="default_toolbar_layout" type="id" />
+    <item name="default_toolbar_left_one" type="id" />
+    <item name="default_toolbar_left_two" type="id" />
+    <item name="default_toolbar_left_three" type="id" />
+    <item name="default_toolbar_left_four" type="id" />
+    <item name="default_toolbar_right_four" type="id" />
+    <item name="default_toolbar_right_three" type="id" />
+    <item name="default_toolbar_right_two" type="id" />
+    <item name="default_toolbar_right_one" type="id" />
+    <item name="default_toolbar_title" type="id" />
+    <item name="default_toolbar_subtitle" type="id" />
+    <item name="default_toolbar_progress" type="id" />
+</resources>

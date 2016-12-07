@@ -7,7 +7,7 @@
     <include layout="@layout/base_defualt_toolbar" />
 
     <com.liangmayong.base.widget.skin.SkinSwipeLayout
-        android:id="@+id/base_swipeLayout"
+        android:id="@id/base_web_refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </LinearLayout>

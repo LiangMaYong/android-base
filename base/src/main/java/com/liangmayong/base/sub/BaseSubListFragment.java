@@ -1,11 +1,10 @@
 package com.liangmayong.base.sub;
 
 import android.annotation.SuppressLint;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.widget.skin.SkinSwipeLayout;
+import com.liangmayong.base.widget.interfaces.IRefreshLayout;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 
@@ -17,7 +16,7 @@ public abstract class BaseSubListFragment extends BaseSubFragment {
 
 
     private SuperListView reListView = null;
-    private SwipeRefreshLayout refreshLayout = null;
+    private IRefreshLayout refreshLayout = null;
 
     /**
      * getListView
@@ -33,29 +32,25 @@ public abstract class BaseSubListFragment extends BaseSubFragment {
      *
      * @return refreshLayout
      */
-    public SwipeRefreshLayout getRefreshLayout() {
+    public IRefreshLayout getRefreshLayout() {
         return refreshLayout;
     }
 
     @Override
     protected final void initSubView(View rootView) {
         reListView = (SuperListView) rootView.findViewById(R.id.base_superListView);
-        refreshLayout = (SkinSwipeLayout) rootView.findViewById(R.id.base_swipeLayout);
-        refreshLayout.setColorSchemeColors(Skin.get().getThemeColor());
+        refreshLayout = (IRefreshLayout) rootView.findViewById(R.id.base_refreshLayout);
         refreshLayout.setEnabled(refreshEnabled());
-        ((SkinSwipeLayout) refreshLayout).setViewGroup(reListView);
+        refreshLayout.setChildView(reListView);
         initListView(reListView, refreshLayout);
     }
 
     @Override
     public void onSkinRefresh(Skin skin) {
         super.onSkinRefresh(skin);
-        if (refreshLayout != null) {
-            refreshLayout.setColorSchemeColors(skin.getThemeColor());
-        }
     }
 
-    protected abstract void initListView(SuperListView listView, SwipeRefreshLayout refreshLayout);
+    protected abstract void initListView(SuperListView listView, IRefreshLayout refreshLayout);
 
     /**
      * refreshEnabled
@@ -68,6 +63,6 @@ public abstract class BaseSubListFragment extends BaseSubFragment {
 
     @Override
     protected final int generateContainerViewId() {
-        return R.layout.base_defualt_fragment_superlist;
+        return R.layout.base_defualt_fragment_superlist_pull;
     }
 }

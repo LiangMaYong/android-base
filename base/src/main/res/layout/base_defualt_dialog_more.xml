@@ -14,7 +14,7 @@
         skin:skin_type="white">
 
         <TextView
-            android:id="@+id/base_more_title"
+            android:id="@id/base_dialog_more_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -26,7 +26,7 @@
             android:text="" />
 
         <com.liangmayong.base.widget.superlistview.SuperListView
-            android:id="@+id/base_more_list"
+            android:id="@id/base_dialog_more_list"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_margin="10dp" />
@@ -37,7 +37,7 @@
             skin:skin_type="gray" />
 
         <com.liangmayong.base.widget.skin.SkinRippleButton
-            android:id="@+id/base_more_close_btn"
+            android:id="@id/base_dialog_more_close_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="@string/base_web_cancel"

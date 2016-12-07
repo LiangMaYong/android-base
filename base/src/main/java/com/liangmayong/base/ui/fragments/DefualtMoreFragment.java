@@ -157,14 +157,15 @@ public class DefualtMoreFragment extends DialogFragment {
         public TextView base_more_title;
 
         public ViewHolder(View rootView) {
+
             this.rootView = rootView;
-            this.base_more_title = (TextView) rootView.findViewById(R.id.base_more_title);
-            this.base_more_list = (SuperListView) rootView.findViewById(R.id.base_more_list);
+            this.base_more_title = (TextView) rootView.findViewById(R.id.base_dialog_more_title);
+            this.base_more_list = (SuperListView) rootView.findViewById(R.id.base_dialog_more_list);
             this.base_more_list.setStaggeredEnable(true);
             this.base_more_list.setOrientation(SuperListView.HORIZONTAL);
             this.base_more_list.setColumnCount(1);
             this.base_more_list.setDecorationSize(DimenUtils.dip2px(rootView.getContext(), 10));
-            this.base_more_close_btn = (SkinRippleButton) rootView.findViewById(R.id.base_more_close_btn);
+            this.base_more_close_btn = (SkinRippleButton) rootView.findViewById(R.id.base_dialog_more_close_btn);
             this.base_more_close_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

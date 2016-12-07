@@ -10,7 +10,7 @@
     android:paddingTop="100dp">
 
     <ImageView
-        android:id="@+id/base_defualt_retry_img"
+        android:id="@id/base_defualt_retry_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -18,7 +18,7 @@
         android:src="@mipmap/base_defualt_retry_img" />
 
     <TextView
-        android:id="@+id/base_defualt_retry_text"
+        android:id="@id/base_defualt_retry_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

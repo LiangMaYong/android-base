@@ -1,15 +1,13 @@
 package com.liangmayong.android_base.demo;
 
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.LayoutInflater;
 import android.view.View;
 
-import com.liangmayong.android_base.R;
 import com.liangmayong.base.sub.BaseSubListFragment;
 import com.liangmayong.base.utils.BundleBuilder;
 import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.widget.binding.annotations.BindTitle;
 import com.liangmayong.base.widget.iconfont.Icon;
+import com.liangmayong.base.widget.interfaces.IRefreshLayout;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 import com.liangmayong.base.widget.superlistview.item.DefualtSuperData;
@@ -27,42 +25,32 @@ public class DemoListFrag extends BaseSubListFragment {
     private int index = 0;
 
     @Override
-    protected void initListView(SuperListView listView, SwipeRefreshLayout refreshLayout) {
+    protected void initListView(SuperListView listView, IRefreshLayout refreshLayout) {
         getDefualtToolbar().rightOne().text("Blog").clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goTo("Blog", "http://blog.csdn.net/stepalone");
             }
         });
-        listView.setReverseLayout(true);
-        //添加头部
-        add_head();
-        //添加尾部
-        add_footer();
         //添加数据
         add_data();
         initSkin();
         getListView().setColumnCount(index);
         listView.setStaggeredEnable(false);
         listView.setDecorationSize(DimenUtils.dip2px(getActivity(), 2));
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout.setOnRefreshListener(new IRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getRefreshLayout().setRefreshing(false);
-                changeSkin();
-                getListView().setColumnCount(index + 1);
+                postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        getRefreshLayout().setRefreshing(false);
+                    }
+                }, 1000);
+//                changeSkin();
+//                getListView().setColumnCount(index + 1);
             }
         });
-    }
-
-    private void add_head() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.header_view, null);
-        getListView().setHeaderView(view);
-    }
-
-    private void add_footer() {
-        View footView = LayoutInflater.from(getContext()).inflate(R.layout.footer_view, null);
-        getListView().setFooterView(footView);
     }
 
     private void initSkin() {
@@ -82,10 +70,10 @@ public class DemoListFrag extends BaseSubListFragment {
     }
 
     private void add_data() {
-        getListView().getPool().add(new DefualtSuperItem("AndroidBase Item", "defualt view","11:22",null).setIcon(Icon.icon_camera).setOnItemClickListener(new SuperListView.OnItemClickListener<DefualtSuperData>() {
+        getListView().getPool().add(new DefualtSuperItem("AndroidBase Item", "defualt view", "11:22", null).setIcon(Icon.icon_camera).setOnItemClickListener(new SuperListView.OnItemClickListener<DefualtSuperData>() {
             @Override
             public void onClick(SuperListView.Item<DefualtSuperData> item, int position, View itemView) {
-               showToast("sssssssssssss");
+                showToast("sssssssssssss");
             }
         }));
         for (int i = 0; i < 500; i++) {
