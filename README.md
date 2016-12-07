@@ -4,9 +4,7 @@ README: [English](https://github.com/LiangMaYong/android-base/blob/master/README
 
 This is android base.
 
-Download DEMO : [demo-1.2.0.apk](https://raw.githubusercontent.com/LiangMaYong/android-base/master/release/apk/demo-1.2.0.apk)
-
-Download AAR : [base-1.2.0.aar](https://raw.githubusercontent.com/LiangMaYong/android-base/master/release/1.2.0/base-1.2.0.aar)
+Download AAR : [base-1.2.1.aar](https://raw.githubusercontent.com/LiangMaYong/android-base/master/release/1.2.1/base-1.2.1.aar)
 
 ## Function
 1,Database
