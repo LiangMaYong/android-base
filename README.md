@@ -47,7 +47,7 @@ Download AAR : [base-1.2.1.aar](https://raw.githubusercontent.com/LiangMaYong/an
 
 ## BindView Plugins
 
-download plugins : [BindView1.0.jar](https://raw.githubusercontent.com/LiangMaYong/android-base/master/plugins/BindView1.0.jar)
+download plugins : [BindView1.1](https://raw.githubusercontent.com/LiangMaYong/android-base/master/plugins/1.1/BindView-Plugin-1.1.zip)
 
 Install bindView plugins
 ```

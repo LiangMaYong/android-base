@@ -46,7 +46,7 @@ README: [English](https://github.com/LiangMaYong/android-base/blob/master/README
 
 ## BindView插件
 
-下载插件 : [BindView1.0.jar](https://raw.githubusercontent.com/LiangMaYong/android-base/master/plugins/BindView1.0.jar)
+下载插件 : [BindView1.1](https://raw.githubusercontent.com/LiangMaYong/android-base/master/plugins/1.1/BindView-Plugin-1.1.zip)
 
 安装BindView插件
 ```
