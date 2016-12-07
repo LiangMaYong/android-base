@@ -611,7 +611,11 @@ public class SuperListView extends RelativeLayout {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            if (dy > 0) {
+            boolean flag = dy > 0;
+            if (isReverseLayout() || isStackFromEnd()) {
+                flag = dy < 0;
+            }
+            if (flag) {
                 if (lastVisible(dy)) {
                     if (!isLast || (System.currentTimeMillis() - lastTime > lastDelay)) {
                         isLast = true;
