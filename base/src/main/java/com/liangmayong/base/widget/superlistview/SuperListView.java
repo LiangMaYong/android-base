@@ -3,6 +3,8 @@ package com.liangmayong.base.widget.superlistview;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,7 +55,7 @@ public class SuperListView extends RelativeLayout {
     // lastCount
     private int lastCount = 5;
     // lastDelay
-    private long lastDelay = 1500;
+    private long lastDelay = 500;
     // lastTime
     private long lastTime = 0;
     // contentLayout
@@ -84,6 +86,8 @@ public class SuperListView extends RelativeLayout {
     private boolean isContent = true;
     // currentPosition
     private int currentPosition = 0;
+    // currentLastPosition
+    private int currentLastPosition = 0;
     // columnCount
     private int columnCount = 1;
     // staggeredEnable
@@ -606,6 +610,39 @@ public class SuperListView extends RelativeLayout {
         this.itemMoveVisibleListener = itemMoveVisibleListener;
     }
 
+    /**
+     * 
+     */
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1001) {
+                if (itemMoveVisibleListener != null) {
+                    itemMoveVisibleListener.onItemMoveVisible(recyclerView, currentPosition, currentLastPosition);
+                }
+            }
+        }
+    };
+
+    /**
+     * getCurrentPosition
+     *
+     * @return currentPosition
+     */
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
+    /**
+     * getCurrentLastPosition
+     *
+     * @return currentLastPosition
+     */
+    public int getCurrentLastPosition() {
+        return currentLastPosition;
+    }
+
     //scrollListener
     private RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
         @Override
@@ -629,13 +666,16 @@ public class SuperListView extends RelativeLayout {
                         isLast = false;
                     }
                 }
-
-                if (itemMoveVisibleListener != null) {
-                    int position = getRecyclerListView().getFristVisiblePosition();
-                    if (currentPosition != position) {
-                        currentPosition = position;
-                        itemMoveVisibleListener.onItemMoveVisible(recyclerView, currentPosition, getRecyclerListView().getLastVisiblePosition());
-                    }
+                int position = getRecyclerListView().getFristVisiblePosition();
+                currentLastPosition = getRecyclerListView().getLastVisiblePosition();
+                if (currentPosition != position) {
+                    currentPosition = position;
+                    post(new Runnable() {
+                        @Override
+                        public void run() {
+                            handler.sendEmptyMessage(1001);
+                        }
+                    });
                 }
             }
         }
@@ -1193,19 +1233,44 @@ public class SuperListView extends RelativeLayout {
 
         public void proxyNotifyDataSetChanged() {
             synchronized (this) {
-                notifyDataSetChanged();
+                try {
+                    pool.getSuperListView().getRecyclerView().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Notify adapter with appropriate notify methods
+                            notifyDataSetChanged();
+                        }
+                    });
+                } catch (Exception e) {
+                }
             }
         }
 
-        public void proxyNotifyItemChanged(int position) {
+        public void proxyNotifyItemChanged(final int position) {
             synchronized (this) {
-                notifyItemChanged(position);
+                try {
+                    pool.getSuperListView().getRecyclerView().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            notifyItemChanged(position);
+                        }
+                    });
+                } catch (Exception e) {
+                }
             }
         }
 
-        public void proxyNotifyItemChanged(int position, Object payload) {
+        public void proxyNotifyItemChanged(final int position, final Object payload) {
             synchronized (this) {
-                notifyItemChanged(position, payload);
+                try {
+                    pool.getSuperListView().getRecyclerView().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            notifyItemChanged(position, payload);
+                        }
+                    });
+                } catch (Exception e) {
+                }
             }
         }
     }

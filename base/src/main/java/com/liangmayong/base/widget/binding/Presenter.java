@@ -42,9 +42,13 @@ public class Presenter<V> {
             viewProxy = (V) Proxy.newProxyInstance(view.getClass().getClassLoader(), view.getClass().getInterfaces(), new InvocationHandler() {
                 @Override
                 public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                    if (isAttached()) {
-                        Object result = method.invoke(view, args);
-                        return result;
+                    try {
+                        if (isAttached()) {
+                            Object result = method.invoke(view, args);
+                            return result;
+                        }
+                    } catch (Exception e) {
+                        handleThrowable(e);
                     }
                     return null;
                 }
@@ -53,6 +57,14 @@ public class Presenter<V> {
             viewProxy = view;
         }
         isAttached = true;
+    }
+
+    /**
+     * handleThrowable
+     *
+     * @param throwable throwable
+     */
+    protected void handleThrowable(Throwable throwable) {
     }
 
     /**
