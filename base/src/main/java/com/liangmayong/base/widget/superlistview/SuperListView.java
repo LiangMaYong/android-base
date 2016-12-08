@@ -611,7 +611,7 @@ public class SuperListView extends RelativeLayout {
     }
 
     /**
-     * 
+     * handler
      */
     private Handler handler = new Handler() {
         @Override

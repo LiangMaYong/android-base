@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.liangmayong.base.ui.activitys.WebActivity;
-import com.liangmayong.base.widget.interfaces.BaseInterface;
+import com.liangmayong.base.compat.base.IBase;
 
 /**
  * Created by LiangMaYong on 2016/9/18.
@@ -50,9 +50,9 @@ public class BaseUtils {
      */
     public static void goTo(Context context, String title, String url) {
         Bundle extras = new Bundle();
-        extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
-        extras.putString(BaseInterface.WEB_EXTRA_URL, url);
-        extras.putString(BaseInterface.WEB_EXTRA_MORE, "false");
+        extras.putString(IBase.WEB_EXTRA_TITLE, title);
+        extras.putString(IBase.WEB_EXTRA_URL, url);
+        extras.putString(IBase.WEB_EXTRA_MORE, "false");
         goTo(context, WebActivity.class, extras);
     }
 
@@ -65,9 +65,9 @@ public class BaseUtils {
      */
     public static void goToWeb(Context context, String title, String url) {
         Bundle extras = new Bundle();
-        extras.putString(BaseInterface.WEB_EXTRA_TITLE, title);
-        extras.putString(BaseInterface.WEB_EXTRA_URL, url);
-        extras.putString(BaseInterface.WEB_EXTRA_MORE, "true");
+        extras.putString(IBase.WEB_EXTRA_TITLE, title);
+        extras.putString(IBase.WEB_EXTRA_URL, url);
+        extras.putString(IBase.WEB_EXTRA_MORE, "true");
         goTo(context, WebActivity.class, extras);
     }
 

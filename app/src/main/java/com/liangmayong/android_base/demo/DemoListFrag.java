@@ -3,9 +3,9 @@ package com.liangmayong.android_base.demo;
 import android.view.View;
 
 import com.liangmayong.base.sub.BaseSubListFragment;
-import com.liangmayong.base.utils.BundleBuilder;
+import com.liangmayong.base.compat.builder.BundleBuilder;
 import com.liangmayong.base.utils.DimenUtils;
-import com.liangmayong.base.widget.binding.annotations.BindTitle;
+import com.liangmayong.base.compat.binding.annotations.BindTitle;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
 import com.liangmayong.base.widget.skin.Skin;

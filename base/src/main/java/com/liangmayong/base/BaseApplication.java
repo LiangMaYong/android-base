@@ -4,11 +4,10 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.os.Process;
-import android.util.Log;
 
 import com.liangmayong.base.utils.FrescoUtils;
 import com.liangmayong.base.utils.ThreadPoolUtils;
-import com.liangmayong.base.utils.lifecycle.ActivityLifeCycle;
+import com.liangmayong.base.compat.lifecycle.ActivityLifeCycle;
 
 import java.util.Iterator;
 

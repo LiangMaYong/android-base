@@ -4,8 +4,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.liangmayong.android_base.R;
-import com.liangmayong.base.widget.binding.annotations.BindLayout;
-import com.liangmayong.base.widget.binding.annotations.BindView;
+import com.liangmayong.base.compat.binding.annotations.BindLayout;
+import com.liangmayong.base.compat.binding.annotations.BindView;
 import com.liangmayong.base.widget.superlistview.item.SuperItem;
 
 /**

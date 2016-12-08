@@ -14,13 +14,13 @@ import android.widget.EditText;
 
 import com.liangmayong.base.utils.BaseUtils;
 import com.liangmayong.base.utils.ToastUtils;
-import com.liangmayong.base.widget.binding.Presenter;
-import com.liangmayong.base.widget.binding.PresenterBind;
-import com.liangmayong.base.widget.binding.PresenterHolder;
-import com.liangmayong.base.widget.binding.ViewBinding;
-import com.liangmayong.base.widget.binding.annotations.BindP;
-import com.liangmayong.base.widget.binding.interfaces.TitleBindInterface;
-import com.liangmayong.base.widget.interfaces.BaseInterface;
+import com.liangmayong.base.compat.binding.Presenter;
+import com.liangmayong.base.compat.binding.PresenterBind;
+import com.liangmayong.base.compat.binding.PresenterHolder;
+import com.liangmayong.base.compat.binding.ViewBinding;
+import com.liangmayong.base.compat.binding.annotations.BindP;
+import com.liangmayong.base.compat.binding.interfaces.TitleBindInterface;
+import com.liangmayong.base.compat.base.IBase;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 
@@ -28,7 +28,7 @@ import com.liangmayong.base.widget.toolbar.DefualtToolbar;
  * Created by LiangMaYong on 2016/8/22.
  */
 @BindP({BasePresenter.class})
-public abstract class BaseFragment extends Fragment implements BaseInterface, TitleBindInterface {
+public abstract class BaseFragment extends Fragment implements IBase, TitleBindInterface {
     //holder
     private PresenterHolder holder = null;
     //defualtToolbar

@@ -7,7 +7,8 @@ import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 
-import com.liangmayong.base.utils.lifecycle.ActivityLifeCycle;
+import com.liangmayong.base.compat.lifecycle.ActivityLifeCycle;
+import com.liangmayong.base.compat.database.DataUtils;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
@@ -98,7 +99,7 @@ public class ContextUtils {
      */
     public static Application getApplication() {
         if (application == null || application.get() == null) {
-            synchronized (ContextUtils.class) {
+            synchronized (DataUtils.class) {
                 if (application == null) {
                     try {
                         if (activityThreadClass == null) {

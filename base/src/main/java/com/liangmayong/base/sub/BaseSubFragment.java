@@ -5,7 +5,6 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.liangmayong.base.BaseAuthManager;
 import com.liangmayong.base.BaseDrawerActivity;
 import com.liangmayong.base.BaseFragment;
 import com.liangmayong.base.ui.fragments.DefualtWebFragment;
@@ -15,7 +14,7 @@ import com.liangmayong.base.widget.iconfont.Icon;
  * Created by LiangMaYong on 2016/10/17.
  */
 
-public abstract class BaseSubFragment extends BaseFragment implements BaseAuthManager.OnAuthStateChangeListener {
+public abstract class BaseSubFragment extends BaseFragment {
 
     // isInitView
     private boolean isInitView = false;
@@ -26,15 +25,6 @@ public abstract class BaseSubFragment extends BaseFragment implements BaseAuthMa
             return;
         }
         isInitView = true;
-        BaseSubFragment authFragment = generateAuthFragment();
-        if (authFragment != null) {
-            if (!BaseAuthManager.getInstance().isAuth()) {
-                onStartAuthFragment();
-                openFragment(authFragment);
-                return;
-            }
-        }
-        BaseAuthManager.getInstance().addAuthStateChangeListener(this);
         initSubView(rootView);
     }
 
@@ -67,21 +57,6 @@ public abstract class BaseSubFragment extends BaseFragment implements BaseAuthMa
                 }
             }
         }
-    }
-
-    /**
-     * generateAuthFragment
-     *
-     * @return auth Fragment
-     */
-    protected BaseSubFragment generateAuthFragment() {
-        return null;
-    }
-
-    /**
-     * onStartAuthFragment
-     */
-    protected void onStartAuthFragment() {
     }
 
     protected abstract void initSubView(View rootView);
@@ -271,18 +246,8 @@ public abstract class BaseSubFragment extends BaseFragment implements BaseAuthMa
     }
 
     @Override
-    public void onAuthStateChange(boolean isAuth) {
-        BaseSubFragment authFragment = generateAuthFragment();
-        if (authFragment != null && !isAuth) {
-            onStartAuthFragment();
-            openFragment(authFragment);
-        }
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
-        BaseAuthManager.getInstance().removeAuthStateChangeListener(this);
     }
 
 }
