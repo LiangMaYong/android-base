@@ -7,7 +7,7 @@ import android.os.Process;
 
 import com.liangmayong.base.utils.FrescoUtils;
 import com.liangmayong.base.utils.ThreadPoolUtils;
-import com.liangmayong.base.compat.lifecycle.ActivityLifeCycle;
+import com.liangmayong.base.support.lifecycle.ActivityLifeCycle;
 
 import java.util.Iterator;
 

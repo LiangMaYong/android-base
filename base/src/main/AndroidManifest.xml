@@ -15,7 +15,7 @@
         android:allowBackup="true"
         android:supportsRtl="true">
         <activity
-            android:name=".ui.activitys.WebActivity"
+            android:name=".web.WebActivity"
             android:screenOrientation="portrait" />
     </application>
 

@@ -19,16 +19,16 @@ import android.widget.EditText;
 
 import com.liangmayong.base.utils.BaseUtils;
 import com.liangmayong.base.utils.ToastUtils;
-import com.liangmayong.base.compat.fixbug.Android5497Workaround;
-import com.liangmayong.base.compat.binding.Presenter;
-import com.liangmayong.base.compat.binding.PresenterBind;
-import com.liangmayong.base.compat.binding.PresenterHolder;
-import com.liangmayong.base.compat.binding.ViewBinding;
-import com.liangmayong.base.compat.binding.annotations.BindP;
-import com.liangmayong.base.compat.binding.interfaces.TitleBindInterface;
-import com.liangmayong.base.compat.base.IBase;
+import com.liangmayong.base.support.fixbug.Android5497Workaround;
+import com.liangmayong.base.support.binding.Presenter;
+import com.liangmayong.base.support.binding.PresenterBind;
+import com.liangmayong.base.support.binding.PresenterHolder;
+import com.liangmayong.base.support.binding.ViewBinding;
+import com.liangmayong.base.support.binding.annotations.BindP;
+import com.liangmayong.base.support.binding.interfaces.TitleBindInterface;
+import com.liangmayong.base.support.base.IBase;
 import com.liangmayong.base.widget.skin.Skin;
-import com.liangmayong.base.compat.statusbar.StatusBarCompat;
+import com.liangmayong.base.support.statusbar.StatusBarCompat;
 import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 
 import java.util.ArrayList;

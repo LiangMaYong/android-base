@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.liangmayong.base.ui.activitys.WebActivity;
-import com.liangmayong.base.compat.base.IBase;
+import com.liangmayong.base.web.WebActivity;
+import com.liangmayong.base.support.base.IBase;
 
 /**
  * Created by LiangMaYong on 2016/9/18.

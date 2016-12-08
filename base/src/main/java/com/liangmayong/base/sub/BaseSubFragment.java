@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.liangmayong.base.BaseDrawerActivity;
 import com.liangmayong.base.BaseFragment;
-import com.liangmayong.base.ui.fragments.DefualtWebFragment;
+import com.liangmayong.base.web.fragments.DefualtWebFragment;
 import com.liangmayong.base.widget.iconfont.Icon;
 
 /**

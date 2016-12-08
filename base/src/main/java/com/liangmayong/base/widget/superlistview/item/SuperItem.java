@@ -4,7 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.liangmayong.base.compat.binding.ViewBinding;
+import com.liangmayong.base.support.binding.ViewBinding;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 
 /**

@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 
 import com.liangmayong.base.sub.BaseSubFragment;
 import com.liangmayong.base.sub.BaseSubFragmentManager;
-import com.liangmayong.base.ui.fragments.DefualtWebFragment;
+import com.liangmayong.base.web.fragments.DefualtWebFragment;
 
 /**
  * Created by LiangMaYong on 2016/11/10.

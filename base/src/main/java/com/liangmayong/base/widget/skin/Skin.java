@@ -14,7 +14,7 @@ import android.os.Message;
 import android.os.Process;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.compat.database.DataPreferences;
+import com.liangmayong.base.support.database.DataPreferences;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
@@ -27,11 +27,10 @@ import java.util.List;
  */
 public class Skin {
 
-
     /**
      * SkinType
      */
-    public static enum SkinType {
+    public enum SkinType {
         defualt(0), primary(1), success(2), info(3), warning(4), danger(5), white(6), gray(7), black(8);
 
         private int value = 0;

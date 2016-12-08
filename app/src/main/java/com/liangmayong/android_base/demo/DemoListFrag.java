@@ -3,9 +3,9 @@ package com.liangmayong.android_base.demo;
 import android.view.View;
 
 import com.liangmayong.base.sub.BaseSubListFragment;
-import com.liangmayong.base.compat.builder.BundleBuilder;
+import com.liangmayong.base.support.builder.BundleBuilder;
 import com.liangmayong.base.utils.DimenUtils;
-import com.liangmayong.base.compat.binding.annotations.BindTitle;
+import com.liangmayong.base.support.binding.annotations.BindTitle;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
 import com.liangmayong.base.widget.skin.Skin;
@@ -29,7 +29,7 @@ public class DemoListFrag extends BaseSubListFragment {
         getDefualtToolbar().rightOne().text("Blog").clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goTo("Blog", "http://blog.csdn.net/stepalone");
+                goTo("Blog", "http://www.baidu.com");
             }
         });
         //添加数据

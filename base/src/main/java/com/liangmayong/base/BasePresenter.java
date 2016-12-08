@@ -1,7 +1,7 @@
 package com.liangmayong.base;
 
-import com.liangmayong.base.compat.base.IBase;
-import com.liangmayong.base.compat.binding.Presenter;
+import com.liangmayong.base.support.base.IBase;
+import com.liangmayong.base.support.binding.Presenter;
 
 
 /**

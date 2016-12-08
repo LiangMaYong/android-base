@@ -7,8 +7,8 @@ import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 
-import com.liangmayong.base.compat.lifecycle.ActivityLifeCycle;
-import com.liangmayong.base.compat.database.DataUtils;
+import com.liangmayong.base.support.lifecycle.ActivityLifeCycle;
+import com.liangmayong.base.support.database.DataUtils;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;

@@ -4,8 +4,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.liangmayong.android_base.R;
-import com.liangmayong.base.compat.binding.annotations.BindLayout;
-import com.liangmayong.base.compat.binding.annotations.BindView;
+import com.liangmayong.base.support.binding.annotations.BindLayout;
+import com.liangmayong.base.support.binding.annotations.BindView;
 import com.liangmayong.base.widget.skin.SkinRippleButton;
 import com.liangmayong.base.widget.superlistview.item.SuperItem;
 
