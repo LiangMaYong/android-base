@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -17,19 +16,19 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.liangmayong.base.support.skin.interfaces.ISkin;
-import com.liangmayong.base.utils.BaseUtils;
-import com.liangmayong.base.utils.ToastUtils;
-import com.liangmayong.base.support.fixbug.Android5497Workaround;
+import com.liangmayong.base.support.base.IBase;
 import com.liangmayong.base.support.binding.Presenter;
 import com.liangmayong.base.support.binding.PresenterBind;
 import com.liangmayong.base.support.binding.PresenterHolder;
 import com.liangmayong.base.support.binding.ViewBinding;
 import com.liangmayong.base.support.binding.annotations.BindP;
 import com.liangmayong.base.support.binding.interfaces.TitleBindInterface;
-import com.liangmayong.base.support.base.IBase;
+import com.liangmayong.base.support.fixbug.Android5497Workaround;
 import com.liangmayong.base.support.skin.SkinManager;
+import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.statusbar.StatusBarCompat;
+import com.liangmayong.base.utils.BaseUtils;
+import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
 import java.util.ArrayList;
@@ -126,11 +125,6 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
         holder = PresenterBind.bind(this);
         SkinManager.registerSkinRefresh(this);
         getWindow().getDecorView().setPadding(0, 0, 0, 0);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override

@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.Fragment;
 
 import java.io.File;
 import java.security.MessageDigest;
@@ -49,14 +50,14 @@ public class PhotoUtils {
     }
 
     //tempDir
-    private static String tempDir = "android_base/take/";
+    private static String tempDir = "android_base/take";
 
     /**
      * init
      *
      * @param tempDir tempDir
      */
-    public static void setTempDir(String tempDir) {
+    public void init(String tempDir) {
         PhotoUtils.tempDir = tempDir;
     }
 
@@ -75,6 +76,20 @@ public class PhotoUtils {
     }
 
     /**
+     * startTake
+     *
+     * @param fragment fragment
+     * @param id       id
+     */
+    public void startTake(Fragment fragment, int id, boolean crop) {
+        if (crop) {
+            fragment.startActivityForResult(getTakeIntent(id + 0xAA), id + 0xAA);
+        } else {
+            fragment.startActivityForResult(getTakeIntent(id), id);
+        }
+    }
+
+    /**
      * startSelect
      *
      * @param activity activity
@@ -88,8 +103,54 @@ public class PhotoUtils {
         }
     }
 
+    /**
+     * startSelect
+     *
+     * @param fragment fragment
+     * @param id       id
+     */
+    public void startSelect(Fragment fragment, int id, boolean crop) {
+        if (crop) {
+            fragment.startActivityForResult(getSelectIntent(id + 0xFF), id + 0xFF);
+        } else {
+            fragment.startActivityForResult(getSelectIntent(id), id);
+        }
+    }
+
     public interface OnPhotoResultListener {
         void onResult(Result result);
+    }
+
+    /**
+     * handleResult
+     *
+     * @param id          id
+     * @param width       width
+     * @param height      height
+     * @param fragment    activity
+     * @param requestCode requestCode
+     * @param resultCode  resultCode
+     * @param data        data
+     * @param listener    listener
+     */
+    public void handleResult(final int id, int width, int height, Fragment fragment, int requestCode, int resultCode,
+                             Intent data, OnPhotoResultListener listener) {
+        if (Activity.RESULT_OK == resultCode) {
+            if (requestCode == id + 0xAA) {
+                fragment.startActivityForResult(getCropIntent(getUri(id + 0xAA), id, width, height), id);
+            } else if (requestCode == id + 0xFF) {
+                fragment.startActivityForResult(getCropIntent(data.getData(), id, width, height), id);
+            } else if (requestCode == id) {
+                // delete take photo
+                File file = new File(getPath(id + 0xAA));
+                if (file.exists()) {
+                    file.delete();
+                }
+                if (listener != null) {
+                    listener.onResult(new Result(fragment.getActivity(), id, width, height, data.getData()));
+                }
+            }
+        }
     }
 
     /**
@@ -379,12 +440,10 @@ public class PhotoUtils {
         String last = "";
         while (!last.equals(path)) {
             last = path;
-            path = last.replaceAll("//[^/]+/..//", "/");
-        }
-        last = "";
-        while (!last.equals(path)) {
-            last = path;
             path = last.replaceAll("/([./]/)+/", "/");
+        }
+        while (path.contains("//")) {
+            path = path.replaceAll("//", "/");
         }
         return path.replaceAll("#", "://").replaceAll(":///", "://").replaceAll("/", separator);
     }

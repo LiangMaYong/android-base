@@ -193,7 +193,6 @@ public abstract class BaseSubFragment extends BaseFragment {
         }
     }
 
-
     /**
      * openFragment
      *
