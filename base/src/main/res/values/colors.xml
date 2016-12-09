@@ -6,7 +6,7 @@
     <color name="colorPrimaryDark">#3399ff</color>
     <color name="colorAccent">#3399ff</color>
 
-    <color name="base_defualt_image_bg_color">#dddddd</color>
+    <color name="base_default_image_bg_color">#dddddd</color>
 
 
     <!--base toolbar-->
@@ -17,12 +17,12 @@
     <color name="base_toolbar_progress_pro_color">#90ffffff</color>
     <color name="base_toolbar_progress_secondary_color">#90ffffff</color>
 
-    <!--base defualt item-->
-    <color name="base_defualt_item_bg_pre_color">#dddddd</color>
-    <color name="base_defualt_item_bg_nor_color">#ffffff</color>
-    <!--base defualt-->
-    <color name="base_defualt_layout_bg_color">#f8f8f8</color>
-    <color name="base_defualt_line_color">#f8f8f8</color>
+    <!--base default_type item-->
+    <color name="base_default_item_bg_pre_color">#dddddd</color>
+    <color name="base_default_item_bg_nor_color">#ffffff</color>
+    <!--base default_type-->
+    <color name="base_default_layout_bg_color">#f8f8f8</color>
+    <color name="base_default_line_color">#f8f8f8</color>
     <!--base retry-->
-    <color name="base_defualt_retry_text_color">#676767</color>
+    <color name="base_default_retry_text_color">#676767</color>
 </resources>

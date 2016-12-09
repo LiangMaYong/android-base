@@ -33,8 +33,8 @@ public abstract class BaseSubActivity extends BaseActivity {
         } else {
             throw new IllegalArgumentException("generateSubFragment return can't is NULL");
         }
-        if (getDefualtToolbar() != null) {
-            getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
+        if (getDefaultToolbar() != null) {
+            getDefaultToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     onBackPressed();
@@ -62,7 +62,7 @@ public abstract class BaseSubActivity extends BaseActivity {
      * generateInitView
      */
     protected void generateContainerView() {
-        setContentView(R.layout.base_defualt_sub_activity);
+        setContentView(R.layout.base_default_sub_activity);
     }
 
     @Override

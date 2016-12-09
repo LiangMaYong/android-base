@@ -37,7 +37,7 @@ public class SkinLinearLayout extends LinearLayout implements SkinInterface {
     private boolean mSetSkinColor = false;
     private boolean mBackgroundTransparent = false;
     private boolean mSetSkinTextColor = false;
-    private Skin.SkinType skinType = Skin.SkinType.defualt;
+    private Skin.SkinType skinType = Skin.SkinType.default_type;
 
 
     public SkinLinearLayout(Context context) {
@@ -134,7 +134,7 @@ public class SkinLinearLayout extends LinearLayout implements SkinInterface {
                     case white:
                         mPressedColor = 0xffffffff;
                         break;
-                    case defualt:
+                    case default_type:
                         mPressedColor = getContext().getResources().getColor(R.color.colorPrimary);
                         break;
                 }

@@ -25,10 +25,10 @@ import java.util.List;
  * Created by LiangMaYong on 2016/11/9.
  */
 
-public class DefualtMoreFragment extends DialogFragment {
+public class DefaultMoreFragment extends DialogFragment {
 
     //fragment tag
-    private static final String TAG = "DefualtMoreFragment";
+    private static final String TAG = "DefaultMoreFragment";
 
     /**
      * show
@@ -36,24 +36,24 @@ public class DefualtMoreFragment extends DialogFragment {
      * @param activity activity
      * @param items    items
      */
-    public static DefualtMoreFragment show(FragmentActivity activity, String title, List<SuperListView.Item> items) {
+    public static DefaultMoreFragment show(FragmentActivity activity, String title, List<SuperListView.Item> items) {
         try {
             synchronized (activity) {
                 DialogFragment dialogFragment = (DialogFragment) activity.getSupportFragmentManager()
                         .findFragmentByTag(TAG);
                 if (dialogFragment != null) {
-                    ((DefualtMoreFragment) dialogFragment).setItems(items);
-                    ((DefualtMoreFragment) dialogFragment).setTitle(title);
+                    ((DefaultMoreFragment) dialogFragment).setItems(items);
+                    ((DefaultMoreFragment) dialogFragment).setTitle(title);
                     if (dialogFragment.isAdded()) {
                         activity.getSupportFragmentManager().beginTransaction().show(dialogFragment).commit();
                     }
                 } else {
-                    dialogFragment = new DefualtMoreFragment();
-                    ((DefualtMoreFragment) dialogFragment).setItems(items);
-                    ((DefualtMoreFragment) dialogFragment).setTitle(title);
+                    dialogFragment = new DefaultMoreFragment();
+                    ((DefaultMoreFragment) dialogFragment).setItems(items);
+                    ((DefaultMoreFragment) dialogFragment).setTitle(title);
                     dialogFragment.show(activity.getSupportFragmentManager(), TAG);
                 }
-                return (DefualtMoreFragment) dialogFragment;
+                return (DefaultMoreFragment) dialogFragment;
             }
         } catch (Exception e) {
         }
@@ -61,7 +61,7 @@ public class DefualtMoreFragment extends DialogFragment {
     }
 
     @SuppressLint("ValidFragment")
-    private DefualtMoreFragment() {
+    private DefaultMoreFragment() {
     }
 
     private List<SuperListView.Item> items = null;
@@ -123,7 +123,7 @@ public class DefualtMoreFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View view = inflater.inflate(R.layout.base_defualt_dialog_more, null);
+        View view = inflater.inflate(R.layout.base_default_dialog_more, null);
         viewHolder = new ViewHolder(view);
         setItems(items);
         setTitle(title);
@@ -169,7 +169,7 @@ public class DefualtMoreFragment extends DialogFragment {
             this.base_more_close_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DefualtMoreFragment.cancel(getActivity());
+                    DefaultMoreFragment.cancel(getActivity());
                 }
             });
         }

@@ -13,7 +13,7 @@ import com.liangmayong.base.sub.webkit.BaseWebChromeClient;
 import com.liangmayong.base.sub.webkit.BaseWebView;
 import com.liangmayong.base.sub.webkit.BaseWebViewClient;
 import com.liangmayong.base.sub.webkit.BaseWebWidget;
-import com.liangmayong.base.web.fragments.DefualtMoreFragment;
+import com.liangmayong.base.web.fragments.DefaultMoreFragment;
 import com.liangmayong.base.web.items.MoreItem;
 import com.liangmayong.base.utils.ClipboardUtils;
 import com.liangmayong.base.utils.ShareUtils;
@@ -22,7 +22,7 @@ import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
-import com.liangmayong.base.widget.toolbar.DefualtToolbar;
+import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -103,7 +103,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
         if (Build.VERSION.SDK_INT >= 9) {
             base_webview.setOverScrollMode(View.OVER_SCROLL_NEVER);
         }
-        initDefualtToolbar();
+        initDefaultToolbar();
         base_webview.setWebViewClient(new BaseWebViewClient() {
             @Override
             protected Map<String, String> generateHeaders() {
@@ -131,12 +131,12 @@ public class BaseSubWebFragment extends BaseSubFragment {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (newProgress == 100) {
-                    getDefualtToolbar().setProgress(0);
+                    getDefaultToolbar().setProgress(0);
                     setToolbarTitle(view.getTitle());
                     // injection ja
                     base_webview.injectionAssetsJS("javascript/base.js");
                 } else {
-                    getDefualtToolbar().setProgress(newProgress);
+                    getDefaultToolbar().setProgress(newProgress);
                 }
                 super.onProgressChanged(view, newProgress);
             }
@@ -175,7 +175,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
             @Override
             public void onClick(SuperListView.Item<MoreItem.Menu> item, int position, View itemView) {
                 reload();
-                DefualtMoreFragment.cancel(getActivity());
+                DefaultMoreFragment.cancel(getActivity());
             }
         }));
         String mUrl = url;
@@ -190,7 +190,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
             menus.add(new MoreItem(new MoreItem.Menu(Icon.icon_copy, getString(R.string.base_web_copylink))).setOnItemClickListener(new SuperListView.OnItemClickListener<MoreItem.Menu>() {
                 @Override
                 public void onClick(SuperListView.Item<MoreItem.Menu> item, int position, View itemView) {
-                    DefualtMoreFragment.cancel(getActivity());
+                    DefaultMoreFragment.cancel(getActivity());
                     String mUrl = url;
                     if (!StringUtils.isEmpty(base_webview.getUrl())) {
                         mUrl = base_webview.getUrl();
@@ -203,7 +203,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
         menus.add(new MoreItem(new MoreItem.Menu(Icon.icon_share, getString(R.string.base_web_share))).setOnItemClickListener(new SuperListView.OnItemClickListener<MoreItem.Menu>() {
             @Override
             public void onClick(SuperListView.Item<MoreItem.Menu> item, int position, View itemView) {
-                DefualtMoreFragment.cancel(getActivity());
+                DefaultMoreFragment.cancel(getActivity());
                 String mUrl = url;
                 if (!StringUtils.isEmpty(base_webview.getUrl())) {
                     mUrl = base_webview.getUrl();
@@ -211,7 +211,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
                 ShareUtils.shareText(getContext(), getString(R.string.base_web_share), mUrl);
             }
         }));
-        DefualtMoreFragment.show(getActivity(), mUrl, menus);
+        DefaultMoreFragment.show(getActivity(), mUrl, menus);
     }
 
     /**
@@ -221,20 +221,20 @@ public class BaseSubWebFragment extends BaseSubFragment {
      */
     private void setToolbarTitle(String title) {
         if (this.title != null && !"".equals(this.title) && !"null".equals(this.title)) {
-            getDefualtToolbar().leftTwo().getIconView().setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-            getDefualtToolbar().leftTwo().getIconView().setPadding(0, 0, 0, 0);
-            getDefualtToolbar().leftTwo().text(this.title);
+            getDefaultToolbar().leftTwo().getIconView().setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            getDefaultToolbar().leftTwo().getIconView().setPadding(0, 0, 0, 0);
+            getDefaultToolbar().leftTwo().text(this.title);
             return;
         }
-        getDefualtToolbar().leftTwo().getIconView().setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        getDefualtToolbar().leftTwo().getIconView().setPadding(0, 0, 0, 0);
-        getDefualtToolbar().leftTwo().text(title);
+        getDefaultToolbar().leftTwo().getIconView().setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        getDefaultToolbar().leftTwo().getIconView().setPadding(0, 0, 0, 0);
+        getDefaultToolbar().leftTwo().text(title);
     }
 
 
     @Override
     protected int generateContainerViewId() {
-        return R.layout.base_defualt_fragment_web;
+        return R.layout.base_default_fragment_web;
     }
 
 
@@ -302,35 +302,35 @@ public class BaseSubWebFragment extends BaseSubFragment {
      */
     public void setCloseEnabled(boolean closeEnabled) {
         this.closeEnabled = closeEnabled;
-        if (getDefualtToolbar() != null) {
+        if (getDefaultToolbar() != null) {
             if (!closeEnabled) {
-                getDefualtToolbar().rightTwo().gone();
+                getDefaultToolbar().rightTwo().gone();
             }
         }
     }
 
     public void setMoreEnabled(boolean moreEnabled) {
         this.moreEnabled = moreEnabled;
-        initDefualtToolbar();
+        initDefaultToolbar();
     }
 
-    private void initDefualtToolbar() {
-        if (getDefualtToolbar() != null) {
-            getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
+    private void initDefaultToolbar() {
+        if (getDefaultToolbar() != null) {
+            getDefaultToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     onBackPressed();
                 }
             });
             if (isMoreEnabled()) {
-                getDefualtToolbar().rightOne().iconToLeft(Icon.icon_more).clicked(new View.OnClickListener() {
+                getDefaultToolbar().rightOne().iconToLeft(Icon.icon_more).clicked(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showMoreDialog(v);
                     }
                 });
             }
-            getDefualtToolbar().rightTwo().text("");
+            getDefaultToolbar().rightTwo().text("");
         }
     }
 
@@ -361,12 +361,12 @@ public class BaseSubWebFragment extends BaseSubFragment {
     public boolean onBackPressed() {
         if (base_webview != null && base_webview.canGoBack()) {
             base_webview.goBack();
-            if (closeEnabled && getDefualtToolbar() != null) {
-                DefualtToolbar.ToolbarItem item = null;
+            if (closeEnabled && getDefaultToolbar() != null) {
+                DefaultToolbar.ToolbarItem item = null;
                 if (isMoreEnabled()) {
-                    item = getDefualtToolbar().rightTwo();
+                    item = getDefaultToolbar().rightTwo();
                 } else {
-                    item = getDefualtToolbar().rightOne();
+                    item = getDefaultToolbar().rightOne();
                 }
                 item.iconToLeft(Icon.icon_close).clicked(new View.OnClickListener() {
                     @Override

@@ -20,7 +20,7 @@ README: [English](https://github.com/LiangMaYong/android-base/blob/master/README
 
 7,SuperListView
 
-8,DefualtToolbar
+8,DefaultToolbar
 
 9,Iconfont
 
@@ -101,7 +101,7 @@ compile(project(':base')) {
     <attr name="skin_color" format="color" />
     <attr name="skin_text_color" format="color" />
     <attr name="skin_type" format="enum">
-        <enum name="defualt" value="0" />
+        <enum name="default_type" value="0" />
         <enum name="primary" value="1" />
         <enum name="success" value="2" />
         <enum name="info" value="3" />

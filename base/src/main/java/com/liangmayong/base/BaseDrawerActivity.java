@@ -11,7 +11,7 @@ import android.view.MotionEvent;
 
 import com.liangmayong.base.sub.BaseSubFragment;
 import com.liangmayong.base.sub.BaseSubFragmentManager;
-import com.liangmayong.base.web.fragments.DefualtWebFragment;
+import com.liangmayong.base.web.fragments.DefaultWebFragment;
 
 /**
  * Created by LiangMaYong on 2016/11/10.
@@ -33,7 +33,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.base_defualt_activity_drawer);
+        setContentView(R.layout.base_default_activity_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.base_drawer_layout);
         mDrawerLayout.setScrimColor(0x20333333);
         mNavigationView = (NavigationView) findViewById(R.id.base_drawer_navigation_view);
@@ -98,7 +98,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     @Override
     public void goTo(String title, String url) {
         hideSoftKeyBoard();
-        openFragment(new DefualtWebFragment(title, url));
+        openFragment(new DefaultWebFragment(title, url));
     }
 
 

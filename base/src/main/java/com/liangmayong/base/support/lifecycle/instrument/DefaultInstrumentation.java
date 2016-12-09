@@ -9,7 +9,7 @@ import com.liangmayong.base.support.lifecycle.ActivityLifeCycle;
  * Created by LiangMaYong on 2016/11/8.
  */
 
-public class DefualtInstrumentation extends ProxyInstrumentation {
+public class DefaultInstrumentation extends ProxyInstrumentation {
 
     @Override
     public void callActivityOnCreate(Activity target, Bundle icicle) {

@@ -9,6 +9,7 @@ import com.liangmayong.base.support.binding.annotations.BindLayout;
 import com.liangmayong.base.support.binding.annotations.BindOnClick;
 import com.liangmayong.base.support.binding.annotations.BindTitle;
 import com.liangmayong.base.support.binding.annotations.BindView;
+import com.liangmayong.base.support.router.Router;
 import com.liangmayong.base.widget.skin.SkinButton;
 
 /**
@@ -25,7 +26,7 @@ public class DemoContentFragment extends BaseSubFragment {
 
     @Override
     protected void initSubView(View rootView) {
-        //getDefualtToolbar().setTitle(getArguments().getString("title"));
+        //getDefaultToolbar().setTitle(getArguments().getString("title"));
         //tv_title.setText(getArguments().getString("title"));
     }
 

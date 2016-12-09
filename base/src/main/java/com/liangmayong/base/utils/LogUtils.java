@@ -18,15 +18,15 @@ import java.lang.reflect.Method;
 public class LogUtils {
 
 
-    private static volatile LogUtils defualt_log = null;
+    private static volatile LogUtils default_log = null;
 
-    private static LogUtils getDefualt() {
-        if (defualt_log == null) {
+    private static LogUtils getDefault() {
+        if (default_log == null) {
             synchronized (LogUtils.class) {
-                defualt_log = new LogUtils("ANDROID-BASE-TAG");
+                default_log = new LogUtils("ANDROID-BASE-LOG");
             }
         }
-        return defualt_log;
+        return default_log;
     }
 
     public static LogUtils get(String tag) {

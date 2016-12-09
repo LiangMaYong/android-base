@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.liangmayong.base.BaseDrawerActivity;
 import com.liangmayong.base.BaseFragment;
-import com.liangmayong.base.web.fragments.DefualtWebFragment;
+import com.liangmayong.base.web.fragments.DefaultWebFragment;
 import com.liangmayong.base.widget.iconfont.Icon;
 
 /**
@@ -30,10 +30,10 @@ public abstract class BaseSubFragment extends BaseFragment {
 
     @Override
     protected void initToolbar() {
-        if (getDefualtToolbar() != null) {
-            getDefualtToolbar().reset();
+        if (getDefaultToolbar() != null) {
+            getDefaultToolbar().reset();
             if (getActivity() instanceof BaseSubActivity) {
-                getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
+                getDefaultToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         finish();
@@ -41,14 +41,14 @@ public abstract class BaseSubFragment extends BaseFragment {
                 });
             } else if (getActivity() instanceof BaseDrawerActivity) {
                 if (((BaseDrawerActivity) getActivity()).getSubFragmentManager().getFragmentCount() > 1) {
-                    getDefualtToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
+                    getDefaultToolbar().leftOne().iconToLeft(Icon.icon_back).clicked(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             finish();
                         }
                     });
                 } else {
-                    getDefualtToolbar().leftOne().iconToLeft(Icon.icon_menu).clicked(new View.OnClickListener() {
+                    getDefaultToolbar().leftOne().iconToLeft(Icon.icon_menu).clicked(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             ((BaseDrawerActivity) getActivity()).openDrawer();
@@ -226,9 +226,9 @@ public abstract class BaseSubFragment extends BaseFragment {
     public void goTo(String title, String url) {
         hideSoftKeyBoard();
         if (getActivity() instanceof BaseSubActivity) {
-            openFragment(new DefualtWebFragment(title, url));
+            openFragment(new DefaultWebFragment(title, url));
         } else if (getActivity() instanceof BaseDrawerActivity) {
-            openFragment(new DefualtWebFragment(title, url));
+            openFragment(new DefaultWebFragment(title, url));
         } else {
             super.goTo(title, url);
         }
@@ -237,9 +237,9 @@ public abstract class BaseSubFragment extends BaseFragment {
     @Override
     public void goToWeb(String title, String url) {
         if (getActivity() instanceof BaseSubActivity) {
-            openFragment(new DefualtWebFragment(title, url, true));
+            openFragment(new DefaultWebFragment(title, url, true));
         } else if (getActivity() instanceof BaseDrawerActivity) {
-            openFragment(new DefualtWebFragment(title, url, true));
+            openFragment(new DefaultWebFragment(title, url, true));
         } else {
             super.goTo(title, url);
         }

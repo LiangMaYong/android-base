@@ -23,7 +23,7 @@ import com.liangmayong.base.support.binding.annotations.BindP;
 import com.liangmayong.base.support.binding.interfaces.TitleBindInterface;
 import com.liangmayong.base.support.base.IBase;
 import com.liangmayong.base.widget.skin.Skin;
-import com.liangmayong.base.widget.toolbar.DefualtToolbar;
+import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
 /**
  * Created by LiangMaYong on 2016/8/22.
@@ -32,8 +32,8 @@ import com.liangmayong.base.widget.toolbar.DefualtToolbar;
 public abstract class AppboxFragment extends ContextThemeWrapper implements IBase, TitleBindInterface {
     //holder
     private PresenterHolder holder = null;
-    //defualtToolbar
-    private DefualtToolbar defualtToolbar = null;
+    //defaultToolbar
+    private DefaultToolbar defaultToolbar = null;
     //handler
     private Handler handler = new Handler();
     //rootView
@@ -63,13 +63,13 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements IBas
     }
 
     /**
-     * getDefualtToolbar
+     * getDefaultToolbar
      *
-     * @return defualtToolbar
+     * @return defaultToolbar
      */
     @Override
-    public DefualtToolbar getDefualtToolbar() {
-        return defualtToolbar;
+    public DefaultToolbar getDefaultToolbar() {
+        return defaultToolbar;
     }
 
     /**
@@ -109,10 +109,10 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements IBas
             rootView = ViewBinding.parserClass(this, getContext());
         }
         try {
-            defualtToolbar = new DefualtToolbar(rootView);
-            defualtToolbar.setTitle(getAnotationTitle());
+            defaultToolbar = new DefaultToolbar(rootView);
+            defaultToolbar.setTitle(getAnotationTitle());
         } catch (Exception e) {
-            defualtToolbar = null;
+            defaultToolbar = null;
         }
         inputManager = (InputMethodManager) getHostActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         initView(rootView);
@@ -168,8 +168,8 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements IBas
     @Override
     public void setAnotationTitle(String title) {
         this.title = title;
-        if (title != null && getDefualtToolbar() != null) {
-            getDefualtToolbar().setTitle(title.toString());
+        if (title != null && getDefaultToolbar() != null) {
+            getDefaultToolbar().setTitle(title.toString());
         }
     }
 

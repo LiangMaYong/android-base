@@ -31,7 +31,7 @@ public class Skin {
      * SkinType
      */
     public enum SkinType {
-        defualt(0), primary(1), success(2), info(3), warning(4), danger(5), white(6), gray(7), black(8);
+        default_type(0), primary(1), success(2), info(3), warning(4), danger(5), white(6), gray(7), black(8);
 
         private int value = 0;
 
@@ -42,7 +42,7 @@ public class Skin {
         public static SkinType valueOf(int value) {
             switch (value) {
                 case 0:
-                    return defualt;
+                    return default_type;
                 case 1:
                     return primary;
                 case 2:
@@ -60,7 +60,7 @@ public class Skin {
                 case 8:
                     return black;
                 default:
-                    return defualt;
+                    return default_type;
             }
         }
 
@@ -186,7 +186,7 @@ public class Skin {
     };
 
     private Skin() {
-        defualtColorValue();
+        defaultColorValue();
         initColorValue();
         IntentFilter filter = new IntentFilter();
         filter.addAction(getApplication().getPackageName() + SKIN_RECEIVER_ACTION);
@@ -219,7 +219,7 @@ public class Skin {
         }
     }
 
-    private void defualtColorValue() {
+    private void defaultColorValue() {
         //grayColor
         grayColor = 0xffb1b1b1;
         //grayTextColor
@@ -259,7 +259,7 @@ public class Skin {
      * resetColorValue
      */
     private void resetColorValue() {
-        defualtColorValue();
+        defaultColorValue();
         getDataPreferences().setInt("grayColor", grayColor)
                 .setInt("grayTextColor", grayTextColor)
                 .setInt("themeColor", themeColor)
@@ -571,7 +571,7 @@ public class Skin {
                 return hasWarningColor();
             case danger:
                 return hasDangerColor();
-            case defualt:
+            case default_type:
                 return hasThemeColor();
             case gray:
                 return true;

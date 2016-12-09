@@ -48,7 +48,7 @@ public class MoreItem extends SuperListView.Item<MoreItem.Menu> {
 
     @Override
     protected View newView(LayoutInflater inflater, ViewGroup parent) {
-        return inflater.inflate(R.layout.base_defualt_item_more, parent, false);
+        return inflater.inflate(R.layout.base_default_item_more, parent, false);
     }
 
     @Override

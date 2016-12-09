@@ -38,6 +38,18 @@ public class PermissionUtils {
     }
 
     /**
+     * recordAudioPermissions
+     *
+     * @param activity activity
+     * @param id       id
+     * @param listener listener
+     */
+    public static void recordAudioPermissions(Activity activity, int id, OnPermissionListener listener) {
+        String[] permissionsNeeded = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+        requestPermissions(activity, id, permissionsNeeded, listener);
+    }
+
+    /**
      * filePermissions
      *
      * @param activity activity

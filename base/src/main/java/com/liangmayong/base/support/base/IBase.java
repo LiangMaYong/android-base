@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import com.liangmayong.base.support.binding.Presenter;
 import com.liangmayong.base.widget.skin.OnSkinRefreshListener;
-import com.liangmayong.base.widget.toolbar.DefualtToolbar;
+import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
 /**
  * Created by LiangMaYong on 2016/9/14.
@@ -93,11 +93,11 @@ public interface IBase extends OnSkinRefreshListener {
     void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode);
 
     /**
-     * getDefualtToolbar
+     * getDefaultToolbar
      *
-     * @return defualt toolbar
+     * @return default_type toolbar
      */
-    DefualtToolbar getDefualtToolbar();
+    DefaultToolbar getDefaultToolbar();
 
 
     /**

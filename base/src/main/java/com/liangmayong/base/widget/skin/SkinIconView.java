@@ -35,7 +35,7 @@ public class SkinIconView extends IconView implements SkinInterface {
     private boolean mSetSkinColor = false;
     private boolean mBackgroundTransparent = false;
     private boolean mSetSkinTextColor = false;
-    private Skin.SkinType skinType = Skin.SkinType.defualt;
+    private Skin.SkinType skinType = Skin.SkinType.default_type;
 
 
     public SkinIconView(Context context) {
@@ -124,7 +124,7 @@ public class SkinIconView extends IconView implements SkinInterface {
                     case white:
                         mPressedColor = 0xffffffff;
                         break;
-                    case defualt:
+                    case default_type:
                         mPressedColor = getContext().getResources().getColor(R.color.colorPrimary);
                         break;
                 }

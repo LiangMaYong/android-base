@@ -29,7 +29,7 @@ import com.liangmayong.base.support.binding.interfaces.TitleBindInterface;
 import com.liangmayong.base.support.base.IBase;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.support.statusbar.StatusBarCompat;
-import com.liangmayong.base.widget.toolbar.DefualtToolbar;
+import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +43,8 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
 
     //holder
     private PresenterHolder holder = null;
-    //defualtToolbar
-    private DefualtToolbar defualtToolbar = null;
+    //defaultToolbar
+    private DefaultToolbar defaultToolbar = null;
     //title
     private String title = "";
     //handler
@@ -68,16 +68,16 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
     @Override
     public void setTitle(CharSequence title) {
         super.setTitle(title);
-        if (title != null && getDefualtToolbar() != null) {
-            getDefualtToolbar().setTitle(title.toString());
+        if (title != null && getDefaultToolbar() != null) {
+            getDefaultToolbar().setTitle(title.toString());
         }
     }
 
     @Override
     public void setTitle(int titleId) {
         super.setTitle(titleId);
-        if (title != null && getDefualtToolbar() != null) {
-            getDefualtToolbar().setTitle(titleId);
+        if (title != null && getDefaultToolbar() != null) {
+            getDefaultToolbar().setTitle(titleId);
         }
     }
 
@@ -101,13 +101,13 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
     }
 
     /**
-     * getDefualtToolbar
+     * getDefaultToolbar
      *
-     * @return defualtToolbar
+     * @return defaultToolbar
      */
     @Override
-    public DefualtToolbar getDefualtToolbar() {
-        return defualtToolbar;
+    public DefaultToolbar getDefaultToolbar() {
+        return defaultToolbar;
     }
 
     @Override
@@ -153,10 +153,10 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
     private void initToolbar() {
         ViewBinding.parserClassByView(this, getWindow().getDecorView());
         try {
-            defualtToolbar = new DefualtToolbar(this);
-            defualtToolbar.setTitle(getAnotationTitle() != null ? getAnotationTitle() : "");
+            defaultToolbar = new DefaultToolbar(this);
+            defaultToolbar.setTitle(getAnotationTitle() != null ? getAnotationTitle() : "");
         } catch (Exception e) {
-            defualtToolbar = null;
+            defaultToolbar = null;
         }
     }
 
@@ -233,8 +233,8 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
     @Override
     public void setAnotationTitle(String title) {
         this.title = title;
-        if (title != null && getDefualtToolbar() != null) {
-            getDefualtToolbar().setTitle(title.toString());
+        if (title != null && getDefaultToolbar() != null) {
+            getDefaultToolbar().setTitle(title.toString());
         }
     }
 

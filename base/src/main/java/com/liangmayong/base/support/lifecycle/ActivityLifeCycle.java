@@ -6,7 +6,7 @@ import android.app.Instrumentation;
 import android.os.Bundle;
 
 import com.liangmayong.base.utils.ReflectUtils;
-import com.liangmayong.base.support.lifecycle.instrument.DefualtInstrumentation;
+import com.liangmayong.base.support.lifecycle.instrument.DefaultInstrumentation;
 import com.liangmayong.base.support.lifecycle.instrument.ProxyInstrumentation;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public final class ActivityLifeCycle {
             if (loadedApk != null) {
                 Object activityThread = ReflectUtils.on(loadedApk).get("mActivityThread");
                 if (activityThread != null) {
-                    ProxyInstrumentation instrumentation = new DefualtInstrumentation();
+                    ProxyInstrumentation instrumentation = new DefaultInstrumentation();
                     Instrumentation instrument = ReflectUtils.on(activityThread).get("mInstrumentation");
                     instrumentation.proxyInstrumentation(instrument);
                     ReflectUtils.on(activityThread).set("mInstrumentation", instrumentation);

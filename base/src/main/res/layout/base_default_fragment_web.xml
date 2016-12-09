@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/base_defualt_toolbar" />
+    <include layout="@layout/base_default_toolbar" />
 
     <com.liangmayong.base.widget.skin.SkinSwipeLayout
         android:id="@id/base_web_refreshLayout"

@@ -21,7 +21,7 @@ Download AAR : [base-1.3.0.aar](https://raw.githubusercontent.com/LiangMaYong/an
 
 7,SuperListView
 
-8,DefualtToolbar
+8,DefaultToolbar
 
 9,Iconfont
 
@@ -102,7 +102,7 @@ public class ${NAME} extends Presenter<${NAME}.IView> {
     <attr name="skin_color" format="color" />
     <attr name="skin_text_color" format="color" />
     <attr name="skin_type" format="enum">
-        <enum name="defualt" value="0" />
+        <enum name="default_type" value="0" />
         <enum name="primary" value="1" />
         <enum name="success" value="2" />
         <enum name="info" value="3" />

@@ -10,8 +10,8 @@ import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
 import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
-import com.liangmayong.base.widget.superlistview.item.DefualtSuperData;
-import com.liangmayong.base.widget.superlistview.item.DefualtSuperItem;
+import com.liangmayong.base.widget.superlistview.item.DefaultSuperData;
+import com.liangmayong.base.widget.superlistview.item.DefaultSuperItem;
 
 /**
  * Created by LiangMaYong on 2016/10/17.
@@ -26,7 +26,7 @@ public class DemoListFrag extends BaseSubListFragment {
 
     @Override
     protected void initListView(SuperListView listView, IRefreshLayout refreshLayout) {
-        getDefualtToolbar().rightOne().text("Blog").clicked(new View.OnClickListener() {
+        getDefaultToolbar().rightOne().text("Blog").clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goTo("Blog", "http://www.baidu.com");
@@ -65,9 +65,9 @@ public class DemoListFrag extends BaseSubListFragment {
     }
 
     private void add_data() {
-        getListView().getPool().add(new DefualtSuperItem("AndroidBase Item", "defualt view", "11:22", null).setIcon(Icon.icon_camera).setOnItemClickListener(new SuperListView.OnItemClickListener<DefualtSuperData>() {
+        getListView().getPool().add(new DefaultSuperItem("AndroidBase Item", "default_type view", "11:22", null).setIcon(Icon.icon_camera).setOnItemClickListener(new SuperListView.OnItemClickListener<DefaultSuperData>() {
             @Override
-            public void onClick(SuperListView.Item<DefualtSuperData> item, int position, View itemView) {
+            public void onClick(SuperListView.Item<DefaultSuperData> item, int position, View itemView) {
                 showToast("sssssssssssss");
             }
         }));

@@ -15,14 +15,14 @@ import java.util.Map;
  * Created by LiangMaYong on 2016/10/27.
  */
 @SuppressLint("ValidFragment")
-public class DefualtWebFragment extends BaseSubWebFragment {
+public class DefaultWebFragment extends BaseSubWebFragment {
 
 
-    public DefualtWebFragment(String title, String url) {
+    public DefaultWebFragment(String title, String url) {
         super(title, url);
     }
 
-    public DefualtWebFragment(String title, String url, boolean moreEnabled) {
+    public DefaultWebFragment(String title, String url, boolean moreEnabled) {
         super(title, url, moreEnabled);
     }
 

@@ -7,7 +7,7 @@ import com.liangmayong.base.widget.iconfont.IconValue;
  * Created by LiangMaYong on 2016/11/7.
  */
 
-public final class DefualtSuperData {
+public final class DefaultSuperData {
     private String title;
     private String sub;
     private Object tag;
@@ -24,12 +24,12 @@ public final class DefualtSuperData {
         return icon;
     }
 
-    public DefualtSuperData(String title, String sub) {
+    public DefaultSuperData(String title, String sub) {
         this.title = title;
         this.sub = sub;
     }
 
-    public DefualtSuperData(String title, String sub, String right_title, String right_sub) {
+    public DefaultSuperData(String title, String sub, String right_title, String right_sub) {
         this.title = title;
         this.sub = sub;
         this.right_title = right_title;
@@ -86,7 +86,7 @@ public final class DefualtSuperData {
 
     @Override
     public String toString() {
-        return "DefualtSuperData{" +
+        return "DefaultSuperData{" +
                 "title='" + title + '\'' +
                 ", sub='" + sub + '\'' +
                 ", tag=" + tag +

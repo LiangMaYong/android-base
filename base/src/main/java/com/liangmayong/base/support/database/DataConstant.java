@@ -9,7 +9,7 @@ public class DataConstant {
     private DataConstant() {
     }
 
-    public static final String DEFUALT_PREFERENCES_DATABASE_NAME = "data_preferces_database.db";
-    public static final String DEFUALT_PREFERENCES_TABLE_NAME = "defualt_preferces";
+    public static final String DEFAULT_PREFERENCES_DATABASE_NAME = "data_preferces_database.db";
+    public static final String DEFAULT_PREFERENCES_TABLE_NAME = "default_preferces";
 
 }

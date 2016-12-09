@@ -63,6 +63,6 @@ public abstract class BaseSubListFragment extends BaseSubFragment {
 
     @Override
     protected int generateContainerViewId() {
-        return R.layout.base_defualt_fragment_superlist_swipe;
+        return R.layout.base_default_fragment_superlist_swipe;
     }
 }

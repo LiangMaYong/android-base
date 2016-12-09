@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_toolbar_height">
 
-        <include layout="@layout/base_defualt_toolbar_items" />
+        <include layout="@layout/base_default_toolbar_items" />
     </com.liangmayong.base.widget.skin.SkinRelativeLayout>
 
 </LinearLayout>

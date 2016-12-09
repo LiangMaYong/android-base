@@ -22,9 +22,9 @@ public class DataPreferences {
     // DATA_PREFERENCES_HASH_MAP
     private static final Map<String, DataPreferences> DATA_PREFERENCES_HASH_MAP = new HashMap<String, DataPreferences>();
     //PREFERENCES_DATABASE_NAME
-    public static final String PREFERENCES_DATABASE_NAME = DataConstant.DEFUALT_PREFERENCES_DATABASE_NAME;
-    //DEFUALT_PREFERENCES_TABLE_NAME
-    private static final String DEFUALT_PREFERENCES_TABLE_NAME = DataConstant.DEFUALT_PREFERENCES_TABLE_NAME;
+    public static final String PREFERENCES_DATABASE_NAME = DataConstant.DEFAULT_PREFERENCES_DATABASE_NAME;
+    //DEFAULT_PREFERENCES_TABLE_NAME
+    private static final String DEFAULT_PREFERENCES_TABLE_NAME = DataConstant.DEFAULT_PREFERENCES_TABLE_NAME;
     //mPreferencesTable
     private PreferencesTable mPreferencesTable;
 
@@ -41,7 +41,7 @@ public class DataPreferences {
      */
     public static DataPreferences getPreferences(String tablename) {
         if (tablename == null || "".equals(tablename)) {
-            tablename = DEFUALT_PREFERENCES_TABLE_NAME;
+            tablename = DEFAULT_PREFERENCES_TABLE_NAME;
         }
         tablename = "pref_" + tablename;
         if (DATA_PREFERENCES_HASH_MAP.containsKey(tablename)) {
@@ -54,12 +54,12 @@ public class DataPreferences {
     }
 
     /**
-     * getDefault
+     * getDefaultPreferences
      *
      * @return preferences
      */
     public static DataPreferences getDefaultPreferences() {
-        return getPreferences(DEFUALT_PREFERENCES_TABLE_NAME);
+        return getPreferences(DEFAULT_PREFERENCES_TABLE_NAME);
     }
 
     /**

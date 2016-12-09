@@ -68,7 +68,7 @@ public class PullRefreshLayout extends ViewGroup implements IRefreshLayout {
         mDurationToCorrectPosition = defaultDuration;
         mSpinnerFinalOffset = mTotalDragDistance = dp2px(DRAG_MAX_DISTANCE);
         mRefreshView = new ImageView(context);
-        setRefreshDrawable(new FrameDrawable(this, R.mipmap.base_loading_1, R.mipmap.base_loading_2, R.mipmap.base_loading_3, R.mipmap.base_loading_4, R.mipmap.base_loading_5, R.mipmap.base_loading_6));
+        setRefreshDrawable(new FrameDrawable(this, R.mipmap.base_default_pull_loading_1, R.mipmap.base_default_pull_loading_2, R.mipmap.base_default_pull_loading_3, R.mipmap.base_default_pull_loading_4, R.mipmap.base_default_pull_loading_5, R.mipmap.base_default_pull_loading_6));
         mRefreshView.setVisibility(View.GONE);
         addView(mRefreshView, 0);
         setWillNotDraw(false);

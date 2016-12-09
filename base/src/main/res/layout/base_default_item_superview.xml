@@ -4,15 +4,15 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        android:id="@id/base_defualt_adapter_linear"
+        android:id="@id/base_default_adapter_linear"
         android:layout_width="match_parent"
         android:layout_height="55dp"
-        android:background="@drawable/base_defualt_item_selector"
+        android:background="@drawable/base_default_item_selector"
         android:gravity="center"
         android:orientation="horizontal">
 
         <com.liangmayong.base.widget.iconfont.IconView
-            android:id="@id/base_defualt_adapter_icon"
+            android:id="@id/base_default_adapter_icon"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:ellipsize="end"
@@ -34,7 +34,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@id/base_defualt_adapter_title"
+                android:id="@id/base_default_adapter_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Item"
@@ -42,7 +42,7 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@id/base_defualt_adapter_sub"
+                android:id="@id/base_default_adapter_sub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Item"
@@ -58,7 +58,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@id/base_defualt_adapter_right_title"
+                android:id="@id/base_default_adapter_right_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -67,7 +67,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@id/base_defualt_adapter_right_sub"
+                android:id="@id/base_default_adapter_right_sub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -77,7 +77,7 @@
         </LinearLayout>
 
         <com.liangmayong.base.widget.iconfont.IconView
-            android:id="@id/base_defualt_adapter_arrow"
+            android:id="@id/base_default_adapter_arrow"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:ellipsize="end"

@@ -2,7 +2,7 @@ package com.liangmayong.base.web;
 
 import com.liangmayong.base.sub.BaseSubActivity;
 import com.liangmayong.base.sub.BaseSubFragment;
-import com.liangmayong.base.web.fragments.DefualtWebFragment;
+import com.liangmayong.base.web.fragments.DefaultWebFragment;
 import com.liangmayong.base.support.base.IBase;
 
 /**
@@ -16,7 +16,7 @@ public class WebActivity extends BaseSubActivity {
         String title = getIntent().getStringExtra(IBase.WEB_EXTRA_TITLE);
         String url = getIntent().getStringExtra(IBase.WEB_EXTRA_URL);
         boolean more = "true".equals(getIntent().getStringExtra(IBase.WEB_EXTRA_MORE));
-        return new DefualtWebFragment(title, url, more);
+        return new DefaultWebFragment(title, url, more);
     }
 
 }

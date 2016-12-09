@@ -20,7 +20,7 @@ import com.liangmayong.base.widget.skin.SkinRelativeLayout;
 /**
  * Created by LiangMaYong on 2016/8/22.
  */
-public class DefualtToolbar {
+public class DefaultToolbar {
 
     private Context context;
     private SkinRelativeLayout toolbar_layout;
@@ -28,7 +28,7 @@ public class DefualtToolbar {
     private ToolbarItem toolbar_right_one, toolbar_right_two, toolbar_right_three, toolbar_right_four;
     private ToolbarItem toolbar_left_one, toolbar_left_two, toolbar_left_three, toolbar_left_four;
     private ProgressBar toolbar_progress;
-    private Skin.SkinType skinType = Skin.SkinType.defualt;
+    private Skin.SkinType skinType = Skin.SkinType.default_type;
     private OnSkinRefreshListener skinRefreshListener = new OnSkinRefreshListener() {
         @Override
         public void onSkinRefresh(Skin skin) {
@@ -49,10 +49,10 @@ public class DefualtToolbar {
         }
     };
 
-    public DefualtToolbar(View view) throws Exception {
+    public DefaultToolbar(View view) throws Exception {
         toolbar_layout = (SkinRelativeLayout) view.findViewById(R.id.default_toolbar_layout);
         if (toolbar_layout == null) {
-            throw new Exception("not include base_defualt_toolbar");
+            throw new Exception("not include base_default_toolbar");
         }
         toolbar_layout.setSkinRefreshListener(skinRefreshListener);
         context = view.getContext();
@@ -117,10 +117,10 @@ public class DefualtToolbar {
         toolbar_layout.setSkinType(skinType);
     }
 
-    public DefualtToolbar(Activity activity) throws Exception {
+    public DefaultToolbar(Activity activity) throws Exception {
         toolbar_layout = (SkinRelativeLayout) activity.findViewById(R.id.default_toolbar_layout);
         if (toolbar_layout == null) {
-            throw new Exception("not include base_defualt_toolbar");
+            throw new Exception("not include base_default_toolbar");
         }
         toolbar_layout.setSkinRefreshListener(skinRefreshListener);
         context = activity;
@@ -399,8 +399,8 @@ public class DefualtToolbar {
          *
          * @return toolbar
          */
-        public DefualtToolbar toolbar() {
-            return DefualtToolbar.this;
+        public DefaultToolbar toolbar() {
+            return DefaultToolbar.this;
         }
 
         /**

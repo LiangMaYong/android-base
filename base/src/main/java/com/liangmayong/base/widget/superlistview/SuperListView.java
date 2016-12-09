@@ -261,24 +261,24 @@ public class SuperListView extends RelativeLayout {
     }
 
     /**
-     * setDefualtEmpty
+     * setDefaultEmpty
      *
      * @param text       text
      * @param imageResId imageResId
      */
-    public void setDefualtEmpty(String text, int imageResId) {
+    public void setDefaultEmpty(String text, int imageResId) {
         if (emptyLayout != null) {
             emptyLayout.removeAllViews();
-            emptyView = LayoutInflater.from(getContext()).inflate(R.layout.base_defualt_retry_layout, null);
+            emptyView = LayoutInflater.from(getContext()).inflate(R.layout.base_default_retry_layout, null);
             emptyView.setOnTouchListener(layoutTouchListener);
             emptyView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             if (text != null) {
-                ((TextView) emptyView.findViewById(R.id.base_defualt_retry_text)).setText(text);
+                ((TextView) emptyView.findViewById(R.id.base_default_retry_text)).setText(text);
             }
             if (imageResId != 0) {
-                ((ImageView) emptyView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
+                ((ImageView) emptyView.findViewById(R.id.base_default_retry_img)).setImageResource(imageResId);
             } else {
-                (emptyView.findViewById(R.id.base_defualt_retry_img)).setVisibility(GONE);
+                (emptyView.findViewById(R.id.base_default_retry_img)).setVisibility(GONE);
             }
             if (emptyRetryListener != null) {
                 emptyRetryListener.setRetryView(emptyView);
@@ -288,24 +288,24 @@ public class SuperListView extends RelativeLayout {
     }
 
     /**
-     * setDefualtError
+     * setDefaultError
      *
      * @param text       text
      * @param imageResId imageResId
      */
-    public void setDefualtError(String text, int imageResId) {
+    public void setDefaultError(String text, int imageResId) {
         if (errorLayout != null) {
             errorLayout.removeAllViews();
-            errorView = LayoutInflater.from(getContext()).inflate(R.layout.base_defualt_retry_layout, null);
+            errorView = LayoutInflater.from(getContext()).inflate(R.layout.base_default_retry_layout, null);
             errorView.setOnTouchListener(layoutTouchListener);
             errorView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             if (text != null) {
-                ((TextView) errorView.findViewById(R.id.base_defualt_retry_text)).setText(text);
+                ((TextView) errorView.findViewById(R.id.base_default_retry_text)).setText(text);
             }
             if (imageResId != 0) {
-                ((ImageView) errorView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
+                ((ImageView) errorView.findViewById(R.id.base_default_retry_img)).setImageResource(imageResId);
             } else {
-                (errorView.findViewById(R.id.base_defualt_retry_img)).setVisibility(GONE);
+                (errorView.findViewById(R.id.base_default_retry_img)).setVisibility(GONE);
             }
             if (errorRetryListener != null) {
                 errorRetryListener.setRetryView(errorView);
@@ -315,24 +315,24 @@ public class SuperListView extends RelativeLayout {
     }
 
     /**
-     * setDefualtError
+     * setDefaultError
      *
      * @param text       text
      * @param imageResId imageResId
      */
-    public void setDefualtLoading(String text, int imageResId) {
+    public void setDefaultLoading(String text, int imageResId) {
         if (loadingLayout != null) {
             loadingLayout.removeAllViews();
-            loadingView = LayoutInflater.from(getContext()).inflate(R.layout.base_defualt_retry_layout, null);
+            loadingView = LayoutInflater.from(getContext()).inflate(R.layout.base_default_retry_layout, null);
             loadingView.setOnTouchListener(layoutTouchListener);
             loadingView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             if (text != null) {
-                ((TextView) loadingView.findViewById(R.id.base_defualt_retry_text)).setText(text);
+                ((TextView) loadingView.findViewById(R.id.base_default_retry_text)).setText(text);
             }
             if (imageResId != 0) {
-                ((ImageView) loadingView.findViewById(R.id.base_defualt_retry_img)).setImageResource(imageResId);
+                ((ImageView) loadingView.findViewById(R.id.base_default_retry_img)).setImageResource(imageResId);
             } else {
-                (loadingView.findViewById(R.id.base_defualt_retry_img)).setVisibility(GONE);
+                (loadingView.findViewById(R.id.base_default_retry_img)).setVisibility(GONE);
             }
             if (loadingRetryListener != null) {
                 loadingRetryListener.setRetryView(loadingView);
@@ -757,7 +757,7 @@ public class SuperListView extends RelativeLayout {
         emptyLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         super.addView(emptyLayout);
         emptyLayout.setVisibility(GONE);
-        setDefualtEmpty("", 0);
+        setDefaultEmpty("", 0);
 
         //insert loadingLayout
         loadingLayout = new RelativeLayout(getContext()) {
@@ -769,7 +769,7 @@ public class SuperListView extends RelativeLayout {
         loadingLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         super.addView(loadingLayout);
         loadingLayout.setVisibility(GONE);
-        setDefualtLoading("", 0);
+        setDefaultLoading("", 0);
 
         //insert errorLayout
         errorLayout = new RelativeLayout(getContext()) {
@@ -781,7 +781,7 @@ public class SuperListView extends RelativeLayout {
         errorLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         super.addView(errorLayout);
         errorLayout.setVisibility(GONE);
-        setDefualtError("", 0);
+        setDefaultError("", 0);
     }
 
     /**
