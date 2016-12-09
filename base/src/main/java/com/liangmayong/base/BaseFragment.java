@@ -12,16 +12,17 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.liangmayong.base.utils.BaseUtils;
-import com.liangmayong.base.utils.ToastUtils;
+import com.liangmayong.base.support.base.IBase;
 import com.liangmayong.base.support.binding.Presenter;
 import com.liangmayong.base.support.binding.PresenterBind;
 import com.liangmayong.base.support.binding.PresenterHolder;
 import com.liangmayong.base.support.binding.ViewBinding;
 import com.liangmayong.base.support.binding.annotations.BindP;
 import com.liangmayong.base.support.binding.interfaces.TitleBindInterface;
-import com.liangmayong.base.support.base.IBase;
-import com.liangmayong.base.widget.skin.Skin;
+import com.liangmayong.base.support.skin.SkinManager;
+import com.liangmayong.base.support.skin.interfaces.ISkin;
+import com.liangmayong.base.utils.BaseUtils;
+import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
 /**
@@ -122,7 +123,7 @@ public abstract class BaseFragment extends Fragment implements IBase, TitleBindI
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         holder = PresenterBind.bind(this);
-        Skin.registerSkinRefresh(this);
+        SkinManager.registerSkinRefresh(this);
     }
 
     @Nullable
@@ -145,7 +146,6 @@ public abstract class BaseFragment extends Fragment implements IBase, TitleBindI
         inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         initToolbar();
         initView(rootView);
-        onSkinRefresh(Skin.get());
         return rootView;
     }
 
@@ -220,13 +220,13 @@ public abstract class BaseFragment extends Fragment implements IBase, TitleBindI
     }
 
     @Override
-    public void onSkinRefresh(Skin skin) {
+    public void onSkinRefresh(ISkin skin) {
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Skin.unregisterSkinRefresh(this);
+        SkinManager.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
     }
 

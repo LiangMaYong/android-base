@@ -1,4 +1,7 @@
-package com.liangmayong.base.widget.skin;
+package com.liangmayong.base.widget.skinview;
+
+import com.liangmayong.base.support.skin.handlers.SkinType;
+import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
 
 /**
  * Created by LiangMaYong on 2016/9/28.
@@ -13,7 +16,7 @@ public interface SkinInterface extends OnSkinRefreshListener {
 
     void setSkinRefreshListener(OnSkinRefreshListener skinRefreshListener);
 
-    void setSkinType(Skin.SkinType skinType);
+    void setSkinType(SkinType skinType);
 
     void setSkinColor(int skinColor, int skinTextColor);
 
@@ -31,7 +34,7 @@ public interface SkinInterface extends OnSkinRefreshListener {
 
     void setStrokeWidth(int strokeWidth);
 
-    Skin.SkinType getSkinType();
+    SkinType getSkinType();
 
     int getSkinColor();
 

@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.liangmayong.base.widget.skin.SkinSquareLayout
+    <com.liangmayong.base.widget.skinview.SkinSquareLayout
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:padding="2dp"
         skin:skin_type="white">
 
-        <com.liangmayong.base.widget.skin.SkinLinearLayout
+        <com.liangmayong.base.widget.skinview.SkinLinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -20,7 +20,7 @@
             skin:shape_type="stroke"
             skin:skin_type="gray">
 
-            <com.liangmayong.base.widget.skin.SkinIconView
+            <com.liangmayong.base.widget.skinview.SkinIconView
                 android:id="@id/base_more_icon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
                 android:textSize="26sp"
                 skin:skin_type="gray" />
 
-            <com.liangmayong.base.widget.skin.SkinTextView
+            <com.liangmayong.base.widget.skinview.SkinTextView
                 android:id="@id/base_more_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,6 +38,6 @@
                 android:text="menu"
                 android:textSize="14sp"
                 skin:skin_type="gray" />
-        </com.liangmayong.base.widget.skin.SkinLinearLayout>
-    </com.liangmayong.base.widget.skin.SkinSquareLayout>
+        </com.liangmayong.base.widget.skinview.SkinLinearLayout>
+    </com.liangmayong.base.widget.skinview.SkinSquareLayout>
 </LinearLayout>

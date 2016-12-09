@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.liangmayong.base.widget.skin.SkinLinearLayout
+    <com.liangmayong.base.widget.skinview.SkinLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
@@ -31,17 +31,17 @@
             android:layout_height="80dp"
             android:layout_margin="10dp" />
 
-        <com.liangmayong.base.widget.skin.SkinView
+        <com.liangmayong.base.widget.skinview.SkinView
             android:layout_width="match_parent"
             android:layout_height="1dp"
             skin:skin_type="gray" />
 
-        <com.liangmayong.base.widget.skin.SkinRippleButton
+        <com.liangmayong.base.widget.skinview.SkinRippleButton
             android:id="@id/base_dialog_more_close_btn"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="@string/base_web_cancel"
             skin:radius="0dp"
             skin:skin_type="white" />
-    </com.liangmayong.base.widget.skin.SkinLinearLayout>
+    </com.liangmayong.base.widget.skinview.SkinLinearLayout>
 </LinearLayout>

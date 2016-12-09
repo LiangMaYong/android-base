@@ -13,6 +13,7 @@ import com.liangmayong.base.sub.webkit.BaseWebChromeClient;
 import com.liangmayong.base.sub.webkit.BaseWebView;
 import com.liangmayong.base.sub.webkit.BaseWebViewClient;
 import com.liangmayong.base.sub.webkit.BaseWebWidget;
+import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.web.fragments.DefaultMoreFragment;
 import com.liangmayong.base.web.items.MoreItem;
 import com.liangmayong.base.utils.ClipboardUtils;
@@ -20,7 +21,6 @@ import com.liangmayong.base.utils.ShareUtils;
 import com.liangmayong.base.utils.StringUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
-import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
@@ -335,7 +335,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
     }
 
     @Override
-    public void onSkinRefresh(Skin skin) {
+    public void onSkinRefresh(ISkin skin) {
         super.onSkinRefresh(skin);
     }
 

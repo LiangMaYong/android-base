@@ -4,13 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.liangmayong.base.widget.skin.SkinRelativeLayout xmlns:skin="http://schemas.android.com/apk/res-auto"
+    <com.liangmayong.base.widget.skinview.SkinRelativeLayout xmlns:skin="http://schemas.android.com/apk/res-auto"
         android:id="@id/default_toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_toolbar_height"
         skin:shape_type="transparent">
 
         <include layout="@layout/base_default_toolbar_items" />
-    </com.liangmayong.base.widget.skin.SkinRelativeLayout>
+    </com.liangmayong.base.widget.skinview.SkinRelativeLayout>
 
 </LinearLayout>

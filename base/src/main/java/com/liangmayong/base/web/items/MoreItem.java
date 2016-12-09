@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 import com.liangmayong.base.R;
 import com.liangmayong.base.widget.iconfont.IconValue;
 import com.liangmayong.base.widget.iconfont.IconView;
-import com.liangmayong.base.widget.skin.SkinIconView;
-import com.liangmayong.base.widget.skin.SkinTextView;
+import com.liangmayong.base.widget.skinview.SkinIconView;
+import com.liangmayong.base.widget.skinview.SkinTextView;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 
 /**

@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/BaseTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".DrawerActivity"
             android:theme="@style/BaseLauncher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

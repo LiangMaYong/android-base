@@ -4,8 +4,8 @@ import android.annotation.SuppressLint;
 import android.view.View;
 
 import com.liangmayong.base.R;
+import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
-import com.liangmayong.base.widget.skin.Skin;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 
 /**
@@ -46,7 +46,7 @@ public abstract class BaseSubListFragment extends BaseSubFragment {
     }
 
     @Override
-    public void onSkinRefresh(Skin skin) {
+    public void onSkinRefresh(ISkin skin) {
         super.onSkinRefresh(skin);
     }
 

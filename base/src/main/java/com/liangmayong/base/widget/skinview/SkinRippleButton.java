@@ -1,4 +1,4 @@
-package com.liangmayong.base.widget.skin;
+package com.liangmayong.base.widget.skinview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

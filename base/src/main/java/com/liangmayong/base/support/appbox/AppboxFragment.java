@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.liangmayong.base.BasePresenter;
+import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.web.WebActivity;
 import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.support.binding.Presenter;
@@ -22,7 +23,7 @@ import com.liangmayong.base.support.binding.ViewBinding;
 import com.liangmayong.base.support.binding.annotations.BindP;
 import com.liangmayong.base.support.binding.interfaces.TitleBindInterface;
 import com.liangmayong.base.support.base.IBase;
-import com.liangmayong.base.widget.skin.Skin;
+import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
 /**
@@ -97,7 +98,7 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements IBas
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         holder = PresenterBind.bind(this);
-        Skin.registerSkinRefresh(this);
+        SkinManager.registerSkinRefresh(this);
     }
 
     public final View onCreateView(Context context, LayoutInflater inflater) {
@@ -116,7 +117,6 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements IBas
         }
         inputManager = (InputMethodManager) getHostActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         initView(rootView);
-        onSkinRefresh(Skin.get());
         return rootView;
     }
 
@@ -179,11 +179,11 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements IBas
     }
 
     @Override
-    public void onSkinRefresh(Skin skin) {
+    public void onSkinRefresh(ISkin skin) {
     }
 
     public void onDestroy() {
-        Skin.unregisterSkinRefresh(this);
+        SkinManager.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
     }
 

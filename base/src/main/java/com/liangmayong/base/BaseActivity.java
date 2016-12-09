@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.utils.BaseUtils;
 import com.liangmayong.base.utils.ToastUtils;
 import com.liangmayong.base.support.fixbug.Android5497Workaround;
@@ -27,7 +28,7 @@ import com.liangmayong.base.support.binding.ViewBinding;
 import com.liangmayong.base.support.binding.annotations.BindP;
 import com.liangmayong.base.support.binding.interfaces.TitleBindInterface;
 import com.liangmayong.base.support.base.IBase;
-import com.liangmayong.base.widget.skin.Skin;
+import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.statusbar.StatusBarCompat;
 import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
@@ -123,7 +124,7 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         ViewBinding.parserActivity(this);
         holder = PresenterBind.bind(this);
-        Skin.registerSkinRefresh(this);
+        SkinManager.registerSkinRefresh(this);
         getWindow().getDecorView().setPadding(0, 0, 0, 0);
     }
 
@@ -218,7 +219,7 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
 
     @Override
     protected void onDestroy() {
-        Skin.unregisterSkinRefresh(this);
+        SkinManager.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
         super.onDestroy();
         hideSoftKeyBoard();
@@ -244,7 +245,7 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
     }
 
     @Override
-    public void onSkinRefresh(Skin skin) {
+    public void onSkinRefresh(ISkin skin) {
         if (isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             StatusBarCompat.setTransparent(this);
         } else {

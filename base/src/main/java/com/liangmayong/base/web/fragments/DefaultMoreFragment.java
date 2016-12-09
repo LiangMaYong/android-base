@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.utils.DimenUtils;
-import com.liangmayong.base.widget.skin.SkinRippleButton;
+import com.liangmayong.base.widget.skinview.SkinRippleButton;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 
 import java.util.List;

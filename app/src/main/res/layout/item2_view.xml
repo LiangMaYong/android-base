@@ -20,7 +20,7 @@
             android:text="Item"
             android:textColor="#333333" />
 
-        <com.liangmayong.base.widget.skin.SkinRippleButton xmlns:skin="http://schemas.android.com/apk/res-auto"
+        <com.liangmayong.base.widget.skinview.SkinRippleButton xmlns:skin="http://schemas.android.com/apk/res-auto"
             android:id="@+id/btn_show"
             android:layout_width="match_parent"
             android:layout_height="40dp"

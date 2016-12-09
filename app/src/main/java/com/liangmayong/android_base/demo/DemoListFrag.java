@@ -8,7 +8,7 @@ import com.liangmayong.base.support.builder.BundleBuilder;
 import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
-import com.liangmayong.base.widget.skin.Skin;
+import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.widget.superlistview.SuperListView;
 import com.liangmayong.base.widget.superlistview.item.DefaultSuperData;
 import com.liangmayong.base.widget.superlistview.item.DefaultSuperItem;
@@ -50,7 +50,7 @@ public class DemoListFrag extends BaseSubListFragment {
 
     private void initSkin() {
         for (int i = 0; i < colors.length; i++) {
-            if (Skin.get().getThemeColor() == colors[i]) {
+            if (SkinManager.get().getThemeColor() == colors[i]) {
                 index = i;
             }
         }
@@ -61,7 +61,7 @@ public class DemoListFrag extends BaseSubListFragment {
         if (index > colors.length - 1) {
             index = 0;
         }
-        Skin.editor().setThemeColor(colors[index], 0xffffffff).commit();
+        SkinManager.editor().setThemeColor(colors[index], 0xffffffff).commit();
     }
 
     private void add_data() {

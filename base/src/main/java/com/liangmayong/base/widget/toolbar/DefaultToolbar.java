@@ -10,11 +10,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
+import com.liangmayong.base.support.skin.handlers.SkinType;
+import com.liangmayong.base.support.skin.interfaces.ISkin;
+import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
 import com.liangmayong.base.widget.iconfont.IconValue;
 import com.liangmayong.base.widget.iconfont.IconView;
-import com.liangmayong.base.widget.skin.OnSkinRefreshListener;
-import com.liangmayong.base.widget.skin.Skin;
-import com.liangmayong.base.widget.skin.SkinRelativeLayout;
+import com.liangmayong.base.widget.skinview.SkinRelativeLayout;
 
 
 /**
@@ -28,10 +29,10 @@ public class DefaultToolbar {
     private ToolbarItem toolbar_right_one, toolbar_right_two, toolbar_right_three, toolbar_right_four;
     private ToolbarItem toolbar_left_one, toolbar_left_two, toolbar_left_three, toolbar_left_four;
     private ProgressBar toolbar_progress;
-    private Skin.SkinType skinType = Skin.SkinType.default_type;
+    private SkinType skinType = SkinType.default_type;
     private OnSkinRefreshListener skinRefreshListener = new OnSkinRefreshListener() {
         @Override
-        public void onSkinRefresh(Skin skin) {
+        public void onSkinRefresh(ISkin skin) {
             if (toolbar_layout != null) {
                 int textColor = skin.getTextColor(skinType);
                 int textPreColor = Color.argb(Color.alpha(textColor), Math.abs(Color.red(textColor) - 0x15), Math.abs(Color.green(textColor) - 0x15), Math.abs(Color.blue(textColor) - 0x15));
@@ -110,7 +111,7 @@ public class DefaultToolbar {
      *
      * @param skinType skinType
      */
-    public void setSkinType(Skin.SkinType skinType) {
+    public void setSkinType(SkinType skinType) {
         if (this.skinType != skinType) {
             this.skinType = skinType;
         }

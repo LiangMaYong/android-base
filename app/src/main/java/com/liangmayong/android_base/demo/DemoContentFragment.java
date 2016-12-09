@@ -9,8 +9,7 @@ import com.liangmayong.base.support.binding.annotations.BindLayout;
 import com.liangmayong.base.support.binding.annotations.BindOnClick;
 import com.liangmayong.base.support.binding.annotations.BindTitle;
 import com.liangmayong.base.support.binding.annotations.BindView;
-import com.liangmayong.base.support.router.Router;
-import com.liangmayong.base.widget.skin.SkinButton;
+import com.liangmayong.base.widget.skinview.SkinButton;
 
 /**
  * Created by LiangMaYong on 2016/10/17.

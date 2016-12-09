@@ -1,4 +1,4 @@
-package com.liangmayong.base.widget.skin;
+package com.liangmayong.base.widget.skinview;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -11,14 +11,18 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import com.liangmayong.base.R;
+import com.liangmayong.base.support.skin.handlers.SkinType;
+import com.liangmayong.base.support.skin.interfaces.ISkin;
+import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
+import com.liangmayong.base.support.skin.SkinManager;
 
 /**
  * Created by LiangMaYong on 2016/9/27.
  */
-public class SkinRelativeLayout extends RelativeLayout implements SkinInterface {
+public class SkinLinearLayout extends LinearLayout implements SkinInterface {
 
     protected int mWidth;
     protected int mHeight;
@@ -37,29 +41,29 @@ public class SkinRelativeLayout extends RelativeLayout implements SkinInterface 
     private boolean mSetSkinColor = false;
     private boolean mBackgroundTransparent = false;
     private boolean mSetSkinTextColor = false;
-    private Skin.SkinType skinType = Skin.SkinType.default_type;
+    private SkinType skinType = SkinType.default_type;
 
 
-    public SkinRelativeLayout(Context context) {
+    public SkinLinearLayout(Context context) {
         this(context, null);
     }
 
 
-    public SkinRelativeLayout(Context context, AttributeSet attrs) {
+    public SkinLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initBG(context, attrs);
     }
 
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public SkinRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SkinLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initBG(context, attrs);
     }
 
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public SkinRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public SkinLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initBG(context, attrs);
     }
@@ -95,15 +99,15 @@ public class SkinRelativeLayout extends RelativeLayout implements SkinInterface 
             mPressedAlpha = typedArray.getInteger(R.styleable.SkinStyleable_pressed_alpha, mPressedAlpha);
             mBackgroundAlpha = typedArray.getInteger(R.styleable.SkinStyleable_background_alpha, mBackgroundAlpha);
             mBackgroundTransparent = typedArray.getBoolean(R.styleable.SkinStyleable_background_transparent, mBackgroundTransparent);
-            mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.SkinStyleable_stroke_width, dip2px(context, 1.4f));
+            mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.SkinStyleable_stroke_width, dip2px(context, 1f));
             int skin = typedArray.getInt(R.styleable.SkinStyleable_skin_type, skinType.value());
-            skinType = Skin.SkinType.valueOf(skin);
+            skinType = SkinType.valueOf(skin);
             if (typedArray.hasValue(R.styleable.SkinStyleable_skin_color)) {
-                mSkinColor = typedArray.getColor(R.styleable.SkinStyleable_skin_color, Skin.get().getColor(skinType));
+                mSkinColor = typedArray.getColor(R.styleable.SkinStyleable_skin_color, SkinManager.get().getColor(skinType));
                 mSetSkinColor = true;
             }
             if (typedArray.hasValue(R.styleable.SkinStyleable_skin_text_color)) {
-                mSkinTextColor = typedArray.getColor(R.styleable.SkinStyleable_skin_text_color, Skin.get().getTextColor(skinType));
+                mSkinTextColor = typedArray.getColor(R.styleable.SkinStyleable_skin_text_color, SkinManager.get().getTextColor(skinType));
                 mSetSkinTextColor = true;
             }
             typedArray.recycle();
@@ -142,7 +146,7 @@ public class SkinRelativeLayout extends RelativeLayout implements SkinInterface 
             color = mPressedColor;
             if (!mSetSkinColor) {
                 this.mSkinColor = mPressedColor;
-                if (skinType == Skin.SkinType.white) {
+                if (skinType == SkinType.white) {
                     this.mSkinTextColor = 0xff333333;
                 } else {
                     this.mSkinTextColor = 0xffffffff;
@@ -160,7 +164,6 @@ public class SkinRelativeLayout extends RelativeLayout implements SkinInterface 
         mBackgroundCoverPaint.setAntiAlias(true);
         mBackgroundCoverPaint.setStyle(Paint.Style.FILL);
         mBackgroundCoverPaint.setAlpha(Color.alpha(mBackgroundCoverColor));
-        mBackgroundCoverPaint.setColor(color);
         mBackgroundCoverPaint.setColor(mBackgroundCoverColor);
 
         this.setWillNotDraw(false);
@@ -173,14 +176,14 @@ public class SkinRelativeLayout extends RelativeLayout implements SkinInterface 
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if (isInEditMode()) return;
-        Skin.registerSkinRefresh(this);
+        SkinManager.registerSkinRefresh(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         if (isInEditMode()) return;
-        Skin.unregisterSkinRefresh(this);
+        SkinManager.unregisterSkinRefresh(this);
     }
 
     @Override
@@ -234,6 +237,7 @@ public class SkinRelativeLayout extends RelativeLayout implements SkinInterface 
             canvas.drawRoundRect(rectF, mRadius, mRadius, paint);
         }
     }
+
 
     protected void eraseOriginalBackgroundColor(int color) {
         if (color != Color.TRANSPARENT) {
@@ -358,7 +362,7 @@ public class SkinRelativeLayout extends RelativeLayout implements SkinInterface 
         if (mSetSkinColor) {
             setUnpressedColor(mSkinColor);
         } else {
-            setUnpressedColor(Skin.get().getColor(skinType));
+            setUnpressedColor(SkinManager.get().getColor(skinType));
         }
     }
 
@@ -380,7 +384,7 @@ public class SkinRelativeLayout extends RelativeLayout implements SkinInterface 
 
 
     @Override
-    public void onSkinRefresh(Skin skin) {
+    public void onSkinRefresh(ISkin skin) {
         if (mSetSkinColor) {
             setUnpressedColor(mSkinColor);
         } else {
@@ -398,8 +402,7 @@ public class SkinRelativeLayout extends RelativeLayout implements SkinInterface 
         this.skinRefreshListener = skinRefreshListener;
     }
 
-
-    public void setSkinType(Skin.SkinType skinType) {
+    public void setSkinType(SkinType skinType) {
         this.skinType = skinType;
         this.mSetSkinColor = false;
         this.mSetSkinTextColor = false;
@@ -414,20 +417,20 @@ public class SkinRelativeLayout extends RelativeLayout implements SkinInterface 
         setShapeType(mShapeType);
     }
 
-    public Skin.SkinType getSkinType() {
+    public SkinType getSkinType() {
         return skinType;
     }
 
     public int getSkinColor() {
         if (!mSetSkinColor) {
-            return Skin.get().getColor(skinType);
+            return SkinManager.get().getColor(skinType);
         }
         return mSkinColor;
     }
 
     public int getSkinTextColor() {
         if (!mSetSkinTextColor) {
-            return Skin.get().getTextColor(skinType);
+            return SkinManager.get().getTextColor(skinType);
         }
         return mSkinTextColor;
     }

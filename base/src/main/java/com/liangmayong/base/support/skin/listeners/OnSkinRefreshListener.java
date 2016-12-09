@@ -1,4 +1,6 @@
-package com.liangmayong.base.widget.skin;
+package com.liangmayong.base.support.skin.listeners;
+
+import com.liangmayong.base.support.skin.interfaces.ISkin;
 
 /**
  * Created by LiangMaYong on 2016/9/11.
@@ -10,5 +12,5 @@ public interface OnSkinRefreshListener {
      *
      * @param skin skin
      */
-    void onSkinRefresh(Skin skin);
+    void onSkinRefresh(ISkin skin);
 }

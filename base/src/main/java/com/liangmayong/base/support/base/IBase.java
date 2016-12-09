@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.liangmayong.base.support.binding.Presenter;
-import com.liangmayong.base.widget.skin.OnSkinRefreshListener;
+import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
 import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
 /**

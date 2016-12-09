@@ -5,7 +5,7 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <com.liangmayong.base.widget.skin.SkinLinearLayout
+    <com.liangmayong.base.widget.skinview.SkinLinearLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:background="#3399ff"
@@ -18,5 +18,5 @@
             android:layout_height="wrap_content"
             android:text="这是尾部"
             android:textColor="#ffffff" />
-    </com.liangmayong.base.widget.skin.SkinLinearLayout>
+    </com.liangmayong.base.widget.skinview.SkinLinearLayout>
 </LinearLayout>
