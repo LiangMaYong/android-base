@@ -38,6 +38,18 @@ public class PermissionUtils {
     }
 
     /**
+     * filePermissions
+     *
+     * @param activity activity
+     * @param id       id
+     * @param listener listener
+     */
+    public static void filePermissions(Activity activity, int id, OnPermissionListener listener) {
+        String[] permissionsNeeded = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+        requestPermissions(activity, id, permissionsNeeded, listener);
+    }
+
+    /**
      * locationPermissions
      *
      * @param activity activity
@@ -51,7 +63,7 @@ public class PermissionUtils {
 
     // request map
     @SuppressLint("UseSparseArrays")
-    private static Map<Integer, PermissionRequest> integerRequestMap = new HashMap<Integer, PermissionRequest>();
+    private static Map<Integer, Request> integerRequestMap = new HashMap<Integer, Request>();
 
     /**
      * OnPermissionListener
@@ -59,9 +71,9 @@ public class PermissionUtils {
      * @author LiangMaYong
      * @version 1.0
      */
-    public static interface OnPermissionListener {
+    public interface OnPermissionListener {
 
-        boolean showDialog(Activity activity, PermissionRequest request);
+        boolean showDialog(Activity activity, Request request);
 
         void gotPermissions();
 
@@ -78,7 +90,7 @@ public class PermissionUtils {
      */
     public static void requestPermissions(final Activity activity, int requestId, String[] permissionsNeeded,
                                           OnPermissionListener permissionListener) {
-        request(activity, new PermissionRequest(activity, requestId, permissionsNeeded, permissionListener));
+        request(activity, new Request(activity, requestId, permissionsNeeded, permissionListener));
     }
 
     /**
@@ -87,7 +99,7 @@ public class PermissionUtils {
      * @param activity activity
      */
     @SuppressLint("NewApi")
-    private static void request(final Activity activity, final PermissionRequest request) {
+    private static void request(final Activity activity, final Request request) {
         if (request == null) {
             return;
         }
@@ -155,7 +167,7 @@ public class PermissionUtils {
      */
     public static void handleResult(int requestCode, String[] permissions, int[] grantResults) {
         if (integerRequestMap.containsKey(requestCode)) {
-            PermissionRequest request = integerRequestMap.get(requestCode);
+            Request request = integerRequestMap.get(requestCode);
             if (request.getPermissionListener() != null) {
                 boolean gotPermissions = true;
                 List<String> rejectPermissions = new ArrayList<String>();
@@ -182,7 +194,7 @@ public class PermissionUtils {
      * @return true or false
      */
     @SuppressLint("NewApi")
-    private static boolean notHasPermissions(Activity activity, PermissionRequest request) {
+    private static boolean notHasPermissions(Activity activity, Request request) {
         if (Build.VERSION.SDK_INT >= 23) {
             boolean hasPermission = false;
             for (int i = 0; i < request.getPermissionsNeeded().length; i++) {
@@ -196,19 +208,19 @@ public class PermissionUtils {
     }
 
     /**
-     * PermissionRequest
+     * Request
      *
      * @author LiangMaYong
      * @version 1.0
      */
-    public static class PermissionRequest {
+    public static class Request {
 
         private Activity activity;
         private int requestId;
         private String[] permissionsNeeded;
         private OnPermissionListener permissionListener;
 
-        private PermissionRequest(Activity activity, int requestId, String[] permissionsNeeded, OnPermissionListener permissionListener) {
+        private Request(Activity activity, int requestId, String[] permissionsNeeded, OnPermissionListener permissionListener) {
             this.activity = activity;
             this.requestId = requestId;
             this.permissionsNeeded = permissionsNeeded;

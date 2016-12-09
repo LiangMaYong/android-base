@@ -3,7 +3,10 @@ package com.liangmayong.base.utils;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
@@ -22,9 +25,8 @@ import java.security.MessageDigest;
  * @version 1.0
  */
 public class PhotoUtils {
-
-    //takePhoto
-    private static volatile PhotoUtils takePhoto;
+    //ourInstance
+    private static volatile PhotoUtils ourInstance;
 
     /**
      * getInstance
@@ -32,12 +34,12 @@ public class PhotoUtils {
      * @return PhotoUtils
      */
     public static PhotoUtils getInstance() {
-        if (takePhoto == null) {
+        if (ourInstance == null) {
             synchronized (PhotoUtils.class) {
-                takePhoto = new PhotoUtils();
+                ourInstance = new PhotoUtils();
             }
         }
-        return takePhoto;
+        return ourInstance;
     }
 
     /**
@@ -46,7 +48,8 @@ public class PhotoUtils {
     private PhotoUtils() {
     }
 
-    private static String tempDir = "/takephoto/take/";
+    //tempDir
+    private static String tempDir = "android_base/take/";
 
     /**
      * init
@@ -63,8 +66,12 @@ public class PhotoUtils {
      * @param activity activity
      * @param id       id
      */
-    public void startTake(final Activity activity, final int id) {
-        activity.startActivityForResult(getTakeIntent(id + 0xAA), id + 0xAA);
+    public void startTake(Activity activity, int id, boolean crop) {
+        if (crop) {
+            activity.startActivityForResult(getTakeIntent(id + 0xAA), id + 0xAA);
+        } else {
+            activity.startActivityForResult(getTakeIntent(id), id);
+        }
     }
 
     /**
@@ -73,8 +80,16 @@ public class PhotoUtils {
      * @param activity activity
      * @param id       id
      */
-    public void startSelect(final Activity activity, final int id) {
-        activity.startActivityForResult(getSelectIntent(), id + 0xFF);
+    public void startSelect(Activity activity, int id, boolean crop) {
+        if (crop) {
+            activity.startActivityForResult(getSelectIntent(id + 0xFF), id + 0xFF);
+        } else {
+            activity.startActivityForResult(getSelectIntent(id), id);
+        }
+    }
+
+    public interface OnPhotoResultListener {
+        void onResult(Result result);
     }
 
     /**
@@ -87,10 +102,10 @@ public class PhotoUtils {
      * @param requestCode requestCode
      * @param resultCode  resultCode
      * @param data        data
-     * @return bitmap
+     * @param listener    listener
      */
-    public Bitmap handleResult(final int id, int width, int height, Activity activity, int requestCode, int resultCode,
-                               Intent data) {
+    public void handleResult(final int id, int width, int height, Activity activity, int requestCode, int resultCode,
+                             Intent data, OnPhotoResultListener listener) {
         if (Activity.RESULT_OK == resultCode) {
             if (requestCode == id + 0xAA) {
                 activity.startActivityForResult(getCropIntent(getUri(id + 0xAA), id, width, height), id);
@@ -102,24 +117,89 @@ public class PhotoUtils {
                 if (file.exists()) {
                     file.delete();
                 }
-                return getThumbnail(id, width, height);
+                if (listener != null) {
+                    listener.onResult(new Result(activity, id, width, height, data.getData()));
+                }
             }
         }
-        return null;
+    }
+
+    /**
+     * Result
+     */
+    public class Result {
+        private int requestId = 0;
+        private int width = 0;
+        private int height = 0;
+        private Uri uri = null;
+        private Context context;
+
+        public Result(Context context, int requestId, int width, int height, Uri uri) {
+            this.requestId = requestId;
+            this.width = width;
+            this.height = height;
+            this.uri = uri;
+            this.context = context;
+        }
+
+        public Bitmap getThumbnail() {
+            return PhotoUtils.this.getThumbnail(getPath(), width, height);
+        }
+
+        /**
+         * getPath
+         *
+         * @return uri
+         */
+        public String getPath() {
+            if (uri != null) {
+                return getRealFilePath(uri);
+            }
+            return PhotoUtils.this.getPath(requestId);
+        }
+
+        /**
+         * Try to return the absolute file path from the given Uri
+         *
+         * @param uri uri
+         * @return the file path or null
+         */
+        private String getRealFilePath(final Uri uri) {
+            if (null == uri) return null;
+            final String scheme = uri.getScheme();
+            String data = null;
+            if (scheme == null)
+                data = uri.getPath();
+            else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+                data = uri.getPath();
+            } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+                Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+                if (null != cursor) {
+                    if (cursor.moveToFirst()) {
+                        int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                        if (index > -1) {
+                            data = cursor.getString(index);
+                        }
+                    }
+                    cursor.close();
+                }
+            }
+            return data;
+        }
     }
 
 
     /**
-     * clearTemp
+     * clearCache
      */
-    public void clearTemp() {
+    public void clearCache() {
         String dirName = tempDir;
-        String fileDir = Environment.getExternalStorageDirectory().getPath() + "/" + dirName;
+        String fileDir = getRootPath() + "/" + dirName;
         if (!createDir(fileDir)) {
             dirName = "";
-            fileDir = Environment.getExternalStorageDirectory().getPath() + "/" + dirName;
+            fileDir = getRootPath() + "/" + dirName;
         }
-        File file = new File(fileDir);
+        File file = new File(constrictFolder(fileDir, "/"));
         if (file.exists()) {
             file.delete();
         }
@@ -133,25 +213,33 @@ public class PhotoUtils {
      */
     public String getPath(int id) {
         String dirName = tempDir;
-        String fileDir = Environment.getExternalStorageDirectory().getPath() + "/" + dirName;
+        String fileDir = getRootPath() + "/" + dirName;
         if (!createDir(fileDir)) {
             dirName = "";
-            fileDir = Environment.getExternalStorageDirectory().getPath() + "/" + dirName;
+            fileDir = getRootPath() + "/" + dirName;
         }
-        return fileDir + "/" + "temp_photoselector_" + encrypt(id + "");
+        return constrictFolder(fileDir + "/" + "temp_" + encrypt(id + ""), "/");
+    }
+
+    /**
+     * getRootPath
+     *
+     * @return root path
+     */
+    private String getRootPath() {
+        return Environment.getExternalStorageDirectory().getPath();
     }
 
     /**
      * getThumbnail
      *
-     * @param id     id
-     * @param width  width
-     * @param height height
+     * @param imagePath imagePath
+     * @param width     width
+     * @param height    height
      * @return Bitmap
      */
     @TargetApi(Build.VERSION_CODES.FROYO)
-    public Bitmap getThumbnail(int id, int width, int height) {
-        String imagePath = getPath(id);
+    public Bitmap getThumbnail(String imagePath, int width, int height) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
@@ -184,8 +272,9 @@ public class PhotoUtils {
      *
      * @return Intent
      */
-    private Intent getSelectIntent() {
+    private Intent getSelectIntent(int id) {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(id));
         return intent;
     }
 
@@ -233,7 +322,7 @@ public class PhotoUtils {
      * @return Uri
      */
     private Uri getUri(int id) {
-        return Uri.parse("file://" + "/" + getPath(id));
+        return Uri.parse(constrictFolder("file://" + "/" + getPath(id), "/"));
     }
 
     /**
@@ -278,4 +367,25 @@ public class PhotoUtils {
         }
     }
 
+    /**
+     * constrictFolder
+     *
+     * @param path      path
+     * @param separator separator
+     * @return path
+     */
+    private String constrictFolder(String path, String separator) {
+        path = path.replaceAll("://", "#").replaceAll("\\\\", "/");
+        String last = "";
+        while (!last.equals(path)) {
+            last = path;
+            path = last.replaceAll("//[^/]+/..//", "/");
+        }
+        last = "";
+        while (!last.equals(path)) {
+            last = path;
+            path = last.replaceAll("/([./]/)+/", "/");
+        }
+        return path.replaceAll("#", "://").replaceAll(":///", "://").replaceAll("/", separator);
+    }
 }
