@@ -25,7 +25,7 @@ import java.security.MessageDigest;
  * @author LiangMaYong
  * @version 1.0
  */
-public final class PhotoUtils {
+public class PhotoUtils {
     //ourInstance
     private static volatile PhotoUtils ourInstance;
 
@@ -50,7 +50,7 @@ public final class PhotoUtils {
     }
 
     //tempDir
-    private static String tempDir = "android_base/take";
+    private static String tempDir = "android_base/photo_take";
 
     /**
      * init
@@ -220,6 +220,18 @@ public final class PhotoUtils {
         }
 
         /**
+         * getUri
+         *
+         * @return uri
+         */
+        public Uri getUri() {
+            if (uri != null) {
+                return uri;
+            }
+            return PhotoUtils.this.getUri(requestId);
+        }
+
+        /**
          * Try to return the absolute file path from the given Uri
          *
          * @param uri uri
@@ -383,7 +395,7 @@ public final class PhotoUtils {
      * @return Uri
      */
     private Uri getUri(int id) {
-        return Uri.parse(constrictFolder("file://" + "/" + getPath(id), "/"));
+        return Uri.parse("file://" + constrictFolder("/" + getPath(id), "/"));
     }
 
     /**
@@ -440,11 +452,17 @@ public final class PhotoUtils {
         String last = "";
         while (!last.equals(path)) {
             last = path;
+            path = last.replaceAll("//[^/]+/..//", "/");
+        }
+        last = "";
+        while (!last.equals(path)) {
+            last = path;
             path = last.replaceAll("/([./]/)+/", "/");
         }
         while (path.contains("//")) {
             path = path.replaceAll("//", "/");
         }
-        return path.replaceAll("#", "://").replaceAll(":///", "://").replaceAll("/", separator);
+        path = path.replaceAll("#", "://").replaceAll(":///", "://").replaceAll("/", separator);
+        return path;
     }
 }
