@@ -147,7 +147,7 @@ public class PhotoUtils {
                     file.delete();
                 }
                 if (listener != null) {
-                    listener.onResult(new Result(fragment.getActivity(), id, width, height, data.getData()));
+                    listener.onResult(new Result(fragment.getActivity(), id, width, height, data != null ? data.getData() : null));
                 }
             }
         }
@@ -179,7 +179,7 @@ public class PhotoUtils {
                     file.delete();
                 }
                 if (listener != null) {
-                    listener.onResult(new Result(activity, id, width, height, data.getData()));
+                    listener.onResult(new Result(activity, id, width, height, data != null ? data.getData() : null));
                 }
             }
         }
