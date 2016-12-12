@@ -20,7 +20,7 @@ import java.io.FileNotFoundException;
  * @author LiangMaYong
  * @version 1.0
  */
-public class ApkUtils {
+public final class ApkUtils {
 
     /**
      * According to the package name for the application name

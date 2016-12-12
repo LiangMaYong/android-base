@@ -8,7 +8,7 @@ import android.content.Context;
  * @author LiangMaYong
  * @version 1.0
  */
-public class DimenUtils {
+public final class DimenUtils {
 
 	private DimenUtils() {
 	}

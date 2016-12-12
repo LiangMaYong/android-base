@@ -21,7 +21,7 @@ import java.util.Map;
  * @version 1.0
  */
 @SuppressLint("DefaultLocale")
-public class ReflectUtils {
+public final class ReflectUtils {
 
     /**
      * @param name name

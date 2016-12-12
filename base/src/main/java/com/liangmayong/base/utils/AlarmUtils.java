@@ -10,7 +10,7 @@ import android.content.IntentFilter;
 /**
  * Created by liangmayong on 2016/11/15.
  */
-public class AlarmUtils {
+public final class AlarmUtils {
 
     private static AlarmReceiver alarmReceiver;
 

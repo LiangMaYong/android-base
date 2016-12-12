@@ -9,7 +9,7 @@ import java.util.HashMap;
  * @author LiangMaYong
  * @version 1.0
  */
-public class GeoUtils {
+public final class GeoUtils {
 	private static double DEF_PI180 = 0.01745329252;
 	private static double DEF_R = 6370693.5;
 	private static double DEF_PI = 3.14159265359;

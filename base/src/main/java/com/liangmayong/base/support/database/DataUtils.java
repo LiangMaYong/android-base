@@ -33,7 +33,7 @@ public class DataUtils {
      *
      * @return application
      */
-    public static Application getContext() {
+    public static Application getApplication() {
         if (application == null || application.get() == null) {
             synchronized (DataUtils.class) {
                 if (application == null) {

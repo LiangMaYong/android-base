@@ -10,7 +10,7 @@ import android.os.Build;
 /**
  * Created by LiangMaYong on 2016/11/9.
  */
-public class ClipboardUtils {
+public final class ClipboardUtils {
 
     private ClipboardUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");

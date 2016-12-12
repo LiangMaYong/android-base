@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  * @author LiangMaYong
  * @version 1.0
  */
-public class StringUtils {
+public final class StringUtils {
 
     /**
      * null to ""

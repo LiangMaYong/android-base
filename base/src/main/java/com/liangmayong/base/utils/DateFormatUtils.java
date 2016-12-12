@@ -6,27 +6,29 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * DateUtils
+ * DateFormatUtils
  *
  * @author LiangMaYong
  * @version 1.0
  */
 @SuppressLint("SimpleDateFormat")
-public class DateUtils {
+public final class DateFormatUtils {
+
+    private DateFormatUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     private static final long ONE_MINUTE = 60000L;
     private static final long ONE_HOUR = 3600000L;
     private static final long ONE_DAY = 86400000L;
     private static final long ONE_WEEK = 604800000L;
 
-    private static final String ONE_SECOND_AGO = " second ago";
+    private static final String ONE_JUST_NOW = "just now";
     private static final String ONE_MINUTE_AGO = " minute ago";
     private static final String ONE_HOUR_AGO = " hour ago";
     private static final String ONE_DAY_AGO = " day ago";
     private static final String ONE_MONTH_AGO = " month ago";
     private static final String ONE_YEAR_AGO = " year ago";
-
-    public static SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     /**
      * format
@@ -36,7 +38,6 @@ public class DateUtils {
      * @return date
      */
     public static String format(long date, String format) {
-        //"yyyy-MM-dd"
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         return sdf.format(new Date(date));
     }
@@ -49,19 +50,18 @@ public class DateUtils {
      * @return date
      */
     public static String format(long date, SimpleDateFormat format) {
-        //"yyyy-MM-dd"
         return format.format(new Date(date));
     }
 
     /**
-     * format
+     * formatYearMonthDayTime
      *
      * @param date date
      * @return date
      */
-    public static String format(long date) {
-        //"yyyy-MM-dd"
-        return FORMAT.format(new Date(date));
+    public static String formatYearMonthDayTime(long date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return sdf.format(date);
     }
 
     /**
@@ -82,7 +82,7 @@ public class DateUtils {
      * @return int[]
      */
     public static int[] formatHousAndMin(long date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         String datatemp = sdf.format(date);
         String datestemp[] = datatemp.split(":");
         return new int[]{Integer.valueOf(datestemp[0]), Integer.valueOf(datestemp[1])};
@@ -95,7 +95,7 @@ public class DateUtils {
      * @return date
      */
     public static String relativeDate(long date) {
-        return relativeDate(date, ONE_SECOND_AGO, ONE_MINUTE_AGO, ONE_HOUR_AGO, ONE_DAY_AGO, ONE_MONTH_AGO, ONE_YEAR_AGO);
+        return relativeDate(date, ONE_JUST_NOW, ONE_MINUTE_AGO, ONE_HOUR_AGO, ONE_DAY_AGO, ONE_MONTH_AGO, ONE_YEAR_AGO);
     }
 
     /**
@@ -113,10 +113,9 @@ public class DateUtils {
     public static String relativeDate(long date, String secondAgo, String minuteAgo, String hourAgo, String dayAgo, String monthAgo, String yearAgo) {
         long delta = new Date().getTime() - date;
         if (delta < 1L * ONE_MINUTE) {
-            long seconds = toSeconds(delta);
-            return (seconds <= 0 ? 1 : seconds) + secondAgo;
+            return secondAgo;
         }
-        if (delta < 45L * ONE_MINUTE) {
+        if (delta < 60L * ONE_MINUTE) {
             long minutes = toMinutes(delta);
             return (minutes <= 0 ? 1 : minutes) + minuteAgo;
         }

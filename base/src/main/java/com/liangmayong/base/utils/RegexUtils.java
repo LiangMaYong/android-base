@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
  * Created by LiangMaYong on 2016/11/8.
  */
 
-public class RegexUtils {
+public final class RegexUtils {
 
     /**
      * REGEX_MOBILE_SIMPLE

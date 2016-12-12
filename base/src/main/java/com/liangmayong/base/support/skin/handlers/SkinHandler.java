@@ -266,21 +266,21 @@ public class SkinHandler implements ISkinHandler {
 
     @Override
     public void setColor(String key, int value) {
-        DataPreferences.getPreferences("skin_" + getThemeName()).setInt(key, value);
+        DataPreferences.getPreferences("skin_" + getThemeName()).setReload(true).setInt(key, value);
     }
 
     @Override
     public void setExtra(String key, String value) {
-        DataPreferences.getPreferences("skin_" + getThemeName()).setString(key, value);
+        DataPreferences.getPreferences("skin_" + getThemeName()).setReload(true).setString(key, value);
     }
 
     @Override
     public int getColor(String key, int defaultValue) {
-        return DataPreferences.getPreferences("skin_" + getThemeName()).getInt(key, defaultValue);
+        return DataPreferences.getPreferences("skin_" + getThemeName()).setReload(true).getInt(key, defaultValue);
     }
 
     @Override
     public String getExtra(String key) {
-        return DataPreferences.getPreferences("skin_" + getThemeName()).getString(key, "");
+        return DataPreferences.getPreferences("skin_" + getThemeName()).setReload(true).getString(key, "");
     }
 }

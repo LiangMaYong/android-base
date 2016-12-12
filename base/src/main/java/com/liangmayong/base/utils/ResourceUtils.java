@@ -11,7 +11,7 @@ import android.view.animation.AnimationUtils;
  * @author LiangMaYong
  * @version 1.0
  */
-public class ResourceUtils {
+public final class ResourceUtils {
 	private ResourceUtils(Context context) {
 	}
 

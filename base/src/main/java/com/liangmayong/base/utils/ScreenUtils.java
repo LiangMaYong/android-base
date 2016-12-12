@@ -14,7 +14,7 @@ import android.view.WindowManager;
  * @author LiangMaYong
  * @version 1.0
  */
-public class ScreenUtils {
+public final class ScreenUtils {
 
 	private ScreenUtils() {
 	}

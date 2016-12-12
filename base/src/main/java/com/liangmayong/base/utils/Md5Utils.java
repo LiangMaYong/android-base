@@ -11,7 +11,7 @@ import java.security.MessageDigest;
  * @version 1.0
  */
 @SuppressLint("DefaultLocale")
-public class Md5Utils {
+public final class Md5Utils {
 
     /**
      * MD5 encrypt

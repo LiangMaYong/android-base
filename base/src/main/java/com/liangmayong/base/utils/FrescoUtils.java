@@ -20,7 +20,7 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 /**
  * Created by LiangMaYong on 2016/10/26.
  */
-public class FrescoUtils {
+public final class FrescoUtils {
 
     private static boolean isInit = false;
 

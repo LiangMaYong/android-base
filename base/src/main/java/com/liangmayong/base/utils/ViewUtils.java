@@ -12,7 +12,7 @@ import android.view.ViewGroup;
  * @author LiangMaYong
  * @version 1.0
  */
-public class ViewUtils {
+public final class ViewUtils {
 
     /**
      * view

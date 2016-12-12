@@ -14,7 +14,7 @@ import android.view.WindowManager;
  * @author LiangMaYong
  * @version 1.0
  */
-public class GestureUtils {
+public final class GestureUtils {
 
     private GestureUtils() {
     }

@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
  * @author LiangMaYong
  * @version 1.0
  */
-public class LogUtils {
+public final class LogUtils {
 
 
     private static volatile LogUtils default_log = null;

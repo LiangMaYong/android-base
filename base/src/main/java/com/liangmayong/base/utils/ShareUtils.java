@@ -7,7 +7,7 @@ import android.net.Uri;
 /**
  * ShareUtils
  */
-public class ShareUtils {
+public final class ShareUtils {
 
     private ShareUtils() {
     }

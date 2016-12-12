@@ -23,7 +23,7 @@ import java.util.concurrent.Future;
  * Created by LiangMaYong on 2016/11/8.
  */
 
-public class NetworkUtils {
+public final class NetworkUtils {
     private NetworkUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }

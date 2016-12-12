@@ -25,7 +25,7 @@ import java.security.MessageDigest;
  * @author LiangMaYong
  * @version 1.0
  */
-public class PhotoUtils {
+public final class PhotoUtils {
     //ourInstance
     private static volatile PhotoUtils ourInstance;
 

@@ -11,7 +11,7 @@ import com.liangmayong.base.support.base.IBase;
 /**
  * Created by LiangMaYong on 2016/9/18.
  */
-public class BaseUtils {
+public final class BaseUtils {
 
     private BaseUtils() {
     }

@@ -16,7 +16,7 @@ import java.io.ByteArrayOutputStream;
  * @author LiangMaYong
  * @version 1.0
  */
-public class BitmapUtils {
+public final class BitmapUtils {
 
 	private BitmapUtils() {
 	}

@@ -1,12 +1,11 @@
 package com.liangmayong.base.support.database;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.lang.ref.WeakReference;
-import java.lang.reflect.Method;
+import com.liangmayong.base.utils.DES2Utils;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,11 +25,84 @@ public class DataPreferences {
     //DEFAULT_PREFERENCES_TABLE_NAME
     private static final String DEFAULT_PREFERENCES_TABLE_NAME = DataConstant.DEFAULT_PREFERENCES_TABLE_NAME;
     //mPreferencesTable
-    private PreferencesTable mPreferencesTable;
+    private final PreferencesTable mPreferencesTable;
+    //encryptListener
+    private OnDataEncryptListener encryptListener = null;
+    //isReload
+    private boolean isReload = false;
+    //values
+    private final Map<String, String> values = new HashMap<String, String>();
+    //default_encryptListener
+    private final OnDataEncryptListener default_encryptListener = new OnDataEncryptListener() {
+        @Override
+        public String encrypt(String key, String value) {
+            return DES2Utils.encrypt(value.getBytes(), key, true);
+        }
+
+        @Override
+        public String decrypt(String key, String value) {
+            return new String(DES2Utils.decrypt(value, key, true));
+        }
+    };
+
+    /**
+     * useDefaultEncrypt
+     *
+     * @return preferences
+     */
+    public DataPreferences useDefaultEncrypt() {
+        setOnDataEncryptListener(default_encryptListener);
+        return this;
+    }
+
+    /**
+     * setOnDataEncryptListener
+     *
+     * @param encryptListener encryptListener
+     * @return preferences
+     */
+    public DataPreferences setOnDataEncryptListener(OnDataEncryptListener encryptListener) {
+        this.encryptListener = encryptListener;
+        return this;
+    }
+
+    /**
+     * setReload
+     *
+     * @param reload reload
+     */
+    public DataPreferences setReload(boolean reload) {
+        isReload = reload;
+        return this;
+    }
+
+    /**
+     * OnDataEncryptListener
+     */
+    public interface OnDataEncryptListener {
+        /**
+         * encrypt
+         *
+         * @param key   key
+         * @param value value
+         * @return en
+         */
+        String encrypt(String key, String value);
+
+        /**
+         * decrypt
+         *
+         * @param key   key
+         * @param value value
+         * @return de
+         */
+        String decrypt(String key, String value);
+    }
 
     //DataPreferences
     private DataPreferences(String tablename) {
-        mPreferencesTable = new PreferencesTable(getApplication(), tablename);
+        mPreferencesTable = new PreferencesTable(DataUtils.getApplication(), tablename);
+        useDefaultEncrypt();
     }
 
     /**
@@ -45,11 +117,11 @@ public class DataPreferences {
         }
         tablename = "pref_" + tablename;
         if (DATA_PREFERENCES_HASH_MAP.containsKey(tablename)) {
-            return DATA_PREFERENCES_HASH_MAP.get(tablename);
+            return DATA_PREFERENCES_HASH_MAP.get(tablename).setReload(false);
         } else {
             DataPreferences preferences = new DataPreferences(tablename);
             DATA_PREFERENCES_HASH_MAP.put(tablename, preferences);
-            return preferences;
+            return preferences.setReload(false);
         }
     }
 
@@ -93,6 +165,16 @@ public class DataPreferences {
      * @return IBDataConfig
      */
     public DataPreferences setString(String skey, String svalue) {
+        if (svalue != null && !"".equals(svalue)) {
+            if (encryptListener != null) {
+                svalue = encryptListener.encrypt(skey, svalue);
+            }
+        }
+        if (svalue != null) {
+            values.put(skey, svalue);
+        } else {
+            values.remove(skey);
+        }
         DataModel model = mPreferencesTable.getModel("skey = '" + skey + "'");
         if (model != null) {
             if (svalue == null) {
@@ -117,10 +199,19 @@ public class DataPreferences {
      * @return svalue
      */
     public String getString(String skey, String defsvalue) {
-        DataModel model = mPreferencesTable.getModel("skey = '" + skey + "'");
         String svalue = defsvalue;
-        if (model != null) {
-            svalue = model.getString("svalue");
+        if (isReload || (!isReload && !values.containsKey(skey))) {
+            DataModel model = mPreferencesTable.getModel("skey = '" + skey + "'");
+            if (model != null) {
+                svalue = model.getString("svalue");
+            }
+        } else {
+            svalue = values.get(skey);
+        }
+        if (svalue != null && !"".equals(svalue)) {
+            if (encryptListener != null) {
+                svalue = encryptListener.decrypt(skey, svalue);
+            }
         }
         return svalue;
     }
@@ -307,36 +398,5 @@ public class DataPreferences {
         protected void generateOnUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         }
-    }
-
-
-    // application
-    private static WeakReference<Application> application;
-
-    /**
-     * getApplication
-     *
-     * @return application
-     */
-    private static Application getApplication() {
-        if (application == null || application.get() == null) {
-            synchronized (DataPreferences.class) {
-                try {
-                    Class<?> clazz = Class.forName("android.app.ActivityThread");
-                    Method currentActivityThread = clazz.getDeclaredMethod("currentActivityThread");
-                    if (currentActivityThread != null) {
-                        Object object = currentActivityThread.invoke(null);
-                        if (object != null) {
-                            Method getApplication = object.getClass().getDeclaredMethod("getApplication");
-                            if (getApplication != null) {
-                                application = new WeakReference<Application>((Application) getApplication.invoke(object));
-                            }
-                        }
-                    }
-                } catch (Exception e) {
-                }
-            }
-        }
-        return application.get();
     }
 }

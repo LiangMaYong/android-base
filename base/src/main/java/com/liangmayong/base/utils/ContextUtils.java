@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 
 import com.liangmayong.base.support.lifecycle.ActivityLifeCycle;
-import com.liangmayong.base.support.database.DataUtils;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
@@ -16,17 +15,18 @@ import java.lang.reflect.Method;
 /**
  * Created by LiangMaYong on 2016/9/9.
  */
-public class ContextUtils {
+public final class ContextUtils {
 
 
     private ContextUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
     //superContext
     private static volatile SuperContext superContext = null;
 
     /**
-     * getContext
+     * getApplication
      *
      * @return context
      */
@@ -99,7 +99,7 @@ public class ContextUtils {
      */
     public static Application getApplication() {
         if (application == null || application.get() == null) {
-            synchronized (DataUtils.class) {
+            synchronized (ContextUtils.class) {
                 if (application == null) {
                     try {
                         if (activityThreadClass == null) {

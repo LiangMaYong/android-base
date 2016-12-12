@@ -323,7 +323,7 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements IBas
     }
 
     /**
-     * getContext
+     * getApplication
      *
      * @return context
      */

@@ -17,29 +17,39 @@ import java.lang.reflect.Method;
  * @version 1.0
  */
 @SuppressLint("InflateParams")
-public class ToastUtils {
+public final class ToastUtils {
+
 
     // application
     private static WeakReference<Application> application = null;
+    private static Class<?> activityThreadClass = null;
+    private static Method currentActivityThreadMethod = null;
+    private static Method getApplicationMethod = null;
 
     /**
      * getApplication
      *
      * @return application
      */
-    private static Application getApplication() {
+    public static Application getApplication() {
         if (application == null || application.get() == null) {
-            synchronized (ContextUtils.class) {
+            synchronized (ToastUtils.class) {
                 if (application == null) {
                     try {
-                        Class<?> clazz = Class.forName("android.app.ActivityThread");
-                        Method currentActivityThread = clazz.getDeclaredMethod("currentActivityThread");
-                        if (currentActivityThread != null) {
-                            Object object = currentActivityThread.invoke(null);
+                        if (activityThreadClass == null) {
+                            activityThreadClass = Class.forName("android.app.ActivityThread");
+                        }
+                        if (currentActivityThreadMethod == null) {
+                            currentActivityThreadMethod = activityThreadClass.getDeclaredMethod("currentActivityThread");
+                        }
+                        if (getApplicationMethod == null) {
+                            getApplicationMethod = activityThreadClass.getDeclaredMethod("getApplication");
+                        }
+                        if (currentActivityThreadMethod != null && getApplicationMethod != null) {
+                            Object object = currentActivityThreadMethod.invoke(null);
                             if (object != null) {
-                                Method getApplication = object.getClass().getDeclaredMethod("getApplication");
-                                if (getApplication != null) {
-                                    application = new WeakReference<Application>((Application) getApplication.invoke(object));
+                                if (getApplicationMethod != null) {
+                                    application = new WeakReference<Application>((Application) getApplicationMethod.invoke(object));
                                 }
                             }
                         }

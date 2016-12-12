@@ -19,7 +19,7 @@ import java.util.Map;
  * @version 1.0
  */
 @TargetApi(Build.VERSION_CODES.DONUT)
-public class PermissionUtils {
+public final class PermissionUtils {
 
     private PermissionUtils() {
     }
