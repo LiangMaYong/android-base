@@ -78,7 +78,7 @@ public class DrawerActivity extends BaseDrawerActivity {
             @Override
             public void onResult(PhotoUtils.Result result) {
                 if (viewHolder != null) {
-                    viewHolder.img.setImageURI(result.getUri());
+                    viewHolder.img.setImageBitmap(result.getThumbnail());
                 }
             }
         });
