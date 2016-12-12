@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.liangmayong.base.utils.DES2Utils;
+import com.liangmayong.base.utils.DESUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,12 +36,12 @@ public class DataPreferences {
     private final OnDataEncryptListener default_encryptListener = new OnDataEncryptListener() {
         @Override
         public String encrypt(String key, String value) {
-            return DES2Utils.encrypt(value.getBytes(), key, true);
+            return DESUtils.encrypt(value.getBytes(), key, true);
         }
 
         @Override
         public String decrypt(String key, String value) {
-            return new String(DES2Utils.decrypt(value, key, true));
+            return new String(DESUtils.decrypt(value, key, true));
         }
     };
 

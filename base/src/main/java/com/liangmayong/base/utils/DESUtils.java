@@ -10,22 +10,22 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * DES2Utils
+ * DESUtils
  *
  * @author LiangMaYong
  * @version 1.0
  */
-public final class DES2Utils {
+public final class DESUtils {
 
     private String iv = "national";
-    private static DES2Utils des = null;
+    private static DESUtils des = null;
 
-    private DES2Utils() {
+    private DESUtils() {
     }
 
-    private static DES2Utils getDes() {
+    private static DESUtils getDes() {
         if (des == null) {
-            des = new DES2Utils();
+            des = new DESUtils();
         }
         return des;
     }
