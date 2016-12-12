@@ -31,7 +31,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     }
 
     @Override
-    protected final void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_default_activity_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.base_drawer_layout);
@@ -62,15 +62,6 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
                 }
             });
         }
-        onCreateActivity(savedInstanceState);
-    }
-
-    /**
-     * onCreateActivity
-     *
-     * @param savedInstanceState savedInstanceState
-     */
-    protected void onCreateActivity(@Nullable Bundle savedInstanceState) {
     }
 
     /**

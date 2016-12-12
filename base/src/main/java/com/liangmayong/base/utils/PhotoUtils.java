@@ -97,9 +97,9 @@ public class PhotoUtils {
      */
     public void startSelect(Activity activity, int id, boolean crop) {
         if (crop) {
-            activity.startActivityForResult(getSelectIntent(id + 0xFF), id + 0xFF);
+            activity.startActivityForResult(getSelectIntent(), id + 0xFF);
         } else {
-            activity.startActivityForResult(getSelectIntent(id), id);
+            activity.startActivityForResult(getSelectIntent(), id);
         }
     }
 
@@ -111,9 +111,9 @@ public class PhotoUtils {
      */
     public void startSelect(Fragment fragment, int id, boolean crop) {
         if (crop) {
-            fragment.startActivityForResult(getSelectIntent(id + 0xFF), id + 0xFF);
+            fragment.startActivityForResult(getSelectIntent(), id + 0xFF);
         } else {
-            fragment.startActivityForResult(getSelectIntent(id), id);
+            fragment.startActivityForResult(getSelectIntent(), id);
         }
     }
 
@@ -345,9 +345,8 @@ public class PhotoUtils {
      *
      * @return Intent
      */
-    private Intent getSelectIntent(int id) {
+    private Intent getSelectIntent() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(id));
         return intent;
     }
 
@@ -377,12 +376,14 @@ public class PhotoUtils {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", width);
-        intent.putExtra("aspectY", height);
-        intent.putExtra("outputX", width);
-        intent.putExtra("outputY", height);
-        intent.putExtra("scale", true);
-        intent.putExtra("scaleUpIfNeeded", true);
+        if (width != 0 && height != 0) {
+            intent.putExtra("aspectX", width);
+            intent.putExtra("aspectY", height);
+            intent.putExtra("outputX", width);
+            intent.putExtra("outputY", height);
+            intent.putExtra("scale", true);
+            intent.putExtra("scaleUpIfNeeded", true);
+        }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, getUri(id));
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         return intent;

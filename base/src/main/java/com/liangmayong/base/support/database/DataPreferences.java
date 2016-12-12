@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.liangmayong.base.utils.DESUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,12 +37,21 @@ public class DataPreferences {
     private final OnDataEncryptListener default_encryptListener = new OnDataEncryptListener() {
         @Override
         public String encrypt(String key, String value) {
-            return DESUtils.encrypt(value.getBytes(), key, true);
+            try {
+                return DESUtils.encrypt(value.getBytes("utf-8"), key, true);
+            } catch (UnsupportedEncodingException e) {
+                return value;
+            }
         }
 
         @Override
         public String decrypt(String key, String value) {
-            return new String(DESUtils.decrypt(value, key, true));
+            try {
+                byte[] bytes = DESUtils.decrypt(value, key, true);
+                return new String(bytes, "utf-8");
+            } catch (UnsupportedEncodingException e) {
+                return value;
+            }
         }
     };
 
@@ -199,8 +209,8 @@ public class DataPreferences {
      * @return svalue
      */
     public String getString(String skey, String defsvalue) {
-        String svalue = defsvalue;
-        if (isReload || (!isReload && !values.containsKey(skey))) {
+        String svalue = null;
+        if (isReload || !values.containsKey(skey)) {
             DataModel model = mPreferencesTable.getModel("skey = '" + skey + "'");
             if (model != null) {
                 svalue = model.getString("svalue");
@@ -212,6 +222,9 @@ public class DataPreferences {
             if (encryptListener != null) {
                 svalue = encryptListener.decrypt(skey, svalue);
             }
+        }
+        if (svalue == null || "".equals(svalue)) {
+            return defsvalue;
         }
         return svalue;
     }

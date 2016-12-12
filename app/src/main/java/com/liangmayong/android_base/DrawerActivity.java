@@ -2,8 +2,12 @@ package com.liangmayong.android_base;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.liangmayong.android_base.demo.DemoContentFragment;
 import com.liangmayong.base.BaseDrawerActivity;
@@ -23,6 +27,8 @@ public class DrawerActivity extends BaseDrawerActivity {
         return R.layout.navi_head;
     }
 
+    protected ViewHolder viewHolder;
+
     @Override
     protected int getDrawerMenuId() {
         return R.menu.menu_drawer;
@@ -33,35 +39,47 @@ public class DrawerActivity extends BaseDrawerActivity {
         return new DemoContentFragment();
     }
 
+
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        showToast(item.getTitle() + "");
-        PermissionUtils.filePermissions(this, 1002, new PermissionUtils.OnPermissionListener() {
-
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewHolder = new ViewHolder(getNavigationView().getHeaderView(0));
+        viewHolder.img.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean showDialog(Activity activity, PermissionUtils.Request request) {
-                return false;
-            }
+            public void onClick(View v) {
+                PermissionUtils.cameraPermissions(DrawerActivity.this, 1002, new PermissionUtils.OnPermissionListener() {
 
-            @Override
-            public void gotPermissions() {
-                PhotoUtils.getInstance().startSelect(DrawerActivity.this, 1001, true);
-            }
+                    @Override
+                    public boolean showDialog(Activity activity, PermissionUtils.Request request) {
+                        return false;
+                    }
 
-            @Override
-            public void rejectPermissions(List<String> rejects) {
+                    @Override
+                    public void gotPermissions() {
+                        PhotoUtils.getInstance().startTake(DrawerActivity.this, 1001, true);
+                    }
+
+                    @Override
+                    public void rejectPermissions(List<String> rejects) {
+                    }
+                });
             }
         });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;
     }
 
     @Override
     public void onActivityResult(final int requestCode, int resultCode, Intent data) {
-        showToast("onActivityResult");
-        PhotoUtils.getInstance().handleResult(1001, 0, 0, this, requestCode, resultCode, data, new PhotoUtils.OnPhotoResultListener() {
+        PhotoUtils.getInstance().handleResult(1001, 160, 160, this, requestCode, resultCode, data, new PhotoUtils.OnPhotoResultListener() {
             @Override
             public void onResult(PhotoUtils.Result result) {
-                showToast(result.getPath());
+                if (viewHolder != null) {
+                    viewHolder.img.setImageURI(result.getUri());
+                }
             }
         });
     }
@@ -72,4 +90,14 @@ public class DrawerActivity extends BaseDrawerActivity {
         PermissionUtils.handleResult(requestCode, permissions, grantResults);
     }
 
+    public class ViewHolder {
+        public View rootView;
+        public ImageView img;
+
+        public ViewHolder(View rootView) {
+            this.rootView = rootView;
+            this.img = (ImageView) rootView.findViewById(R.id.img);
+        }
+
+    }
 }

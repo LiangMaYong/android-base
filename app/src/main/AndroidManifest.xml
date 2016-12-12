@@ -11,6 +11,8 @@
         android:theme="@style/BaseTheme">
         <activity
             android:name=".DrawerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/BaseLauncher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
