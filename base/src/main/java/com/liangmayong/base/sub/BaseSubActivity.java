@@ -117,7 +117,7 @@ public abstract class BaseSubActivity extends BaseActivity {
     }
 
     /**
-     * get visible fragment
+     * doGet visible fragment
      *
      * @return visible fragment
      */

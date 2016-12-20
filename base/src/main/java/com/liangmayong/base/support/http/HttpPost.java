@@ -4,16 +4,12 @@ import android.annotation.SuppressLint;
 import android.os.Handler;
 
 import java.io.ByteArrayOutputStream;
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -35,13 +31,13 @@ class HttpPost {
     private static final int SUCCESS = 1;
     private static final int ERROR = 2;
 
-    private static class PostMsg {
+    private static class PostRequest {
         private OnHttpListener netListener;
         private byte[] data;
         private Exception ex;
         private String encode = "utf-8";
         private String cookie;
-        private Map<String, File> files = new HashMap<String, File>();
+        private Map<String, HttpFile> files = new HashMap<String, HttpFile>();
         public Map<String, String> params = new HashMap<String, String>();
         public Map<String, String> headers = new HashMap<String, String>();
 
@@ -49,7 +45,7 @@ class HttpPost {
             return headers;
         }
 
-        public Map<String, File> getFiles() {
+        public Map<String, HttpFile> getFiles() {
             return files;
         }
 
@@ -65,19 +61,19 @@ class HttpPost {
             }
         }
 
-        public void setFiles(Map<String, File> files) {
-            for (Map.Entry<String, File> entry : this.files.entrySet()) {
+        public void setFiles(Map<String, HttpFile> files) {
+            for (Map.Entry<String, HttpFile> entry : this.files.entrySet()) {
                 this.files.remove(entry.getKey());
             }
             if (files == null) {
                 return;
             }
-            for (Map.Entry<String, File> entry : files.entrySet()) {
+            for (Map.Entry<String, HttpFile> entry : files.entrySet()) {
                 this.files.put(entry.getKey(), entry.getValue());
             }
         }
 
-        public PostMsg(OnHttpListener netListener) {
+        public PostRequest(OnHttpListener netListener) {
             this.netListener = netListener;
         }
 
@@ -86,9 +82,11 @@ class HttpPost {
         }
 
         public void setParams(Map<String, String> params) {
-
             for (Map.Entry<String, String> entry : this.params.entrySet()) {
                 this.params.remove(entry.getKey());
+            }
+            if (params == null) {
+                return;
             }
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 this.params.put(entry.getKey(), entry.getValue());
@@ -109,6 +107,66 @@ class HttpPost {
 
         public String getCookie() {
             return cookie;
+        }
+
+        public byte[] getBody() {
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            try {
+                if ((getParams() != null && getParams().size() > 0)
+                        || (getFiles() != null && getFiles().size() > 0)) {
+                    // post params
+                    if (getParams() != null && getParams().size() > 0) {
+                        for (Map.Entry<String, String> entry : getParams().entrySet()) {
+                            StringBuilder psb = new StringBuilder();
+                            psb.append(prefix);
+                            psb.append(boundary);
+                            psb.append(lineEnd);
+                            psb.append("Content-Disposition:form-data;name=\"" + entry.getKey() + "\"" + lineEnd
+                                    + lineEnd);
+                            psb.append(entry.getValue());
+                            psb.append(lineEnd);
+                            outputStream.write(psb.toString().getBytes());
+                        }
+                    }
+                    // post files
+                    if (getFiles() != null && getFiles().size() > 0) {
+                        for (Map.Entry<String, HttpFile> entry : getFiles().entrySet()) {
+                            File item = new File(entry.getValue().getPath());
+                            long totallenght = item.length();
+                            int bufferSize = (int) (totallenght / 10);
+                            StringBuilder sb = new StringBuilder();
+                            sb.append(prefix);
+                            sb.append(boundary);
+                            sb.append(lineEnd);
+                            sb.append("Content-Disposition: form-data;name=\"" + entry.getKey() + "\";filename=\""
+                                    + item.getName() + "\"" + lineEnd);
+                            FileInputStream in = new FileInputStream(item);
+                            sb.append("Content-Length:" + in.available() + lineEnd);
+                            sb.append("Content-Type:" + getContentTypeByExtensionName(entry.getValue().getName()) + lineEnd + lineEnd);
+                            outputStream.write(sb.toString().getBytes());
+                            int bytes = 0;
+                            byte[] bufferOut = new byte[Math.max(20 * 1024, Math.min(512 * 1024, bufferSize))];
+                            while ((bytes = in.read(bufferOut)) != -1) {
+                                outputStream.write(bufferOut, 0, bytes);
+                            }
+                            outputStream.write(lineEnd.getBytes());
+                            in.close();
+                        }
+                    }
+                    byte[] end_data = (lineEnd + prefix + boundary + prefix + lineEnd).getBytes();
+                    outputStream.write(end_data);
+                    outputStream.flush();
+                    outputStream.close();
+                }
+            } catch (Exception e) {
+            }
+            byte[] bytes = outputStream.toByteArray();
+            try {
+                outputStream.flush();
+                outputStream.close();
+            } catch (Exception e) {
+            }
+            return bytes;
         }
 
         public void setData(byte[] data) {
@@ -139,12 +197,15 @@ class HttpPost {
 
     }
 
+    /**
+     * handler
+     */
     private static Handler handler = new Handler() {
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
             try {
-                PostMsg message = (PostMsg) msg.obj;
+                PostRequest message = (PostRequest) msg.obj;
                 switch (msg.what) {
                     case ERROR:
                         message.Error();
@@ -164,13 +225,22 @@ class HttpPost {
     private HttpPost() {
     }
 
-    public static void post(final String url, Map<String, String> params, Map<String, File> files,
+    /**
+     * post
+     *
+     * @param url         url
+     * @param params      params
+     * @param files       files
+     * @param headers     headers
+     * @param netListener netListener
+     */
+    public static void post(final String url, Map<String, String> params, Map<String, HttpFile> files,
                             Map<String, String> headers, OnHttpListener netListener) {
-        final PostMsg postMsg = new PostMsg(netListener);
+        final PostRequest postMsg = new PostRequest(netListener);
         postMsg.setParams(params);
         postMsg.setFiles(files);
         postMsg.setHeaders(headers);
-        HttpUtil.executorService().execute(new Runnable() {
+        HttpUtils.executorService().execute(new Runnable() {
             @Override
             public void run() {
                 dopost(url, postMsg);
@@ -178,14 +248,24 @@ class HttpPost {
         });
     }
 
-    public static void post(final String url, Map<String, String> params, Map<String, File> files,
+    /**
+     * post
+     *
+     * @param url         url
+     * @param params      params
+     * @param files       files
+     * @param headers     headers
+     * @param encode      encode
+     * @param netListener netListener
+     */
+    public static void post(final String url, Map<String, String> params, Map<String, HttpFile> files,
                             Map<String, String> headers, String encode, OnHttpListener netListener) {
-        final PostMsg postMsg = new PostMsg(netListener);
+        final PostRequest postMsg = new PostRequest(netListener);
         postMsg.setEncode(encode);
         postMsg.setParams(params);
         postMsg.setFiles(files);
         postMsg.setHeaders(headers);
-        HttpUtil.executorService().execute(new Runnable() {
+        HttpUtils.executorService().execute(new Runnable() {
             @Override
             public void run() {
                 dopost(url, postMsg);
@@ -193,15 +273,26 @@ class HttpPost {
         });
     }
 
-    public static void post(final String url, Map<String, String> params, Map<String, File> files,
+    /**
+     * post
+     *
+     * @param url         url
+     * @param params      params
+     * @param files       files
+     * @param headers     headers
+     * @param encode      encode
+     * @param cookie      cookie
+     * @param netListener netListener
+     */
+    public static void post(final String url, Map<String, String> params, Map<String, HttpFile> files,
                             Map<String, String> headers, String encode, String cookie, OnHttpListener netListener) {
-        final PostMsg postMsg = new PostMsg(netListener);
+        final PostRequest postMsg = new PostRequest(netListener);
         postMsg.setCookie(cookie);
         postMsg.setEncode(encode);
         postMsg.setParams(params);
         postMsg.setFiles(files);
         postMsg.setHeaders(headers);
-        HttpUtil.executorService().execute(new Runnable() {
+        HttpUtils.executorService().execute(new Runnable() {
             @Override
             public void run() {
                 dopost(url, postMsg);
@@ -209,14 +300,19 @@ class HttpPost {
         });
     }
 
-    private static void dopost(final String url, PostMsg message) {
+    /**
+     * do post
+     *
+     * @param url     url
+     * @param request request
+     */
+    private static void dopost(final String url, PostRequest request) {
         boolean success = false;
         int code = -1;
         HttpURLConnection connection = null;
         try {
             URL requestUrl = new URL(url);
             connection = (HttpURLConnection) requestUrl.openConnection();
-            connection.setChunkedStreamingMode(512 * 1024);
             connection.setDoInput(true);
             connection.setDoOutput(true);
             connection.setUseCaches(false);
@@ -225,75 +321,29 @@ class HttpPost {
             // read result
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("Charset", message.getEncode());
+            connection.setRequestProperty("Charset", request.getEncode());
+            byte[] bytes = request.getBody();
+            connection.setRequestProperty("Content-Length", "" + bytes.length);
             connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-            if (message.getHeaders() != null && message.getHeaders().size() > 0) {
-                for (Map.Entry<String, String> entry : message.getHeaders().entrySet()) {
+            if (request.getHeaders() != null && request.getHeaders().size() > 0) {
+                for (Map.Entry<String, String> entry : request.getHeaders().entrySet()) {
                     connection.setRequestProperty(entry.getKey(), entry.getValue());
                 }
             }
-            byte[] end_data = (lineEnd + prefix + boundary + prefix + lineEnd).getBytes();
-            if (message.getCookie() != null) {
-                connection.addRequestProperty("Cookie", message.getCookie());
+            if (request.getCookie() != null) {
+                connection.addRequestProperty("Cookie", request.getCookie());
             }
-            try {
-                if ((message.getParams() != null && message.getParams().size() > 0)
-                        || (message.getFiles() != null && message.getFiles().size() > 0)) {
-
-                    OutputStream outputStream = connection.getOutputStream();
-                    // post params
-                    if (message.getParams() != null && message.getParams().size() > 0) {
-                        for (Map.Entry<String, String> entry : message.getParams().entrySet()) {
-                            StringBuilder psb = new StringBuilder();
-                            psb.append(prefix);
-                            psb.append(boundary);
-                            psb.append(lineEnd);
-                            psb.append("Content-Disposition:form-data;name=\"" + entry.getKey() + "\"" + lineEnd
-                                    + lineEnd);
-                            psb.append(entry.getValue());
-                            psb.append(lineEnd);
-                            outputStream.write(psb.toString().getBytes());
-                        }
-
-                    }
-
-                    // post files
-                    if (message.getFiles() != null && message.getFiles().size() > 0) {
-                        for (Map.Entry<String, File> entry : message.getFiles().entrySet()) {
-                            File item = entry.getValue();
-                            long totallenght = item.length();
-                            int bufferSize = (int) (totallenght / 10);
-                            StringBuilder sb = new StringBuilder();
-                            sb.append(prefix);
-                            sb.append(boundary);
-                            sb.append(lineEnd);
-                            sb.append("Content-Disposition: form-data;name=\"" + entry.getKey() + "\";filename=\""
-                                    + item.getName() + "\"" + lineEnd);
-                            sb.append("Content-Type:" + getContentType(item.getName()) + lineEnd + lineEnd);
-                            outputStream.write(sb.toString().getBytes());
-                            FileInputStream in = new FileInputStream(item);
-                            int bytes = 0;
-                            byte[] bufferOut = new byte[Math.max(20 * 1024, Math.min(512 * 1024, bufferSize))];
-                            while ((bytes = in.read(bufferOut)) != -1) {
-                                outputStream.write(bufferOut, 0, bytes);
-                            }
-                            outputStream.write(lineEnd.getBytes());
-                            in.close();
-                        }
-                    }
-                    outputStream.write(end_data);
-                    outputStream.flush();
-                    outputStream.close();
-                }
-            } catch (Exception e) {
-            }
+            OutputStream outputStream = connection.getOutputStream();
+            outputStream.write(bytes);
+            outputStream.flush();
+            outputStream.close();
             code = connection.getResponseCode();
             if (code == 200) {
                 InputStream inputStream;
                 inputStream = connection.getInputStream();
                 Map<String, List<String>> map = connection.getHeaderFields();
-                String cookieVal = message.getCookie();
-                String encodeVal = message.getEncode();
+                String cookieVal = request.getCookie();
+                String encodeVal = request.getEncode();
                 for (String name : map.keySet()) {
                     if ("Set-Cookie".equals(name)) {
                         cookieVal = map.get(name).toString().replace("[", "").replace("]", "");
@@ -303,53 +353,34 @@ class HttpPost {
                         encodeVal = map.get(name).toString().substring(m + 8).replace("]", "");
                     }
                 }
-                message.setCookie(cookieVal);
-                message.setEncode(encodeVal);
-                message.setData(inputStream2bytes(inputStream));
+                request.setCookie(cookieVal);
+                request.setEncode(encodeVal);
+                request.setData(inputStream2bytes(inputStream));
                 success = true;
             } else {
-                success = false;
-                message.setException(new HttpServiceError(code));
+                request.setException(new HttpServiceError(code));
             }
-            connection.disconnect();
-        } catch (MalformedURLException e) {
-            message.setException(e);
-            try {
-                connection.disconnect();
-            } catch (Exception e2) {
-            }
-        } catch (UnsupportedEncodingException e) {
-            message.setException(e);
-            try {
-                connection.disconnect();
-            } catch (Exception e2) {
-            }
-        } catch (SocketTimeoutException e) {
-            message.setException(e);
-            try {
-                connection.disconnect();
-            } catch (Exception e2) {
-            }
-        } catch (EOFException e) {
-            message.setException(e);
-            try {
-                connection.disconnect();
-            } catch (Exception e2) {
-            }
-        } catch (IOException e) {
-            message.setException(e);
+        } catch (Exception e) {
+            request.setException(e);
+        } finally {
             try {
                 connection.disconnect();
             } catch (Exception e2) {
             }
         }
         if (success) {
-            handler.obtainMessage(SUCCESS, message).sendToTarget();
+            handler.obtainMessage(SUCCESS, request).sendToTarget();
         } else {
-            handler.obtainMessage(ERROR, message).sendToTarget();
+            handler.obtainMessage(ERROR, request).sendToTarget();
         }
     }
 
+    /**
+     * input stream to bytes
+     *
+     * @param stream stream
+     * @return bytes
+     */
     private static byte[] inputStream2bytes(InputStream stream) {
         ByteArrayOutputStream nBuilder = new ByteArrayOutputStream();
         try {
@@ -364,82 +395,88 @@ class HttpPost {
         return nBuilder.toByteArray();
     }
 
-    private static String getContentType(String type) {
+    /**
+     * doGet content type by extension name
+     *
+     * @param extensionName
+     * @return content type
+     */
+    private static String getContentTypeByExtensionName(String extensionName) {
         String contenttype = "";
-        type = getExtensionName(type);
-        if (type == null || type.equals("") || type.equals(".*") || type.equals(".") || type.equals("*")) {
+        extensionName = getExtensionName(extensionName);
+        if (extensionName == null || extensionName.equals("") || extensionName.equals(".*") || extensionName.equals(".") || extensionName.equals("*")) {
             contenttype = "application/octet-stream";
-        } else if (type.equals(".txt") || type.equals("txt")) {
+        } else if (extensionName.equals(".txt") || extensionName.equals("txt")) {
             contenttype = "text/plain";
-        } else if (type.equals(".tif") || type.equals("tif")) {
+        } else if (extensionName.equals(".tif") || extensionName.equals("tif")) {
             contenttype = "image/tiff";
-        } else if (type.equals(".001") || type.equals("001")) {
+        } else if (extensionName.equals(".001") || extensionName.equals("001")) {
             contenttype = "text/plain";
-        } else if (type.equals(".asp") || type.equals("asp")) {
+        } else if (extensionName.equals(".asp") || extensionName.equals("asp")) {
             contenttype = "text/asp";
-        } else if (type.equals(".avi") || type.equals("avi")) {
+        } else if (extensionName.equals(".avi") || extensionName.equals("avi")) {
             contenttype = "video/avi";
-        } else if (type.equals(".bmp") || type.equals("bmp")) {
+        } else if (extensionName.equals(".bmp") || extensionName.equals("bmp")) {
             contenttype = "application/x-bmp";
-        } else if (type.equals(".exe") || type.equals("exe")) {
+        } else if (extensionName.equals(".exe") || extensionName.equals("exe")) {
             contenttype = "application/x-msdownload";
-        } else if (type.equals(".eps") || type.equals("eps")) {
+        } else if (extensionName.equals(".eps") || extensionName.equals("eps")) {
             contenttype = "application/x-ps";
-        } else if (type.equals(".htm") || type.equals("htm")) {
+        } else if (extensionName.equals(".htm") || extensionName.equals("htm")) {
             contenttype = "text/html";
-        } else if (type.equals(".html") || type.equals("html")) {
+        } else if (extensionName.equals(".html") || extensionName.equals("html")) {
             contenttype = "text/html";
-        } else if (type.equals(".jfif") || type.equals("jfif")) {
+        } else if (extensionName.equals(".jfif") || extensionName.equals("jfif")) {
             contenttype = "image/jpeg";
-        } else if (type.equals(".jpe") || type.equals("jpe")) {
+        } else if (extensionName.equals(".jpe") || extensionName.equals("jpe")) {
             contenttype = "image/jpeg";
-        } else if (type.equals(".jpeg") || type.equals("jpeg")) {
+        } else if (extensionName.equals(".jpeg") || extensionName.equals("jpeg")) {
             contenttype = "image/jpeg";
-        } else if (type.equals(".jpg") || type.equals("jpg")) {
+        } else if (extensionName.equals(".jpg") || extensionName.equals("jpg")) {
             contenttype = "image/jpeg";
-        } else if (type.equals(".png") || type.equals("png")) {
+        } else if (extensionName.equals(".png") || extensionName.equals("png")) {
             contenttype = "image/png";
-        } else if (type.equals(".gif") || type.equals("gif")) {
+        } else if (extensionName.equals(".gif") || extensionName.equals("gif")) {
             contenttype = "image/gif";
-        } else if (type.equals(".js") || type.equals("js")) {
+        } else if (extensionName.equals(".js") || extensionName.equals("js")) {
             contenttype = "application/x-javascript";
-        } else if (type.equals(".jsp") || type.equals("jsp")) {
+        } else if (extensionName.equals(".jsp") || extensionName.equals("jsp")) {
             contenttype = "text/html";
-        } else if (type.equals(".mp3") || type.equals("mp3")) {
+        } else if (extensionName.equals(".mp3") || extensionName.equals("mp3")) {
             contenttype = "audio/mp3";
-        } else if (type.equals(".mp4") || type.equals("mp4")) {
+        } else if (extensionName.equals(".mp4") || extensionName.equals("mp4")) {
             contenttype = "video/mpeg4";
-        } else if (type.equals(".mpa") || type.equals("mpa")) {
+        } else if (extensionName.equals(".mpa") || extensionName.equals("mpa")) {
             contenttype = "video/x-mpg";
-        } else if (type.equals(".pot") || type.equals("pot")) {
+        } else if (extensionName.equals(".pot") || extensionName.equals("pot")) {
             contenttype = "application/vnd.ms-powerpoint";
-        } else if (type.equals(".ppa") || type.equals("ppa")) {
+        } else if (extensionName.equals(".ppa") || extensionName.equals("ppa")) {
             contenttype = "application/vnd.ms-powerpoint";
-        } else if (type.equals(".pps") || type.equals("pps")) {
+        } else if (extensionName.equals(".pps") || extensionName.equals("pps")) {
             contenttype = "application/vnd.ms-powerpoint";
-        } else if (type.equals(".ppt") || type.equals("ppt")) {
+        } else if (extensionName.equals(".ppt") || extensionName.equals("ppt")) {
             contenttype = "application/vnd.ms-powerpoint";
-        } else if (type.equals(".ppm") || type.equals("ppm")) {
+        } else if (extensionName.equals(".ppm") || extensionName.equals("ppm")) {
             contenttype = "application/x-ppm";
-        } else if (type.equals(".rmvb") || type.equals("rmvb")) {
+        } else if (extensionName.equals(".rmvb") || extensionName.equals("rmvb")) {
             contenttype = "application/vnd.rn-realmedia-vbr";
-        } else if (type.equals(".torrent") || type.equals("torrent")) {
+        } else if (extensionName.equals(".torrent") || extensionName.equals("torrent")) {
             contenttype = "application/x-bittorrent";
-        } else if (type.equals(".vxml") || type.equals("vxml")) {
+        } else if (extensionName.equals(".vxml") || extensionName.equals("vxml")) {
             contenttype = "text/xml";
-        } else if (type.equals(".xml") || type.equals("xml")) {
+        } else if (extensionName.equals(".xml") || extensionName.equals("xml")) {
             contenttype = "text/xml";
-        } else if (type.equals(".wm") || type.equals("wm")) {
+        } else if (extensionName.equals(".wm") || extensionName.equals("wm")) {
             contenttype = "video/x-ms-wm";
-        } else if (type.equals(".wma") || type.equals("wma")) {
+        } else if (extensionName.equals(".wma") || extensionName.equals("wma")) {
             contenttype = "audio/x-ms-wma";
-        } else if (type.equals(".xsl") || type.equals("xsl")) {
+        } else if (extensionName.equals(".xsl") || extensionName.equals("xsl")) {
             contenttype = "text/xml";
-        } else if (type.equals(".xwd") || type.equals("xwd")) {
+        } else if (extensionName.equals(".xwd") || extensionName.equals("xwd")) {
             contenttype = "application/x-xwd";
-        } else if (type.equals(".java") || type.equals("java")) {
+        } else if (extensionName.equals(".java") || extensionName.equals("java")) {
             contenttype = "java/*";
-        } else if (type.equals(".pdf") || type.equals("pdf")) {
+        } else if (extensionName.equals(".pdf") || extensionName.equals("pdf")) {
             contenttype = "application/pdf";
         } else {
             contenttype = "application/octet-stream";
@@ -447,6 +484,12 @@ class HttpPost {
         return contenttype;
     }
 
+    /**
+     * doGet file extension name
+     *
+     * @param filename filename
+     * @return extension name
+     */
     private static String getExtensionName(String filename) {
         if ((filename != null) && (filename.length() > 0)) {
             int dot = filename.lastIndexOf('.');

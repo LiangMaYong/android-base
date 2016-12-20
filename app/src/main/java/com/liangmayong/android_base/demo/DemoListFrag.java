@@ -9,9 +9,9 @@ import com.liangmayong.base.utils.DimenUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
 import com.liangmayong.base.support.skin.SkinManager;
-import com.liangmayong.base.widget.superlistview.SuperListView;
-import com.liangmayong.base.widget.superlistview.item.DefaultSuperData;
-import com.liangmayong.base.widget.superlistview.item.DefaultSuperItem;
+import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
+import com.liangmayong.base.widget.recyclerbox.item.DefaultRecyclerBoxData;
+import com.liangmayong.base.widget.recyclerbox.item.DefaultRecyclerBoxItem;
 
 /**
  * Created by LiangMaYong on 2016/10/17.
@@ -25,7 +25,7 @@ public class DemoListFrag extends BaseSubListFragment {
     private int index = 0;
 
     @Override
-    protected void initListView(SuperListView listView, IRefreshLayout refreshLayout) {
+    protected void initListView(RecyclerBox listView, IRefreshLayout refreshLayout) {
         getDefaultToolbar().rightOne().text("Blog").clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,9 +65,9 @@ public class DemoListFrag extends BaseSubListFragment {
     }
 
     private void add_data() {
-        getListView().getPool().add(new DefaultSuperItem("AndroidBase Item", "default_type view", "11:22", null).setIcon(Icon.icon_camera).setOnItemClickListener(new SuperListView.OnItemClickListener<DefaultSuperData>() {
+        getListView().getPool().add(new DefaultRecyclerBoxItem("AndroidBase Item", "default_type view", "11:22", null).setIcon(Icon.icon_camera).setOnItemClickListener(new RecyclerBox.OnRecyclerBoxItemClickListener<DefaultRecyclerBoxData>() {
             @Override
-            public void onClick(SuperListView.Item<DefaultSuperData> item, int position, View itemView) {
+            public void onClick(RecyclerBox.Item<DefaultRecyclerBoxData> item, int position, View itemView) {
                 showToast("sssssssssssss");
             }
         }));
@@ -75,9 +75,9 @@ public class DemoListFrag extends BaseSubListFragment {
             if (i % 3 == 0) {
                 getListView().getPool().add(new DemoItemView("Item" + (i + 1)));
             } else {
-                getListView().getPool().add(new DemoItem2View("Item" + (i + 1)).setOnItemClickListener(new SuperListView.OnItemClickListener<String>() {
+                getListView().getPool().add(new DemoItem2View("Item" + (i + 1)).setOnItemClickListener(new RecyclerBox.OnRecyclerBoxItemClickListener<String>() {
                     @Override
-                    public void onClick(SuperListView.Item<String> item, int position, View itemView) {
+                    public void onClick(RecyclerBox.Item<String> item, int position, View itemView) {
                         openFragment(new DemoContentFragment().initArguments(new BundleBuilder().put("title", item.getData()).builder()));
                     }
                 }));

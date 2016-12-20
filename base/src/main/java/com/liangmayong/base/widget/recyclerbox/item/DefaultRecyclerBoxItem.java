@@ -1,4 +1,4 @@
-package com.liangmayong.base.widget.superlistview.item;
+package com.liangmayong.base.widget.recyclerbox.item;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,23 +13,23 @@ import com.liangmayong.base.widget.iconfont.IconView;
 /**
  * Created by LiangMaYong on 2016/11/7.
  */
-public final class DefaultSuperItem extends SuperItem<DefaultSuperData> {
+public final class DefaultRecyclerBoxItem extends SuperRecyclerBoxItem<DefaultRecyclerBoxData> {
 
-    public DefaultSuperItem(String title) {
-        super(new DefaultSuperData(title, null));
+    public DefaultRecyclerBoxItem(String title) {
+        super(new DefaultRecyclerBoxData(title, null));
     }
 
-    public DefaultSuperItem(String title, String sub) {
-        super(new DefaultSuperData(title, sub));
+    public DefaultRecyclerBoxItem(String title, String sub) {
+        super(new DefaultRecyclerBoxData(title, sub));
     }
 
-    public DefaultSuperItem(String title, String sub, String r_title, String r_sub) {
-        super(new DefaultSuperData(title, sub, r_title, r_sub));
+    public DefaultRecyclerBoxItem(String title, String sub, String r_title, String r_sub) {
+        super(new DefaultRecyclerBoxData(title, sub, r_title, r_sub));
     }
 
     @Override
     protected View onNewView(LayoutInflater inflater, ViewGroup parent) {
-        return inflater.inflate(R.layout.base_default_item_superview, null);
+        return inflater.inflate(R.layout.base_default_item_recyclerbox_view, null);
     }
 
     private boolean showRightIcon = false;
@@ -38,7 +38,7 @@ public final class DefaultSuperItem extends SuperItem<DefaultSuperData> {
         return showRightIcon;
     }
 
-    public DefaultSuperItem showRightIcon(boolean showRightIcon) {
+    public DefaultRecyclerBoxItem showRightIcon(boolean showRightIcon) {
         this.showRightIcon = showRightIcon;
         return this;
     }
@@ -49,13 +49,13 @@ public final class DefaultSuperItem extends SuperItem<DefaultSuperData> {
      * @param icon icon
      * @return icon
      */
-    public DefaultSuperItem setIcon(IconValue icon) {
+    public DefaultRecyclerBoxItem setIcon(IconValue icon) {
         getData().setIcon(icon);
         return this;
     }
 
     @Override
-    protected void onBindView(View itemView, DefaultSuperData defaultSuperData) {
+    protected void onBindView(View itemView, DefaultRecyclerBoxData defaultSuperData) {
         ViewHolder holder = new ViewHolder(itemView);
         holder.base_default_adapter_title.setText(defaultSuperData.getTitle());
         if (defaultSuperData.getSub() != null) {

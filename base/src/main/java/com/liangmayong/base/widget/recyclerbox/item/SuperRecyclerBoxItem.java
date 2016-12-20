@@ -1,18 +1,18 @@
-package com.liangmayong.base.widget.superlistview.item;
+package com.liangmayong.base.widget.recyclerbox.item;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.liangmayong.base.support.binding.ViewBinding;
-import com.liangmayong.base.widget.superlistview.SuperListView;
+import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
 
 /**
  * Created by LiangMaYong on 2016/11/7.
  */
-public abstract class SuperItem<Data> extends SuperListView.Item<Data> {
+public abstract class SuperRecyclerBoxItem<Data> extends RecyclerBox.Item<Data> {
 
-    public SuperItem(Data data) {
+    public SuperRecyclerBoxItem(Data data) {
         super(data);
     }
 

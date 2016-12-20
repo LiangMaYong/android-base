@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
-import com.liangmayong.base.widget.superlistview.SuperListView;
+import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
 
 /**
  * Created by LiangMaYong on 2016/10/17.
@@ -14,16 +14,16 @@ import com.liangmayong.base.widget.superlistview.SuperListView;
 public abstract class BaseListFragment extends BaseFragment {
 
 
-    private SuperListView reListView = null;
+    private RecyclerBox recyclerBox = null;
     private IRefreshLayout refreshLayout = null;
 
     /**
-     * getListView
+     * getRecyclerBox
      *
      * @return listView
      */
-    public SuperListView getListView() {
-        return reListView;
+    public RecyclerBox getRecyclerBox() {
+        return recyclerBox;
     }
 
     /**
@@ -37,11 +37,11 @@ public abstract class BaseListFragment extends BaseFragment {
 
     @Override
     protected final void initView(View rootView) {
-        reListView = (SuperListView) rootView.findViewById(R.id.base_superListView);
+        recyclerBox = (RecyclerBox) rootView.findViewById(R.id.base_recyclerbox);
         refreshLayout = (IRefreshLayout) rootView.findViewById(R.id.base_refreshLayout);
         refreshLayout.setEnabled(refreshEnabled());
-        refreshLayout.setChildView(reListView);
-        initListView(reListView, refreshLayout);
+        refreshLayout.setChildView(recyclerBox);
+        initListView(recyclerBox, refreshLayout);
     }
 
     @Override
@@ -49,7 +49,7 @@ public abstract class BaseListFragment extends BaseFragment {
         super.onSkinRefresh(skin);
     }
 
-    protected abstract void initListView(SuperListView listView, IRefreshLayout refreshLayout);
+    protected abstract void initListView(RecyclerBox listView, IRefreshLayout refreshLayout);
 
     /**
      * refreshEnabled
@@ -62,6 +62,6 @@ public abstract class BaseListFragment extends BaseFragment {
 
     @Override
     protected int generateContainerViewId() {
-        return R.layout.base_default_fragment_superlist_swipe;
+        return R.layout.base_default_fragment_recyclerbox_swipe;
     }
 }

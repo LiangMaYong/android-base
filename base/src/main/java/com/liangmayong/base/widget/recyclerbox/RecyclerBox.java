@@ -1,4 +1,4 @@
-package com.liangmayong.base.widget.superlistview;
+package com.liangmayong.base.widget.recyclerbox;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -28,15 +28,54 @@ import java.util.List;
 /**
  * Created by LiangMaYong on 2016/8/24.
  */
-public class SuperListView extends RelativeLayout {
+public class RecyclerBox extends RelativeLayout {
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////   Listener   ////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * OnReListViewRetryListener
+     * OnRecyclerBoxListViewRetryListener
      */
-    public interface OnReListViewRetryListener {
+    public interface OnRecyclerBoxListViewRetryListener {
         void setRetryView(View retryView);
     }
 
+    /**
+     * OnRecyclerBoxItemClickListener
+     *
+     * @param <Data> data type
+     */
+    public interface OnRecyclerBoxItemClickListener<Data> {
+        void onClick(Item<Data> item, int position, View itemView);
+    }
+
+    /**
+     * OnRecyclerBoxItemLongClickListener
+     *
+     * @param <Data> data type
+     */
+    public interface OnRecyclerBoxItemLongClickListener<Data> {
+        boolean onLongClick(Item<Data> item, int position, View itemView);
+    }
+
+    /**
+     * OnRecyclerBoxLastItemVisibleListener
+     */
+    public static interface OnRecyclerBoxLastItemVisibleListener {
+        void onLastItemVisible(RecyclerView recyclerView, int dx, int dy);
+    }
+
+    /**
+     * OnRecyclerBoxLastItemVisibleListener
+     */
+    public interface OnRecyclerBoxItemMoveVisibleListener {
+        void onItemMoveVisible(RecyclerView recyclerView, int fristPosition, int lastPosition);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////   RecyclerBox   /////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // HORIZONTAL
     public static final int HORIZONTAL = LinearLayoutManager.HORIZONTAL;
@@ -49,9 +88,9 @@ public class SuperListView extends RelativeLayout {
     // isLast
     private boolean isLast = false;
     // lastItemVisibleListener
-    private OnLastItemVisibleListener lastItemVisibleListener = null;
+    private OnRecyclerBoxLastItemVisibleListener lastItemVisibleListener = null;
     //itemMoveVisibleListener
-    private OnItemMoveVisibleListener itemMoveVisibleListener = null;
+    private OnRecyclerBoxItemMoveVisibleListener itemMoveVisibleListener = null;
     // lastCount
     private int lastCount = 5;
     // lastDelay
@@ -92,7 +131,7 @@ public class SuperListView extends RelativeLayout {
     private int columnCount = 1;
     // staggeredEnable
     private boolean staggeredEnable = true;
-    //superListView
+    //recyclerBox
     private ProxyRecyclerView recyclerView;
     //orientation
     private int orientation = VERTICAL;
@@ -100,13 +139,12 @@ public class SuperListView extends RelativeLayout {
     private boolean stackFromEnd = false;
     //reverseLayout
     private boolean reverseLayout = false;
-
     //errorRetryListener
-    private OnReListViewRetryListener errorRetryListener;
+    private OnRecyclerBoxListViewRetryListener errorRetryListener;
     //emptyRetryListener
-    private OnReListViewRetryListener emptyRetryListener;
+    private OnRecyclerBoxListViewRetryListener emptyRetryListener;
     //loadingRetryListener
-    private OnReListViewRetryListener loadingRetryListener;
+    private OnRecyclerBoxListViewRetryListener loadingRetryListener;
     //layoutTouchListener
     private OnTouchListener layoutTouchListener = new OnTouchListener() {
         @Override
@@ -114,24 +152,6 @@ public class SuperListView extends RelativeLayout {
             return true;
         }
     };
-
-    /**
-     * getEmptyView
-     *
-     * @return emptyView
-     */
-    public View getEmptyView() {
-        return emptyView;
-    }
-
-    /**
-     * getErrorView
-     *
-     * @return errorView
-     */
-    public View getErrorView() {
-        return errorView;
-    }
 
     /**
      * setStackFromEnd
@@ -147,7 +167,6 @@ public class SuperListView extends RelativeLayout {
             setLayoutManager(recyclerView.getLayoutManager());
         }
     }
-
 
     /**
      * setStackFromEnd
@@ -192,12 +211,30 @@ public class SuperListView extends RelativeLayout {
     }
 
     /**
+     * getEmptyView
+     *
+     * @return emptyView
+     */
+    public View getEmptyView() {
+        return emptyView;
+    }
+
+    /**
+     * getErrorView
+     *
+     * @return errorView
+     */
+    public View getErrorView() {
+        return errorView;
+    }
+
+    /**
      * setEmptyLayout
      *
      * @param resLayoutId        resLayoutId
      * @param emptyRetryListener emptyRetryListener
      */
-    public void setEmptyLayout(int resLayoutId, OnReListViewRetryListener emptyRetryListener) {
+    public void setEmptyLayout(int resLayoutId, OnRecyclerBoxListViewRetryListener emptyRetryListener) {
         this.emptyRetryListener = emptyRetryListener;
         if (emptyLayout != null) {
             emptyLayout.removeAllViews();
@@ -217,7 +254,7 @@ public class SuperListView extends RelativeLayout {
      * @param resLayoutId        resLayoutId
      * @param errorRetryListener errorRetryListener
      */
-    public void setErrorLayout(int resLayoutId, OnReListViewRetryListener errorRetryListener) {
+    public void setErrorLayout(int resLayoutId, OnRecyclerBoxListViewRetryListener errorRetryListener) {
         this.errorRetryListener = errorRetryListener;
         if (errorLayout != null) {
             errorLayout.removeAllViews();
@@ -237,7 +274,7 @@ public class SuperListView extends RelativeLayout {
      * @param resLayoutId          resLayoutId
      * @param loadingRetryListener loadingRetryListener
      */
-    public void setLoadingLayout(int resLayoutId, OnReListViewRetryListener loadingRetryListener) {
+    public void setLoadingLayout(int resLayoutId, OnRecyclerBoxListViewRetryListener loadingRetryListener) {
         this.loadingRetryListener = loadingRetryListener;
         if (loadingLayout != null) {
             loadingLayout.removeAllViews();
@@ -597,7 +634,7 @@ public class SuperListView extends RelativeLayout {
      *
      * @param lastItemVisibleListener lastItemVisibleListener
      */
-    public void setOnLastItemVisibleListener(OnLastItemVisibleListener lastItemVisibleListener) {
+    public void setOnLastItemVisibleListener(OnRecyclerBoxLastItemVisibleListener lastItemVisibleListener) {
         this.lastItemVisibleListener = lastItemVisibleListener;
     }
 
@@ -606,7 +643,7 @@ public class SuperListView extends RelativeLayout {
      *
      * @param itemMoveVisibleListener itemMoveVisibleListener
      */
-    public void setOnItemMoveVisibleListener(OnItemMoveVisibleListener itemMoveVisibleListener) {
+    public void setOnItemMoveVisibleListener(OnRecyclerBoxItemMoveVisibleListener itemMoveVisibleListener) {
         this.itemMoveVisibleListener = itemMoveVisibleListener;
     }
 
@@ -686,12 +723,11 @@ public class SuperListView extends RelativeLayout {
         }
     };
 
-    public SuperListView(Context context) {
-        super(context);
-        initView();
+    public RecyclerBox(Context context) {
+        this(context, null);
     }
 
-    public SuperListView(Context context, AttributeSet attrs) {
+    public RecyclerBox(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
@@ -824,7 +860,7 @@ public class SuperListView extends RelativeLayout {
     /**
      * getRecyclerListView
      *
-     * @return superListView
+     * @return recyclerBox
      */
     private ProxyRecyclerView getRecyclerListView() {
         return recyclerView;
@@ -837,7 +873,7 @@ public class SuperListView extends RelativeLayout {
      * @param size size
      */
     public void setDecorationSize(int size) {
-        setItemDecoration(new SuperDecoration(size));
+        setItemDecoration(new BoxDecoration(size));
     }
 
     /**
@@ -869,20 +905,6 @@ public class SuperListView extends RelativeLayout {
             return true;
         }
         return false;
-    }
-
-    /**
-     * OnLastItemVisibleListener
-     */
-    public static interface OnLastItemVisibleListener {
-        void onLastItemVisible(RecyclerView recyclerView, int dx, int dy);
-    }
-
-    /**
-     * OnLastItemVisibleListener
-     */
-    public interface OnItemMoveVisibleListener {
-        void onItemMoveVisible(RecyclerView recyclerView, int fristPosition, int lastPosition);
     }
 
     /**
@@ -981,6 +1003,10 @@ public class SuperListView extends RelativeLayout {
 
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////   Classes    ////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Pool
      */
@@ -990,25 +1016,25 @@ public class SuperListView extends RelativeLayout {
         // types
         private final List<Item> types = new ArrayList<Item>();
         // adapter
-        private final SuperAdapter adapter;
+        private final BoxAdapter adapter;
         //tag
         private Object tag;
-        //superListView
-        private SuperListView superListView;
+        //recyclerBox
+        private RecyclerBox recyclerBox;
         // isAttach
         private boolean isAttach = false;
 
         private Pool() {
-            adapter = new SuperAdapter(this);
+            adapter = new BoxAdapter(this);
         }
 
         /**
-         * getSuperListView
+         * getRecyclerBox
          *
-         * @return superListView
+         * @return recyclerBox
          */
-        public SuperListView getSuperListView() {
-            return superListView;
+        public RecyclerBox getRecyclerBox() {
+            return recyclerBox;
         }
 
         /**
@@ -1033,12 +1059,12 @@ public class SuperListView extends RelativeLayout {
         /**
          * attachTo
          *
-         * @param recyclerView superListView
+         * @param recyclerView recyclerBox
          */
-        private void attachTo(SuperListView recyclerView) {
+        private void attachTo(RecyclerBox recyclerView) {
             if (recyclerView != null) {
-                this.superListView = recyclerView;
-                this.superListView.getRecyclerListView().setAdapter(adapter);
+                this.recyclerBox = recyclerView;
+                this.recyclerBox.getRecyclerListView().setAdapter(adapter);
                 isAttach = true;
             }
         }
@@ -1191,14 +1217,14 @@ public class SuperListView extends RelativeLayout {
     }
 
     /**
-     * SuperAdapter
+     * BoxAdapter
      */
-    private static class SuperAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static class BoxAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         // pool
         private final Pool pool;
 
-        public SuperAdapter(Pool pool) {
+        public BoxAdapter(Pool pool) {
             this.pool = pool;
         }
 
@@ -1234,7 +1260,7 @@ public class SuperListView extends RelativeLayout {
         public void proxyNotifyDataSetChanged() {
             synchronized (this) {
                 try {
-                    pool.getSuperListView().getRecyclerView().post(new Runnable() {
+                    pool.getRecyclerBox().getRecyclerView().post(new Runnable() {
                         @Override
                         public void run() {
                             // Notify adapter with appropriate notify methods
@@ -1249,7 +1275,7 @@ public class SuperListView extends RelativeLayout {
         public void proxyNotifyItemChanged(final int position) {
             synchronized (this) {
                 try {
-                    pool.getSuperListView().getRecyclerView().post(new Runnable() {
+                    pool.getRecyclerBox().getRecyclerView().post(new Runnable() {
                         @Override
                         public void run() {
                             notifyItemChanged(position);
@@ -1263,7 +1289,7 @@ public class SuperListView extends RelativeLayout {
         public void proxyNotifyItemChanged(final int position, final Object payload) {
             synchronized (this) {
                 try {
-                    pool.getSuperListView().getRecyclerView().post(new Runnable() {
+                    pool.getRecyclerBox().getRecyclerView().post(new Runnable() {
                         @Override
                         public void run() {
                             notifyItemChanged(position, payload);
@@ -1273,25 +1299,6 @@ public class SuperListView extends RelativeLayout {
                 }
             }
         }
-    }
-
-
-    /**
-     * OnItemClickListener
-     *
-     * @param <Data> data type
-     */
-    public interface OnItemClickListener<Data> {
-        void onClick(Item<Data> item, int position, View itemView);
-    }
-
-    /**
-     * OnItemLongClickListener
-     *
-     * @param <Data> data type
-     */
-    public interface OnItemLongClickListener<Data> {
-        boolean onLongClick(Item<Data> item, int position, View itemView);
     }
 
     /**
@@ -1314,16 +1321,16 @@ public class SuperListView extends RelativeLayout {
         //longclickable
         private boolean longClickable = true;
         //clickListener
-        private OnItemClickListener<Data> clickListener;
+        private OnRecyclerBoxItemClickListener<Data> clickListener;
         //longClickListener
-        private OnItemLongClickListener<Data> longClickListener;
+        private OnRecyclerBoxItemLongClickListener<Data> longClickListener;
 
         /**
          * getOnItemClickListener
          *
          * @return clickListener
          */
-        protected OnItemClickListener<Data> getOnItemClickListener() {
+        protected OnRecyclerBoxItemClickListener<Data> getOnItemClickListener() {
             return clickListener;
         }
 
@@ -1332,7 +1339,7 @@ public class SuperListView extends RelativeLayout {
          *
          * @return longClickListener
          */
-        protected OnItemLongClickListener<Data> getOnItemLongClickListener() {
+        protected OnRecyclerBoxItemLongClickListener<Data> getOnItemLongClickListener() {
             return longClickListener;
         }
 
@@ -1342,7 +1349,7 @@ public class SuperListView extends RelativeLayout {
          * @param clickListener clickListener
          * @return item
          */
-        public Item<Data> setOnItemClickListener(OnItemClickListener<Data> clickListener) {
+        public Item<Data> setOnItemClickListener(OnRecyclerBoxItemClickListener<Data> clickListener) {
             this.clickListener = clickListener;
             return this;
         }
@@ -1353,7 +1360,7 @@ public class SuperListView extends RelativeLayout {
          * @param longClickListener longClickListener
          * @return item
          */
-        public Item<Data> setOnItemLongClickListener(OnItemLongClickListener<Data> longClickListener) {
+        public Item<Data> setOnItemLongClickListener(OnRecyclerBoxItemLongClickListener<Data> longClickListener) {
             this.longClickListener = longClickListener;
             return this;
         }
@@ -1461,7 +1468,7 @@ public class SuperListView extends RelativeLayout {
         /**
          * getItemType
          *
-         * @return get type
+         * @return doGet type
          */
         public int getItemType() {
             if (itemType == 0) {
@@ -1524,7 +1531,7 @@ public class SuperListView extends RelativeLayout {
                 });
             }
             if (itemView != null) {
-                if (getPool().getSuperListView().getOrientation() == HORIZONTAL) {
+                if (getPool().getRecyclerBox().getOrientation() == HORIZONTAL) {
                     itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 } else {
                     itemView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -1541,22 +1548,21 @@ public class SuperListView extends RelativeLayout {
                 super(itemView);
             }
         }
-
     }
 
     /**
-     * SuperDecoration
+     * BoxDecoration
      */
-    public static class SuperDecoration extends RecyclerView.ItemDecoration {
+    public static class BoxDecoration extends RecyclerView.ItemDecoration {
         //space
         private int space = 0;
         private boolean full = false;
 
-        public SuperDecoration(int spacingInPixels) {
+        public BoxDecoration(int spacingInPixels) {
             this.space = spacingInPixels / 2;
         }
 
-        public SuperDecoration(int spacingInPixels, boolean full) {
+        public BoxDecoration(int spacingInPixels, boolean full) {
             this(spacingInPixels);
             this.full = full;
         }

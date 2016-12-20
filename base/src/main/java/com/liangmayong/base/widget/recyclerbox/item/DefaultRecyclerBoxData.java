@@ -1,4 +1,4 @@
-package com.liangmayong.base.widget.superlistview.item;
+package com.liangmayong.base.widget.recyclerbox.item;
 
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.iconfont.IconValue;
@@ -7,7 +7,7 @@ import com.liangmayong.base.widget.iconfont.IconValue;
  * Created by LiangMaYong on 2016/11/7.
  */
 
-public final class DefaultSuperData {
+public final class DefaultRecyclerBoxData {
     private String title;
     private String sub;
     private Object tag;
@@ -24,12 +24,12 @@ public final class DefaultSuperData {
         return icon;
     }
 
-    public DefaultSuperData(String title, String sub) {
+    public DefaultRecyclerBoxData(String title, String sub) {
         this.title = title;
         this.sub = sub;
     }
 
-    public DefaultSuperData(String title, String sub, String right_title, String right_sub) {
+    public DefaultRecyclerBoxData(String title, String sub, String right_title, String right_sub) {
         this.title = title;
         this.sub = sub;
         this.right_title = right_title;
@@ -86,7 +86,7 @@ public final class DefaultSuperData {
 
     @Override
     public String toString() {
-        return "DefaultSuperData{" +
+        return "DefaultRecyclerBoxData{" +
                 "title='" + title + '\'' +
                 ", sub='" + sub + '\'' +
                 ", tag=" + tag +

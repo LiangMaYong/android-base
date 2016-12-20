@@ -1,32 +1,22 @@
 package com.liangmayong.base.support.http;
 
-import java.io.File;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * HttpUtil
+ * HttpUtils
  *
  * @author LiangMaYong
  * @version 1.0
  */
-public class HttpUtil {
+public class HttpUtils {
 
-    private HttpUtil() {
+    private HttpUtils() {
     }
 
     //executorService
     private static ExecutorService executorService = Executors.newFixedThreadPool(5);
-
-    /**
-     * setThreadCount
-     *
-     * @param count count
-     */
-    public final static void setThreadCount(int count) {
-        HttpUtil.executorService = Executors.newFixedThreadPool(count);
-    }
 
     /**
      * executorService
@@ -71,7 +61,7 @@ public class HttpUtil {
      * @param netListener callback listener
      */
     public static void post(String url, Map<String, String> params, Map<String, String> headers,
-                            Map<String, File> files, OnHttpListener netListener) {
+                            Map<String, HttpFile> files, OnHttpListener netListener) {
         HttpPost.post(url, params, files, headers, netListener);
     }
 
@@ -86,7 +76,7 @@ public class HttpUtil {
      * @param netListener callback listener
      */
     public static void post(String url, Map<String, String> params, Map<String, String> headers,
-                            Map<String, File> files, String encode, OnHttpListener netListener) {
+                            Map<String, HttpFile> files, String encode, OnHttpListener netListener) {
         HttpPost.post(url, params, files, headers, encode, netListener);
     }
 
@@ -102,12 +92,12 @@ public class HttpUtil {
      * @param netListener callback listener
      */
     public static void post(String url, Map<String, String> params, Map<String, String> headers,
-                            Map<String, File> files, String encode, String cookie, OnHttpListener netListener) {
+                            Map<String, HttpFile> files, String encode, String cookie, OnHttpListener netListener) {
         HttpPost.post(url, params, files, headers, encode, cookie, netListener);
     }
 
     /**
-     * get
+     * doGet
      *
      * @param url         url
      * @param netListener callback listener
@@ -117,7 +107,7 @@ public class HttpUtil {
     }
 
     /**
-     * get
+     * doGet
      *
      * @param url         url
      * @param encode      encode default = utf8
@@ -128,7 +118,7 @@ public class HttpUtil {
     }
 
     /**
-     * get
+     * doGet
      *
      * @param url         url
      * @param cookie      cookie

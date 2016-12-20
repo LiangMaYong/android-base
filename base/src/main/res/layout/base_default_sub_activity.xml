@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_default_layout_bg_color">
-
     <FrameLayout
         android:id="@id/base_sub_fragment"
         android:layout_width="match_parent"

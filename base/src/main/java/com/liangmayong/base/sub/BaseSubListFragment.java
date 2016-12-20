@@ -6,7 +6,7 @@ import android.view.View;
 import com.liangmayong.base.R;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
-import com.liangmayong.base.widget.superlistview.SuperListView;
+import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
 
 /**
  * Created by LiangMaYong on 2016/10/17.
@@ -15,16 +15,16 @@ import com.liangmayong.base.widget.superlistview.SuperListView;
 public abstract class BaseSubListFragment extends BaseSubFragment {
 
 
-    private SuperListView reListView = null;
+    private RecyclerBox recyclerBox = null;
     private IRefreshLayout refreshLayout = null;
 
     /**
-     * getListView
+     * getRecyclerBox
      *
      * @return listView
      */
-    public SuperListView getListView() {
-        return reListView;
+    public RecyclerBox getListView() {
+        return recyclerBox;
     }
 
     /**
@@ -38,11 +38,11 @@ public abstract class BaseSubListFragment extends BaseSubFragment {
 
     @Override
     protected final void initSubView(View rootView) {
-        reListView = (SuperListView) rootView.findViewById(R.id.base_superListView);
+        recyclerBox = (RecyclerBox) rootView.findViewById(R.id.base_recyclerbox);
         refreshLayout = (IRefreshLayout) rootView.findViewById(R.id.base_refreshLayout);
         refreshLayout.setEnabled(refreshEnabled());
-        refreshLayout.setChildView(reListView);
-        initListView(reListView, refreshLayout);
+        refreshLayout.setChildView(recyclerBox);
+        initListView(recyclerBox, refreshLayout);
     }
 
     @Override
@@ -50,7 +50,7 @@ public abstract class BaseSubListFragment extends BaseSubFragment {
         super.onSkinRefresh(skin);
     }
 
-    protected abstract void initListView(SuperListView listView, IRefreshLayout refreshLayout);
+    protected abstract void initListView(RecyclerBox recyclerBox, IRefreshLayout refreshLayout);
 
     /**
      * refreshEnabled
@@ -63,6 +63,6 @@ public abstract class BaseSubListFragment extends BaseSubFragment {
 
     @Override
     protected int generateContainerViewId() {
-        return R.layout.base_default_fragment_superlist_swipe;
+        return R.layout.base_default_fragment_recyclerbox_swipe;
     }
 }

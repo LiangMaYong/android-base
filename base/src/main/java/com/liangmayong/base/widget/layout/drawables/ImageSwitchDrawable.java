@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.TypedValue;
 
+import com.liangmayong.base.R;
 import com.liangmayong.base.widget.layout.PullRefreshLayout;
 
 import java.security.InvalidParameterException;
@@ -14,7 +15,11 @@ import java.security.InvalidParameterException;
 /**
  * Created by LiangMaYong on 2016/8/24.
  */
-public class FrameDrawable extends RefreshDrawable {
+public class ImageSwitchDrawable extends RefreshDrawable {
+
+    public static ImageSwitchDrawable newDrawable(PullRefreshLayout refreshLayout) {
+        return new ImageSwitchDrawable(refreshLayout, R.mipmap.base_default_pull_loading_1, R.mipmap.base_default_pull_loading_2, R.mipmap.base_default_pull_loading_3, R.mipmap.base_default_pull_loading_4, R.mipmap.base_default_pull_loading_5, R.mipmap.base_default_pull_loading_6);
+    }
 
     private Paint mPaint;
 
@@ -36,7 +41,7 @@ public class FrameDrawable extends RefreshDrawable {
 
     private int[] drawBitmap;
 
-    public FrameDrawable(PullRefreshLayout layout, int... resIds) {
+    public ImageSwitchDrawable(PullRefreshLayout layout, int... resIds) {
         super(layout);
         if (resIds == null || resIds.length < 2)
             throw new InvalidParameterException("The resIds length must be >= 2");

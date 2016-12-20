@@ -484,7 +484,7 @@ public class DefaultToolbar {
         }
 
         /**
-         * get view
+         * doGet view
          *
          * @return icon bar
          */

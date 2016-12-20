@@ -4,9 +4,9 @@
     <item name="base_drawer_layout" type="id" />
     <item name="base_drawer_fragment" type="id" />
     <item name="base_drawer_navigation_view" type="id" />
-    <!-- base_default_fragment_superlist_pull.xml and  base_default_fragment_superlist_swipe.xml-->
+    <!-- base_default_fragment_recyclerbox_pullll.xml and  base_default_fragment_recyclerbox_swipepe.xml-->
     <item name="base_refreshLayout" type="id" />
-    <item name="base_superListView" type="id" />
+    <item name="base_recyclerbox" type="id" />
     <!-- base_default_fragment_web.xml-->
     <item name="base_web_refreshLayout" type="id" />
     <!-- base_default_dialog_more.xml -->
@@ -16,7 +16,7 @@
     <!-- base_default_item_more.xml -->
     <item name="base_more_title" type="id" />
     <item name="base_more_icon" type="id" />
-    <!-- base_default_item_superview.xml -->
+    <!-- base_default_item_recyclerbox_viewox_view.xml -->
     <item name="base_default_adapter_linear" type="id" />
     <item name="base_default_adapter_icon" type="id" />
     <item name="base_default_adapter_title" type="id" />

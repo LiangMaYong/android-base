@@ -16,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <com.liangmayong.base.widget.superlistview.SuperListView
-                android:id="@id/base_superListView"
+            <com.liangmayong.base.widget.recyclerbox.RecyclerBox
+                android:id="@id/base_recyclerbox"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical" />

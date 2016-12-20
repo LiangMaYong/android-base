@@ -375,7 +375,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        // Let the focused view and/or our descendants get the key first
+        // Let the focused view and/or our descendants doGet the key first
         return super.dispatchKeyEvent(event) || executeKeyEvent(event);
     }
 
@@ -914,7 +914,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
             // (also, need to temporarily force FOCUS_BEFORE_DESCENDANTS so we
             // are
             // sure to
-            // get it)
+            // doGet it)
             final int descendantFocusability = getDescendantFocusability(); // save
             setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
             requestFocus();
@@ -1129,7 +1129,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
     }
 
     /**
-     * If rect is off screen, scroll just enough to get it (or at least the
+     * If rect is off screen, scroll just enough to doGet it (or at least the
      * first screen size chunk of it) on screen.
      *
      * @param rect      The rectangle.
@@ -1150,7 +1150,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
     }
 
     /**
-     * Compute the amount to scroll in the Y direction in order to get a
+     * Compute the amount to scroll in the Y direction in order to doGet a
      * rectangle completely on the screen (or, if taller than the screen, at
      * least the first screen size chunk of it).
      *
@@ -1181,15 +1181,15 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
         int scrollYDelta = 0;
 
         if (rect.bottom > screenBottom && rect.top > screenTop) {
-            // need to move down to get it in view: move down just enough so
+            // need to move down to doGet it in view: move down just enough so
             // that the entire rectangle is in view (or at least the first
             // screen size chunk).
 
             if (rect.height() > height) {
-                // just enough to get screen size chunk on
+                // just enough to doGet screen size chunk on
                 scrollYDelta += (rect.top - screenTop);
             } else {
-                // get entire rect at bottom of screen
+                // doGet entire rect at bottom of screen
                 scrollYDelta += (rect.bottom - screenBottom);
             }
 
@@ -1199,7 +1199,7 @@ public class OverScrollView extends FrameLayout implements OnTouchListener {
             scrollYDelta = Math.min(scrollYDelta, distanceToBottom);
 
         } else if (rect.top < screenTop && rect.bottom < screenBottom) {
-            // need to move up to get it in view: move up just enough so that
+            // need to move up to doGet it in view: move up just enough so that
             // entire rectangle is in view (or at least the first screen
             // size chunk of it).
 

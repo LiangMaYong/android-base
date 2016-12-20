@@ -51,7 +51,7 @@ public final class GestureUtils {
         public int Type = -1;
 
         /**
-         * IBGestureType
+         * GestureType
          *
          * @param direction direction
          */

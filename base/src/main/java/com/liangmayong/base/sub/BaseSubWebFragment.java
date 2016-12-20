@@ -14,14 +14,14 @@ import com.liangmayong.base.sub.webkit.BaseWebView;
 import com.liangmayong.base.sub.webkit.BaseWebViewClient;
 import com.liangmayong.base.sub.webkit.BaseWebWidget;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
-import com.liangmayong.base.web.fragments.DefaultMoreFragment;
+import com.liangmayong.base.web.dialogs.DefaultMoreDialog;
 import com.liangmayong.base.web.items.MoreItem;
 import com.liangmayong.base.utils.ClipboardUtils;
 import com.liangmayong.base.utils.ShareUtils;
 import com.liangmayong.base.utils.StringUtils;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
-import com.liangmayong.base.widget.superlistview.SuperListView;
+import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
 import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
 import java.net.MalformedURLException;
@@ -169,13 +169,13 @@ public class BaseSubWebFragment extends BaseSubFragment {
      * @param view view
      */
     protected void showMoreDialog(final View view) {
-        List<SuperListView.Item> menus = new ArrayList<>();
+        List<RecyclerBox.Item> menus = new ArrayList<>();
 
-        menus.add(new MoreItem(new MoreItem.Menu(Icon.icon_refresh, getString(R.string.base_web_refresh))).setOnItemClickListener(new SuperListView.OnItemClickListener<MoreItem.Menu>() {
+        menus.add(new MoreItem(new MoreItem.MoreData(Icon.icon_refresh, getString(R.string.base_web_refresh))).setOnItemClickListener(new RecyclerBox.OnRecyclerBoxItemClickListener<MoreItem.MoreData>() {
             @Override
-            public void onClick(SuperListView.Item<MoreItem.Menu> item, int position, View itemView) {
+            public void onClick(RecyclerBox.Item<MoreItem.MoreData> item, int position, View itemView) {
                 reload();
-                DefaultMoreFragment.cancel(getActivity());
+                DefaultMoreDialog.cancel(getActivity());
             }
         }));
         String mUrl = url;
@@ -187,10 +187,10 @@ public class BaseSubWebFragment extends BaseSubFragment {
         } catch (MalformedURLException e) {
         }
         if (copyEnabled) {
-            menus.add(new MoreItem(new MoreItem.Menu(Icon.icon_copy, getString(R.string.base_web_copylink))).setOnItemClickListener(new SuperListView.OnItemClickListener<MoreItem.Menu>() {
+            menus.add(new MoreItem(new MoreItem.MoreData(Icon.icon_copy, getString(R.string.base_web_copylink))).setOnItemClickListener(new RecyclerBox.OnRecyclerBoxItemClickListener<MoreItem.MoreData>() {
                 @Override
-                public void onClick(SuperListView.Item<MoreItem.Menu> item, int position, View itemView) {
-                    DefaultMoreFragment.cancel(getActivity());
+                public void onClick(RecyclerBox.Item<MoreItem.MoreData> item, int position, View itemView) {
+                    DefaultMoreDialog.cancel(getActivity());
                     String mUrl = url;
                     if (!StringUtils.isEmpty(base_webview.getUrl())) {
                         mUrl = base_webview.getUrl();
@@ -200,10 +200,10 @@ public class BaseSubWebFragment extends BaseSubFragment {
                 }
             }));
         }
-        menus.add(new MoreItem(new MoreItem.Menu(Icon.icon_share, getString(R.string.base_web_share))).setOnItemClickListener(new SuperListView.OnItemClickListener<MoreItem.Menu>() {
+        menus.add(new MoreItem(new MoreItem.MoreData(Icon.icon_share, getString(R.string.base_web_share))).setOnItemClickListener(new RecyclerBox.OnRecyclerBoxItemClickListener<MoreItem.MoreData>() {
             @Override
-            public void onClick(SuperListView.Item<MoreItem.Menu> item, int position, View itemView) {
-                DefaultMoreFragment.cancel(getActivity());
+            public void onClick(RecyclerBox.Item<MoreItem.MoreData> item, int position, View itemView) {
+                DefaultMoreDialog.cancel(getActivity());
                 String mUrl = url;
                 if (!StringUtils.isEmpty(base_webview.getUrl())) {
                     mUrl = base_webview.getUrl();
@@ -211,7 +211,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
                 ShareUtils.shareText(getContext(), getString(R.string.base_web_share), mUrl);
             }
         }));
-        DefaultMoreFragment.show(getActivity(), mUrl, menus);
+        DefaultMoreDialog.show(getActivity(), mUrl, menus);
     }
 
     /**

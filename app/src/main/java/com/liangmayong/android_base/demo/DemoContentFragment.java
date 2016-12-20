@@ -18,8 +18,6 @@ import com.liangmayong.base.widget.skinview.SkinButton;
 @BindTitle("Item")
 public class DemoContentFragment extends BaseSubFragment {
 
-    @BindView(R.id.tv_title)
-    private TextView tv_title;
     @BindView(R.id.btn_test)
     private SkinButton btn_test;
 

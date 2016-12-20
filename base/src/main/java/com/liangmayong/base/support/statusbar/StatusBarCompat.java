@@ -21,7 +21,6 @@ public class StatusBarCompat {
             activity.getWindow().setStatusBarColor(statusColor);
             return;
         }
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             ViewGroup contentView = (ViewGroup) activity.findViewById(android.R.id.content);
             int countChild = contentView.getChildCount();

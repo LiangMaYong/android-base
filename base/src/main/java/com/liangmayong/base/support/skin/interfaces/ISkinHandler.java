@@ -7,6 +7,25 @@ import com.liangmayong.base.support.skin.handlers.SkinType;
  */
 public interface ISkinHandler {
 
+    String THEME_COLOR = "THEME_COLOR";
+    String THEME_TEXT_COLOR = "THEME_TEXT_COLOR";
+    String PRIMARY_COLOR = "PRIMARY_COLOR";
+    String PRIMARY_TEXT_COLOR = "PRIMARY_TEXT_COLOR";
+    String SUCCESS_COLOR = "SUCCESS_COLOR";
+    String SUCCESS_TEXT_COLOR = "SUCCESS_TEXT_COLOR";
+    String INFO_COLOR = "INFO_COLOR";
+    String INFO_TEXT_COLOR = "INFO_TEXT_COLOR";
+    String WARNING_COLOR = "WARNING_COLOR";
+    String WARNING_TEXT_COLOR = "WARNING_TEXT_COLOR";
+    String DANGER_COLOR = "DANGER_COLOR";
+    String DANGER_TEXT_COLOR = "DANGER_TEXT_COLOR";
+    String GRAY_COLOR = "GRAY_COLOR";
+    String GRAY_TEXT_COLOR = "GRAY_TEXT_COLOR";
+    String WHITE_COLOR = "WHITE_COLOR";
+    String WHITE_TEXT_COLOR = "WHITE_TEXT_COLOR";
+    String BLACK_COLOR = "BLACK_COLOR";
+    String BLACK_TEXT_COLOR = "BLACK_TEXT_COLOR";
+
     int getThemeColor();
 
     int getThemeTextColor();

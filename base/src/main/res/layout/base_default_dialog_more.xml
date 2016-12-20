@@ -25,7 +25,7 @@
             android:singleLine="true"
             android:text="" />
 
-        <com.liangmayong.base.widget.superlistview.SuperListView
+        <com.liangmayong.base.widget.recyclerbox.RecyclerBox
             android:id="@id/base_dialog_more_list"
             android:layout_width="match_parent"
             android:layout_height="80dp"

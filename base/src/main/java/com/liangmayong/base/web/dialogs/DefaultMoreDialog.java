@@ -1,4 +1,4 @@
-package com.liangmayong.base.web.fragments;
+package com.liangmayong.base.web.dialogs;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -16,44 +16,44 @@ import android.widget.TextView;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.utils.DimenUtils;
+import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
 import com.liangmayong.base.widget.skinview.SkinRippleButton;
-import com.liangmayong.base.widget.superlistview.SuperListView;
 
 import java.util.List;
 
 /**
  * Created by LiangMaYong on 2016/11/9.
  */
-
-public class DefaultMoreFragment extends DialogFragment {
-
-    //fragment tag
-    private static final String TAG = "DefaultMoreFragment";
+public class DefaultMoreDialog extends DialogFragment {
+    //tag
+    private static final String TAG = "DefaultMoreDialog";
 
     /**
      * show
      *
      * @param activity activity
+     * @param title    title
      * @param items    items
+     * @return more dialog
      */
-    public static DefaultMoreFragment show(FragmentActivity activity, String title, List<SuperListView.Item> items) {
+    public static DefaultMoreDialog show(FragmentActivity activity, String title, List<RecyclerBox.Item> items) {
         try {
             synchronized (activity) {
                 DialogFragment dialogFragment = (DialogFragment) activity.getSupportFragmentManager()
                         .findFragmentByTag(TAG);
                 if (dialogFragment != null) {
-                    ((DefaultMoreFragment) dialogFragment).setItems(items);
-                    ((DefaultMoreFragment) dialogFragment).setTitle(title);
+                    ((DefaultMoreDialog) dialogFragment).setItems(items);
+                    ((DefaultMoreDialog) dialogFragment).setTitle(title);
                     if (dialogFragment.isAdded()) {
                         activity.getSupportFragmentManager().beginTransaction().show(dialogFragment).commit();
                     }
                 } else {
-                    dialogFragment = new DefaultMoreFragment();
-                    ((DefaultMoreFragment) dialogFragment).setItems(items);
-                    ((DefaultMoreFragment) dialogFragment).setTitle(title);
+                    dialogFragment = new DefaultMoreDialog();
+                    ((DefaultMoreDialog) dialogFragment).setItems(items);
+                    ((DefaultMoreDialog) dialogFragment).setTitle(title);
                     dialogFragment.show(activity.getSupportFragmentManager(), TAG);
                 }
-                return (DefaultMoreFragment) dialogFragment;
+                return (DefaultMoreDialog) dialogFragment;
             }
         } catch (Exception e) {
         }
@@ -61,10 +61,10 @@ public class DefaultMoreFragment extends DialogFragment {
     }
 
     @SuppressLint("ValidFragment")
-    private DefaultMoreFragment() {
+    private DefaultMoreDialog() {
     }
 
-    private List<SuperListView.Item> items = null;
+    private List<RecyclerBox.Item> items = null;
     private String title = "";
 
     public void setTitle(String title) {
@@ -80,7 +80,7 @@ public class DefaultMoreFragment extends DialogFragment {
      *
      * @param items items
      */
-    public void setItems(List<SuperListView.Item> items) {
+    public void setItems(List<RecyclerBox.Item> items) {
         if (viewHolder != null) {
             viewHolder.base_more_list.getPool().clear();
             viewHolder.base_more_list.getPool().addAll(items);
@@ -149,27 +149,28 @@ public class DefaultMoreFragment extends DialogFragment {
         return (int) (dpValue * scale + 0.5f);
     }
 
-
+    /**
+     * ViewHolder
+     */
     public class ViewHolder {
         public View rootView;
-        public SuperListView base_more_list;
+        public RecyclerBox base_more_list;
         public SkinRippleButton base_more_close_btn;
         public TextView base_more_title;
 
         public ViewHolder(View rootView) {
-
             this.rootView = rootView;
             this.base_more_title = (TextView) rootView.findViewById(R.id.base_dialog_more_title);
-            this.base_more_list = (SuperListView) rootView.findViewById(R.id.base_dialog_more_list);
+            this.base_more_list = (RecyclerBox) rootView.findViewById(R.id.base_dialog_more_list);
             this.base_more_list.setStaggeredEnable(true);
-            this.base_more_list.setOrientation(SuperListView.HORIZONTAL);
+            this.base_more_list.setOrientation(RecyclerBox.HORIZONTAL);
             this.base_more_list.setColumnCount(1);
             this.base_more_list.setDecorationSize(DimenUtils.dip2px(rootView.getContext(), 10));
             this.base_more_close_btn = (SkinRippleButton) rootView.findViewById(R.id.base_dialog_more_close_btn);
             this.base_more_close_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DefaultMoreFragment.cancel(getActivity());
+                    DefaultMoreDialog.cancel(getActivity());
                 }
             });
         }

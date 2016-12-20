@@ -2,24 +2,15 @@
 
     <!-- Base application theme. -->
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <!-- Base application theme. -->
-    <style name="BaseTheme.NoChange" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:screenOrientation">portrait</item>
         <item name="android:configChanges">keyboardHidden|orientation|screenSize</item>
+        <item name="android:windowBackground">@color/base_default_layout_bg_color</item>
     </style>
 
-    <style name="BaseLauncher" parent="BaseTheme.NoChange">
-        <!-- Customize your theme here. -->
+    <style name="BaseLauncher" parent="BaseTheme">
         <item name="colorPrimaryDark">#30333333</item>
         <item name="android:windowBackground">@mipmap/base_launcher_background</item>
     </style>

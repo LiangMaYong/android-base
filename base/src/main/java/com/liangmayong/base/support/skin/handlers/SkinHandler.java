@@ -3,6 +3,7 @@ package com.liangmayong.base.support.skin.handlers;
 import com.liangmayong.base.support.database.DataPreferences;
 import com.liangmayong.base.support.skin.interfaces.ISkinDefault;
 import com.liangmayong.base.support.skin.interfaces.ISkinHandler;
+import com.liangmayong.base.support.skin.themes.SkinDefault;
 
 /**
  * Created by LiangMaYong on 2016/12/9.
@@ -10,40 +11,20 @@ import com.liangmayong.base.support.skin.interfaces.ISkinHandler;
 
 public class SkinHandler implements ISkinHandler {
 
-    private static volatile SkinHandler ourInstance = null;
-
-    public static SkinHandler getDefault() {
-        if (ourInstance == null) {
-            synchronized (SkinHandler.class) {
-                ourInstance = new SkinHandler("default_handler", new SkinDefault());
-            }
+    public static SkinHandler get(String name, Class<? extends ISkinDefault> defaultClazz) {
+        ISkinDefault defualt = null;
+        try {
+            defualt = defaultClazz.newInstance();
+        } catch (Exception e) {
+            defualt = new SkinDefault();
         }
-        return ourInstance;
+        return new SkinHandler(name + "_handler", defualt);
     }
-
-    private static final String THEME_COLOR = "THEME_COLOR";
-    private static final String THEME_TEXT_COLOR = "THEME_TEXT_COLOR";
-    private static final String PRIMARY_COLOR = "PRIMARY_COLOR";
-    private static final String PRIMARY_TEXT_COLOR = "PRIMARY_TEXT_COLOR";
-    private static final String SUCCESS_COLOR = "SUCCESS_COLOR";
-    private static final String SUCCESS_TEXT_COLOR = "SUCCESS_TEXT_COLOR";
-    private static final String INFO_COLOR = "INFO_COLOR";
-    private static final String INFO_TEXT_COLOR = "INFO_TEXT_COLOR";
-    private static final String WARNING_COLOR = "WARNING_COLOR";
-    private static final String WARNING_TEXT_COLOR = "WARNING_TEXT_COLOR";
-    private static final String DANGER_COLOR = "DANGER_COLOR";
-    private static final String DANGER_TEXT_COLOR = "DANGER_TEXT_COLOR";
-    private static final String GRAY_COLOR = "GRAY_COLOR";
-    private static final String GRAY_TEXT_COLOR = "GRAY_TEXT_COLOR";
-    private static final String WHITE_COLOR = "WHITE_COLOR";
-    private static final String WHITE_TEXT_COLOR = "WHITE_TEXT_COLOR";
-    private static final String BLACK_COLOR = "BLACK_COLOR";
-    private static final String BLACK_TEXT_COLOR = "BLACK_TEXT_COLOR";
 
     private final String themeName;
     private final ISkinDefault default_color;
 
-    public SkinHandler(String themeName, ISkinDefault default_color) {
+    private SkinHandler(String themeName, ISkinDefault default_color) {
         this.themeName = themeName;
         this.default_color = default_color;
     }

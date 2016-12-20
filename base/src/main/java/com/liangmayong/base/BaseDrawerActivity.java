@@ -22,10 +22,14 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     private DrawerLayout mDrawerLayout;
     // mNavigationView
     private NavigationView mNavigationView;
-    //mFrameViewgradlew
+    // mSubManager
     private BaseSubFragmentManager mSubManager;
 
-    //getSubFragmentManager
+    /**
+     * getSubFragmentManager
+     *
+     * @return sub fragment manager
+     */
     public BaseSubFragmentManager getSubFragmentManager() {
         return mSubManager;
     }
@@ -64,6 +68,12 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
         }
     }
 
+    @Override
+    public void goTo(String title, String url) {
+        hideSoftKeyBoard();
+        openFragment(new DefaultWebFragment(title, url));
+    }
+
     /**
      * openFragment
      *
@@ -84,12 +94,6 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     public void openFragment(BaseSubFragment fragment, int enterAnim, int exitAnim) {
         hideSoftKeyBoard();
         getSubFragmentManager().addFragment(fragment, 0, 0);
-    }
-
-    @Override
-    public void goTo(String title, String url) {
-        hideSoftKeyBoard();
-        openFragment(new DefaultWebFragment(title, url));
     }
 
 
@@ -239,7 +243,7 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     }
 
     /**
-     * get visible fragment
+     * doGet visible fragment
      *
      * @return visible fragment
      */

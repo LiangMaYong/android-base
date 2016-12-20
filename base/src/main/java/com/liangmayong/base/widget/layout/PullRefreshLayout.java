@@ -15,9 +15,8 @@ import android.view.animation.Transformation;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 
-import com.liangmayong.base.R;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
-import com.liangmayong.base.widget.layout.drawables.FrameDrawable;
+import com.liangmayong.base.widget.layout.drawables.ImageSwitchDrawable;
 import com.liangmayong.base.widget.layout.drawables.RefreshDrawable;
 
 
@@ -68,7 +67,7 @@ public class PullRefreshLayout extends ViewGroup implements IRefreshLayout {
         mDurationToCorrectPosition = defaultDuration;
         mSpinnerFinalOffset = mTotalDragDistance = dp2px(DRAG_MAX_DISTANCE);
         mRefreshView = new ImageView(context);
-        setRefreshDrawable(new FrameDrawable(this, R.mipmap.base_default_pull_loading_1, R.mipmap.base_default_pull_loading_2, R.mipmap.base_default_pull_loading_3, R.mipmap.base_default_pull_loading_4, R.mipmap.base_default_pull_loading_5, R.mipmap.base_default_pull_loading_6));
+        setRefreshDrawable(ImageSwitchDrawable.newDrawable(this));
         mRefreshView.setVisibility(View.GONE);
         addView(mRefreshView, 0);
         setWillNotDraw(false);

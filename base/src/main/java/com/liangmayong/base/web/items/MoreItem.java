@@ -9,22 +9,22 @@ import com.liangmayong.base.widget.iconfont.IconValue;
 import com.liangmayong.base.widget.iconfont.IconView;
 import com.liangmayong.base.widget.skinview.SkinIconView;
 import com.liangmayong.base.widget.skinview.SkinTextView;
-import com.liangmayong.base.widget.superlistview.SuperListView;
+import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
 
 /**
  * Created by LiangMaYong on 2016/9/25.
  */
-public class MoreItem extends SuperListView.Item<MoreItem.Menu> {
+public class MoreItem extends RecyclerBox.Item<MoreItem.MoreData> {
 
-    public MoreItem(Menu s) {
+    public MoreItem(MoreData s) {
         super(s);
     }
 
-    public static class Menu {
+    public static class MoreData {
         private IconValue icon;
         private String txt;
 
-        public Menu(IconValue icon, String txt) {
+        public MoreData(IconValue icon, String txt) {
             this.icon = icon;
             this.txt = txt;
         }
@@ -52,7 +52,7 @@ public class MoreItem extends SuperListView.Item<MoreItem.Menu> {
     }
 
     @Override
-    protected void bindView(View itemView, Menu data) {
+    protected void bindView(View itemView, MoreData data) {
         ViewHolder holder = new ViewHolder(itemView);
         holder.base_more_icon.setIcon("", data.getIcon(), IconView.ICON_LEFT);
         holder.base_more_title.setText(data.getTxt());

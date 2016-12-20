@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.liangmayong.base.widget.skinview.SkinLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.liangmayong.base.widget.skinview.SkinLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimary"
@@ -13,11 +14,11 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="fitXY"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="zwt_UseDesignDemo" />
+        android:text="android-base"/>
 </com.liangmayong.base.widget.skinview.SkinLinearLayout>

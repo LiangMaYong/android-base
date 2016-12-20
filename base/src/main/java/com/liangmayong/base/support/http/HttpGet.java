@@ -7,16 +7,13 @@ import android.os.Message;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Get tool class
+ * DoGet tool class
  *
  * @author LiangMaYong
  * @version 1.0
@@ -24,8 +21,8 @@ import java.util.Map;
 class HttpGet {
 
     public static void get(String url, OnHttpListener netListener) {
-        Get get = new Get(url);
-        get.get(netListener);
+        DoGet get = new DoGet(url);
+        get.doGet(netListener);
     }
 
     /**
@@ -36,8 +33,8 @@ class HttpGet {
      * @param netListener callback listener
      */
     public static void get(String url, String encode, OnHttpListener netListener) {
-        Get get = new Get(url, encode);
-        get.get(netListener);
+        DoGet get = new DoGet(url, encode);
+        get.doGet(netListener);
     }
 
     /**
@@ -49,22 +46,48 @@ class HttpGet {
      * @param netListener callback listener
      */
     public static void get(String url, String encode, String cookie, OnHttpListener netListener) {
-        Get get = new Get(url, encode, cookie);
-        get.get(netListener);
+        DoGet get = new DoGet(url, encode, cookie);
+        get.doGet(netListener);
     }
 
-    private static class Get {
+    /**
+     * DoGet
+     */
+    private static class DoGet {
+
         final int Success = 1;
         final int Error = 2;
         private OnHttpListener Listener;
         private String url, cookie, encode = "utf-8";
 
-        public Get(String url, String encode) {
+        /**
+         * DoGet
+         *
+         * @param url url
+         */
+        public DoGet(String url) {
+            this.url = url;
+        }
+
+        /**
+         * DoGet
+         *
+         * @param url    url
+         * @param encode encode
+         */
+        public DoGet(String url, String encode) {
             this.encode = encode;
             this.url = url;
         }
 
-        public Get(String url, String encode, String cookie) {
+        /**
+         * DoGet
+         *
+         * @param url    url
+         * @param encode encode
+         * @param cookie cookie
+         */
+        public DoGet(String url, String encode, String cookie) {
             this.encode = encode;
             this.url = url;
             this.cookie = cookie;
@@ -97,32 +120,33 @@ class HttpGet {
             ;
         };
 
-        public Get(String url) {
-            this.url = url;
-        }
-
-        public void get(OnHttpListener netListener) {
+        /**
+         * doGet
+         *
+         * @param netListener netListener
+         */
+        public void doGet(OnHttpListener netListener) {
             this.Listener = netListener;
-            HttpUtil.executorService().execute(new Runnable() {
+            HttpUtils.executorService().execute(new Runnable() {
                 @Override
                 public void run() {
                     int state = -1;
                     Object object = null;
-                    HttpURLConnection localHttpURLConnection = null;
+                    HttpURLConnection connection = null;
                     try {
-                        localHttpURLConnection = (HttpURLConnection) new URL(url).openConnection();
-                        localHttpURLConnection.addRequestProperty("Cookie", cookie);
-                        localHttpURLConnection.setConnectTimeout(5000);
-                        localHttpURLConnection.setReadTimeout(5000);
-                        localHttpURLConnection.setRequestMethod("GET");
-                        localHttpURLConnection.setDoInput(true);
-                        localHttpURLConnection.connect();
+                        connection = (HttpURLConnection) new URL(url).openConnection();
+                        connection.addRequestProperty("Cookie", cookie);
+                        connection.setConnectTimeout(5000);
+                        connection.setReadTimeout(5000);
+                        connection.setRequestMethod("GET");
+                        connection.setDoInput(true);
+                        connection.connect();
                         int code = 0;
-                        code = localHttpURLConnection.getResponseCode();
+                        code = connection.getResponseCode();
                         if (code == 200) {
                             InputStream inputStream;
-                            inputStream = localHttpURLConnection.getInputStream();
-                            Map<String, List<String>> map = localHttpURLConnection.getHeaderFields();
+                            inputStream = connection.getInputStream();
+                            Map<String, List<String>> map = connection.getHeaderFields();
                             String cookieVal = cookie;
                             for (String name : map.keySet()) {
                                 if ("Set-Cookie".equals(name)) {
@@ -140,32 +164,12 @@ class HttpGet {
                             object = new HttpServiceError(code);
                             state = Error;
                         }
-                    } catch (MalformedURLException e1) {
+                    } catch (Exception e1) {
                         object = e1;
                         state = Error;
+                    } finally {
                         try {
-                            localHttpURLConnection.disconnect();
-                        } catch (Exception e) {
-                        }
-                    } catch (SocketTimeoutException e1) {
-                        object = e1;
-                        state = Error;
-                        try {
-                            localHttpURLConnection.disconnect();
-                        } catch (Exception e) {
-                        }
-                    } catch (UnsupportedEncodingException e1) {
-                        object = e1;
-                        state = Error;
-                        try {
-                            localHttpURLConnection.disconnect();
-                        } catch (Exception e) {
-                        }
-                    } catch (IOException e1) {
-                        object = e1;
-                        state = Error;
-                        try {
-                            localHttpURLConnection.disconnect();
+                            connection.disconnect();
                         } catch (Exception e) {
                         }
                     }
@@ -178,6 +182,13 @@ class HttpGet {
         }
     }
 
+    /**
+     * input stream to bytes
+     *
+     * @param stream stream
+     * @param encode encode
+     * @return bytes
+     */
     private static byte[] inputStream2bytes(InputStream stream, String encode) {
         ByteArrayOutputStream nBuilder = new ByteArrayOutputStream();
         try {
