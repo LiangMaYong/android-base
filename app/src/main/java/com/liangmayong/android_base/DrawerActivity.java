@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,17 +12,10 @@ import android.widget.ImageView;
 import com.liangmayong.android_base.demo.DemoContentFragment;
 import com.liangmayong.base.BaseDrawerActivity;
 import com.liangmayong.base.sub.BaseSubFragment;
-import com.liangmayong.base.support.http.HttpError;
-import com.liangmayong.base.support.http.HttpFile;
-import com.liangmayong.base.support.http.HttpUtils;
-import com.liangmayong.base.support.http.OnHttpListener;
 import com.liangmayong.base.utils.PermissionUtils;
 import com.liangmayong.base.utils.PhotoUtils;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by LiangMaYong on 2016/11/10.
@@ -94,24 +86,6 @@ public class DrawerActivity extends BaseDrawerActivity {
                 if (viewHolder != null) {
                     viewHolder.img.setImageBitmap(result.getThumbnail());
                 }
-                Map<String, HttpFile> fileMap = new HashMap<String, HttpFile>();
-                fileMap.put("data", new HttpFile("img.jpg", result.getPath()));
-                HttpUtils.post("http://121.201.108.221/dpadmin/uploadFile.php", null, null, fileMap, new OnHttpListener() {
-                    @Override
-                    public void success(byte[] data, String encode, String cookie) {
-                        try {
-                            Log.e("TAG", new String(data, encode));
-                            showToast(new String(data, encode));
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void error(HttpError e) {
-                        e.getException().printStackTrace();
-                    }
-                });
             }
         });
     }
