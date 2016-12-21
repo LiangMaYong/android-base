@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -86,6 +87,7 @@ public class DrawerActivity extends BaseDrawerActivity {
                 if (viewHolder != null) {
                     viewHolder.img.setImageBitmap(result.getThumbnail());
                 }
+                Log.e("TAG", result.getPath());
             }
         });
     }

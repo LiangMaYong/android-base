@@ -25,7 +25,6 @@ import java.util.UUID;
 @SuppressLint("HandlerLeak")
 class HttpPost {
     private static String boundary = UUID.randomUUID().toString();
-    ;
     private static String prefix = "--";
     private static String lineEnd = "\r\n";
     private static final int SUCCESS = 1;
@@ -139,10 +138,10 @@ class HttpPost {
                             sb.append(boundary);
                             sb.append(lineEnd);
                             sb.append("Content-Disposition: form-data;name=\"" + entry.getKey() + "\";filename=\""
-                                    + item.getName() + "\"" + lineEnd);
+                                    + entry.getValue().getName() + "\"" + lineEnd);
                             FileInputStream in = new FileInputStream(item);
                             sb.append("Content-Length:" + in.available() + lineEnd);
-                            sb.append("Content-Type:" + getContentTypeByExtensionName(entry.getValue().getName()) + lineEnd + lineEnd);
+                            sb.append("Content-Type:" + entry.getValue().getContentType() + lineEnd + lineEnd);
                             outputStream.write(sb.toString().getBytes());
                             int bytes = 0;
                             byte[] bufferOut = new byte[Math.max(20 * 1024, Math.min(512 * 1024, bufferSize))];
@@ -393,111 +392,6 @@ class HttpPost {
         } catch (IOException e1) {
         }
         return nBuilder.toByteArray();
-    }
-
-    /**
-     * doGet content type by extension name
-     *
-     * @param extensionName
-     * @return content type
-     */
-    private static String getContentTypeByExtensionName(String extensionName) {
-        String contenttype = "";
-        extensionName = getExtensionName(extensionName);
-        if (extensionName == null || extensionName.equals("") || extensionName.equals(".*") || extensionName.equals(".") || extensionName.equals("*")) {
-            contenttype = "application/octet-stream";
-        } else if (extensionName.equals(".txt") || extensionName.equals("txt")) {
-            contenttype = "text/plain";
-        } else if (extensionName.equals(".tif") || extensionName.equals("tif")) {
-            contenttype = "image/tiff";
-        } else if (extensionName.equals(".001") || extensionName.equals("001")) {
-            contenttype = "text/plain";
-        } else if (extensionName.equals(".asp") || extensionName.equals("asp")) {
-            contenttype = "text/asp";
-        } else if (extensionName.equals(".avi") || extensionName.equals("avi")) {
-            contenttype = "video/avi";
-        } else if (extensionName.equals(".bmp") || extensionName.equals("bmp")) {
-            contenttype = "application/x-bmp";
-        } else if (extensionName.equals(".exe") || extensionName.equals("exe")) {
-            contenttype = "application/x-msdownload";
-        } else if (extensionName.equals(".eps") || extensionName.equals("eps")) {
-            contenttype = "application/x-ps";
-        } else if (extensionName.equals(".htm") || extensionName.equals("htm")) {
-            contenttype = "text/html";
-        } else if (extensionName.equals(".html") || extensionName.equals("html")) {
-            contenttype = "text/html";
-        } else if (extensionName.equals(".jfif") || extensionName.equals("jfif")) {
-            contenttype = "image/jpeg";
-        } else if (extensionName.equals(".jpe") || extensionName.equals("jpe")) {
-            contenttype = "image/jpeg";
-        } else if (extensionName.equals(".jpeg") || extensionName.equals("jpeg")) {
-            contenttype = "image/jpeg";
-        } else if (extensionName.equals(".jpg") || extensionName.equals("jpg")) {
-            contenttype = "image/jpeg";
-        } else if (extensionName.equals(".png") || extensionName.equals("png")) {
-            contenttype = "image/png";
-        } else if (extensionName.equals(".gif") || extensionName.equals("gif")) {
-            contenttype = "image/gif";
-        } else if (extensionName.equals(".js") || extensionName.equals("js")) {
-            contenttype = "application/x-javascript";
-        } else if (extensionName.equals(".jsp") || extensionName.equals("jsp")) {
-            contenttype = "text/html";
-        } else if (extensionName.equals(".mp3") || extensionName.equals("mp3")) {
-            contenttype = "audio/mp3";
-        } else if (extensionName.equals(".mp4") || extensionName.equals("mp4")) {
-            contenttype = "video/mpeg4";
-        } else if (extensionName.equals(".mpa") || extensionName.equals("mpa")) {
-            contenttype = "video/x-mpg";
-        } else if (extensionName.equals(".pot") || extensionName.equals("pot")) {
-            contenttype = "application/vnd.ms-powerpoint";
-        } else if (extensionName.equals(".ppa") || extensionName.equals("ppa")) {
-            contenttype = "application/vnd.ms-powerpoint";
-        } else if (extensionName.equals(".pps") || extensionName.equals("pps")) {
-            contenttype = "application/vnd.ms-powerpoint";
-        } else if (extensionName.equals(".ppt") || extensionName.equals("ppt")) {
-            contenttype = "application/vnd.ms-powerpoint";
-        } else if (extensionName.equals(".ppm") || extensionName.equals("ppm")) {
-            contenttype = "application/x-ppm";
-        } else if (extensionName.equals(".rmvb") || extensionName.equals("rmvb")) {
-            contenttype = "application/vnd.rn-realmedia-vbr";
-        } else if (extensionName.equals(".torrent") || extensionName.equals("torrent")) {
-            contenttype = "application/x-bittorrent";
-        } else if (extensionName.equals(".vxml") || extensionName.equals("vxml")) {
-            contenttype = "text/xml";
-        } else if (extensionName.equals(".xml") || extensionName.equals("xml")) {
-            contenttype = "text/xml";
-        } else if (extensionName.equals(".wm") || extensionName.equals("wm")) {
-            contenttype = "video/x-ms-wm";
-        } else if (extensionName.equals(".wma") || extensionName.equals("wma")) {
-            contenttype = "audio/x-ms-wma";
-        } else if (extensionName.equals(".xsl") || extensionName.equals("xsl")) {
-            contenttype = "text/xml";
-        } else if (extensionName.equals(".xwd") || extensionName.equals("xwd")) {
-            contenttype = "application/x-xwd";
-        } else if (extensionName.equals(".java") || extensionName.equals("java")) {
-            contenttype = "java/*";
-        } else if (extensionName.equals(".pdf") || extensionName.equals("pdf")) {
-            contenttype = "application/pdf";
-        } else {
-            contenttype = "application/octet-stream";
-        }
-        return contenttype;
-    }
-
-    /**
-     * doGet file extension name
-     *
-     * @param filename filename
-     * @return extension name
-     */
-    private static String getExtensionName(String filename) {
-        if ((filename != null) && (filename.length() > 0)) {
-            int dot = filename.lastIndexOf('.');
-            if ((dot > -1) && (dot < (filename.length() - 1))) {
-                return filename.substring(dot + 1);
-            }
-        }
-        return filename;
     }
 
 }
