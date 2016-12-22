@@ -5,4 +5,3 @@
 * | Author: LiangMaYong <ibeam@qq.com>
 * +---------------------------------
 **/
-//TODO:javascript

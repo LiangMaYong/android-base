@@ -134,6 +134,11 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
         mDrawerLayout.closeDrawer(GravityCompat.START);
     }
 
+    /**
+     * isOpenDrawer
+     *
+     * @return is open drawer
+     */
     public boolean isOpenDrawer() {
         return getDrawerLayout().isDrawerOpen(GravityCompat.START);
     }

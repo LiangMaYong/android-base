@@ -56,7 +56,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
     private String title = "";
     //url
     private String url = "";
-    //refreshEnabled
+    //isRefreshEnabled
     private boolean refreshEnabled = false;
     //closeEnabled
     private boolean closeEnabled = true;
@@ -250,7 +250,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
     /**
      * isRefreshEnabled
      *
-     * @return refreshEnabled
+     * @return isRefreshEnabled
      */
     public boolean isRefreshEnabled() {
         return refreshEnabled;
@@ -277,7 +277,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
     /**
      * setRefreshEnabled
      *
-     * @param refreshEnabled refreshEnabled
+     * @param refreshEnabled isRefreshEnabled
      */
     public void setRefreshEnabled(boolean refreshEnabled) {
         this.refreshEnabled = refreshEnabled;

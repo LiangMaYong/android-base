@@ -13,7 +13,6 @@ import java.util.LinkedList;
 /**
  * Created by LiangMaYong on 2016/10/29.
  */
-
 public class BaseSubFragmentManager {
 
     private boolean mLock = false;
@@ -31,6 +30,14 @@ public class BaseSubFragmentManager {
 
     public interface OnFragmentCountListener {
         void onFragmentCount(int count);
+    }
+
+    public FragmentActivity getFragmentActivity() {
+        return mActivity;
+    }
+
+    public FragmentManager getFragmentManager() {
+        return getFragmentActivity().getSupportFragmentManager();
     }
 
     private OnFragmentCountListener countListener;
@@ -57,7 +64,7 @@ public class BaseSubFragmentManager {
                 boolean flag = mCurrentFragment.onBackPressed();
                 if (!flag) {
                     closeAllFragment();
-                    mActivity.finish();
+                    getFragmentActivity().finish();
                     mCurrentFragment = null;
                     return;
                 } else {
@@ -65,7 +72,7 @@ public class BaseSubFragmentManager {
                 }
             } else if (count < 1) {
                 closeAllFragment();
-                mActivity.finish();
+                getFragmentActivity().finish();
                 mCurrentFragment = null;
                 return;
             } else {
@@ -87,7 +94,7 @@ public class BaseSubFragmentManager {
         if (mLock) {
             return;
         }
-        FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setTransition(FragmentTransaction.TRANSIT_NONE)
                 .replace(id, mTargetFragment, mTargetFragment.getClass().getName()).commit();
         mCurrentFragment = mTargetFragment;
@@ -103,7 +110,7 @@ public class BaseSubFragmentManager {
         if (mLock) {
             return;
         }
-        FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         if (enterAnim != 0 && exitAnim != 0) {
             transaction.setCustomAnimations(enterAnim, exitAnim);
         }
@@ -141,18 +148,18 @@ public class BaseSubFragmentManager {
         if (mFragments.contains(mTargetFragment)) {
             if (mFragments.size() <= 1) {
                 closeAllFragment();
-                mActivity.finish();
+                getFragmentActivity().finish();
                 mCurrentFragment = null;
                 return;
             }
-            FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
             mFragments.remove(mTargetFragment);
             if (mTargetFragment.equals(mCurrentFragment)) {
                 mCurrentFragment = mFragments.get(mFragments.size() - 1);
                 transaction.show(mCurrentFragment).commit();
                 View fromVie = mTargetFragment.getView();
                 if (popExit != 0 && popEnter != 0) {
-                    Animation quit_Out = AnimationUtils.loadAnimation(mActivity, popExit);
+                    Animation quit_Out = AnimationUtils.loadAnimation(getFragmentActivity(), popExit);
                     if (fromVie != null && quit_Out != null) {
                         fromVie.startAnimation(quit_Out);
                         quit_Out.setAnimationListener(new Animation.AnimationListener() {
@@ -162,7 +169,7 @@ public class BaseSubFragmentManager {
 
                             @Override
                             public void onAnimationEnd(Animation animation) {
-                                FragmentTransaction transaction = mActivity.getSupportFragmentManager().beginTransaction();
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
                                 transaction.remove(mTargetFragment).commit();
                             }
 
@@ -178,7 +185,7 @@ public class BaseSubFragmentManager {
                 if (mCurrentFragment != null) {
                     View toView = mCurrentFragment.getView();
                     if (popEnter != 0 && popExit != 0) {
-                        Animation quit_In = AnimationUtils.loadAnimation(mActivity, popEnter);
+                        Animation quit_In = AnimationUtils.loadAnimation(getFragmentActivity(), popEnter);
                         if (toView != null && quit_In != null) {
                             toView.startAnimation(quit_In);
                             quit_In.setAnimationListener(new Animation.AnimationListener() {
@@ -216,10 +223,10 @@ public class BaseSubFragmentManager {
         if (mLock) {
             return;
         }
-        int backStackCount = mActivity.getSupportFragmentManager().getBackStackEntryCount();
+        int backStackCount = getFragmentManager().getBackStackEntryCount();
         for (int i = 0; i < backStackCount; i++) {
-            int backStackId = mActivity.getSupportFragmentManager().getBackStackEntryAt(i).getId();
-            mActivity.getSupportFragmentManager().popBackStack(backStackId, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            int backStackId = getFragmentManager().getBackStackEntryAt(i).getId();
+            getFragmentManager().popBackStack(backStackId, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
         if (countListener != null) {
             countListener.onFragmentCount(getFragmentCount());

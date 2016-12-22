@@ -21,7 +21,6 @@ import com.liangmayong.base.support.binding.Presenter;
 import com.liangmayong.base.support.binding.PresenterBind;
 import com.liangmayong.base.support.binding.PresenterHolder;
 import com.liangmayong.base.support.binding.ViewBinding;
-import com.liangmayong.base.support.binding.annotations.BindP;
 import com.liangmayong.base.support.binding.interfaces.TitleBindInterface;
 import com.liangmayong.base.support.fixbug.Android5497Workaround;
 import com.liangmayong.base.support.skin.SkinManager;
@@ -38,7 +37,6 @@ import java.util.List;
 /**
  * Created by LiangMaYong on 2016/8/22.
  */
-@BindP({BasePresenter.class})
 public class BaseActivity extends AppCompatActivity implements IBase, TitleBindInterface {
 
     //holder
@@ -145,6 +143,9 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
         initToolbar();
     }
 
+    /**
+     * initToolbar
+     */
     private void initToolbar() {
         ViewBinding.parserClassByView(this, getWindow().getDecorView());
         try {
@@ -213,9 +214,9 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
 
     @Override
     protected void onDestroy() {
+        super.onDestroy();
         SkinManager.unregisterSkinRefresh(this);
         getPresenterHolder().onDettach();
-        super.onDestroy();
         hideSoftKeyBoard();
     }
 
@@ -352,11 +353,5 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
             return !flag;
         }
         return false;
-    }
-
-    @Override
-    public void finish() {
-        super.finish();
-        hideSoftKeyBoard();
     }
 }

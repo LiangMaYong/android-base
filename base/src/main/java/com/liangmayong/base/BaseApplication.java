@@ -1,15 +1,10 @@
 package com.liangmayong.base;
 
-import android.app.ActivityManager;
 import android.app.Application;
-import android.content.Context;
-import android.os.Process;
 
+import com.liangmayong.base.support.lifecycle.ActivityLifeCycle;
 import com.liangmayong.base.utils.FrescoUtils;
 import com.liangmayong.base.utils.ThreadPoolUtils;
-import com.liangmayong.base.support.lifecycle.ActivityLifeCycle;
-
-import java.util.Iterator;
 
 
 /**
@@ -20,7 +15,7 @@ public class BaseApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initialize(this);
+        BaseApplication.initialize(this);
     }
 
     /**
@@ -45,7 +40,7 @@ public class BaseApplication extends Application {
      * @return base
      */
     public static String getBaseVersion() {
-        return "1.2.0";
+        return "1.3.0";
     }
 
 }

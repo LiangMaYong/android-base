@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.liangmayong.base.BasePresenter;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.web.WebActivity;
 import com.liangmayong.base.utils.ToastUtils;
@@ -20,7 +19,6 @@ import com.liangmayong.base.support.binding.Presenter;
 import com.liangmayong.base.support.binding.PresenterBind;
 import com.liangmayong.base.support.binding.PresenterHolder;
 import com.liangmayong.base.support.binding.ViewBinding;
-import com.liangmayong.base.support.binding.annotations.BindP;
 import com.liangmayong.base.support.binding.interfaces.TitleBindInterface;
 import com.liangmayong.base.support.base.IBase;
 import com.liangmayong.base.support.skin.SkinManager;
@@ -29,7 +27,6 @@ import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 /**
  * Created by LiangMaYong on 2016/8/22.
  */
-@BindP({BasePresenter.class})
 public abstract class AppboxFragment extends ContextThemeWrapper implements IBase, TitleBindInterface {
     //holder
     private PresenterHolder holder = null;

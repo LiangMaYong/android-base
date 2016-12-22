@@ -39,7 +39,7 @@ public abstract class BaseListFragment extends BaseFragment {
     protected final void initView(View rootView) {
         recyclerBox = (RecyclerBox) rootView.findViewById(R.id.base_recyclerbox);
         refreshLayout = (IRefreshLayout) rootView.findViewById(R.id.base_refreshLayout);
-        refreshLayout.setEnabled(refreshEnabled());
+        refreshLayout.setEnabled(isRefreshEnabled());
         refreshLayout.setChildView(recyclerBox);
         initListView(recyclerBox, refreshLayout);
     }
@@ -49,14 +49,20 @@ public abstract class BaseListFragment extends BaseFragment {
         super.onSkinRefresh(skin);
     }
 
-    protected abstract void initListView(RecyclerBox listView, IRefreshLayout refreshLayout);
+    /**
+     * initListView
+     *
+     * @param recyclerBox   recyclerBox
+     * @param refreshLayout refreshLayout
+     */
+    protected abstract void initListView(RecyclerBox recyclerBox, IRefreshLayout refreshLayout);
 
     /**
-     * refreshEnabled
+     * isRefreshEnabled
      *
      * @return refresh enabled
      */
-    protected boolean refreshEnabled() {
+    protected boolean isRefreshEnabled() {
         return true;
     }
 

@@ -53,7 +53,7 @@ public abstract class BaseSubListFragment extends BaseSubFragment {
     protected abstract void initListView(RecyclerBox recyclerBox, IRefreshLayout refreshLayout);
 
     /**
-     * refreshEnabled
+     * isRefreshEnabled
      *
      * @return refresh enabled
      */

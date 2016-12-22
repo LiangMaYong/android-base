@@ -153,7 +153,6 @@ public final class PermissionUtils {
         } else {
             request.getPermissionListener().gotPermissions();
         }
-
     }
 
     /**

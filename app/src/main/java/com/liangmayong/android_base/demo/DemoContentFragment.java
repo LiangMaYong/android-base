@@ -1,7 +1,6 @@
 package com.liangmayong.android_base.demo;
 
 import android.view.View;
-import android.widget.TextView;
 
 import com.liangmayong.android_base.R;
 import com.liangmayong.base.sub.BaseSubFragment;
@@ -31,7 +30,7 @@ public class DemoContentFragment extends BaseSubFragment {
     private void bindOnClick(View v) {
         switch (v.getId()) {
             case R.id.btn_test:
-                goTo("百度一下", "http://www.baidu.com");
+                goToWeb("百度一下", "http://www.baidu.com");
                 break;
         }
     }
