@@ -6,7 +6,9 @@ import android.view.View;
 
 import com.liangmayong.base.BaseActivity;
 import com.liangmayong.base.support.binding.annotations.BindLayout;
+import com.liangmayong.base.support.binding.annotations.BindOnClick;
 import com.liangmayong.base.support.binding.annotations.BindTitle;
+import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.widget.iconfont.Icon;
 
 /**
@@ -31,5 +33,14 @@ public class TestActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @BindOnClick({R.id.btn_test})
+    private void bindOnClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_test:
+                SkinManager.editor().setThemeColor(0xfffcb315, 0xffffffff).commit();
+                break;
+        }
     }
 }

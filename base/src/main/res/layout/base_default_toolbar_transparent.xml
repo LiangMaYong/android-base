@@ -4,12 +4,6 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@id/default_toolbar_status_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"/>
-
     <com.liangmayong.base.widget.skinview.SkinRelativeLayout
         xmlns:skin="http://schemas.android.com/apk/res-auto"
         android:id="@id/default_toolbar_layout"

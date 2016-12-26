@@ -21,39 +21,48 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="right"
                 android:orientation="vertical"
                 android:padding="10dp">
 
                 <com.liangmayong.base.widget.shapeimage.ShapeImageView
                     android:layout_width="200dp"
-                    android:layout_height="400dp"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/base_launcher_background"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:scaleType="center"
+                    android:src="@mipmap/img_src"
                     app:shape="@drawable/icon_right"
                     app:shapeCover="@drawable/icon_right_cover"/>
 
-                <TextView
-                    android:id="@+id/tv_title"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="梦游天姥吟留别 / 别东鲁诸公"
-                    android:textColor="#313131"
-                    android:textSize="18sp"/>
+                    android:layout_marginRight="50dp"
+                    android:background="@drawable/icon_left"
+                    android:orientation="vertical">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="#eeeeee"/>
+                    <TextView
+                        android:id="@+id/tv_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="梦游天姥吟留别 / 别东鲁诸公"
+                        android:textColor="#313131"
+                        android:textSize="18sp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="#eeeeee"/>
 
 
-                <TextView
-                    android:id="@+id/et_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="50dp"
-                    android:text="
+                    <TextView
+                        android:id="@+id/et_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="50dp"
+                        android:text="
 【作者】李白 【朝代】唐代\n
 海客谈瀛洲，烟涛微茫信难求；\n
 越人语天姥，云霞明灭或可睹。\n
@@ -77,8 +86,9 @@
 世间行乐亦如此，古来万事东流水。\n
 别君去兮何时还？且放白鹿青崖间。须行即骑访名山。\n
 安能摧眉折腰事权贵，使我不得开心颜!"
-                    android:textColor="#313131"
-                    android:textSize="16sp"/>
+                        android:textColor="#313131"
+                        android:textSize="16sp"/>
+                </LinearLayout>
             </LinearLayout>
 
         </ScrollView>
