@@ -148,7 +148,7 @@ public abstract class BaseFragment extends Fragment implements IBase, TitleBindI
     }
 
     /**
-     * initToolbar
+     * initDefaultToolbar
      */
     protected void initToolbar() {
     }

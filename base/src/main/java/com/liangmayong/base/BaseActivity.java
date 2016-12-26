@@ -128,25 +128,34 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
-        initToolbar();
+        try {
+            initDefaultToolbar();
+        } catch (Exception e) {
+        }
     }
 
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        initToolbar();
+        try {
+            initDefaultToolbar();
+        } catch (Exception e) {
+        }
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         super.setContentView(view, params);
-        initToolbar();
+        try {
+            initDefaultToolbar();
+        } catch (Exception e) {
+        }
     }
 
     /**
-     * initToolbar
+     * initDefaultToolbar
      */
-    private void initToolbar() {
+    protected void initDefaultToolbar() {
         ViewBinding.parserClassByView(this, getWindow().getDecorView());
         try {
             defaultToolbar = new DefaultToolbar(this);
@@ -154,6 +163,7 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
         } catch (Exception e) {
             defaultToolbar = null;
         }
+        onSkinRefresh(SkinManager.get());
     }
 
     /**
@@ -171,6 +181,9 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
      * @return true or false
      */
     protected boolean isThinStatusBar() {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+            return true;
+        }
         return false;
     }
 
@@ -241,15 +254,17 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
 
     @Override
     public void onSkinRefresh(ISkin skin) {
-        if (isTranslucentStatusBar() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            StatusBarCompat.setTransparent(this);
-        } else {
-            int themeColor = skin.getThemeColor();
-            if (isThinStatusBar()) {
-                int color = Color.argb(Color.alpha(themeColor), Math.abs(Color.red(themeColor) - 0x15), Math.abs(Color.green(themeColor) - 0x15), Math.abs(Color.blue(themeColor) - 0x15));
-                StatusBarCompat.compat(this, color);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (isTranslucentStatusBar()) {
+                StatusBarCompat.setTransparent(this);
             } else {
-                StatusBarCompat.compat(this, themeColor);
+                int themeColor = skin.getThemeColor();
+                if (isThinStatusBar()) {
+                    int color = Color.argb(Color.alpha(themeColor), Math.abs(Color.red(themeColor) - 0x15), Math.abs(Color.green(themeColor) - 0x15), Math.abs(Color.blue(themeColor) - 0x15));
+                    StatusBarCompat.compat(this, color);
+                } else {
+                    StatusBarCompat.compat(this, themeColor);
+                }
             }
         }
     }

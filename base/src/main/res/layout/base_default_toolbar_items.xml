@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
             android:singleLine="true"
             android:text=""
             android:textColor="@color/base_toolbar_item_text_color"
-            android:textSize="@dimen/base_toolbar_item_text_size" />
+            android:textSize="@dimen/base_toolbar_item_text_size"/>
 
         <com.liangmayong.base.widget.iconfont.IconView
             android:id="@id/default_toolbar_left_two"
@@ -42,7 +42,7 @@
             android:paddingRight="@dimen/base_toolbar_item_padding"
             android:singleLine="true"
             android:textColor="@color/base_toolbar_item_text_color"
-            android:textSize="@dimen/base_toolbar_item_text_size" />
+            android:textSize="@dimen/base_toolbar_item_text_size"/>
 
         <com.liangmayong.base.widget.iconfont.IconView
             android:id="@id/default_toolbar_left_three"
@@ -58,7 +58,7 @@
             android:paddingRight="@dimen/base_toolbar_item_padding"
             android:singleLine="true"
             android:textColor="@color/base_toolbar_item_text_color"
-            android:textSize="@dimen/base_toolbar_item_text_size" />
+            android:textSize="@dimen/base_toolbar_item_text_size"/>
 
         <com.liangmayong.base.widget.iconfont.IconView
             android:id="@id/default_toolbar_left_four"
@@ -74,7 +74,7 @@
             android:paddingRight="@dimen/base_toolbar_item_padding"
             android:singleLine="true"
             android:textColor="@color/base_toolbar_item_text_color"
-            android:textSize="@dimen/base_toolbar_item_text_size" />
+            android:textSize="@dimen/base_toolbar_item_text_size"/>
     </LinearLayout>
 
     <LinearLayout
@@ -100,7 +100,7 @@
             android:singleLine="true"
             android:text=""
             android:textColor="@color/base_toolbar_item_text_color"
-            android:textSize="@dimen/base_toolbar_item_text_size" />
+            android:textSize="@dimen/base_toolbar_item_text_size"/>
 
         <com.liangmayong.base.widget.iconfont.IconView
             android:id="@id/default_toolbar_right_three"
@@ -117,7 +117,7 @@
             android:singleLine="true"
             android:text=""
             android:textColor="@color/base_toolbar_item_text_color"
-            android:textSize="@dimen/base_toolbar_item_text_size" />
+            android:textSize="@dimen/base_toolbar_item_text_size"/>
 
         <com.liangmayong.base.widget.iconfont.IconView
             android:id="@id/default_toolbar_right_two"
@@ -134,7 +134,7 @@
             android:singleLine="true"
             android:text=""
             android:textColor="@color/base_toolbar_item_text_color"
-            android:textSize="@dimen/base_toolbar_item_text_size" />
+            android:textSize="@dimen/base_toolbar_item_text_size"/>
 
 
         <com.liangmayong.base.widget.iconfont.IconView
@@ -152,7 +152,7 @@
             android:singleLine="true"
             android:text=""
             android:textColor="@color/base_toolbar_item_text_color"
-            android:textSize="@dimen/base_toolbar_item_text_size" />
+            android:textSize="@dimen/base_toolbar_item_text_size"/>
 
     </LinearLayout>
 
@@ -177,7 +177,7 @@
             android:text=""
             android:textColor="@color/base_toolbar_item_text_color"
             android:textSize="@dimen/base_toolbar_title_size"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:id="@id/default_toolbar_subtitle"
@@ -192,7 +192,7 @@
             android:singleLine="true"
             android:textColor="@color/base_toolbar_item_text_color"
             android:textSize="@dimen/base_toolbar_subtitle_size"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </LinearLayout>
 
     <LinearLayout

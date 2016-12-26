@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
 
-    <com.liangmayong.base.widget.skinview.SkinRelativeLayout xmlns:skin="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
+        android:id="@id/default_toolbar_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"/>
+
+    <com.liangmayong.base.widget.skinview.SkinRelativeLayout
+        xmlns:skin="http://schemas.android.com/apk/res-auto"
         android:id="@id/default_toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_toolbar_height"
         skin:shape_type="transparent">
 
-        <include layout="@layout/base_default_toolbar_items" />
+        <include layout="@layout/base_default_toolbar_items"/>
     </com.liangmayong.base.widget.skinview.SkinRelativeLayout>
 
 </LinearLayout>

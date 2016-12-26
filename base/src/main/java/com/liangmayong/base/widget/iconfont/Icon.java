@@ -42,11 +42,15 @@ public final class Icon {
     public static final IconValue icon_filtrate = new IconValue(FONT_PATH, 0xe60d);
     public static final IconValue icon_download = new IconValue(FONT_PATH, 0xe606);
     public static final IconValue icon_yes = new IconValue(FONT_PATH, 0xe617);
+    public static final IconValue icon_full_heart = new IconValue(FONT_PATH, 0xe621);
     public static final IconValue icon_pay = new IconValue(FONT_PATH, 0xe619);
+    public static final IconValue icon_photo = new IconValue(FONT_PATH, 0xe657);
     public static final IconValue icon_setting = new IconValue(FONT_PATH, 0xe60b);
     public static final IconValue icon_password = new IconValue(FONT_PATH, 0xe613);
+    public static final IconValue icon_switch = new IconValue(FONT_PATH, 0xe625);
     public static final IconValue icon_location_map = new IconValue(FONT_PATH, 0xe614);
     public static final IconValue icon_menu = new IconValue(FONT_PATH, 0xe605);
     public static final IconValue icon_back = new IconValue(FONT_PATH, 0xe600);
+    public static final IconValue icon_hollow_heart = new IconValue(FONT_PATH, 0xe679);
 
 }

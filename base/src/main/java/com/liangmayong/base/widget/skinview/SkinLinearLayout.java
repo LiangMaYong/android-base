@@ -90,24 +90,24 @@ public class SkinLinearLayout extends LinearLayout implements SkinInterface {
         mPressedColor = 0xff333333;
         int preview_color = -1;
         if (attrs != null) {
-            final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SkinStyleable);
-            mShapeType = typedArray.getInt(R.styleable.SkinStyleable_shape_type, SHAPE_TYPE_RECTANGLE);
-            mRadius = typedArray.getDimensionPixelSize(R.styleable.SkinStyleable_radius, 0);
-            mPressedColor = typedArray.getColor(R.styleable.SkinStyleable_pressed_color, mPressedColor);
-            preview_color = typedArray.getColor(R.styleable.SkinStyleable_preview_color, preview_color);
-            mBackgroundCoverColor = typedArray.getColor(R.styleable.SkinStyleable_background_cover, mBackgroundCoverColor);
-            mPressedAlpha = typedArray.getInteger(R.styleable.SkinStyleable_pressed_alpha, mPressedAlpha);
-            mBackgroundAlpha = typedArray.getInteger(R.styleable.SkinStyleable_background_alpha, mBackgroundAlpha);
-            mBackgroundTransparent = typedArray.getBoolean(R.styleable.SkinStyleable_background_transparent, mBackgroundTransparent);
-            mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.SkinStyleable_stroke_width, dip2px(context, 1f));
-            int skin = typedArray.getInt(R.styleable.SkinStyleable_skin_type, skinType.value());
+            final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SkinViewStyleable);
+            mShapeType = typedArray.getInt(R.styleable.SkinViewStyleable_shape_type, SHAPE_TYPE_RECTANGLE);
+            mRadius = typedArray.getDimensionPixelSize(R.styleable.SkinViewStyleable_radius, 0);
+            mPressedColor = typedArray.getColor(R.styleable.SkinViewStyleable_pressed_color, mPressedColor);
+            preview_color = typedArray.getColor(R.styleable.SkinViewStyleable_preview_color, preview_color);
+            mBackgroundCoverColor = typedArray.getColor(R.styleable.SkinViewStyleable_background_cover, mBackgroundCoverColor);
+            mPressedAlpha = typedArray.getInteger(R.styleable.SkinViewStyleable_pressed_alpha, mPressedAlpha);
+            mBackgroundAlpha = typedArray.getInteger(R.styleable.SkinViewStyleable_background_alpha, mBackgroundAlpha);
+            mBackgroundTransparent = typedArray.getBoolean(R.styleable.SkinViewStyleable_background_transparent, mBackgroundTransparent);
+            mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.SkinViewStyleable_stroke_width, dip2px(context, 1f));
+            int skin = typedArray.getInt(R.styleable.SkinViewStyleable_skin_type, skinType.value());
             skinType = SkinType.valueOf(skin);
-            if (typedArray.hasValue(R.styleable.SkinStyleable_skin_color)) {
-                mSkinColor = typedArray.getColor(R.styleable.SkinStyleable_skin_color, SkinManager.get().getColor(skinType));
+            if (typedArray.hasValue(R.styleable.SkinViewStyleable_skin_color)) {
+                mSkinColor = typedArray.getColor(R.styleable.SkinViewStyleable_skin_color, SkinManager.get().getColor(skinType));
                 mSetSkinColor = true;
             }
-            if (typedArray.hasValue(R.styleable.SkinStyleable_skin_text_color)) {
-                mSkinTextColor = typedArray.getColor(R.styleable.SkinStyleable_skin_text_color, SkinManager.get().getTextColor(skinType));
+            if (typedArray.hasValue(R.styleable.SkinViewStyleable_skin_text_color)) {
+                mSkinTextColor = typedArray.getColor(R.styleable.SkinViewStyleable_skin_text_color, SkinManager.get().getTextColor(skinType));
                 mSetSkinTextColor = true;
             }
             typedArray.recycle();
