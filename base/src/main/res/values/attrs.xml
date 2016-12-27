@@ -33,6 +33,7 @@
     <declare-styleable name="ShapeViewStyleable">
         <attr name="shapeSquare" format="boolean"/>
         <attr name="shapeCover" format="reference"/>
+        <attr name="shapePressed" format="color"/>
         <attr name="shape" format="reference"/>
     </declare-styleable>
 </resources>

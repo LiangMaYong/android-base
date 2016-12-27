@@ -15,6 +15,7 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 
 import com.liangmayong.base.R;
@@ -27,6 +28,7 @@ public class ShapeImageView extends ImageView {
 
     private static final PorterDuffXfermode PORTER_DUFF_DST_IN = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
     private static final PorterDuffXfermode PORTER_DUFF_SRC_ATOP = new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP);
+
 
     private Canvas maskCanvas;
     private Bitmap maskBitmap;
@@ -46,6 +48,10 @@ public class ShapeImageView extends ImageView {
 
     private boolean invalidated = true;
     private boolean square = false;
+
+    private int pressedColor = 0x20333333;
+
+    private boolean pressed = false;
 
     public ShapeImageView(Context context) {
         super(context);
@@ -75,6 +81,7 @@ public class ShapeImageView extends ImageView {
             this.square = typedArray.getBoolean(R.styleable.ShapeViewStyleable_shapeSquare, false);
             this.shape = typedArray.getDrawable(R.styleable.ShapeViewStyleable_shape);
             this.cover = typedArray.getDrawable(R.styleable.ShapeViewStyleable_shapeCover);
+            this.pressedColor = typedArray.getColor(R.styleable.ShapeViewStyleable_shapePressed, pressedColor);
             typedArray.recycle();
         }
 
@@ -84,6 +91,7 @@ public class ShapeImageView extends ImageView {
 
         maskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         maskPaint.setColor(Color.BLACK);
+
         coverPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         coverPaint.setColor(Color.BLACK);
 
@@ -136,6 +144,24 @@ public class ShapeImageView extends ImageView {
         }
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (isClickable()) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    pressed = true;
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_CANCEL:
+                case MotionEvent.ACTION_UP:
+                    pressed = false;
+                    invalidate();
+                    break;
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
     /**
      * drawDrawable
      *
@@ -157,6 +183,13 @@ public class ShapeImageView extends ImageView {
                         drawableCanvas.concat(imageMatrix);
                         drawable.draw(drawableCanvas);
                         drawableCanvas.restoreToCount(drawableSaveCount);
+                    }
+
+                    if (pressed) {
+                        drawablePaint.reset();
+                        drawablePaint.setFilterBitmap(false);
+                        drawablePaint.setXfermode(PORTER_DUFF_SRC_ATOP);
+                        drawableCanvas.drawColor(pressedColor);
                     }
 
                     drawablePaint.reset();

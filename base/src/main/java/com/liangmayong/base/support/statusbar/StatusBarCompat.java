@@ -37,20 +37,20 @@ public class StatusBarCompat {
                 if (frameLayout != null) {
                     frameLayout.setPadding(0, getStatusBarHeight(activity), 0, 0);
                 }
-                View statusBarViewBg = contentView.findViewById(R.id.default_toolbar_status_bar);
-                if (statusBarViewBg != null) {
-                    statusBarViewBg.setLayoutParams(getStatusBarLayoutParams(activity, contentView));
-                    statusBarViewBg.setBackgroundColor(statusColor);
+                View statusBarView = activity.findViewById(R.id.default_toolbar_status_bar);
+                if (statusBarView != null) {
+                    statusBarView.setLayoutParams(getStatusBarLayoutParams(activity, contentView));
+                    statusBarView.setBackgroundColor(statusColor);
                     return;
                 } else {
                     for (int i = 0; i < contentView.getChildCount(); i++) {
                         View view = contentView.getChildAt(i);
                         view.setPadding(view.getPaddingLeft(), view.getTop() + getStatusBarHeight(activity), view.getPaddingRight(), view.getPaddingBottom());
                     }
-                    statusBarViewBg = new View(activity);
-                    statusBarViewBg.setId(R.id.default_toolbar_status_bar);
-                    statusBarViewBg.setBackgroundColor(statusColor);
-                    contentView.addView(statusBarViewBg, getStatusBarLayoutParams(activity, contentView));
+                    statusBarView = new View(activity);
+                    statusBarView.setId(R.id.default_toolbar_status_bar);
+                    statusBarView.setBackgroundColor(statusColor);
+                    contentView.addView(statusBarView, getStatusBarLayoutParams(activity, contentView));
                 }
             } else {
                 untransparentStatusBar(activity);

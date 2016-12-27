@@ -30,6 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:scaleType="center"
+                    android:clickable="true"
                     android:src="@mipmap/img_src"
                     app:shape="@drawable/icon_right"
                     app:shapeCover="@drawable/icon_right_cover"/>

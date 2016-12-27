@@ -181,9 +181,9 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
      * @return true or false
      */
     protected boolean isThinStatusBar() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
-            return true;
-        }
+//        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+//            return true;
+//        }
         return false;
     }
 
