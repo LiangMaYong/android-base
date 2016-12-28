@@ -9,6 +9,7 @@ import com.liangmayong.base.support.binding.annotations.BindLayout;
 import com.liangmayong.base.support.binding.annotations.BindOnClick;
 import com.liangmayong.base.support.binding.annotations.BindTitle;
 import com.liangmayong.base.support.skin.SkinManager;
+import com.liangmayong.base.support.statusbar.StatusBarCompat;
 import com.liangmayong.base.widget.iconfont.Icon;
 
 /**
@@ -35,11 +36,20 @@ public class TestActivity extends BaseActivity {
         });
     }
 
+    boolean call = false;
+
     @BindOnClick({R.id.btn_test})
     private void bindOnClick(View v) {
         switch (v.getId()) {
             case R.id.btn_test:
-                SkinManager.editor().setThemeColor(0xfffcb315, 0xffffffff).commit();
+//                SkinManager.editor().setThemeColor(0xfffcb315, 0xffffffff).commit();
+//                if (call) {
+//                    call = false;
+//                    SkinManager.editor().setThemeColor(0xfffcb315, 0xffffffff).commit();
+//                } else {
+//                    StatusBarCompat.compat(this, 0xff3399ff, "正在通话中");
+//                    call = true;
+//                }
                 break;
         }
     }

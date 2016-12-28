@@ -14,14 +14,15 @@ public final class Icon {
     }
 
 
-    private static final String FONT_PATH = "fonts/iconfont.ttf";
+    private static final String FONT_PATH = "fonts/base_iconfont.ttf";
 
     public static void loadFont(Context context) {
         IconFont.loadFont(context, FONT_PATH);
     }
 
-    public static final IconValue icon_about = new IconValue(FONT_PATH, 0xe607);
-    public static final IconValue icon_delete = new IconValue(FONT_PATH, 0xe60e);
+
+    public static final IconValue icon_about = new IconValue(FONT_PATH, 0xe68d);
+    public static final IconValue icon_delete = new IconValue(FONT_PATH, 0xe622);
     public static final IconValue icon_star = new IconValue(FONT_PATH, 0xe610);
     public static final IconValue icon_more = new IconValue(FONT_PATH, 0xe60c);
     public static final IconValue icon_notice = new IconValue(FONT_PATH, 0xe612);
@@ -33,7 +34,10 @@ public final class Icon {
     public static final IconValue icon_add = new IconValue(FONT_PATH, 0xe602);
     public static final IconValue icon_close = new IconValue(FONT_PATH, 0xe601);
     public static final IconValue icon_refresh = new IconValue(FONT_PATH, 0xe604);
+    public static final IconValue icon_circle_error = new IconValue(FONT_PATH, 0xe635);
     public static final IconValue icon_share = new IconValue(FONT_PATH, 0xe609);
+    public static final IconValue icon_circle_warning = new IconValue(FONT_PATH, 0xe64f);
+    public static final IconValue icon_circle_help = new IconValue(FONT_PATH, 0xe6c5);
     public static final IconValue icon_my = new IconValue(FONT_PATH, 0xe603);
     public static final IconValue icon_camera = new IconValue(FONT_PATH, 0xe60f);
     public static final IconValue icon_copy = new IconValue(FONT_PATH, 0xe707);
@@ -44,6 +48,7 @@ public final class Icon {
     public static final IconValue icon_yes = new IconValue(FONT_PATH, 0xe617);
     public static final IconValue icon_full_heart = new IconValue(FONT_PATH, 0xe621);
     public static final IconValue icon_pay = new IconValue(FONT_PATH, 0xe619);
+    public static final IconValue icon_circle_yes = new IconValue(FONT_PATH, 0xe61b);
     public static final IconValue icon_photo = new IconValue(FONT_PATH, 0xe657);
     public static final IconValue icon_setting = new IconValue(FONT_PATH, 0xe60b);
     public static final IconValue icon_password = new IconValue(FONT_PATH, 0xe613);

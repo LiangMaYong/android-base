@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.liangmayong.base.BaseDrawerActivity;
 import com.liangmayong.base.BaseFragment;
+import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.web.fragments.DefaultWebFragment;
 import com.liangmayong.base.widget.iconfont.Icon;
 

@@ -12,16 +12,16 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.liangmayong.base.support.skin.interfaces.ISkin;
-import com.liangmayong.base.web.WebActivity;
-import com.liangmayong.base.utils.ToastUtils;
+import com.liangmayong.base.support.base.IBase;
 import com.liangmayong.base.support.binding.Presenter;
 import com.liangmayong.base.support.binding.PresenterBind;
 import com.liangmayong.base.support.binding.PresenterHolder;
 import com.liangmayong.base.support.binding.ViewBinding;
 import com.liangmayong.base.support.binding.interfaces.TitleBindInterface;
-import com.liangmayong.base.support.base.IBase;
 import com.liangmayong.base.support.skin.SkinManager;
+import com.liangmayong.base.support.skin.interfaces.ISkin;
+import com.liangmayong.base.utils.ToastUtils;
+import com.liangmayong.base.web.WebActivity;
 import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
 /**
@@ -40,6 +40,16 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements IBas
     private String title = "";
     //inputManager
     private InputMethodManager inputManager = null;
+    // skin
+    private ISkin skin;
+
+    @Override
+    public ISkin getSkin() {
+        if (skin == null) {
+            skin = SkinManager.get();
+        }
+        return skin;
+    }
 
     /**
      * postDelayed
@@ -177,6 +187,7 @@ public abstract class AppboxFragment extends ContextThemeWrapper implements IBas
 
     @Override
     public void onSkinRefresh(ISkin skin) {
+        this.skin = skin;
     }
 
     public void onDestroy() {

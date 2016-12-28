@@ -1,5 +1,6 @@
 package com.liangmayong.base;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -11,6 +12,7 @@ import android.view.MotionEvent;
 
 import com.liangmayong.base.sub.BaseSubFragment;
 import com.liangmayong.base.sub.BaseSubFragmentManager;
+import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.web.fragments.DefaultWebFragment;
 
 /**
@@ -39,8 +41,14 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_default_activity_drawer);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.base_drawer_layout);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            mDrawerLayout.setFitsSystemWindows(false);
+        }
         mDrawerLayout.setScrimColor(0x20333333);
         mNavigationView = (NavigationView) findViewById(R.id.base_drawer_navigation_view);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            mNavigationView.setFitsSystemWindows(false);
+        }
         mNavigationView.inflateHeaderView(getDrawerHeadLayoutId());
         mNavigationView.inflateMenu(getDrawerMenuId());
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -72,6 +80,14 @@ public abstract class BaseDrawerActivity extends BaseActivity implements Navigat
     public void goTo(String title, String url) {
         hideSoftKeyBoard();
         openFragment(new DefaultWebFragment(title, url));
+    }
+
+    @Override
+    public void onSkinRefresh(ISkin skin) {
+        super.onSkinRefresh(skin);
+        if (mDrawerLayout != null) {
+            mDrawerLayout.setStatusBarBackgroundColor(skin.getThemeColor());
+        }
     }
 
     /**

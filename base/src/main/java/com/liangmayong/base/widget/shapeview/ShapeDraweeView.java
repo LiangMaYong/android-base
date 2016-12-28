@@ -1,4 +1,4 @@
-package com.liangmayong.base.widget.shapeimage;
+package com.liangmayong.base.widget.shapeview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,15 +16,14 @@ import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.ImageView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.liangmayong.base.R;
 
 /**
  * Created by LiangMaYong on 2016/12/23.
  */
-
-public class ShapeImageView extends ImageView {
+public class ShapeDraweeView extends SimpleDraweeView {
 
     private static final PorterDuffXfermode PORTER_DUFF_DST_IN = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
     private static final PorterDuffXfermode PORTER_DUFF_SRC_ATOP = new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP);
@@ -35,8 +34,6 @@ public class ShapeImageView extends ImageView {
     private Paint maskPaint;
     private Drawable shape;
     private Drawable cover;
-    private Matrix matrix;
-    private Matrix drawMatrix;
 
     private Canvas coverCanvas;
     private Bitmap coverBitmap;
@@ -53,17 +50,17 @@ public class ShapeImageView extends ImageView {
 
     private boolean pressed = false;
 
-    public ShapeImageView(Context context) {
+    public ShapeDraweeView(Context context) {
         super(context);
         setup(context, null, 0);
     }
 
-    public ShapeImageView(Context context, AttributeSet attrs) {
+    public ShapeDraweeView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setup(context, attrs, 0);
     }
 
-    public ShapeImageView(Context context, AttributeSet attrs, int defStyle) {
+    public ShapeDraweeView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         setup(context, attrs, defStyle);
     }
@@ -95,7 +92,6 @@ public class ShapeImageView extends ImageView {
         coverPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         coverPaint.setColor(Color.BLACK);
 
-        this.matrix = new Matrix();
         if (isInEditMode()) {
             if (cover != null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -186,9 +182,6 @@ public class ShapeImageView extends ImageView {
                     }
 
                     if (pressed) {
-                        drawablePaint.reset();
-                        drawablePaint.setFilterBitmap(false);
-                        drawablePaint.setXfermode(PORTER_DUFF_SRC_ATOP);
                         drawableCanvas.drawColor(pressedColor);
                     }
 
@@ -275,16 +268,7 @@ public class ShapeImageView extends ImageView {
         if (shape != null) {
             if (shape instanceof BitmapDrawable) {
                 configureBitmapBounds(width, height);
-                if (drawMatrix != null) {
-                    int drawableSaveCount = maskCanvas.getSaveCount();
-                    maskCanvas.save();
-                    maskCanvas.concat(matrix);
-                    shape.draw(maskCanvas);
-                    maskCanvas.restoreToCount(drawableSaveCount);
-                    return;
-                }
             }
-
             shape.setBounds(0, 0, width, height);
             shape.draw(maskCanvas);
         }
@@ -302,16 +286,7 @@ public class ShapeImageView extends ImageView {
         if (cover != null) {
             if (cover instanceof BitmapDrawable) {
                 configureBitmapBounds(width, height);
-                if (drawMatrix != null) {
-                    int drawableSaveCount = topCanvas.getSaveCount();
-                    topCanvas.save();
-                    topCanvas.concat(matrix);
-                    cover.draw(topCanvas);
-                    topCanvas.restoreToCount(drawableSaveCount);
-                    return;
-                }
             }
-
             cover.setBounds(0, 0, width, height);
             cover.draw(topCanvas);
         }
@@ -324,7 +299,6 @@ public class ShapeImageView extends ImageView {
      * @param viewHeight viewHeight
      */
     private void configureBitmapBounds(int viewWidth, int viewHeight) {
-        drawMatrix = null;
         int drawableWidth = shape.getIntrinsicWidth();
         int drawableHeight = shape.getIntrinsicHeight();
         boolean fits = viewWidth == drawableWidth && viewHeight == drawableHeight;
@@ -336,9 +310,6 @@ public class ShapeImageView extends ImageView {
             float scale = Math.min(widthRatio, heightRatio);
             float dx = (int) ((viewWidth - drawableWidth * scale) * 0.5f + 0.5f);
             float dy = (int) ((viewHeight - drawableHeight * scale) * 0.5f + 0.5f);
-
-            matrix.setScale(scale, scale);
-            matrix.postTranslate(dx, dy);
         }
     }
 }

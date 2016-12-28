@@ -209,4 +209,19 @@
             android:progressDrawable="@drawable/base_toolbar_progressbar"
             android:visibility="visible"></ProgressBar>
     </LinearLayout>
+
+    <com.liangmayong.base.widget.iconfont.IconView
+        android:id="@id/default_toolbar_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#3399ff"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:singleLine="true"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/base_toolbar_message_size"
+        android:visibility="invisible"/>
 </RelativeLayout>

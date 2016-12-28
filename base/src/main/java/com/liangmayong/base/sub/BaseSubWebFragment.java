@@ -14,11 +14,11 @@ import com.liangmayong.base.sub.webkit.BaseWebView;
 import com.liangmayong.base.sub.webkit.BaseWebViewClient;
 import com.liangmayong.base.sub.webkit.BaseWebWidget;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
-import com.liangmayong.base.web.dialogs.DefaultMoreDialog;
-import com.liangmayong.base.web.items.MoreItem;
 import com.liangmayong.base.utils.ClipboardUtils;
 import com.liangmayong.base.utils.ShareUtils;
 import com.liangmayong.base.utils.StringUtils;
+import com.liangmayong.base.web.dialogs.DefaultMoreDialog;
+import com.liangmayong.base.web.items.MoreItem;
 import com.liangmayong.base.widget.iconfont.Icon;
 import com.liangmayong.base.widget.interfaces.IRefreshLayout;
 import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
@@ -196,7 +196,7 @@ public class BaseSubWebFragment extends BaseSubFragment {
                         mUrl = base_webview.getUrl();
                     }
                     ClipboardUtils.copyText(getContext(), mUrl);
-                    showToast(getString(R.string.base_web_copylink_success));
+                    getDefaultToolbar().message().show(Icon.icon_circle_yes, getString(R.string.base_web_copylink_success), 0xff333333, 0xffffffff, 1500);
                 }
             }));
         }

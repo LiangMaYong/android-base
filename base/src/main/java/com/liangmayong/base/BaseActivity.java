@@ -51,6 +51,8 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
     private InputMethodManager inputManager = null;
     //ignoreHideKeyboard
     private final List<View> ignoreHideKeyboard = new ArrayList<View>();
+    // skin
+    private ISkin skin;
 
     /**
      * ignoreClickHideKeyboard
@@ -211,6 +213,14 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
     }
 
     @Override
+    public ISkin getSkin() {
+        if (skin == null) {
+            skin = SkinManager.get();
+        }
+        return skin;
+    }
+
+    @Override
     public final void showToast(CharSequence text) {
         ToastUtils.showToast(text);
     }
@@ -254,6 +264,7 @@ public class BaseActivity extends AppCompatActivity implements IBase, TitleBindI
 
     @Override
     public void onSkinRefresh(ISkin skin) {
+        this.skin = skin;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (isTranslucentStatusBar()) {
                 StatusBarCompat.setTransparent(this);

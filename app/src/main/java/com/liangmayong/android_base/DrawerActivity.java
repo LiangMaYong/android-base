@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.liangmayong.android_base.demo.DemoContentFragment;
 import com.liangmayong.base.BaseDrawerActivity;
 import com.liangmayong.base.sub.BaseSubFragment;
+import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.utils.PermissionUtils;
 import com.liangmayong.base.utils.PhotoUtils;
 

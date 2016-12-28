@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -23,9 +26,13 @@ import com.liangmayong.base.widget.skinview.SkinRelativeLayout;
  */
 public class DefaultToolbar {
 
+    private Animation showAnimation, hiddenAnimation;
+    private int anim_time = 300;
     private Context context;
+    private Handler handler = new Handler();
     private SkinRelativeLayout toolbar_layout;
     private TextView toolbar_title, toolbar_subtitle;
+    private ToolbarMessage message;
     private ToolbarItem toolbar_right_one, toolbar_right_two, toolbar_right_three, toolbar_right_four;
     private ToolbarItem toolbar_left_one, toolbar_left_two, toolbar_left_three, toolbar_left_four;
     private ProgressBar toolbar_progress;
@@ -59,6 +66,7 @@ public class DefaultToolbar {
         context = view.getContext();
         toolbar_title = (TextView) view.findViewById(R.id.default_toolbar_title);
         toolbar_subtitle = (TextView) view.findViewById(R.id.default_toolbar_subtitle);
+        IconView textView = (IconView) view.findViewById(R.id.default_toolbar_message);
         IconView right_one = (IconView) view.findViewById(R.id.default_toolbar_right_one);
         IconView right_two = (IconView) view.findViewById(R.id.default_toolbar_right_two);
         IconView right_three = (IconView) view.findViewById(R.id.default_toolbar_right_three);
@@ -67,6 +75,7 @@ public class DefaultToolbar {
         IconView left_two = (IconView) view.findViewById(R.id.default_toolbar_left_two);
         IconView left_three = (IconView) view.findViewById(R.id.default_toolbar_left_three);
         IconView left_four = (IconView) view.findViewById(R.id.default_toolbar_left_four);
+        message = new ToolbarMessage(textView);
         toolbar_right_one = new ToolbarItem(right_one);
         toolbar_right_two = new ToolbarItem(right_two);
         toolbar_right_three = new ToolbarItem(right_three);
@@ -76,20 +85,115 @@ public class DefaultToolbar {
         toolbar_left_three = new ToolbarItem(left_three);
         toolbar_left_four = new ToolbarItem(left_four);
         toolbar_progress = (ProgressBar) view.findViewById(R.id.default_toolbar_progress);
+        init();
+    }
+
+    public DefaultToolbar(Activity activity) throws Exception {
+        toolbar_layout = (SkinRelativeLayout) activity.findViewById(R.id.default_toolbar_layout);
+        if (toolbar_layout == null) {
+            throw new Exception("not include base_default_toolbar");
+        }
+        toolbar_layout.setSkinRefreshListener(skinRefreshListener);
+        context = activity;
+        toolbar_title = (TextView) activity.findViewById(R.id.default_toolbar_title);
+        toolbar_subtitle = (TextView) activity.findViewById(R.id.default_toolbar_subtitle);
+        IconView textView = (IconView) activity.findViewById(R.id.default_toolbar_message);
+        IconView right_one = (IconView) activity.findViewById(R.id.default_toolbar_right_one);
+        IconView right_two = (IconView) activity.findViewById(R.id.default_toolbar_right_two);
+        IconView right_three = (IconView) activity.findViewById(R.id.default_toolbar_right_three);
+        IconView right_four = (IconView) activity.findViewById(R.id.default_toolbar_right_four);
+        IconView left_one = (IconView) activity.findViewById(R.id.default_toolbar_left_one);
+        IconView left_two = (IconView) activity.findViewById(R.id.default_toolbar_left_two);
+        IconView left_three = (IconView) activity.findViewById(R.id.default_toolbar_left_three);
+        IconView left_four = (IconView) activity.findViewById(R.id.default_toolbar_left_four);
+        message = new ToolbarMessage(textView);
+        toolbar_right_one = new ToolbarItem(right_one);
+        toolbar_right_two = new ToolbarItem(right_two);
+        toolbar_right_three = new ToolbarItem(right_three);
+        toolbar_right_four = new ToolbarItem(right_four);
+        toolbar_left_one = new ToolbarItem(left_one);
+        toolbar_left_two = new ToolbarItem(left_two);
+        toolbar_left_three = new ToolbarItem(left_three);
+        toolbar_left_four = new ToolbarItem(left_four);
+        toolbar_progress = (ProgressBar) activity.findViewById(R.id.default_toolbar_progress);
+        init();
+    }
+
+    private void init() {
+        Animation hide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
+        hide.setDuration(anim_time);
+        setHiddenAnimation(hide);
+        Animation show = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+        show.setDuration(anim_time);
+        setShowAnimation(show);
     }
 
     /**
-     * gone
+     * setHiddenAnimation
+     *
+     * @param animation animation
+     */
+    public void setHiddenAnimation(Animation animation) {
+        this.hiddenAnimation = animation;
+        if (this.hiddenAnimation != null) {
+            hiddenAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    toolbar_layout.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+        }
+    }
+
+    /**
+     * setShowAnimation
+     *
+     * @param animation animation
+     */
+    public void setShowAnimation(Animation animation) {
+        this.showAnimation = animation;
+    }
+
+    /**
+     * _gone
      */
     public void gone() {
-        toolbar_layout.setVisibility(View.GONE);
+        if (toolbar_layout.getVisibility() == View.VISIBLE) {
+            toolbar_layout.startAnimation(hiddenAnimation);
+        }
     }
 
     /**
-     * visible
+     * switchVisibility
+     */
+    public void switchVisibility() {
+        if (toolbar_layout.getVisibility() == View.GONE) {
+            visible();
+        } else {
+            gone();
+        }
+    }
+
+    /**
+     * _visible
      */
     public void visible() {
-        toolbar_layout.setVisibility(View.VISIBLE);
+        if (toolbar_layout.getVisibility() == View.GONE) {
+            toolbar_layout.setVisibility(View.VISIBLE);
+            toolbar_layout.startAnimation(showAnimation);
+        }
     }
 
     /**
@@ -104,6 +208,7 @@ public class DefaultToolbar {
         rightTwo().reset();
         rightThree().reset();
         rightFour().reset();
+        visible();
     }
 
     /**
@@ -116,34 +221,6 @@ public class DefaultToolbar {
             this.skinType = skinType;
         }
         toolbar_layout.setSkinType(skinType);
-    }
-
-    public DefaultToolbar(Activity activity) throws Exception {
-        toolbar_layout = (SkinRelativeLayout) activity.findViewById(R.id.default_toolbar_layout);
-        if (toolbar_layout == null) {
-            throw new Exception("not include base_default_toolbar");
-        }
-        toolbar_layout.setSkinRefreshListener(skinRefreshListener);
-        context = activity;
-        toolbar_title = (TextView) activity.findViewById(R.id.default_toolbar_title);
-        toolbar_subtitle = (TextView) activity.findViewById(R.id.default_toolbar_subtitle);
-        IconView right_one = (IconView) activity.findViewById(R.id.default_toolbar_right_one);
-        IconView right_two = (IconView) activity.findViewById(R.id.default_toolbar_right_two);
-        IconView right_three = (IconView) activity.findViewById(R.id.default_toolbar_right_three);
-        IconView right_four = (IconView) activity.findViewById(R.id.default_toolbar_right_four);
-        IconView left_one = (IconView) activity.findViewById(R.id.default_toolbar_left_one);
-        IconView left_two = (IconView) activity.findViewById(R.id.default_toolbar_left_two);
-        IconView left_three = (IconView) activity.findViewById(R.id.default_toolbar_left_three);
-        IconView left_four = (IconView) activity.findViewById(R.id.default_toolbar_left_four);
-        toolbar_right_one = new ToolbarItem(right_one);
-        toolbar_right_two = new ToolbarItem(right_two);
-        toolbar_right_three = new ToolbarItem(right_three);
-        toolbar_right_four = new ToolbarItem(right_four);
-        toolbar_left_one = new ToolbarItem(left_one);
-        toolbar_left_two = new ToolbarItem(left_two);
-        toolbar_left_three = new ToolbarItem(left_three);
-        toolbar_left_four = new ToolbarItem(left_four);
-        toolbar_progress = (ProgressBar) activity.findViewById(R.id.default_toolbar_progress);
     }
 
     /**
@@ -281,10 +358,154 @@ public class DefaultToolbar {
     }
 
     /**
-     * icon bar
+     * message
      *
-     * @author LiangMaYong
-     * @version 1.0
+     * @return message
+     */
+    public ToolbarMessage message() {
+        return message;
+    }
+
+    /**
+     * ToolbarMessage
+     */
+    public class ToolbarMessage {
+        private IconView message;
+        private int mAnimTime = 300;
+        private Animation mMessageShowAnimation, mMessageShow2Animation, mMessageHiddenAnimation;
+        private View.OnClickListener onClickListener = null;
+        private boolean isShow = false;
+
+        private ToolbarMessage(IconView messageView) {
+            this.message = messageView;
+            this.message.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (onClickListener != null) {
+                        onClickListener.onClick(v);
+                    }
+                }
+            });
+            this.mMessageHiddenAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
+            this.mMessageHiddenAnimation.setDuration(mAnimTime);
+            this.mMessageHiddenAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    _gone();
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            this.mMessageShowAnimation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.1f);
+            this.mMessageShowAnimation.setDuration(mAnimTime);
+            this.mMessageShowAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    getMessageView().startAnimation(mMessageShow2Animation);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            this.mMessageShow2Animation = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.1f, Animation.RELATIVE_TO_SELF, 0.0f);
+            this.mMessageShow2Animation.setDuration(200);
+        }
+
+        private void _visible() {
+            getMessageView().setVisibility(View.VISIBLE);
+            isShow = true;
+        }
+
+        private void _gone() {
+            getMessageView().setVisibility(View.GONE);
+            isShow = false;
+        }
+
+        private Runnable hideRun = new Runnable() {
+            @Override
+            public void run() {
+                hide();
+            }
+        };
+
+        public ToolbarMessage click(View.OnClickListener onClickListener) {
+            this.onClickListener = onClickListener;
+            return this;
+        }
+
+        /**
+         * show
+         *
+         * @param text            text
+         * @param textColor       textColor
+         * @param backgroundColor backgroundColor
+         * @param duration        duration
+         */
+        public void show(String text, int textColor, int backgroundColor, int duration) {
+            show(null, text, textColor, backgroundColor, duration);
+        }
+
+        /**
+         * getMessageView
+         *
+         * @return message
+         */
+        public IconView getMessageView() {
+            return message;
+        }
+
+        /**
+         * show
+         *
+         * @param icon            icon
+         * @param text            text
+         * @param textColor       textColor
+         * @param backgroundColor backgroundColor
+         * @param duration        duration
+         */
+        public void show(IconValue icon, String text, int textColor, int backgroundColor, int duration) {
+            getMessageView().setIcon(" " + text, icon, IconView.ICON_LEFT);
+            getMessageView().setTextColor(textColor);
+            getMessageView().setBackgroundColor(backgroundColor);
+            if (!isShow) {
+                _visible();
+                getMessageView().startAnimation(mMessageShowAnimation);
+            }
+            handler.removeCallbacks(hideRun);
+            if (duration != -1) {
+                handler.postDelayed(hideRun, duration < 1000 ? 1000 : duration);
+            }
+        }
+
+        /**
+         * hide
+         */
+        public void hide() {
+            if (isShow) {
+                getMessageView().startAnimation(mMessageHiddenAnimation);
+            }
+        }
+    }
+
+    /**
+     * ToolbarItem
      */
     public class ToolbarItem {
         private IconView actionView;
@@ -414,7 +635,7 @@ public class DefaultToolbar {
         }
 
         /**
-         * visible
+         * _visible
          *
          * @return ToolbarItem
          */
@@ -426,7 +647,7 @@ public class DefaultToolbar {
         }
 
         /**
-         * icon bar gone
+         * icon bar _gone
          *
          * @return icon bar
          */
@@ -541,7 +762,7 @@ public class DefaultToolbar {
         }
 
         /**
-         * stop animation
+         * stop showAnimation
          *
          * @return icon bar
          */
@@ -553,9 +774,9 @@ public class DefaultToolbar {
         }
 
         /**
-         * start animation
+         * start showAnimation
          *
-         * @param animaRes animation res id
+         * @param animaRes showAnimation res id
          * @return icon bar
          */
         public ToolbarItem startAnimation(int animaRes) {

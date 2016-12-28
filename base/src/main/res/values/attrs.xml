@@ -34,6 +34,16 @@
         <attr name="shapeSquare" format="boolean"/>
         <attr name="shapeCover" format="reference"/>
         <attr name="shapePressed" format="color"/>
+        <attr name="shapeBackground" format="color"/>
         <attr name="shape" format="reference"/>
     </declare-styleable>
+    <declare-styleable name="LogcatTextView">
+        <attr name="verboseColor" format="color"/>
+        <attr name="debugColor" format="color"/>
+        <attr name="errorColor" format="color"/>
+        <attr name="infoColor" format="color"/>
+        <attr name="warningColor" format="color"/>
+        <attr name="consoleColor" format="color"/>
+    </declare-styleable>
+
 </resources>

@@ -114,7 +114,7 @@ public class BaseSubFragmentManager {
         if (enterAnim != 0 && exitAnim != 0) {
             transaction.setCustomAnimations(enterAnim, exitAnim);
         }
-        transaction.add(id, mTargetFragment, mTargetFragment.getClass().getName()).hide(mCurrentFragment).commit();
+        transaction.hide(mCurrentFragment).add(id, mTargetFragment, mTargetFragment.getClass().getName()).commit();
         mCurrentFragment = mTargetFragment;
         mFragments.add(mTargetFragment);
         if (countListener != null) {

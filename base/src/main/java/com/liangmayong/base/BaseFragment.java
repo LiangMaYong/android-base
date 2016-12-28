@@ -40,6 +40,8 @@ public abstract class BaseFragment extends Fragment implements IBase, TitleBindI
     private String title = "";
     //inputManager
     private InputMethodManager inputManager = null;
+    // skin
+    private ISkin skin;
 
     /**
      * getFragmentId
@@ -52,6 +54,18 @@ public abstract class BaseFragment extends Fragment implements IBase, TitleBindI
         } catch (Exception e) {
         }
         return 0;
+    }
+
+    /**
+     * getSkin
+     *
+     * @return skin
+     */
+    public ISkin getSkin() {
+        if (skin == null) {
+            skin = SkinManager.get();
+        }
+        return skin;
     }
 
     /**
@@ -128,12 +142,19 @@ public abstract class BaseFragment extends Fragment implements IBase, TitleBindI
     @Override
     public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         onCreateView();
-        rootView = null;
-        if (generateContainerViewId() > 0) {
-            rootView = inflater.inflate(generateContainerViewId(), null);
+        if (rootView != null) {
+            ViewGroup parent = (ViewGroup) rootView.getParent();
+            if (parent != null) {
+                parent.removeView(rootView);
+            }
             ViewBinding.parserClassByView(this, rootView);
         } else {
-            rootView = ViewBinding.parserFragment(this, container);
+            if (generateContainerViewId() > 0) {
+                rootView = inflater.inflate(generateContainerViewId(), null);
+                ViewBinding.parserClassByView(this, rootView);
+            } else {
+                rootView = ViewBinding.parserFragment(this, container);
+            }
         }
         try {
             defaultToolbar = new DefaultToolbar(rootView);
@@ -142,6 +163,7 @@ public abstract class BaseFragment extends Fragment implements IBase, TitleBindI
             defaultToolbar = null;
         }
         inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        rootView.setVisibility(View.VISIBLE);
         initToolbar();
         initView(rootView);
         return rootView;
@@ -219,6 +241,7 @@ public abstract class BaseFragment extends Fragment implements IBase, TitleBindI
 
     @Override
     public void onSkinRefresh(ISkin skin) {
+        this.skin = skin;
     }
 
     @Override

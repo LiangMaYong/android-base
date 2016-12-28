@@ -25,15 +25,31 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
-                <com.liangmayong.base.widget.shapeimage.ShapeImageView
+                <com.liangmayong.base.widget.shapeview.ShapeImageView
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:scaleType="center"
                     android:clickable="true"
+                    android:scaleType="center"
                     android:src="@mipmap/img_src"
                     app:shape="@drawable/icon_right"
                     app:shapeCover="@drawable/icon_right_cover"/>
+
+
+                <com.liangmayong.base.widget.shapeview.ShapeLayoutView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#ffffff"
+                    android:clickable="true"
+                    app:shape="@drawable/icon_right"
+                    app:shapeCover="@drawable/icon_right_cover">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Demo"/>
+                </com.liangmayong.base.widget.shapeview.ShapeLayoutView>
 
                 <LinearLayout
                     android:layout_width="match_parent"

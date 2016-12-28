@@ -14,7 +14,7 @@
     <color name="base_toolbar_item_bg_pre_color">#33333333</color>
     <color name="base_toolbar_item_bg_nor_color">#00ffffff</color>
     <color name="base_toolbar_progress_nor_color">#00ffffff</color>
-    <color name="base_toolbar_progress_pro_color">#90ffffff</color>
+    <color name="base_toolbar_progress_pro_color">#90dddddd</color>
     <color name="base_toolbar_progress_secondary_color">#90ffffff</color>
 
     <!--base default_type item-->
@@ -25,4 +25,14 @@
     <color name="base_default_line_color">#f8f8f8</color>
     <!--base retry-->
     <color name="base_default_retry_text_color">#676767</color>
+
+    <color name="defaultVerboseColor">#0093C4</color>
+    <color name="defaultDebugColor">#FF6B68</color>
+    <color name="defaultErrorColor">#22BB00</color>
+    <color name="defaultInfoColor">#FFFFFF</color>
+    <color name="defaultWarningColor">#BB7D0E</color>
+
+    <color name="defaultTextColor">#FFFFFF</color>
+    <color name="defaultConsoleColor">#000000</color>
+
 </resources>

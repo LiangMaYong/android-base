@@ -32,6 +32,7 @@
     <!-- base_default_retry_layout.xml -->
     <item name="default_toolbar_status_bar" type="id"/>
     <item name="default_toolbar_layout" type="id"/>
+    <item name="default_toolbar_message" type="id"/>
     <item name="default_toolbar_left_one" type="id"/>
     <item name="default_toolbar_left_two" type="id"/>
     <item name="default_toolbar_left_three" type="id"/>

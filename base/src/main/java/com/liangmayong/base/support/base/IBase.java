@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.liangmayong.base.support.binding.Presenter;
+import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
 import com.liangmayong.base.widget.toolbar.DefaultToolbar;
 
@@ -16,6 +17,13 @@ public interface IBase extends OnSkinRefreshListener {
     String WEB_EXTRA_URL = "web_extra_url";
     String WEB_EXTRA_MORE = "web_extra_more";
     String WEB_EXTRA_TITLE = "web_extra_title";
+
+    /**
+     * getSkin
+     *
+     * @return skin
+     */
+    ISkin getSkin();
 
     /**
      * showToast
