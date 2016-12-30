@@ -3,20 +3,14 @@ package com.liangmayong.base;
 import android.app.Application;
 
 import com.liangmayong.base.support.lifecycle.ActivityLifeCycle;
-import com.liangmayong.base.utils.FrescoUtils;
-import com.liangmayong.base.utils.ThreadPoolUtils;
+import com.liangmayong.base.support.utils.FrescoUtils;
+import com.liangmayong.base.support.utils.ThreadPoolUtils;
 
 
 /**
  * Created by LiangMaYong on 2016/8/22.
  */
 public class BaseApplication extends Application {
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        BaseApplication.initialize(this);
-    }
 
     /**
      * initialize
@@ -32,6 +26,12 @@ public class BaseApplication extends Application {
                 FrescoUtils.initialize(application);
             }
         });
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        BaseApplication.initialize(this);
     }
 
     /**

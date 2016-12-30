@@ -18,7 +18,7 @@ import android.os.IBinder;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
-import com.liangmayong.base.utils.ReflectUtils;
+import com.liangmayong.base.support.utils.ReflectUtils;
 
 /**
  * Created by liangmayong on 2016/9/18.

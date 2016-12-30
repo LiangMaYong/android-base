@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.liangmayong.base.utils.DESUtils;
+import com.liangmayong.base.support.utils.DESUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;

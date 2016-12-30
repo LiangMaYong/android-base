@@ -12,7 +12,7 @@ import android.os.Process;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
-import com.liangmayong.base.utils.ContextUtils;
+import com.liangmayong.base.support.utils.ContextUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;

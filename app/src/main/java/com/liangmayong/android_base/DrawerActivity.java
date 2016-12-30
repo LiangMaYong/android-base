@@ -2,31 +2,33 @@ package com.liangmayong.android_base;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.liangmayong.android_base.demo.DemoContentFragment;
-import com.liangmayong.base.BaseDrawerActivity;
-import com.liangmayong.base.sub.BaseSubFragment;
-import com.liangmayong.base.support.skin.SkinManager;
-import com.liangmayong.base.utils.PermissionUtils;
-import com.liangmayong.base.utils.PhotoUtils;
+import com.liangmayong.android_base.demo.StackF;
+import com.liangmayong.base.basic.expands.drawer.DrawerBaseActivity;
+import com.liangmayong.base.basic.flow.FlowBaseFragment;
+import com.liangmayong.base.support.utils.PermissionUtils;
+import com.liangmayong.base.support.utils.PhotoUtils;
 
 import java.util.List;
 
 /**
  * Created by LiangMaYong on 2016/11/10.
  */
-public class DrawerActivity extends BaseDrawerActivity {
+public class DrawerActivity extends DrawerBaseActivity {
 
     @Override
-    protected int getDrawerHeadLayoutId() {
+    protected int getDrawerHeaderLayoutId() {
         return R.layout.navi_head;
+    }
+
+    @Override
+    protected FlowBaseFragment getFristFragment() {
+        return new StackF();
     }
 
     protected ViewHolder viewHolder;
@@ -37,14 +39,13 @@ public class DrawerActivity extends BaseDrawerActivity {
     }
 
     @Override
-    protected BaseSubFragment getContentFragment() {
-        return new DemoContentFragment();
+    protected boolean isStatusBarDark() {
+        return false;
     }
 
-
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void generateContainerView() {
+        super.generateContainerView();
         viewHolder = new ViewHolder(getNavigationView().getHeaderView(0));
         viewHolder.img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,12 +72,6 @@ public class DrawerActivity extends BaseDrawerActivity {
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.menu_setting) {
-//            SkinManager.switchTheme("night", NightDefault.class);
-//        } else {
-//            SkinManager.switchTheme("day", SkinDefault.class);
-//        }
         return false;
     }
 

@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
 import com.liangmayong.base.support.skin.SkinManager;
-import com.liangmayong.base.widget.interfaces.IRefreshLayout;
+import com.liangmayong.base.widget.interfaces.IRefresh;
 
 /**
  * Created by LiangMaYong on 2016/12/7.
  */
-public class SkinSwipeLayout extends SwipeRefreshLayout implements OnSkinRefreshListener, IRefreshLayout {
+public class SkinSwipeLayout extends SwipeRefreshLayout implements OnSkinRefreshListener, IRefresh {
 
     // childView
     private ViewGroup childView;
@@ -56,7 +56,7 @@ public class SkinSwipeLayout extends SwipeRefreshLayout implements OnSkinRefresh
     }
 
     @Override
-    public void setOnRefreshListener(final IRefreshLayout.OnRefreshListener listener) {
+    public void setOnRefreshListener(final IRefresh.OnRefreshListener listener) {
         super.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

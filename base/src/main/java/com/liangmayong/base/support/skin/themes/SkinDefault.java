@@ -4,7 +4,7 @@ import android.os.Build;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.support.skin.interfaces.ISkinDefault;
-import com.liangmayong.base.utils.ContextUtils;
+import com.liangmayong.base.support.utils.ContextUtils;
 
 /**
  * Created by LiangMaYong on 2016/12/9.

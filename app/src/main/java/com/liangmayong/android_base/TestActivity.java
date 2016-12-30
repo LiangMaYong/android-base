@@ -1,56 +1,21 @@
 package com.liangmayong.android_base;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-
-import com.liangmayong.base.BaseActivity;
-import com.liangmayong.base.support.binding.annotations.BindLayout;
-import com.liangmayong.base.support.binding.annotations.BindOnClick;
-import com.liangmayong.base.support.binding.annotations.BindTitle;
-import com.liangmayong.base.support.skin.SkinManager;
-import com.liangmayong.base.support.statusbar.StatusBarCompat;
-import com.liangmayong.base.widget.iconfont.Icon;
+import com.liangmayong.android_base.demo.StackF;
+import com.liangmayong.base.basic.flow.FlowBaseActivity;
+import com.liangmayong.base.basic.flow.FlowBaseFragment;
+import com.liangmayong.base.binding.view.annotations.BindLayout;
+import com.liangmayong.base.binding.view.annotations.BindTitle;
 
 /**
  * Created by LiangMaYong on 2016/12/26.
  */
 @BindLayout(R.layout.activity_item)
 @BindTitle("Test")
-public class TestActivity extends BaseActivity {
+public class TestActivity extends FlowBaseActivity {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected FlowBaseFragment getFristFragment() {
+        return new StackF();
     }
 
-    @Override
-    protected void initDefaultToolbar() {
-        super.initDefaultToolbar();
-        getDefaultToolbar().leftOne().iconToLeft(Icon.icon_photo).clicked(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showToast("action");
-
-            }
-        });
-    }
-
-    boolean call = false;
-
-    @BindOnClick({R.id.btn_test})
-    private void bindOnClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_test:
-//                SkinManager.editor().setThemeColor(0xfffcb315, 0xffffffff).commit();
-//                if (call) {
-//                    call = false;
-//                    SkinManager.editor().setThemeColor(0xfffcb315, 0xffffffff).commit();
-//                } else {
-//                    StatusBarCompat.compat(this, 0xff3399ff, "正在通话中");
-//                    call = true;
-//                }
-                break;
-        }
-    }
 }

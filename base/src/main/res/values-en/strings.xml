@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="base_web_refresh">Refresh</string>
-    <string name="base_web_copylink">Copy link</string>
-    <string name="base_web_copylink_success">Copy success</string>
-    <string name="base_web_share">Share</string>
-    <string name="base_web_cancel">Cancel</string>
-</resources>

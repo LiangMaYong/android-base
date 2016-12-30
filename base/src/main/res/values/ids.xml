@@ -9,13 +9,6 @@
     <item name="base_recyclerbox" type="id"/>
     <!-- base_default_fragment_web.xml-->
     <item name="base_web_refreshLayout" type="id"/>
-    <!-- base_default_dialog_more.xml -->
-    <item name="base_dialog_more_title" type="id"/>
-    <item name="base_dialog_more_list" type="id"/>
-    <item name="base_dialog_more_close_btn" type="id"/>
-    <!-- base_default_item_more.xml -->
-    <item name="base_more_title" type="id"/>
-    <item name="base_more_icon" type="id"/>
     <!-- base_default_item_recyclerbox_viewox_view.xml -->
     <item name="base_default_adapter_linear" type="id"/>
     <item name="base_default_adapter_icon" type="id"/>
@@ -29,7 +22,7 @@
     <!-- base_default_retry_layout.xml -->
     <item name="base_default_retry_img" type="id"/>
     <item name="base_default_retry_text" type="id"/>
-    <!-- base_default_retry_layout.xml -->
+    <!-- base_default_toolbar.xml -->
     <item name="default_toolbar_status_bar" type="id"/>
     <item name="default_toolbar_layout" type="id"/>
     <item name="default_toolbar_message" type="id"/>

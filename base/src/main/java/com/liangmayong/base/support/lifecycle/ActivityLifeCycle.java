@@ -5,7 +5,7 @@ import android.app.Application;
 import android.app.Instrumentation;
 import android.os.Bundle;
 
-import com.liangmayong.base.utils.ReflectUtils;
+import com.liangmayong.base.support.utils.ReflectUtils;
 import com.liangmayong.base.support.lifecycle.instrument.DefaultInstrumentation;
 import com.liangmayong.base.support.lifecycle.instrument.ProxyInstrumentation;
 

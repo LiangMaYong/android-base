@@ -1,6 +1,7 @@
 package com.liangmayong.base.support.audio;
 
 import android.annotation.TargetApi;
+import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Environment;
@@ -79,8 +80,21 @@ public class AudioRecorder {
         if (mRecorder == null) {
             mRecorder = new MediaRecorder();
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
             mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            CamcorderProfile profile = CamcorderProfile.get(CamcorderProfile.QUALITY_LOW);
+            if (profile.audioBitRate > 44100) {
+                profile.audioBitRate = 44100;
+            } else if (profile.audioBitRate < 12200 * 1.5) {
+                profile.audioBitRate = (int) (12200 * 1.5);
+            }
+            if (profile.audioSampleRate < 8000 * 1.5) {
+                profile.audioSampleRate = (int) (8000 * 1.5);
+            }
+            profile.audioChannels = 1;
+            mRecorder.setAudioEncodingBitRate(profile.audioBitRate);
+            mRecorder.setAudioSamplingRate(profile.audioSampleRate);
+            mRecorder.setAudioChannels(profile.audioChannels);
             fileNotExistsCreate(audioPath);
             mRecorder.setOutputFile(audioPath);
             try {

@@ -20,7 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.utils.Md5Utils;
+import com.liangmayong.base.support.utils.Md5Utils;
 
 import java.util.ArrayList;
 import java.util.List;
