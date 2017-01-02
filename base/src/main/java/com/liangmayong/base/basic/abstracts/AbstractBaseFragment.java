@@ -17,7 +17,7 @@ import com.liangmayong.base.binding.view.ViewBinding;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
-import com.liangmayong.base.support.utils.BaseUtils;
+import com.liangmayong.base.support.utils.GoToUtils;
 import com.liangmayong.base.support.utils.ToastUtils;
 
 /**
@@ -181,32 +181,32 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
 
     @Override
     public void goTo(Class<? extends Activity> cls) {
-        BaseUtils.goTo(getActivity(), cls);
+        GoToUtils.goTo(getActivity(), cls);
     }
 
     @Override
     public void goTo(Class<? extends Activity> cls, Bundle extras) {
-        BaseUtils.goTo(getActivity(), cls, extras);
+        GoToUtils.goTo(getActivity(), cls, extras);
     }
 
     @Override
     public void goTo(String title, String url) {
-        BaseUtils.goTo(getActivity(), title, url);
+        GoToUtils.goTo(getActivity(), title, url);
     }
 
     @Override
     public void goToForResult(Class<? extends Activity> cls, int requestCode) {
-        BaseUtils.goToForResult(getActivity(), cls, null, requestCode);
+        GoToUtils.goToForResult(getActivity(), cls, null, requestCode);
     }
 
     @Override
     public void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
-        BaseUtils.goToForResult(getActivity(), cls, extras, requestCode);
+        GoToUtils.goToForResult(getActivity(), cls, extras, requestCode);
     }
 
     @Override
     public void goHome() {
-        BaseUtils.goHome(getActivity());
+        GoToUtils.goHome(getActivity());
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

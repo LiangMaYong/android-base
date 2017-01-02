@@ -74,7 +74,7 @@ public class WebKit extends android.webkit.WebView {
      *
      * @param filename filename
      */
-    public void injectionAssetsJS(String filename) {
+    public void injectionAssetsJS(String filename, String jsName) {
         try {
             InputStream in = getContext().getAssets().open(filename);
             byte buff[] = new byte[1024];
@@ -87,7 +87,7 @@ public class WebKit extends android.webkit.WebView {
                 }
                 fromFile.write(buff, 0, numread);
             } while (true);
-            String wholeJS = fromFile.toString();
+            String wholeJS = fromFile.toString().replaceAll("#jsBridge#", jsName);
             if (android.os.Build.VERSION.SDK_INT < 19) {
                 loadUrl("javascript: " + wholeJS);
             } else {

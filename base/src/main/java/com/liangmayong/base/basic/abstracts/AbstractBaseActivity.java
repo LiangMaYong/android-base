@@ -25,7 +25,7 @@ import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.statusbar.StatusBarCompat;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
-import com.liangmayong.base.support.utils.BaseUtils;
+import com.liangmayong.base.support.utils.GoToUtils;
 import com.liangmayong.base.support.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -220,32 +220,32 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
 
     @Override
     public void goTo(Class<? extends Activity> cls) {
-        BaseUtils.goTo(this, cls);
+        GoToUtils.goTo(this, cls);
     }
 
     @Override
     public void goTo(Class<? extends Activity> cls, Bundle extras) {
-        BaseUtils.goTo(this, cls, extras);
+        GoToUtils.goTo(this, cls, extras);
     }
 
     @Override
     public void goTo(String title, String url) {
-        BaseUtils.goTo(this, title, url);
+        GoToUtils.goTo(this, title, url);
     }
 
     @Override
     public void goToForResult(Class<? extends Activity> cls, int requestCode) {
-        BaseUtils.goToForResult(this, cls, null, requestCode);
+        GoToUtils.goToForResult(this, cls, null, requestCode);
     }
 
     @Override
     public void goToForResult(Class<? extends Activity> cls, Bundle extras, int requestCode) {
-        BaseUtils.goToForResult(this, cls, extras, requestCode);
+        GoToUtils.goToForResult(this, cls, extras, requestCode);
     }
 
     @Override
     public void goHome() {
-        BaseUtils.goHome(this);
+        GoToUtils.goHome(this);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

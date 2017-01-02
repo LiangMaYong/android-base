@@ -16,6 +16,11 @@ public abstract class WebKitInterceptor {
         this.toffset = toffset;
     }
 
+    public WebKitInterceptor(String scheme) {
+        this.scheme = scheme;
+        this.toffset = 0;
+    }
+
     public String getScheme() {
         return scheme;
     }

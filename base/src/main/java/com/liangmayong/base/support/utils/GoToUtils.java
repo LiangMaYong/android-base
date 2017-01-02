@@ -11,9 +11,9 @@ import com.liangmayong.base.basic.interfaces.IBasic;
 /**
  * Created by LiangMaYong on 2016/9/18.
  */
-public final class BaseUtils {
+public final class GoToUtils {
 
-    private BaseUtils() {
+    private GoToUtils() {
     }
 
     /**

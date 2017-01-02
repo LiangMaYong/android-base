@@ -2,7 +2,7 @@ package com.liangmayong.android_base.demo;
 
 import android.view.View;
 
-import com.liangmayong.base.basic.expands.box.FlowRecyclerBoxFragment;
+import com.liangmayong.base.basic.expands.recyclerbox.FlowRecyclerBoxFragment;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.support.builder.BundleBuilder;
 import com.liangmayong.base.support.utils.DimenUtils;
@@ -36,7 +36,7 @@ public class DemoListFrag extends FlowRecyclerBoxFragment {
         getDefaultToolbar().rightOne().text("Blog").click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goTo("Blog", "http://www.baidu.com");
+                goTo("Blog", "file:///android_asset/index.html");
             }
         });
         inserData();

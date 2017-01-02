@@ -1,12 +1,9 @@
 package com.liangmayong.base.basic.expands.web;
 
-import android.annotation.SuppressLint;
-
 import com.liangmayong.base.basic.expands.web.fragments.FlowWebViewFragment;
 import com.liangmayong.base.basic.expands.web.webkit.WebKitInterceptor;
 import com.liangmayong.base.basic.flow.FlowBaseActivity;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
-import com.liangmayong.base.basic.interfaces.IBasic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +20,6 @@ public class WebViewActivity extends FlowBaseActivity {
     private static final Map<String, String> WEB_VIEW_HEADERS = new HashMap<String, String>();
     // WEB_VIEW_INTERCEPTORS
     private static final List<WebKitInterceptor> WEB_VIEW_INTERCEPTORS = new ArrayList<WebKitInterceptor>();
-
 
     /**
      * interceptor
@@ -86,26 +82,28 @@ public class WebViewActivity extends FlowBaseActivity {
 
     @Override
     protected FlowBaseFragment getFristFragment() {
-        String title = getIntent().getStringExtra(IBasic.WEB_EXTRA_TITLE);
-        String url = getIntent().getStringExtra(IBasic.WEB_EXTRA_URL);
-        return new WebFragment(title, url);
+        return new WebFragment().initArguments(getIntent().getExtras());
     }
 
-    @SuppressLint("ValidFragment")
     public static class WebFragment extends FlowWebViewFragment {
-
-        public WebFragment(String title, String url) {
-            super(title, url);
-        }
 
         @Override
         protected Map<String, String> getHeaders() {
-            return WEB_VIEW_HEADERS;
+            Map<String, String> headers = super.getHeaders();
+            headers.putAll(WEB_VIEW_HEADERS);
+            return headers;
+        }
+
+        @Override
+        protected String getJsBridgeName() {
+            return "jsBridge";
         }
 
         @Override
         protected List<WebKitInterceptor> getWebKitInterceptors() {
-            return WEB_VIEW_INTERCEPTORS;
+            List<WebKitInterceptor> list = super.getWebKitInterceptors();
+            list.addAll(WEB_VIEW_INTERCEPTORS);
+            return list;
         }
     }
 

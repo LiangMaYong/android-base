@@ -1,4 +1,4 @@
-package com.liangmayong.base.basic.expands.box;
+package com.liangmayong.base.basic.expands.recyclerbox;
 
 import android.view.View;
 

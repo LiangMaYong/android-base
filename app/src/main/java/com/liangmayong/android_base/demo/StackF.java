@@ -22,8 +22,7 @@ import com.liangmayong.base.widget.skinview.SkinButton;
  */
 @BindLayout(R.layout.activity_item)
 @BindTitle("Android-base")
-@BindPresenter(DemoPer.class)
-public class StackF extends FlowBaseFragment implements DemoPerI{
+public class StackF extends FlowBaseFragment{
 
     @BindView(R.id.tv_title)
     private TextView tv_title;
@@ -34,7 +33,6 @@ public class StackF extends FlowBaseFragment implements DemoPerI{
 
     @Override
     protected void initViews(View containerView) {
-        getPresenter(DemoPer.class).toast();
     }
 
     @Override
@@ -61,10 +59,5 @@ public class StackF extends FlowBaseFragment implements DemoPerI{
                 open(new DemoListFrag());
                 break;
         }
-    }
-
-    @Override
-    public void toast() {
-        showToast("toast");
     }
 }
