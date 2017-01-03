@@ -60,7 +60,7 @@ Android studio -> new -> Edit File Templates...-> Add
 模板内容
 ```
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
-import com.liangmayong.base.support.binding.Presenter;
+import import com.liangmayong.base.binding.mvp.Presenter;
 #parse("File Header.java")
 public class ${NAME} extends Presenter<${NAME}.IView> {
 
