@@ -1,9 +1,14 @@
 package com.liangmayong.base.basic.expands.web;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+
 import com.liangmayong.base.basic.expands.web.fragments.FlowWebViewFragment;
 import com.liangmayong.base.basic.expands.web.webkit.WebKitInterceptor;
 import com.liangmayong.base.basic.flow.FlowBaseActivity;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
+import com.liangmayong.base.support.utils.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +21,7 @@ import java.util.Map;
 
 public class WebViewActivity extends FlowBaseActivity {
 
+    private static final Map<String, String> WEB_VIEW_PARAMS = new HashMap<String, String>();
     // WEB_VIEW_HEADERS
     private static final Map<String, String> WEB_VIEW_HEADERS = new HashMap<String, String>();
     // WEB_VIEW_INTERCEPTORS
@@ -53,7 +59,7 @@ public class WebViewActivity extends FlowBaseActivity {
      * @param value value
      */
     public static void addHeader(String key, String value) {
-        if (value == null) {
+        if (value == null || "".equals(value)) {
             if (WEB_VIEW_HEADERS.containsKey(key)) {
                 WEB_VIEW_HEADERS.remove(key);
             }
@@ -73,6 +79,56 @@ public class WebViewActivity extends FlowBaseActivity {
         }
     }
 
+
+    /**
+     * addHeader
+     *
+     * @param key   key
+     * @param value value
+     */
+    public static void addParam(String key, String value) {
+        if (value == null || "".equals(value)) {
+            if (WEB_VIEW_PARAMS.containsKey(key)) {
+                WEB_VIEW_PARAMS.remove(key);
+            }
+        } else {
+            WEB_VIEW_PARAMS.put(key, value);
+        }
+    }
+
+    /**
+     * getParam
+     *
+     * @param key      key
+     * @param defvalue defvalue
+     * @return param
+     */
+    public static String getParam(String key, String defvalue) {
+        if (WEB_VIEW_PARAMS.containsKey(key)) {
+            return WEB_VIEW_PARAMS.get(key);
+        }
+        return defvalue;
+    }
+
+    /**
+     * setJsBridgeName
+     *
+     * @param name name
+     */
+    public static void setJsBridgeName(String name) {
+        addParam("js_bridge_name", name);
+    }
+
+
+    /**
+     * setJsBridgeName
+     *
+     * @param defname defname
+     */
+    public static String getJsBridgeName(String defname) {
+        return getParam("js_bridge_name", defname);
+    }
+
     /**
      * clearHeaders
      */
@@ -83,6 +139,31 @@ public class WebViewActivity extends FlowBaseActivity {
     @Override
     protected FlowBaseFragment getFristFragment() {
         return new WebFragment().initArguments(getIntent().getExtras());
+    }
+
+    @Override
+    public void onStackActivityCreate(Bundle savedInstanceState) {
+        super.onStackActivityCreate(savedInstanceState);
+        PermissionUtils.readPhoneStatePermissions(this, 10010, new PermissionUtils.OnPermissionListener() {
+            @Override
+            public boolean showDialog(Activity activity, PermissionUtils.Request request) {
+                return false;
+            }
+
+            @Override
+            public void gotPermissions() {
+            }
+
+            @Override
+            public void rejectPermissions(List<String> rejects) {
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        PermissionUtils.handleResult(requestCode, permissions, grantResults);
     }
 
     public static class WebFragment extends FlowWebViewFragment {
@@ -96,7 +177,7 @@ public class WebViewActivity extends FlowBaseActivity {
 
         @Override
         protected String getJsBridgeName() {
-            return "jsBridge";
+            return getParam("js_bridge_name", "jsBridge");
         }
 
         @Override
@@ -106,5 +187,4 @@ public class WebViewActivity extends FlowBaseActivity {
             return list;
         }
     }
-
 }

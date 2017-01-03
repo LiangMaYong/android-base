@@ -4,10 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.liangmayong.android_base.R;
-import com.liangmayong.android_base.presenters.DemoPer;
-import com.liangmayong.android_base.presenters.DemoPerI;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
-import com.liangmayong.base.binding.mvp.annotations.BindPresenter;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindOnClick;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
@@ -22,7 +19,7 @@ import com.liangmayong.base.widget.skinview.SkinButton;
  */
 @BindLayout(R.layout.activity_item)
 @BindTitle("Android-base")
-public class StackF extends FlowBaseFragment{
+public class StackF extends FlowBaseFragment {
 
     @BindView(R.id.tv_title)
     private TextView tv_title;
@@ -56,7 +53,7 @@ public class StackF extends FlowBaseFragment{
     private void bindOnClick(View v) {
         switch (v.getId()) {
             case R.id.btn_test:
-                open(new DemoListFrag());
+                goTo("", "file:///android_asset/index.html");
                 break;
         }
     }

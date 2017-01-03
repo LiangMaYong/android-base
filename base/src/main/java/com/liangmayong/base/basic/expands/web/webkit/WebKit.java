@@ -7,8 +7,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.webkit.WebViewClient;
 
+import com.liangmayong.base.support.utils.DeviceUtils;
 import com.liangmayong.base.support.utils.StringUtils;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,7 +22,7 @@ import java.io.InputStream;
  * Created by LiangMaYong on 2016/11/3.
  */
 
-public class WebKit extends android.webkit.WebView {
+public class WebKit extends android.webkit.WebView implements WebKitCallback.OnWebKitCallbackListener {
 
     /**
      * Java call js function format with parameters
@@ -29,6 +33,7 @@ public class WebKit extends android.webkit.WebView {
      * Java call js function format without parameters
      */
     private static final String FUNC_FORMAT = "javascript:window.%s()";
+    private WebViewClient client;
 
     public WebKit(Context context) {
         super(context);
@@ -87,13 +92,17 @@ public class WebKit extends android.webkit.WebView {
                 }
                 fromFile.write(buff, 0, numread);
             } while (true);
-            String wholeJS = fromFile.toString().replaceAll("#jsBridge#", jsName);
-            if (android.os.Build.VERSION.SDK_INT < 19) {
-                loadUrl("javascript: " + wholeJS);
-            } else {
+            String wholeJS = fromFile.toString().replaceAll("&jsBridge&", jsName);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 evaluateJavascript(wholeJS, null);
+            } else {
+                loadUrl("javascript: " + wholeJS);
             }
             fromFile.close();
+            try {
+                call(jsName + ".init", new JSONObject(DeviceUtils.getDeviceInfo(getContext())).toString());
+            } catch (Exception e) {
+            }
         } catch (IOException e) {
         }
     }
@@ -105,13 +114,25 @@ public class WebKit extends android.webkit.WebView {
         }
     }
 
+    public void onPageFinished() {
+        if (client != null) {
+            client.onPageFinished(this, getUrl());
+        }
+    }
+
+    @Override
+    public void setWebViewClient(WebViewClient client) {
+        super.setWebViewClient(client);
+        this.client = client;
+    }
+
     /**
      * callFunction
      *
      * @param functionName functionName
      */
-    public void callFunction(String functionName) {
-        callFunction(functionName, null);
+    public void call(String functionName) {
+        call(functionName, null);
     }
 
     /**
@@ -120,7 +141,7 @@ public class WebKit extends android.webkit.WebView {
      * @param functionName functionName
      * @param jsonString   jsonString
      */
-    public void callFunction(String functionName, String jsonString) {
+    public void call(String functionName, String jsonString) {
         if (StringUtils.isEmpty(functionName)) {
             return;
         }
@@ -133,4 +154,26 @@ public class WebKit extends android.webkit.WebView {
         }
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (!isInEditMode()) {
+            WebKitCallback.registerCallbackListener(this);
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (!isInEditMode()) {
+            WebKitCallback.unregisterCallbackListener(this);
+        }
+    }
+
+    @Override
+    public void onCall(String url, String functionName, String jsonString) {
+        if (getUrl().equals(url)) {
+            call(functionName, jsonString);
+        }
+    }
 }

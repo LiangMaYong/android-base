@@ -1,0 +1,27 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <title>Page 2</title>
+</head>
+<body>
+Page 2
+<br/>
+<br/>
+<button onclick="toast('Toast Page 2')" type="button" style="width:100%;height:50px;">Toast</button>
+<br/>
+<br/>
+<button onclick="back()" type="button" style="width:100%;height:50px;">Back</button>
+<script>
+    function toast(msg){
+       jsBridge.toast(msg);
+    }
+
+    function back(){
+       jsBridge.back();
+    }
+
+</script>
+</body>
+</html>

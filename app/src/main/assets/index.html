@@ -1,11 +1,75 @@
 <html>
 <head>
-    <title>Demo</title>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <title>Page 1</title>
 </head>
 <body>
-Toast Demo
+Page 1
+<br/>
+<br/>
+<button onclick="toast('你好 Toast')" type="button" style="width:100%;height:50px;">Toast</button>
+<br/>
+<br/>
+<button onclick="toolbar_message('登录成功')" type="button" style="width:100%;height:50px;">Toolbar Message
+</button>
+<br/>
+<br/>
+<button onclick="openFile('file:///android_asset/page2.html')" type="button"
+        style="width:100%;height:50px;">Open
+</button>
+<br/>
+<br/>
+<button onclick="reload()" type="button" style="width:100%;height:50px;">Reload
+</button>
+<br/>
+<br/>
+<button onclick="forward()" type="button" style="width:100%;height:50px;">Forward
+</button>
+<br/>
+<br/>
+<button onclick="finish()" type="button" style="width:100%;height:50px;">Finish</button>
+<br/>
+<br/>
+<button onclick="getInfo()" type="button" style="width:100%;height:50px;">Get Device Info
+</button>
+<br/>
+<br/>
+<p id="deviceInfo" style="width:100%;"></p>
 <script>
-    jsBridge.toast("Lmy");
+    function toast(msg){
+       jsBridge.toast(msg);
+    }
+
+    function toolbar_message(msg){
+       jsBridge.toolbar_message(msg);
+    }
+
+    function finish(){
+       jsBridge.finish();
+    }
+
+    function reload(){
+       jsBridge.reload();
+    }
+
+    function forward(){
+       jsBridge.forward();
+    }
+
+    function openFile(url){
+       jsBridge.open(url);
+    }
+
+    function getInfo(){
+        var temp = "";
+        var obj = jsBridge.getDeviceInfo();
+        for(var i in obj){
+            temp += i+":"+obj[i]+"<br/>";
+        }
+        document.getElementById("deviceInfo").innerHTML = temp;
+    }
 </script>
 </body>
 </html>

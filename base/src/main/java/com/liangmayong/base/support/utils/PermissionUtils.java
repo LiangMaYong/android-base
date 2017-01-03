@@ -26,6 +26,18 @@ public final class PermissionUtils {
 
 
     /**
+     * readPhoneStatePermissions
+     *
+     * @param activity activity
+     * @param id       id
+     * @param listener listener
+     */
+    public static void readPhoneStatePermissions(Activity activity, int id, OnPermissionListener listener) {
+        String[] permissionsNeeded = {Manifest.permission.READ_PHONE_STATE};
+        requestPermissions(activity, id, permissionsNeeded, listener);
+    }
+
+    /**
      * cameraPermissions
      *
      * @param activity activity

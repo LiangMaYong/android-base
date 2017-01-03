@@ -9,6 +9,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -20,18 +21,22 @@ public class WebKitClient extends android.webkit.WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            String url = request.getUrl().toString().toLowerCase();
-            List<WebKitInterceptor> widgets = generateInterceptors();
-            if (widgets != null && widgets.size() > 0) {
-                for (int i = 0; i < widgets.size(); i++) {
-                    if (url.startsWith(widgets.get(i).getScheme(), widgets.get(i).getToffset())) {
-                        boolean flag = widgets.get(i).interceptorUrlLoading(view, url);
-                        if (flag) {
-                            return true;
+            String url = request.getUrl().toString();
+            if (view instanceof WebKit) {
+                List<WebKitInterceptor> interceptors = generateInterceptors();
+                if (interceptors != null && interceptors.size() > 0) {
+                    for (int i = 0; i < interceptors.size(); i++) {
+                        String lowurl = url.toLowerCase();
+                        if (lowurl.startsWith(interceptors.get(i).getScheme())) {
+                            boolean flag = interceptors.get(i).interceptorUrlLoading((WebKit) view, new WebKitUrl(url, interceptors.get(i).getScheme()));
+                            if (flag) {
+                                return true;
+                            }
                         }
                     }
                 }
             }
+            url = url.toLowerCase();
             if (url.startsWith("http:") || url.startsWith("https:")) {
                 view.loadUrl(url, generateHeaders());
                 return true;
@@ -48,18 +53,21 @@ public class WebKitClient extends android.webkit.WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        url = url.toLowerCase();
-        List<WebKitInterceptor> interceptors = generateInterceptors();
-        if (interceptors != null && interceptors.size() > 0) {
-            for (int i = 0; i < interceptors.size(); i++) {
-                if (url.startsWith(interceptors.get(i).getScheme(), interceptors.get(i).getToffset())) {
-                    boolean flag = interceptors.get(i).interceptorUrlLoading(view, url);
-                    if (flag) {
-                        return true;
+        if (view instanceof WebKit) {
+            List<WebKitInterceptor> interceptors = generateInterceptors();
+            if (interceptors != null && interceptors.size() > 0) {
+                for (int i = 0; i < interceptors.size(); i++) {
+                    String lowurl = url.toLowerCase();
+                    if (lowurl.startsWith(interceptors.get(i).getScheme())) {
+                        boolean flag = interceptors.get(i).interceptorUrlLoading((WebKit) view, new WebKitUrl(url, interceptors.get(i).getScheme()));
+                        if (flag) {
+                            return true;
+                        }
                     }
                 }
             }
         }
+        url = url.toLowerCase();
         if (url.startsWith("http:") || url.startsWith("https:")) {
             view.loadUrl(url, generateHeaders());
             return true;
