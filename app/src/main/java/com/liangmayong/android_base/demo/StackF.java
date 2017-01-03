@@ -1,8 +1,10 @@
 package com.liangmayong.android_base.demo;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
+import com.liangmayong.android_base.ImageViewActivity;
 import com.liangmayong.android_base.R;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
@@ -11,7 +13,9 @@ import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
+import com.liangmayong.base.support.transitions.ActivityTransitionLauncher;
 import com.liangmayong.base.widget.iconfont.Icon;
+import com.liangmayong.base.widget.shapeview.ShapeImageView;
 import com.liangmayong.base.widget.skinview.SkinButton;
 
 /**
@@ -27,9 +31,18 @@ public class StackF extends FlowBaseFragment {
     private TextView et_content;
     @BindView(R.id.btn_test)
     private SkinButton btn_test;
+    @BindView(R.id.imgview)
+    private ShapeImageView imgview;
 
     @Override
     protected void initViews(View containerView) {
+        imgview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent = new Intent(getContext(), ImageViewActivity.class);
+                ActivityTransitionLauncher.with(getActivity()).from(v).launch(intent);
+            }
+        });
     }
 
     @Override

@@ -1,12 +1,16 @@
 package com.liangmayong.base.support.audio;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+
+import com.liangmayong.base.support.utils.ContextUtils;
 
 import java.io.File;
 
@@ -16,10 +20,9 @@ public class AudioRecorder {
      * OnAudioRecorderListener
      */
     public interface OnAudioRecorderListener {
-
         void onError(Exception e);
 
-        void onSuccess(String path, long millis);
+        void onSuccess(String path, long size, long millis);
 
         void onRecording(double amplitude, double amplitudeEMA);
     }
@@ -30,20 +33,18 @@ public class AudioRecorder {
     private String audioPath = "";
     private long startMillis = 0;
     private long audioMillis = 0;
-    private String audioDir = "";
 
     /**
-     * AudioRecorder
+     * HXIMAudioRecorder
      *
      * @param name name
      */
     public AudioRecorder(String name) {
-        audioDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/android_base/audio_record";
-        File file = new File(audioDir);
-        if (!file.exists()) {
-            file.mkdir();
+        File file = new File(getTempPath(name));
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
         }
-        audioPath = getAudioPath(name);
+        audioPath = file.getPath();
     }
 
     private OnAudioRecorderListener audioRecorderListener;
@@ -60,16 +61,20 @@ public class AudioRecorder {
     /**
      * handler
      */
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
-                if (audioRecorderListener != null)
-                    audioRecorderListener.onSuccess(audioPath, audioMillis);
+                if (audioRecorderListener != null) {
+                    File file = new File(audioPath);
+                    audioRecorderListener.onSuccess(audioPath, file.length(), audioMillis);
+                }
             }
         }
     };
 
+    @SuppressLint("InlinedApi")
     public void start() {
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             if (audioRecorderListener != null) {
@@ -99,12 +104,11 @@ public class AudioRecorder {
             mRecorder.setOutputFile(audioPath);
             try {
                 mRecorder.prepare();
-                startMillis = System.currentTimeMillis();
                 mRecorder.start();
+                startMillis = System.currentTimeMillis();
                 mEMA = 0.0;
                 handler.postDelayed(amplitudeRun, 500);
             } catch (Exception e) {
-                e.printStackTrace();
                 if (audioRecorderListener != null) {
                     audioRecorderListener.onError(e);
                 }
@@ -113,41 +117,47 @@ public class AudioRecorder {
     }
 
     @TargetApi(Build.VERSION_CODES.CUPCAKE)
-    public void stop(boolean save) {
-        if (mRecorder != null) {
-            try {
-                mRecorder.setOnErrorListener(null);
-                mRecorder.setOnInfoListener(null);
-                mRecorder.setPreviewDisplay(null);
-                mRecorder.stop();
-                audioMillis = System.currentTimeMillis() - startMillis;
-            } catch (IllegalStateException e) {
-            } catch (RuntimeException e) {
-            } catch (Exception e) {
-            }
-            mRecorder.release();
-            mRecorder = null;
-            handler.removeCallbacks(amplitudeRun);
-            if (save) {
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        handler.sendEmptyMessage(1);
+    public void stop(final boolean save) {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mRecorder != null) {
+                    try {
+                        mRecorder.setOnErrorListener(null);
+                        mRecorder.setOnInfoListener(null);
+                        mRecorder.setPreviewDisplay(null);
+                        mRecorder.stop();
+                        audioMillis = System.currentTimeMillis() - startMillis;
+                    } catch (IllegalStateException e) {
+                    } catch (RuntimeException e) {
+                    } catch (Exception e) {
                     }
-                });
-                thread.start();
+                    mRecorder.release();
+                    mRecorder = null;
+                    handler.removeCallbacks(amplitudeRun);
+                    if (save) {
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                handler.sendEmptyMessage(1);
+                            }
+                        });
+                        thread.start();
+                    }
+                }
             }
-        }
+        }, 200);
     }
 
     /**
-     * getAudioPath
+     * getTempPath
      *
      * @param name name
      * @return path
      */
-    private String getAudioPath(String name) {
-        return audioDir + "/audio_" + name + ".aac";
+    private static String getTempPath(String name) {
+        File file = ContextUtils.getApplication().getDir("audio_recorder", Context.MODE_PRIVATE);
+        return new File(file.getPath() + "/" + name).getPath();
     }
 
     /**

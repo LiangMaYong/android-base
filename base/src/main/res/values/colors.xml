@@ -35,4 +35,5 @@
     <color name="defaultTextColor">#FFFFFF</color>
     <color name="defaultConsoleColor">#000000</color>
 
+    <color name="translucent">#00FFFFFF</color>
 </resources>

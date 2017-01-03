@@ -26,6 +26,7 @@
                 android:padding="10dp">
 
                 <com.liangmayong.base.widget.shapeview.ShapeImageView
+                    android:id="@+id/imgview"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"

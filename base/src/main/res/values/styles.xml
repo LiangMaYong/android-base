@@ -16,4 +16,9 @@
         <item name="android:windowBackground">@mipmap/base_launcher_background</item>
     </style>
 
+    <style name="BaseTranslucent" parent="BaseTheme">
+        <item name="android:windowBackground">@color/translucent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 </resources>

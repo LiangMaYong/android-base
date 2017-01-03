@@ -14,7 +14,6 @@ public class AudioPlayer {
      * OnAudioPlayListener
      */
     public interface OnAudioPlayListener {
-
         void onPrepared();
 
         void onCompletion();
