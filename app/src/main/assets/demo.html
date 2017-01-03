@@ -1,0 +1,84 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <title>Page 1</title>
+</head>
+<body>
+<h1>Demo</h1>
+<button onclick="toast('hello toast')" type="button" style="width:100%;height:50px;">Toast</button>
+<br/>
+<br/>
+<button onclick="toolbar_message('hello toolbar message')" type="button"
+        style="width:100%;height:50px;">
+    Toolbar Message
+</button>
+<br/>
+<br/>
+<button onclick="hide_toolbar()" type="button" style="width:100%;height:50px;">hide_toolbar
+</button>
+<br/>
+<br/>
+<button onclick="show_toolbar()" type="button" style="width:100%;height:50px;">show_toolbar
+</button>
+<br/>
+<br/>
+<button onclick="openFile('file:///android_asset/demo_page.html')" type="button"
+        style="width:100%;height:50px;">Open
+</button>
+<br/>
+<br/>
+<button onclick="openFile('file:///android_asset/demo_device_info.html')" type="button"
+        style="width:100%;height:50px;">Device Info
+</button>
+<br/>
+<br/>
+<button onclick="reload()" type="button" style="width:20%;height:50px;">Reload
+</button>
+<button onclick="back()" type="button" style="width:20%;height:50px;">Back
+</button>
+<button onclick="forward()" type="button" style="width:20%;height:50px;">Forward
+</button>
+<button onclick="finish()" type="button" style="width:20%;height:50px;">Finish</button>
+<script>
+    function toast(msg){
+       jsBridge.toast(msg);
+    }
+
+    function toolbar_message(msg){
+       jsBridge.toolbar_message(msg);
+    }
+
+    function finish(){
+       jsBridge.finish();
+    }
+
+    function reload(){
+       jsBridge.reload();
+    }
+
+    function back(){
+       jsBridge.back();
+    }
+
+    function forward(){
+       jsBridge.forward();
+    }
+
+    function hide_toolbar(){
+       jsBridge.hide_toolbar();
+    }
+
+    function show_toolbar(){
+       jsBridge.show_toolbar();
+    }
+
+    function openFile(url){
+       jsBridge.open(url);
+    }
+
+
+</script>
+</body>
+</html>

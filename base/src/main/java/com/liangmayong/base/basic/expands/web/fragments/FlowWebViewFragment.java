@@ -336,13 +336,23 @@ public class FlowWebViewFragment extends FlowBaseFragment {
             @Override
             public boolean interceptorUrlLoading(WebKit web, WebKitUrl url) {
                 if ("finish".equals(url.getContent())) {
-                    finish();
+                    action_finish();
                 } else if ("reload".equals(url.getContent())) {
-                    reload();
+                    action_reload();
                 } else if ("forward".equals(url.getContent())) {
-                    forward();
+                    action_forward();
                 } else if ("back".equals(url.getContent())) {
+                    action_back();
+                } else if ("back_finish".equals(url.getContent())) {
                     onBackPressed();
+                } else if ("hide_toolbar".equals(url.getContent())) {
+                    if (getDefaultToolbar() != null) {
+                        getDefaultToolbar().gone();
+                    }
+                } else if ("show_toolbar".equals(url.getContent())) {
+                    if (getDefaultToolbar() != null) {
+                        getDefaultToolbar().visible();
+                    }
                 } else if ("open".equals(url.getContent())) {
                     String adds = url.getParams().get("url");
                     if (adds != null && !"".equals(adds)) {
@@ -374,27 +384,33 @@ public class FlowWebViewFragment extends FlowBaseFragment {
                 getDefaultToolbar().rightOne().icon(Icon.icon_close).click(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        finish();
+                        action_finish();
                     }
                 });
             }
         } else {
-            finish();
+            action_finish();
         }
         return true;
     }
 
-    private void back() {
-        onBackPressed();
+    private void action_reload() {
+        reload();
     }
 
-    private void forward() {
+    private void action_back() {
+        if (webKit != null && webKit.canGoBack()) {
+            webKit.goBack();
+        }
+    }
+
+    private void action_forward() {
         if (webKit != null && webKit.canGoForward()) {
             webKit.goForward();
         }
     }
 
-    private void finish() {
+    private void action_finish() {
         try {
             webKit.stopLoading();
             webKit.loadUrl("about:blank");

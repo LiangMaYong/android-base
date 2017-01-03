@@ -32,23 +32,35 @@ function JsBridge()
     };
 
     this.finish = function(){
-       window.location.href ="action:finish";
+       this.action("finish");
     };
 
     this.back = function(){
-       window.location.href ="action:back";
+       this.action("back");
+    };
+
+    this.back_finish = function(){
+       this.action("back_finish");
     };
 
     this.open = function(url){
-       window.location.href ="action:open?url="+url;
+       this.action("open?url="+url);
     };
 
     this.reload = function(){
-       window.location.href ="action:reload";
+       this.action("reload");
     };
 
     this.forward = function(){
-       window.location.href ="action:forward";
+       this.action("forward");
+    };
+
+    this.hide_toolbar = function(){
+       this.action("hide_toolbar");
+    };
+
+    this.show_toolbar = function(){
+       this.action("show_toolbar");
     };
 
     this.action = function(action){

@@ -1,0 +1,52 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <title>Page 2</title>
+</head>
+<body>
+<h1>Device Info</h1>
+<p id="deviceInfo" style="width:100%;"></p>
+<br/>
+<br/>
+<button onclick="getInfo()" type="button" style="width:100%;height:50px;">Get Device Info</button>
+<br/>
+<br/>
+<button onclick="reload()" type="button" style="width:20%;height:50px;">Reload
+</button>
+<button onclick="back()" type="button" style="width:20%;height:50px;">Back
+</button>
+<button onclick="forward()" type="button" style="width:20%;height:50px;">Forward
+</button>
+<button onclick="finish()" type="button" style="width:20%;height:50px;">Finish</button>
+<script>
+
+
+    function finish(){
+       jsBridge.finish();
+    }
+
+    function reload(){
+       jsBridge.reload();
+    }
+
+    function back(){
+       jsBridge.back();
+    }
+
+    function forward(){
+       jsBridge.forward();
+    }
+
+    function getInfo(){
+        var temp = "";
+        var obj = jsBridge.getDeviceInfo();
+        for(var i in obj){
+            temp += i+" : "+obj[i]+"<br/>";
+        }
+        document.getElementById("deviceInfo").innerHTML = temp;
+    }
+</script>
+</body>
+</html>

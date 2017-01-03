@@ -43,6 +43,7 @@ public class DeviceUtils {
         info.put("BUILD.PRODUCT", Build.PRODUCT);
         info.put("BUILD.SDK_INT", Build.VERSION.SDK_INT + "");
         info.put("BUILD.PREVIEW_SDK_INT", Build.VERSION.PREVIEW_SDK_INT + "");
+        info.put("APP.NAME", getAppName(context));
         info.put("APP.VERSION_NAME", getVersionName(context));
         info.put("APP.VERSION_CODE", getVersionCode(context) + "");
         info.put("DEVICE.Width", ScreenUtils.getScreenWidth(context) + "");
@@ -51,6 +52,12 @@ public class DeviceUtils {
         return info;
     }
 
+    /**
+     * getVersionName
+     *
+     * @param context context
+     * @return version name
+     */
     public static String getVersionName(Context context) {
         try {
             PackageManager manager = context.getPackageManager();
@@ -62,6 +69,24 @@ public class DeviceUtils {
         }
     }
 
+    /**
+     * getAppName
+     *
+     * @param context context
+     * @return app name
+     */
+    public static String getAppName(Context context) {
+        PackageManager pm = context.getPackageManager();
+        String appName = context.getApplicationInfo().loadLabel(pm).toString();
+        return appName;
+    }
+
+    /**
+     * getVersionCode
+     *
+     * @param context context
+     * @return version code
+     */
     public static int getVersionCode(Context context) {
         try {
             PackageManager manager = context.getPackageManager();

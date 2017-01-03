@@ -36,7 +36,7 @@ public class DemoListFrag extends FlowRecyclerBoxFragment {
         getDefaultToolbar().rightOne().text("Blog").click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goTo("Blog", "file:///android_asset/index.html");
+                goTo("Blog", "file:///android_asset/demo.html");
             }
         });
         inserData();

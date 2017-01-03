@@ -53,7 +53,7 @@ public class StackF extends FlowBaseFragment {
     private void bindOnClick(View v) {
         switch (v.getId()) {
             case R.id.btn_test:
-                goTo("", "file:///android_asset/index.html");
+                goTo("", "file:///android_asset/demo.html");
                 break;
         }
     }
