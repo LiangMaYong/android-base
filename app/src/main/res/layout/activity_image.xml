@@ -10,13 +10,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <ImageView
+        <com.liangmayong.base.widget.layout.SquareLinearLayout
             android:id="@+id/imgview"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/img_src"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/img_src"/>
+        </com.liangmayong.base.widget.layout.SquareLinearLayout>
     </LinearLayout>
 </LinearLayout>
