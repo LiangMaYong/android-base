@@ -30,6 +30,8 @@ import com.liangmayong.base.support.transitions.core.TransitionMoveData;
 
 public class ActivityTransition {
     private int duration = 500;
+    private float bgAlpha = 0.0f;
+    private float toAlpha = 1.0f;
     private View toView;
     private View bgView;
     private TimeInterpolator interpolator;
@@ -54,6 +56,16 @@ public class ActivityTransition {
         return this;
     }
 
+    public ActivityTransition toAlpha(float alpha) {
+        this.toAlpha = alpha;
+        return this;
+    }
+
+    public ActivityTransition bgAlpha(float alpha) {
+        this.bgAlpha = alpha;
+        return this;
+    }
+
     public ActivityTransition duration(int duration) {
         this.duration = duration;
         return this;
@@ -75,7 +87,7 @@ public class ActivityTransition {
         }
         final Context context = toView.getContext();
         final Bundle bundle = fromIntent.getExtras();
-        final TransitionMoveData moveData = TransitionAnimation.startAnimation(context, toView, bgView, bundle, savedInstanceState, duration, interpolator, listener);
+        final TransitionMoveData moveData = TransitionAnimation.startAnimation(context, toView, bgView, toAlpha, bgAlpha, bundle, savedInstanceState, duration, interpolator, listener);
         return new ExitActivityTransition(moveData);
     }
 

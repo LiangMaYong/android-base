@@ -9,10 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -24,6 +21,7 @@ import com.liangmayong.base.R;
  * Created by LiangMaYong on 2016/12/23.
  */
 public class ShapeDraweeView extends SimpleDraweeView {
+
 
     private static final PorterDuffXfermode PORTER_DUFF_DST_IN = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
     private static final PorterDuffXfermode PORTER_DUFF_SRC_ATOP = new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP);
@@ -171,7 +169,7 @@ public class ShapeDraweeView extends SimpleDraweeView {
                 if (drawable != null) {
                     invalidated = false;
                     Matrix imageMatrix = getImageMatrix();
-                    if (imageMatrix == null) {// && mPaddingTop == 0 && mPaddingLeft == 0) {
+                    if (imageMatrix == null) {
                         drawable.draw(drawableCanvas);
                     } else {
                         int drawableSaveCount = drawableCanvas.getSaveCount();
@@ -184,16 +182,19 @@ public class ShapeDraweeView extends SimpleDraweeView {
                     if (pressed) {
                         drawableCanvas.drawColor(pressedColor);
                     }
+                    if (maskBitmap != null) {
+                        drawablePaint.reset();
+                        drawablePaint.setFilterBitmap(false);
+                        drawablePaint.setXfermode(PORTER_DUFF_DST_IN);
+                        drawableCanvas.drawBitmap(maskBitmap, 0.0f, 0.0f, drawablePaint);
+                    }
 
-                    drawablePaint.reset();
-                    drawablePaint.setFilterBitmap(false);
-                    drawablePaint.setXfermode(PORTER_DUFF_DST_IN);
-                    drawableCanvas.drawBitmap(maskBitmap, 0.0f, 0.0f, drawablePaint);
-
-                    drawablePaint.reset();
-                    drawablePaint.setFilterBitmap(false);
-                    drawablePaint.setXfermode(PORTER_DUFF_SRC_ATOP);
-                    drawableCanvas.drawBitmap(coverBitmap, 0.0f, 0.0f, drawablePaint);
+                    if (maskBitmap != null) {
+                        drawablePaint.reset();
+                        drawablePaint.setFilterBitmap(false);
+                        drawablePaint.setXfermode(PORTER_DUFF_SRC_ATOP);
+                        drawableCanvas.drawBitmap(coverBitmap, 0.0f, 0.0f, drawablePaint);
+                    }
                 }
             }
             if (!invalidated) {
@@ -226,29 +227,39 @@ public class ShapeDraweeView extends SimpleDraweeView {
      * @param oldh   oldh
      */
     private void createShapeCanvas(int width, int height, int oldw, int oldh) {
-        boolean sizeChanged = width != oldw || height != oldh;
-        boolean isValid = width > 0 && height > 0;
-        if (isValid && (maskCanvas == null || sizeChanged)) {
+        if (maskBitmap != null) {
+            maskBitmap.recycle();
+            maskBitmap = null;
+        }
+        if (coverBitmap != null) {
+            coverBitmap.recycle();
+            coverBitmap = null;
+        }
+        if (drawableBitmap != null) {
+            drawableBitmap.recycle();
+            drawableBitmap = null;
+        }
+        if (shape != null) {
             maskCanvas = new Canvas();
-            maskBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            maskBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
             maskCanvas.setBitmap(maskBitmap);
 
             maskPaint.reset();
             paintMaskCanvas(maskCanvas, maskPaint, width, height);
-
+        }
+        if (cover != null) {
             coverCanvas = new Canvas();
-            coverBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            coverBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
             coverCanvas.setBitmap(coverBitmap);
 
             coverPaint.reset();
             paintCoverCanvas(coverCanvas, coverPaint, width, height);
-
-            drawableCanvas = new Canvas();
-            drawableBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            drawableCanvas.setBitmap(drawableBitmap);
-            drawablePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            invalidated = true;
         }
+        drawableCanvas = new Canvas();
+        drawableBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+        drawableCanvas.setBitmap(drawableBitmap);
+        drawablePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        invalidated = true;
     }
 
     /**
@@ -260,15 +271,7 @@ public class ShapeDraweeView extends SimpleDraweeView {
      * @param height     height
      */
     private void paintMaskCanvas(Canvas maskCanvas, Paint maskPaint, int width, int height) {
-        if (shape == null) {
-            shape = new ShapeDrawable(new RectShape());
-            shape.setBounds(0, 0, width, height);
-            ((ShapeDrawable) shape).getPaint().setColor(Color.BLACK);
-        }
         if (shape != null) {
-            if (shape instanceof BitmapDrawable) {
-                configureBitmapBounds(width, height);
-            }
             shape.setBounds(0, 0, width, height);
             shape.draw(maskCanvas);
         }
@@ -284,32 +287,8 @@ public class ShapeDraweeView extends SimpleDraweeView {
      */
     private void paintCoverCanvas(Canvas topCanvas, Paint topPaint, int width, int height) {
         if (cover != null) {
-            if (cover instanceof BitmapDrawable) {
-                configureBitmapBounds(width, height);
-            }
             cover.setBounds(0, 0, width, height);
             cover.draw(topCanvas);
-        }
-    }
-
-    /**
-     * configureBitmapBounds
-     *
-     * @param viewWidth  viewWidth
-     * @param viewHeight viewHeight
-     */
-    private void configureBitmapBounds(int viewWidth, int viewHeight) {
-        int drawableWidth = shape.getIntrinsicWidth();
-        int drawableHeight = shape.getIntrinsicHeight();
-        boolean fits = viewWidth == drawableWidth && viewHeight == drawableHeight;
-
-        if (drawableWidth > 0 && drawableHeight > 0 && !fits) {
-            shape.setBounds(0, 0, drawableWidth, drawableHeight);
-            float widthRatio = (float) viewWidth / (float) drawableWidth;
-            float heightRatio = (float) viewHeight / (float) drawableHeight;
-            float scale = Math.min(widthRatio, heightRatio);
-            float dx = (int) ((viewWidth - drawableWidth * scale) * 0.5f + 0.5f);
-            float dy = (int) ((viewHeight - drawableHeight * scale) * 0.5f + 0.5f);
         }
     }
 }

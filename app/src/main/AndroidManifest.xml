@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".ImageViewActivity"
-            android:theme="@style/translucent"
+            android:theme="@style/BaseTranslucent"
             />
     </application>
 

@@ -2,13 +2,14 @@ package com.liangmayong.android_base.demo;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liangmayong.android_base.ImageViewActivity;
 import com.liangmayong.android_base.R;
+import com.liangmayong.base.basic.expands.logcat.FlowLogcatFragment;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
-import com.liangmayong.base.binding.view.annotations.BindOnClick;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
 import com.liangmayong.base.support.skin.SkinManager;
@@ -32,7 +33,7 @@ public class StackF extends FlowBaseFragment {
     @BindView(R.id.btn_test)
     private SkinButton btn_test;
     @BindView(R.id.imgview)
-    private ShapeImageView imgview;
+    private ImageView imgview;
 
     @Override
     protected void initViews(View containerView) {
@@ -41,6 +42,12 @@ public class StackF extends FlowBaseFragment {
             public void onClick(View v) {
                 final Intent intent = new Intent(getContext(), ImageViewActivity.class);
                 ActivityTransitionLauncher.with(getActivity()).from(v).launch(intent);
+            }
+        });
+        btn_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goTo("", "file:///android_asset/demo.html");
             }
         });
     }
@@ -57,17 +64,8 @@ public class StackF extends FlowBaseFragment {
         defaultToolbar.rightOne().icon(Icon.icon_message).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDefaultToolbar().message().show(Icon.icon_about, " 关于我们", SkinManager.get().getInfoTextColor(), SkinManager.get().getInfoColor(), 1500);
+                open(FlowLogcatFragment.newInstance());
             }
         });
-    }
-
-    @BindOnClick({R.id.btn_test})
-    private void bindOnClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_test:
-                goTo("", "file:///android_asset/demo.html");
-                break;
-        }
     }
 }

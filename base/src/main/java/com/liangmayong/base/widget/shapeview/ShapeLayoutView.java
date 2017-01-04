@@ -10,8 +10,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -133,10 +131,14 @@ public class ShapeLayoutView extends RelativeLayout {
             if (pressed) {
                 canvas.drawColor(pressedColor);
             }
-            maskPaint.setXfermode(PORTER_DUFF_DST_IN);
-            canvas.drawBitmap(maskBitmap, 0.0f, 0.0f, maskPaint);
-            coverPaint.setXfermode(PORTER_DUFF_SRC_ATOP);
-            canvas.drawBitmap(coverBitmap, 0.0f, 0.0f, coverPaint);
+            if (maskBitmap != null) {
+                maskPaint.setXfermode(PORTER_DUFF_DST_IN);
+                canvas.drawBitmap(maskBitmap, 0.0f, 0.0f, maskPaint);
+            }
+            if (coverBitmap != null) {
+                coverPaint.setXfermode(PORTER_DUFF_SRC_ATOP);
+                canvas.drawBitmap(coverBitmap, 0.0f, 0.0f, coverPaint);
+            }
         }
     }
 
@@ -178,22 +180,33 @@ public class ShapeLayoutView extends RelativeLayout {
      * @param oldh   oldh
      */
     private void createShapeCanvas(int width, int height, int oldw, int oldh) {
+        if (maskBitmap != null) {
+            maskBitmap.recycle();
+            maskBitmap = null;
+        }
+        if (coverBitmap != null) {
+            coverBitmap.recycle();
+            coverBitmap = null;
+        }
         boolean sizeChanged = width != oldw || height != oldh;
         boolean isValid = width > 0 && height > 0;
         if (isValid && (maskCanvas == null || sizeChanged)) {
-            maskCanvas = new Canvas();
-            maskBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            maskCanvas.setBitmap(maskBitmap);
+            if (shape != null) {
+                maskCanvas = new Canvas();
+                maskBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+                maskCanvas.setBitmap(maskBitmap);
 
-            maskPaint.reset();
-            paintMaskCanvas(maskCanvas, maskPaint, width, height);
+                maskPaint.reset();
+                paintMaskCanvas(maskCanvas, maskPaint, width, height);
+            }
+            if (cover != null) {
+                coverCanvas = new Canvas();
+                coverBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_4444);
+                coverCanvas.setBitmap(coverBitmap);
 
-            coverCanvas = new Canvas();
-            coverBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            coverCanvas.setBitmap(coverBitmap);
-
-            coverPaint.reset();
-            paintCoverCanvas(coverCanvas, coverPaint, width, height);
+                coverPaint.reset();
+                paintCoverCanvas(coverCanvas, coverPaint, width, height);
+            }
         }
     }
 
@@ -206,11 +219,6 @@ public class ShapeLayoutView extends RelativeLayout {
      * @param height     height
      */
     private void paintMaskCanvas(Canvas maskCanvas, Paint maskPaint, int width, int height) {
-        if (shape == null) {
-            shape = new ShapeDrawable(new RectShape());
-            shape.setBounds(0, 0, width, height);
-            ((ShapeDrawable) shape).getPaint().setColor(Color.BLACK);
-        }
         if (shape != null) {
             if (shape instanceof BitmapDrawable) {
                 configureBitmapBounds(width, height);

@@ -1,14 +1,9 @@
 package com.liangmayong.base.basic.expands.web;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-
 import com.liangmayong.base.basic.expands.web.fragments.FlowWebViewFragment;
 import com.liangmayong.base.basic.expands.web.webkit.WebKitInterceptor;
 import com.liangmayong.base.basic.flow.FlowBaseActivity;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
-import com.liangmayong.base.support.utils.PermissionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -139,31 +134,6 @@ public class WebViewActivity extends FlowBaseActivity {
     @Override
     protected FlowBaseFragment getFristFragment() {
         return new WebFragment().initArguments(getIntent().getExtras());
-    }
-
-    @Override
-    public void onStackActivityCreate(Bundle savedInstanceState) {
-        super.onStackActivityCreate(savedInstanceState);
-        PermissionUtils.readPhoneStatePermissions(this, 10010, new PermissionUtils.OnPermissionListener() {
-            @Override
-            public boolean showDialog(Activity activity, PermissionUtils.Request request) {
-                return false;
-            }
-
-            @Override
-            public void gotPermissions() {
-            }
-
-            @Override
-            public void rejectPermissions(List<String> rejects) {
-            }
-        });
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionUtils.handleResult(requestCode, permissions, grantResults);
     }
 
     public static class WebFragment extends FlowWebViewFragment {

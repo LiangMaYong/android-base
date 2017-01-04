@@ -40,7 +40,7 @@ public class TransitionAnimation {
     public static WeakReference<Bitmap> bitmapCache;
     public static boolean isImageFileReady = false;
 
-    public static TransitionMoveData startAnimation(Context context, final View toView, final View bgView, Bundle transitionBundle, Bundle savedInstanceState, final int duration, final TimeInterpolator interpolator, final Animator.AnimatorListener listener) {
+    public static TransitionMoveData startAnimation(Context context, final View toView, final View bgView, float toAlpha, float bgAlpha, Bundle transitionBundle, Bundle savedInstanceState, final int duration, final TimeInterpolator interpolator, final Animator.AnimatorListener listener) {
         final TransitionData transitionData = new TransitionData(context, transitionBundle);
         if (transitionData.imageFilePath != null) {
             setImageToView(toView, transitionData.imageFilePath);
@@ -48,6 +48,8 @@ public class TransitionAnimation {
         final TransitionMoveData moveData = new TransitionMoveData();
         moveData.toView = toView;
         moveData.bgView = bgView;
+        moveData.toAlpha = toAlpha;
+        moveData.bgAlpha = bgAlpha;
         moveData.duration = duration;
         if (savedInstanceState == null) {
             ViewTreeObserver observer = toView.getViewTreeObserver();
@@ -77,24 +79,24 @@ public class TransitionAnimation {
         final View toView = moveData.toView;
         toView.setPivotX(0);
         toView.setPivotY(0);
-        toView.setAlpha(0.5f);
         toView.setScaleX(moveData.widthScale);
         toView.setScaleY(moveData.heightScale);
         toView.setTranslationX(moveData.leftDelta);
         toView.setTranslationY(moveData.topDelta);
+        toView.setAlpha(moveData.toAlpha);
 
         toView.animate()
+                .alpha(1.0f)
                 .setDuration(moveData.duration)
                 .scaleX(1)
                 .scaleY(1)
-                .alpha(1.0f)
                 .translationX(0)
                 .translationY(0)
                 .setListener(listener)
                 .setInterpolator(interpolator);
         final View bgView = moveData.bgView;
         if (bgView != null) {
-            bgView.setAlpha(0.0f);
+            bgView.setAlpha(moveData.bgAlpha);
             bgView.animate()
                     .setDuration(moveData.duration)
                     .alpha(1.0f)
@@ -143,7 +145,7 @@ public class TransitionAnimation {
         float widthScale = moveData.widthScale;
         float heightScale = moveData.heightScale;
         view.animate()
-                .alpha(0.8f)
+                .alpha(moveData.toAlpha)
                 .setDuration(duration)
                 .scaleX(widthScale)
                 .scaleY(heightScale)
@@ -156,7 +158,7 @@ public class TransitionAnimation {
         View bgview = moveData.bgView;
         if (bgview != null) {
             bgview.animate()
-                    .alpha(0.0f)
+                    .alpha(moveData.bgAlpha)
                     .setDuration(duration);
         }
     }

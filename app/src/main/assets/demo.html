@@ -34,6 +34,11 @@
 </button>
 <br/>
 <br/>
+<button onclick="logcat()" type="button"
+        style="width:100%;height:50px;">Logcat
+</button>
+<br/>
+<br/>
 <button onclick="reload()" type="button" style="width:20%;height:50px;">Reload
 </button>
 <button onclick="back()" type="button" style="width:20%;height:50px;">Back
@@ -78,6 +83,9 @@
        jsBridge.open(url);
     }
 
+    function logcat(){
+       jsBridge.logcat();
+    }
 
 </script>
 </body>

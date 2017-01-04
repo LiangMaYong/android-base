@@ -254,9 +254,9 @@ public final class ViewUtils {
     }
 
     /**
-     * alpha
+     * toAlpha
      *
-     * @param alpha alpha
+     * @param alpha toAlpha
      * @return ViewUtils
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)

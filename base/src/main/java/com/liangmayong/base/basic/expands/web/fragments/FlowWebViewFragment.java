@@ -13,6 +13,7 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.liangmayong.base.R;
+import com.liangmayong.base.basic.expands.logcat.FlowLogcatFragment;
 import com.liangmayong.base.basic.expands.web.webkit.WebKit;
 import com.liangmayong.base.basic.expands.web.webkit.WebKitChromeClient;
 import com.liangmayong.base.basic.expands.web.webkit.WebKitClient;
@@ -122,8 +123,10 @@ public class FlowWebViewFragment extends FlowBaseFragment {
                 super.onPageFinished(view, url);
                 if (!mPageFinished) {
                     mPageFinished = true;
-                    webKit.injectionAssetsJS("javascript/jsBridge.js", getJsBridgeName());
-                    setTitle(view.getTitle());
+                    if (url != null && !"about:blank".equals(url)) {
+                        webKit.injectionAssetsJS("javascript/jsBridge.js", getJsBridgeName());
+                        setTitle(view.getTitle());
+                    }
                 }
             }
 
@@ -329,6 +332,13 @@ public class FlowWebViewFragment extends FlowBaseFragment {
                 } catch (Exception e) {
                 }
                 getDefaultToolbar().message().show(url.getContent(), textColor, bgColor, 1500);
+                return true;
+            }
+        });
+        interceptors.add(new WebKitInterceptor("logcat:") {
+            @Override
+            public boolean interceptorUrlLoading(WebKit web, WebKitUrl url) {
+                open(FlowLogcatFragment.newInstance(url.getContent()));
                 return true;
             }
         });

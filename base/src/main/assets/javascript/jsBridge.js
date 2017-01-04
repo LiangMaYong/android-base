@@ -10,9 +10,18 @@
 function JsBridge()
 {
     var deviceInfo;
+    var userInfo;
 
     this.init = function(info){
        deviceInfo = eval('(' + info + ')');
+    };
+
+    this.auth = function(info){
+       userInfo = eval('(' + info + ')');
+    };
+
+    this.getUserInfo = function(){
+       return userInfo;
     };
 
     this.getDeviceInfo = function(){
@@ -65,6 +74,10 @@ function JsBridge()
 
     this.action = function(action){
        window.location.href ="action:"+action;
+    };
+
+    this.logcat = function(tag){
+       window.location.href ="logcat:"+ (tag != null ? tag:"");
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

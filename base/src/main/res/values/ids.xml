@@ -37,4 +37,7 @@
     <item name="default_toolbar_title" type="id"/>
     <item name="default_toolbar_subtitle" type="id"/>
     <item name="default_toolbar_progress" type="id"/>
+
+
+    <item name="default_logcat" type="id"/>
 </resources>

@@ -22,6 +22,8 @@ import android.view.View;
 public class TransitionMoveData {
     public int leftDelta;
     public int topDelta;
+    public float toAlpha;
+    public float bgAlpha;
     public float widthScale;
     public float heightScale;
     public int duration = 500;

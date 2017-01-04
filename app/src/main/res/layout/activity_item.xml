@@ -25,17 +25,32 @@
                 android:orientation="vertical"
                 android:padding="10dp">
 
+                <com.liangmayong.base.widget.shapeview.ShapeLayoutView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#ffffff"
+                    android:clickable="true"
+                    app:shape="@drawable/icon_right"
+                    app:shapeCover="@drawable/icon_right_cover">
+
+                    <ImageView
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:clickable="true"
+                        android:scaleType="center"
+                        android:src="@mipmap/img_src"/>
+
+                </com.liangmayong.base.widget.shapeview.ShapeLayoutView>
+
                 <com.liangmayong.base.widget.shapeview.ShapeImageView
                     android:id="@+id/imgview"
                     android:layout_width="200dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="200dp"
                     android:layout_marginBottom="10dp"
-                    android:clickable="true"
-                    android:scaleType="center"
                     android:src="@mipmap/img_src"
                     app:shape="@drawable/icon_right"
                     app:shapeCover="@drawable/icon_right_cover"/>
-
 
                 <com.liangmayong.base.widget.shapeview.ShapeLayoutView
                     android:layout_width="200dp"

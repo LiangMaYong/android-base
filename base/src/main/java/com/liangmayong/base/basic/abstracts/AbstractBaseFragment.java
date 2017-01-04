@@ -66,8 +66,8 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
             defaultToolbar = null;
         }
         onSkinRefresh(SkinManager.get());
-        view.setVisibility(View.VISIBLE);
         onAbstractCreateView(view);
+        view.setVisibility(View.VISIBLE);
         return view;
     }
 

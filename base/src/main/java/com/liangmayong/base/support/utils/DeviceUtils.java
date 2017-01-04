@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
+
+import com.liangmayong.base.support.database.DataPreferences;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -19,37 +22,47 @@ public class DeviceUtils {
 
     public static Map<String, String> getDeviceInfo(Context context) {
         Map<String, String> info = new TreeMap<String, String>();
-        try {
-            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            info.put("DEVICE.Id(IMEI)", tm.getDeviceId());
-            info.put("DEVICE.SoftwareVersion", tm.getDeviceSoftwareVersion());
-            info.put("DEVICE.Line1Number", tm.getLine1Number());
-            info.put("DEVICE.NetworkCountryIso", tm.getNetworkCountryIso());
-            info.put("DEVICE.NetworkOperator", tm.getNetworkOperator());
-            info.put("DEVICE.NetworkOperatorName", tm.getNetworkOperatorName());
-            info.put("DEVICE.NetworkType", tm.getNetworkType() + "");
-            info.put("DEVICE.PhoneType", tm.getPhoneType() + "");
-            info.put("DEVICE.SimCountryIso", tm.getSimCountryIso());
-            info.put("DEVICE.SimOperator", tm.getSimOperator());
-            info.put("DEVICE.SimOperatorName", tm.getSimOperatorName());
-            info.put("DEVICE.SimSerialNumber", tm.getSimSerialNumber());
-            info.put("DEVICE.SimState", tm.getSimState() + "");
-            info.put("DEVICE.SubscriberId(IMSI)", tm.getSubscriberId());
-            info.put("DEVICE.VoiceMailNumber", tm.getVoiceMailNumber());
-        } catch (Exception e) {
-        }
-        info.put("BUILD.MODEL", Build.MODEL);
-        info.put("BUILD.DEVICE", Build.DEVICE);
-        info.put("BUILD.PRODUCT", Build.PRODUCT);
         info.put("BUILD.SDK_INT", Build.VERSION.SDK_INT + "");
         info.put("BUILD.PREVIEW_SDK_INT", Build.VERSION.PREVIEW_SDK_INT + "");
         info.put("APP.NAME", getAppName(context));
+        info.put("APP.USER", getUserId(getDeviceId(context)));
         info.put("APP.VERSION_NAME", getVersionName(context));
         info.put("APP.VERSION_CODE", getVersionCode(context) + "");
+        info.put("DEVICE.User", Build.USER);
         info.put("DEVICE.Width", ScreenUtils.getScreenWidth(context) + "");
         info.put("DEVICE.Height", ScreenUtils.getScreenHeight(context) + "");
         info.put("DEVICE.Type", "Android");
+        info.put("DEVICE.UUID", getDeviceId(context));
+        info.put("DEVICE.MODEL", Build.MODEL);
+        info.put("DEVICE.DEVICE", Build.DEVICE);
+        info.put("DEVICE.PRODUCT", Build.PRODUCT);
+        info.put("DEVICE.BOARD", Build.BOARD);
+        info.put("DEVICE.ID", Build.ID);
+        try {
+            info.put("DEVICE.ANDROID_ID", Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID));
+        } catch (Exception e) {
+        }
         return info;
+    }
+
+    /**
+     * setUserId
+     *
+     * @param userId userId
+     */
+    public static void setUserId(String userId) {
+        DataPreferences.getPreferences("android_base_device_utils").setString("userId", userId);
+    }
+
+
+    /**
+     * getUserId
+     *
+     * @param defValue defValue
+     * @return userId
+     */
+    public static String getUserId(String defValue) {
+        return DataPreferences.getPreferences("android_base_device_utils").getString("userId", defValue);
     }
 
     /**
@@ -67,6 +80,40 @@ public class DeviceUtils {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    /**
+     * getDeviceId
+     *
+     * @return device id
+     */
+    public static String getDeviceId(Context context) {
+        String deviceId = Build.BOARD +
+                Build.BRAND +
+                Build.CPU_ABI +
+                Build.DEVICE +
+                Build.DISPLAY +
+                Build.HOST +
+                Build.ID +
+                Build.MANUFACTURER +
+                Build.MODEL +
+                Build.PRODUCT +
+                Build.TAGS +
+                Build.TYPE +
+                Build.SERIAL +
+                Build.USER;
+        try {
+            deviceId = deviceId + Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        } catch (Exception e) {
+        }
+        try {
+            TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            deviceId += tm.getDeviceId();
+        } catch (Exception e) {
+        }
+        deviceId += "w" + ScreenUtils.getScreenWidth(context) + "";
+        deviceId += "h" + ScreenUtils.getScreenHeight(context) + "";
+        return Md5Utils.encrypt(deviceId);
     }
 
     /**

@@ -3,7 +3,6 @@
     <translate
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:duration="500"
-        android:startOffset="100"
         android:fromXDelta="0"
         android:fromYDelta="0"
         android:repeatCount="0"
