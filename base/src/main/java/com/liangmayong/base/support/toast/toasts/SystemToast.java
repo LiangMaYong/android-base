@@ -1,8 +1,10 @@
-package com.liangmayong.base.support.toast;
+package com.liangmayong.base.support.toast.toasts;
 
 import android.content.Context;
 import android.view.View;
 import android.widget.Toast;
+
+import com.liangmayong.base.support.toast.interfaces.IToast;
 
 /**
  * Created by ttt on 2016/7/5.

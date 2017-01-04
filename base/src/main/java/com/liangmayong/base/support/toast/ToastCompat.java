@@ -6,6 +6,10 @@ import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.view.View;
 
+import com.liangmayong.base.support.toast.interfaces.IToast;
+import com.liangmayong.base.support.toast.toasts.CustomToast;
+import com.liangmayong.base.support.toast.toasts.SystemToast;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 

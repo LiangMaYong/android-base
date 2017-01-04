@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.widget.Toast;
 
-import com.liangmayong.base.support.toast.IToast;
+import com.liangmayong.base.support.toast.interfaces.IToast;
 import com.liangmayong.base.support.toast.ToastCompat;
 
 import java.lang.ref.WeakReference;

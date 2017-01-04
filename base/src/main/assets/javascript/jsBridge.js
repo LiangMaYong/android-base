@@ -4,8 +4,6 @@
 * +---------------------------------
 * | Author: LiangMaYong <ibeam@qq.com>
 * +---------------------------------
-* | toast:test?indedex=lmy&
-* +---------------------------------
 **/
 function JsBridge()
 {

@@ -1,4 +1,4 @@
-package com.liangmayong.base.support.toast;
+package com.liangmayong.base.support.toast.toasts;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.liangmayong.base.support.toast.interfaces.IToast;
 import com.liangmayong.base.support.utils.DimenUtils;
 
 import java.util.concurrent.BlockingQueue;
