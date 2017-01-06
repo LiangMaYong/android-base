@@ -17,6 +17,7 @@ import com.liangmayong.base.support.toolbar.DefaultToolbar;
  */
 public interface IBasic extends OnSkinRefreshListener, ITitle {
 
+    String LOGCAT_EXTRA_TAG = "logcat_tag";
     String WEB_EXTRA_URL = "web_extra_url";
     String WEB_EXTRA_TITLE = "web_extra_title";
 

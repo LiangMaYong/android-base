@@ -22,8 +22,11 @@ public class DeviceUtils {
 
     public static Map<String, String> getDeviceInfo(Context context) {
         Map<String, String> info = new TreeMap<String, String>();
-        info.put("BUILD.SDK_INT", Build.VERSION.SDK_INT + "");
-        info.put("BUILD.PREVIEW_SDK_INT", Build.VERSION.PREVIEW_SDK_INT + "");
+        try {
+            info.put("BUILD.SDK_INT", Build.VERSION.SDK_INT + "");
+        } catch (Exception e) {
+            info.put("BUILD.SDK_INT", Build.VERSION.SDK + "");
+        }
         info.put("APP.NAME", getAppName(context));
         info.put("APP.USER", getUserId(getDeviceId(context)));
         info.put("APP.VERSION_NAME", getVersionName(context));

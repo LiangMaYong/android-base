@@ -9,7 +9,6 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
-import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -36,13 +35,13 @@ public class WebKitClient extends android.webkit.WebViewClient {
                     }
                 }
             }
-            url = url.toLowerCase();
-            if (url.startsWith("http:") || url.startsWith("https:")) {
+            String lowurl = url.toLowerCase();
+            if (lowurl.startsWith("http:") || lowurl.startsWith("https:")) {
                 view.loadUrl(url, generateHeaders());
                 return true;
             }
             // Otherwise allow the OS to handle things like tel, mailto, etc.
-            if (url.startsWith("tel:") || url.startsWith("email:")) {
+            if (lowurl.startsWith("tel:") || lowurl.startsWith("email:")) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 view.getContext().startActivity(intent);
                 return true;
@@ -67,13 +66,13 @@ public class WebKitClient extends android.webkit.WebViewClient {
                 }
             }
         }
-        url = url.toLowerCase();
-        if (url.startsWith("http:") || url.startsWith("https:")) {
+        String lowurl = url.toLowerCase();
+        if (lowurl.startsWith("http:") || lowurl.startsWith("https:")) {
             view.loadUrl(url, generateHeaders());
             return true;
         }
         // Otherwise allow the OS to handle things like tel, mailto, etc.
-        if (url.startsWith("tel:") || url.startsWith("email:")) {
+        if (lowurl.startsWith("tel:") || lowurl.startsWith("email:")) {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             view.getContext().startActivity(intent);
             return true;

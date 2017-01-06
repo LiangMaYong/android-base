@@ -125,7 +125,10 @@ public class FlowWebViewFragment extends FlowBaseFragment {
                     mPageFinished = true;
                     if (url != null && !"about:blank".equals(url)) {
                         webKit.injectionAssetsJS("javascript/jsBridge.js", getJsBridgeName());
-                        setTitle(view.getTitle());
+                    }
+                    String title = view.getTitle();
+                    if (title != null && !"null".equals(title)) {
+                        setTitle(title);
                     }
                 }
             }
@@ -145,8 +148,8 @@ public class FlowWebViewFragment extends FlowBaseFragment {
         } else {
             webKit.getSettings().setLoadsImagesAutomatically(false);
         }
-        webKit.loadData("", "text/html", null);
         webKit.getSettings().setDefaultTextEncodingName("UTF-8");
+        webKit.loadData("", "text/html", null);
         webKit.setWebChromeClient(new WebKitChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -382,7 +385,7 @@ public class FlowWebViewFragment extends FlowBaseFragment {
      */
     protected Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<String, String>();
-        headers.put("device", "jsAndroid");
+        headers.put("device", "Android");
         return headers;
     }
 

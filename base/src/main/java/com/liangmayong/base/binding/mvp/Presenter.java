@@ -9,18 +9,18 @@ import java.lang.reflect.Proxy;
  */
 public class Presenter<V> {
 
-    //viewStub
-    private V viewStub = null;
+    //viewState
+    private V viewState = null;
     //isAttached
     private boolean isAttached = false;
 
     /**
-     * getViewStub
+     * getViewState
      *
      * @return view
      */
-    protected final V getViewStub() {
-        return viewStub;
+    protected final V getViewState() {
+        return viewState;
     }
 
     /**
@@ -39,7 +39,7 @@ public class Presenter<V> {
      */
     public void onAttach(final V view) {
         try {
-            viewStub = (V) Proxy.newProxyInstance(view.getClass().getClassLoader(), view.getClass().getInterfaces(), new InvocationHandler() {
+            viewState = (V) Proxy.newProxyInstance(view.getClass().getClassLoader(), view.getClass().getInterfaces(), new InvocationHandler() {
                 @Override
                 public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                     try {
@@ -54,7 +54,7 @@ public class Presenter<V> {
                 }
             });
         } catch (Exception e) {
-            viewStub = view;
+            viewState = view;
         }
         isAttached = true;
     }

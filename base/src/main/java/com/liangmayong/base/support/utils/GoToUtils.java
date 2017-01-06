@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.liangmayong.base.basic.expands.logcat.LogcatActivity;
 import com.liangmayong.base.basic.expands.web.WebViewActivity;
 import com.liangmayong.base.basic.interfaces.IBasic;
 
@@ -53,6 +54,19 @@ public final class GoToUtils {
         extras.putString(IBasic.WEB_EXTRA_TITLE, title);
         extras.putString(IBasic.WEB_EXTRA_URL, url);
         goTo(context, WebViewActivity.class, extras);
+    }
+
+
+    /**
+     * goToLogcat
+     *
+     * @param context context
+     * @param tag     tag
+     */
+    public static void goLogcat(Context context, String tag) {
+        Bundle extras = new Bundle();
+        extras.putString(IBasic.LOGCAT_EXTRA_TAG, tag != null ? tag : "");
+        goTo(context, LogcatActivity.class, extras);
     }
 
     /**

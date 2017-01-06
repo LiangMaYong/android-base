@@ -16,7 +16,7 @@ public class DemoPer extends Presenter<DemoPer.IView> {
     // TODO:Do something
 
     public void toast() {
-        getViewStub().toast();
+        getViewState().toast();
     }
 
 }

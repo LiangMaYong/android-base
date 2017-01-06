@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
+import com.liangmayong.base.basic.interfaces.IBasic;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.widget.iconfont.Icon;
@@ -24,7 +25,7 @@ public class FlowLogcatFragment extends FlowBaseFragment {
      */
     public static FlowLogcatFragment newInstance(String tag) {
         Bundle extras = new Bundle();
-        extras.putString("logcat_tag", tag);
+        extras.putString(IBasic.LOGCAT_EXTRA_TAG, tag);
         return (FlowLogcatFragment) new FlowLogcatFragment().initArguments(extras);
     }
 
@@ -43,7 +44,7 @@ public class FlowLogcatFragment extends FlowBaseFragment {
     protected void initViews(View containerView) {
         _initView(containerView);
         if (getArguments() != null) {
-            String tag = getArguments().getString("logcat_tag");
+            String tag = getArguments().getString(IBasic.LOGCAT_EXTRA_TAG);
             default_logcat.setLogcatTag(tag);
         }
         default_logcat.refreshLogcat();
