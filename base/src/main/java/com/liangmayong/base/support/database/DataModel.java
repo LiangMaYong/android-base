@@ -299,17 +299,17 @@ public class DataModel {
      * @param <T> bean type
      * @return
      */
-    public <T extends DataBean> T toBean(T t) {
-        t.writeModel(values);
+    public <T extends DataObject> T toBean(T t) {
+        t.writeObject(values);
         return t;
     }
 
     /**
-     * writeModel
+     * writeObject
      *
      * @param bean bean
      */
-    public void writeModel(DataBean bean) {
+    public void writeModel(DataObject bean) {
         putAll(bean.writeValues());
     }
 }

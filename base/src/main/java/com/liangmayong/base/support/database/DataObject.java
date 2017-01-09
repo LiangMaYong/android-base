@@ -5,9 +5,9 @@ import android.content.ContentValues;
 /**
  * Created by LiangMaYong on 2016/11/30.
  */
-public interface DataBean {
+public interface DataObject {
 
-    void writeModel(ContentValues values);
+    void writeObject(ContentValues values);
 
     ContentValues writeValues();
 
