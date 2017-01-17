@@ -46,7 +46,7 @@ public abstract class DrawerBaseActivity extends FlowBaseActivity implements Nav
     }
 
     @Override
-    protected void onConfigStackFragmentAnims() {
+    protected void onConfigFlowFragmentAnims() {
     }
 
     @Override

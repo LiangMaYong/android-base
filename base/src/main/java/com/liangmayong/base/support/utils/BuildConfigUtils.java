@@ -31,12 +31,7 @@ public class BuildConfigUtils {
             Class<?> clazz = Class.forName(context.getPackageName() + ".BuildConfig");
             Field field = clazz.getField(fieldName);
             return field.get(null);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
         return null;
     }

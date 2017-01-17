@@ -21,6 +21,7 @@ import com.liangmayong.base.binding.mvp.Presenter;
 import com.liangmayong.base.binding.mvp.PresenterBinding;
 import com.liangmayong.base.binding.mvp.PresenterHolder;
 import com.liangmayong.base.binding.view.ViewBinding;
+import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.statusbar.StatusBarCompat;
@@ -47,6 +48,9 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (shouldFixbug5497Workaround()) {
+            AndroidBug5497Workaround.assistActivity(this);
+        }
         inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         SkinManager.registerSkinRefresh(this);
@@ -124,6 +128,10 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
             defaultToolbar = null;
         }
         onSkinRefresh(SkinManager.get());
+    }
+
+    protected boolean shouldFixbug5497Workaround() {
+        return true;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

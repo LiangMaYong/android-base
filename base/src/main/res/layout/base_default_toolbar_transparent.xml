@@ -6,7 +6,7 @@
 
     <com.liangmayong.base.widget.skinview.SkinRelativeLayout
         xmlns:skin="http://schemas.android.com/apk/res-auto"
-        android:id="@id/default_toolbar_layout"
+        android:id="@id/base_default_toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_toolbar_height"
         skin:shape_type="transparent">

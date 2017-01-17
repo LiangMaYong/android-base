@@ -7,7 +7,7 @@
     <include layout="@layout/base_default_toolbar"/>
 
     <com.liangmayong.base.widget.logcat.LogcatTextView
-        android:id="@id/default_logcat"
+        android:id="@id/base_default_logcat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

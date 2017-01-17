@@ -10,10 +10,29 @@ import android.widget.FrameLayout;
 /**
  * Created by LiangMaYong on 2016/10/28.
  */
-public class Android5497Workaround {
+public class AndroidBug5497Workaround {
 
+    /**
+     * assistActivity
+     *
+     * @param activity activity
+     */
     public static void assistActivity(Activity activity) {
-        new Android5497Workaround(activity);
+        new AndroidBug5497Workaround(activity);
+    }
+
+    /**
+     * unassistActivity
+     *
+     * @param activity activity
+     */
+    public static void unassistActivity(Activity activity) {
+        try {
+            ViewGroup content = (ViewGroup) activity.findViewById(android.R.id.content);
+            View mChildOfContent = content.getChildAt(0);
+            mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(null);
+        } catch (Exception e) {
+        }
     }
 
     private View mChildOfContent;
@@ -21,9 +40,8 @@ public class Android5497Workaround {
     private FrameLayout.LayoutParams frameLayoutParams;
     private boolean isfirst = true;
 
-    private Android5497Workaround(Activity activity) {
+    private AndroidBug5497Workaround(Activity activity) {
         try {
-            int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
             ViewGroup content = (ViewGroup) activity.findViewById(android.R.id.content);
             mChildOfContent = content.getChildAt(0);
             mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

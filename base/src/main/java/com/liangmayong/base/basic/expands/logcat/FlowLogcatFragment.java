@@ -73,6 +73,6 @@ public class FlowLogcatFragment extends FlowBaseFragment {
     }
 
     private void _initView(View rootView) {
-        default_logcat = (LogcatTextView) rootView.findViewById(R.id.default_logcat);
+        default_logcat = (LogcatTextView) rootView.findViewById(R.id.base_default_logcat);
     }
 }

@@ -20,7 +20,7 @@
         android:layout_gravity="start"
         android:background="#ffffff"
         android:fitsSystemWindows="true"
-        app:itemIconTint="@color/base_navigation_item_color"
-        app:itemTextColor="@color/base_navigation_item_color"/>
+        app:itemIconTint="@color/base_default_navigation_item_color"
+        app:itemTextColor="@color/base_default_navigation_item_color"/>
 
 </android.support.v4.widget.DrawerLayout>

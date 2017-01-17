@@ -62,7 +62,7 @@ public class StatusBarCompat {
                 ViewGroup contentView = (ViewGroup) content.getParent();
                 if (contentView instanceof LinearLayout) {
                     transparentStatusBar(activity);
-                    TextView statusBarView = (TextView) activity.findViewById(R.id.default_toolbar_status_bar);
+                    TextView statusBarView = (TextView) activity.findViewById(R.id.base_default_toolbar_status_bar);
                     if (statusBarView != null) {
                         statusBarView.setLayoutParams(getStatusBarLayoutParams(activity, contentView));
                         statusBarView.setBackgroundColor(statusColor);
@@ -73,7 +73,7 @@ public class StatusBarCompat {
                         statusBarView.setText(statusTxt);
                         statusBarView.setTextColor(0xffffffff);
                         statusBarView.setGravity(Gravity.CENTER);
-                        statusBarView.setId(R.id.default_toolbar_status_bar);
+                        statusBarView.setId(R.id.base_default_toolbar_status_bar);
                         statusBarView.setBackgroundColor(statusColor);
                         contentView.addView(statusBarView, 0, getStatusBarLayoutParams(activity, contentView));
                     }

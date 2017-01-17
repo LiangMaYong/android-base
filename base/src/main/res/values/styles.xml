@@ -11,12 +11,12 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="BaseLauncher" parent="BaseTheme">
+    <style name="BaseTheme.Launcher" parent="BaseTheme">
         <item name="colorPrimaryDark">#30333333</item>
-        <item name="android:windowBackground">@mipmap/base_launcher_background</item>
+        <item name="android:windowBackground">@mipmap/base_default_launcher_background</item>
     </style>
 
-    <style name="BaseTranslucent" parent="BaseTheme">
+    <style name="BaseTheme.Translucent" parent="BaseTheme">
         <item name="android:windowBackground">@color/translucent</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>

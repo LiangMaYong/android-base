@@ -67,6 +67,12 @@
                         android:text="Demo"/>
                 </com.liangmayong.base.widget.shapeview.ShapeLayoutView>
 
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="demo"/>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -22,23 +22,21 @@ public final class AlarmUtils {
         }
     }
 
-    /**
-     * ACTION_ALARM
-     */
-    private static final String ACTION_ALARM = "com.liangmayong.alarm";
-
-    /**
-     * "Alignment" time threshold, defaults to 5 minutes
-     */
+    // ACTION_ALARM
+    private static final String ACTION_ALARM = "con.liangmayong.base.alerm";
+    // "Alignment" time threshold, defaults to 5 minutes
     public static int ALIGNMENT_TIME_IN_MILLIS = 300000;
-    /**
-     * Open the "alignment" function
-     */
+    // IS_ALIGNMENT_MODE
     public static boolean IS_ALIGNMENT_MODE = true;
+    // ORIGIONAL_INTENT
     private static final String ORIGIONAL_INTENT = "origional_alarm_intent";
+    // ORIGIONAL_TIMER
     private static final String ORIGIONAL_TIMER = "origional_alarm_timer";
+    // ORIGIONAL_INTERVAL
     private static final String ORIGIONAL_INTERVAL = "origional_alarm_interval";
+    // ORIGIONAL_ID
     private static final String ORIGIONAL_ID = "origional_alarm_id";
+    // ORIGIONAL_TYPE
     private static final String ORIGIONAL_TYPE = "origional_alarm_type";
 
     /**
@@ -370,11 +368,6 @@ public final class AlarmUtils {
     }
 
     private static class AlarmReceiver extends BroadcastReceiver {
-        private static final String ORIGIONAL_INTENT = "origional_alarm_intent";
-        private static final String ORIGIONAL_TIMER = "origional_alarm_timer";
-        private static final String ORIGIONAL_INTERVAL = "origional_alarm_interval";
-        private static final String ORIGIONAL_ID = "origional_alarm_id";
-        private static final String ORIGIONAL_TYPE = "origional_alarm_type";
 
         @Override
         public void onReceive(Context context, Intent intent) {

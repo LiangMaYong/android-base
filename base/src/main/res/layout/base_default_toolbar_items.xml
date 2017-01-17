@@ -12,10 +12,10 @@
         android:paddingRight="@dimen/base_toolbar_height">
 
         <com.liangmayong.base.widget.iconfont.IconView
-            android:id="@id/default_toolbar_left_one"
+            android:id="@id/base_default_toolbar_left_one"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/base_toolbar_item_selector"
+            android:background="@drawable/base_default_toolbar_item_selector"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
@@ -29,10 +29,10 @@
             android:textSize="@dimen/base_toolbar_item_text_size"/>
 
         <com.liangmayong.base.widget.iconfont.IconView
-            android:id="@id/default_toolbar_left_two"
+            android:id="@id/base_default_toolbar_left_two"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/base_toolbar_item_selector"
+            android:background="@drawable/base_default_toolbar_item_selector"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
@@ -45,10 +45,10 @@
             android:textSize="@dimen/base_toolbar_item_text_size"/>
 
         <com.liangmayong.base.widget.iconfont.IconView
-            android:id="@id/default_toolbar_left_three"
+            android:id="@id/base_default_toolbar_left_three"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/base_toolbar_item_selector"
+            android:background="@drawable/base_default_toolbar_item_selector"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
@@ -61,10 +61,10 @@
             android:textSize="@dimen/base_toolbar_item_text_size"/>
 
         <com.liangmayong.base.widget.iconfont.IconView
-            android:id="@id/default_toolbar_left_four"
+            android:id="@id/base_default_toolbar_left_four"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/base_toolbar_item_selector"
+            android:background="@drawable/base_default_toolbar_item_selector"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
@@ -86,10 +86,10 @@
         android:paddingLeft="@dimen/base_toolbar_height">
 
         <com.liangmayong.base.widget.iconfont.IconView
-            android:id="@id/default_toolbar_right_four"
+            android:id="@id/base_default_toolbar_right_four"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/base_toolbar_item_selector"
+            android:background="@drawable/base_default_toolbar_item_selector"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
@@ -103,10 +103,10 @@
             android:textSize="@dimen/base_toolbar_item_text_size"/>
 
         <com.liangmayong.base.widget.iconfont.IconView
-            android:id="@id/default_toolbar_right_three"
+            android:id="@id/base_default_toolbar_right_three"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/base_toolbar_item_selector"
+            android:background="@drawable/base_default_toolbar_item_selector"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
@@ -120,10 +120,10 @@
             android:textSize="@dimen/base_toolbar_item_text_size"/>
 
         <com.liangmayong.base.widget.iconfont.IconView
-            android:id="@id/default_toolbar_right_two"
+            android:id="@id/base_default_toolbar_right_two"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/base_toolbar_item_selector"
+            android:background="@drawable/base_default_toolbar_item_selector"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
@@ -138,10 +138,10 @@
 
 
         <com.liangmayong.base.widget.iconfont.IconView
-            android:id="@id/default_toolbar_right_one"
+            android:id="@id/base_default_toolbar_right_one"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/base_toolbar_item_selector"
+            android:background="@drawable/base_default_toolbar_item_selector"
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
@@ -165,7 +165,7 @@
         android:paddingRight="@dimen/base_toolbar_item_min_width">
 
         <TextView
-            android:id="@id/default_toolbar_title"
+            android:id="@id/base_default_toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -180,7 +180,7 @@
             android:visibility="gone"/>
 
         <TextView
-            android:id="@id/default_toolbar_subtitle"
+            android:id="@id/base_default_toolbar_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -202,16 +202,16 @@
         android:gravity="center_vertical">
 
         <ProgressBar
-            android:id="@id/default_toolbar_progress"
+            android:id="@id/base_default_toolbar_progress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/base_toolbar_progressbar_height"
-            android:progressDrawable="@drawable/base_toolbar_progressbar"
+            android:progressDrawable="@drawable/base_default_toolbar_progressbar"
             android:visibility="visible"></ProgressBar>
     </LinearLayout>
 
     <com.liangmayong.base.widget.iconfont.IconView
-        android:id="@id/default_toolbar_message"
+        android:id="@id/base_default_toolbar_message"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#3399ff"

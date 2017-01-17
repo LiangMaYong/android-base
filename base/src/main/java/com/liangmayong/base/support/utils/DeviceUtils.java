@@ -7,6 +7,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
+import com.liangmayong.base.BaseApplication;
 import com.liangmayong.base.support.database.DataPreferences;
 
 import java.util.Map;
@@ -31,6 +32,7 @@ public class DeviceUtils {
         info.put("APP.USER", getUserId(getDeviceId(context)));
         info.put("APP.VERSION_NAME", getVersionName(context));
         info.put("APP.VERSION_CODE", getVersionCode(context) + "");
+        info.put("APP.BASIC_VERSION", BaseApplication.getBaseVersion());
         info.put("DEVICE.User", Build.USER);
         info.put("DEVICE.Width", ScreenUtils.getScreenWidth(context) + "");
         info.put("DEVICE.Height", ScreenUtils.getScreenHeight(context) + "");

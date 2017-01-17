@@ -40,11 +40,11 @@ public abstract class FlowBaseActivity extends BaseActivity implements IStack {
     }
 
     @Override
-    public void onStackActivityCreate(Bundle savedInstanceState) {
+    public void onFlowActivityCreate(Bundle savedInstanceState) {
     }
 
     @Override
-    public void onStackFragmentCreateView(FlowBaseFragment fragment, View view) {
+    public void onFlowFragmentCreateView(FlowBaseFragment fragment, View view) {
     }
 
     @Override
@@ -58,8 +58,8 @@ public abstract class FlowBaseActivity extends BaseActivity implements IStack {
         fragment.setFrist(true);
         manager = new StackManager(this, generateContainerFragmentId());
         manager.setFragment(fragment);
-        onConfigStackFragmentAnims();
-        onStackActivityCreate(savedInstanceState);
+        onConfigFlowFragmentAnims();
+        onFlowActivityCreate(savedInstanceState);
     }
 
     /**
@@ -87,9 +87,9 @@ public abstract class FlowBaseActivity extends BaseActivity implements IStack {
     }
 
     /**
-     * onConfigStackFragmentAnims
+     * onConfigFlowFragmentAnims
      */
-    protected void onConfigStackFragmentAnims() {
+    protected void onConfigFlowFragmentAnims() {
         int anim_next_in = R.anim.base_anim_in_enter;
         int anim_next_out = R.anim.base_anim_out_enter;
         int anim_quit_in = R.anim.base_anim_in_exit;

@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.os.Process;
 import android.view.ContextThemeWrapper;
 
-import com.liangmayong.base.support.lifecycle.ActivityLifeCycle;
-
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.Iterator;
@@ -41,9 +39,6 @@ public final class ContextUtils {
      * @return context
      */
     public static Context getCurrentContext() {
-        if (ActivityLifeCycle.getCurrentActivity() != null) {
-            return ActivityLifeCycle.getCurrentActivity();
-        }
         if (superContext == null) {
             synchronized (ContextUtils.class) {
                 superContext = new SuperContext();

@@ -26,14 +26,14 @@
     <!--base retry-->
     <color name="base_default_retry_text_color">#676767</color>
 
-    <color name="defaultVerboseColor">#0093C4</color>
-    <color name="defaultDebugColor">#22BB00</color>
-    <color name="defaultErrorColor">#FF6B68</color>
-    <color name="defaultInfoColor">#FFFFFF</color>
-    <color name="defaultWarningColor">#BB7D0E</color>
+    <color name="base_logcat_defaultVerboseColor">#0093C4</color>
+    <color name="base_logcat_defaultDebugColor">#22BB00</color>
+    <color name="base_logcat_defaultErrorColor">#FF6B68</color>
+    <color name="base_logcat_defaultInfoColor">#FFFFFF</color>
+    <color name="base_logcat_defaultWarningColor">#BB7D0E</color>
 
-    <color name="defaultTextColor">#FFFFFF</color>
-    <color name="defaultConsoleColor">#000000</color>
+    <color name="base_logcat_defaultTextColor">#FFFFFF</color>
+    <color name="base_logcat_defaultConsoleColor">#000000</color>
 
     <color name="translucent">#00FFFFFF</color>
 </resources>

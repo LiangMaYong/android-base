@@ -21,7 +21,7 @@ import java.io.InputStreamReader;
  * Created by munix on 20/12/16.
  */
 
-public class LogcatTextView extends ScrollView implements LogcatListener {
+public class LogcatTextView extends ScrollView {
 
     private int verboseColor, debugColor, errorColor, infoColor, warningColor, consoleColor;
     private TextView textView;
@@ -69,7 +69,7 @@ public class LogcatTextView extends ScrollView implements LogcatListener {
         textView.setPadding(20, 20, 20, 20);
         addView(textView);
 
-        textView.setTextColor(getContext().getResources().getColor(R.color.defaultTextColor));
+        textView.setTextColor(getContext().getResources().getColor(R.color.base_logcat_defaultTextColor));
 
         if (attrs != null) {
             TypedArray a = getContext().getTheme()
@@ -77,28 +77,28 @@ public class LogcatTextView extends ScrollView implements LogcatListener {
 
             try {
                 verboseColor = a.getColor(R.styleable.LogcatTextView_verboseColor, getContext().getResources()
-                        .getColor(R.color.defaultVerboseColor));
+                        .getColor(R.color.base_logcat_defaultVerboseColor));
                 debugColor = a.getColor(R.styleable.LogcatTextView_debugColor, getContext().getResources()
-                        .getColor(R.color.defaultDebugColor));
+                        .getColor(R.color.base_logcat_defaultDebugColor));
                 errorColor = a.getColor(R.styleable.LogcatTextView_errorColor, getContext().getResources()
-                        .getColor(R.color.defaultErrorColor));
+                        .getColor(R.color.base_logcat_defaultErrorColor));
                 infoColor = a.getColor(R.styleable.LogcatTextView_infoColor, getContext().getResources()
-                        .getColor(R.color.defaultInfoColor));
+                        .getColor(R.color.base_logcat_defaultInfoColor));
                 warningColor = a.getColor(R.styleable.LogcatTextView_warningColor, getContext().getResources()
-                        .getColor(R.color.defaultWarningColor));
+                        .getColor(R.color.base_logcat_defaultWarningColor));
 
                 consoleColor = a.getColor(R.styleable.LogcatTextView_consoleColor, getContext().getResources()
-                        .getColor(R.color.defaultConsoleColor));
+                        .getColor(R.color.base_logcat_defaultConsoleColor));
             } finally {
                 a.recycle();
             }
         } else {
-            verboseColor = getContext().getResources().getColor(R.color.defaultVerboseColor);
-            debugColor = getContext().getResources().getColor(R.color.defaultDebugColor);
-            errorColor = getContext().getResources().getColor(R.color.defaultErrorColor);
-            infoColor = getContext().getResources().getColor(R.color.defaultInfoColor);
-            warningColor = getContext().getResources().getColor(R.color.defaultWarningColor);
-            consoleColor = getContext().getResources().getColor(R.color.defaultConsoleColor);
+            verboseColor = getContext().getResources().getColor(R.color.base_logcat_defaultVerboseColor);
+            debugColor = getContext().getResources().getColor(R.color.base_logcat_defaultDebugColor);
+            errorColor = getContext().getResources().getColor(R.color.base_logcat_defaultErrorColor);
+            infoColor = getContext().getResources().getColor(R.color.base_logcat_defaultInfoColor);
+            warningColor = getContext().getResources().getColor(R.color.base_logcat_defaultWarningColor);
+            consoleColor = getContext().getResources().getColor(R.color.base_logcat_defaultConsoleColor);
         }
         setBackgroundColor(consoleColor);
         textView.setBackgroundColor(consoleColor);
@@ -108,8 +108,7 @@ public class LogcatTextView extends ScrollView implements LogcatListener {
         getLogcat();
     }
 
-    @Override
-    public void onLogcatCaptured(String logcat) {
+    private void onLogcatCaptured(String logcat) {
         textView.setText(Html.fromHtml(logcat));
         if (isBottom) {
             scrollToBottom();
@@ -232,7 +231,6 @@ public class LogcatTextView extends ScrollView implements LogcatListener {
                     }
                     handler.obtainMessage(0, log.toString()).sendToTarget();
                 } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         }.start();

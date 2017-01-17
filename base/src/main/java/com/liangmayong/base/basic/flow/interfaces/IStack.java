@@ -15,19 +15,19 @@ import com.liangmayong.base.basic.flow.stack.StackManager;
 public interface IStack {
 
     /**
-     * onStackActivityCreate
+     * onFlowActivityCreate
      *
      * @param savedInstanceState savedInstanceState
      */
-    void onStackActivityCreate(Bundle savedInstanceState);
+    void onFlowActivityCreate(Bundle savedInstanceState);
 
     /**
-     * onStackFragmentCreateView
+     * onFlowFragmentCreateView
      *
      * @param fragment fragment
      * @param view     view
      */
-    void onStackFragmentCreateView(FlowBaseFragment fragment, View view);
+    void onFlowFragmentCreateView(FlowBaseFragment fragment, View view);
 
     /**
      * getVisibleFragment

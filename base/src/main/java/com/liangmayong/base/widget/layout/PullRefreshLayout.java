@@ -15,8 +15,8 @@ import android.view.animation.Transformation;
 import android.widget.AbsListView;
 import android.widget.ImageView;
 
-import com.liangmayong.base.widget.interfaces.IRefresh;
-import com.liangmayong.base.widget.layout.drawables.ImageSwitchDrawable;
+import com.liangmayong.base.widget.refresh.RefreshView;
+import com.liangmayong.base.widget.layout.drawables.LogoDrawable;
 import com.liangmayong.base.widget.layout.drawables.RefreshDrawable;
 
 
@@ -24,7 +24,7 @@ import com.liangmayong.base.widget.layout.drawables.RefreshDrawable;
  * Created by LiangMaYong on 2016/8/24.
  */
 @SuppressLint("NewApi")
-public class PullRefreshLayout extends ViewGroup implements IRefresh {
+public class PullRefreshLayout extends ViewGroup implements RefreshView {
 
     private static final float DECELERATE_INTERPOLATION_FACTOR = 2f;
     private static final int DRAG_MAX_DISTANCE = 64;
@@ -67,7 +67,7 @@ public class PullRefreshLayout extends ViewGroup implements IRefresh {
         mDurationToCorrectPosition = defaultDuration;
         mSpinnerFinalOffset = mTotalDragDistance = dp2px(DRAG_MAX_DISTANCE);
         mRefreshView = new ImageView(context);
-        setRefreshDrawable(ImageSwitchDrawable.newDrawable(this));
+        setRefreshDrawable(LogoDrawable.newDrawable(this));
         mRefreshView.setVisibility(View.GONE);
         addView(mRefreshView, 0);
         setWillNotDraw(false);
@@ -349,7 +349,7 @@ public class PullRefreshLayout extends ViewGroup implements IRefresh {
     }
 
     @Override
-    public void setOnRefreshListener(final IRefresh.OnRefreshListener listener) {
+    public void setOnRefreshListener(final RefreshView.OnRefreshListener listener) {
         setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {

@@ -26,7 +26,7 @@ import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.widget.iconfont.Icon;
-import com.liangmayong.base.widget.interfaces.IRefresh;
+import com.liangmayong.base.widget.refresh.RefreshView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,8 +38,8 @@ import java.util.Map;
  */
 public class FlowWebViewFragment extends FlowBaseFragment {
 
-    //refresh
-    private IRefresh refresh;
+    //refreshView
+    private RefreshView refreshView;
     //webKit
     private WebKit webKit;
     //title
@@ -83,11 +83,11 @@ public class FlowWebViewFragment extends FlowBaseFragment {
     }
 
     /**
-     * getWebView
+     * getWebKit
      *
      * @return webKit
      */
-    public WebKit getWebView() {
+    public WebKit getWebKit() {
         return webKit;
     }
 
@@ -95,17 +95,17 @@ public class FlowWebViewFragment extends FlowBaseFragment {
     protected final void initViews(View rootView) {
         webKit = new WebKit(getActivity());
         webKit.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        refresh = (IRefresh) rootView.findViewById(R.id.base_web_refreshLayout);
-        refresh.addView(webKit);
-        refresh.setEnabled(refreshEnabled);
-        refresh.setChildView(webKit);
+        refreshView = (RefreshView) rootView.findViewById(R.id.base_web_refreshLayout);
+        refreshView.addView(webKit);
+        refreshView.setEnabled(refreshEnabled);
+        refreshView.setChildView(webKit);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             webKit.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
-        refresh.setOnRefreshListener(new IRefresh.OnRefreshListener() {
+        refreshView.setOnRefreshListener(new RefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refresh.setRefreshing(false);
+                refreshView.setRefreshing(false);
                 reload();
             }
         });
@@ -281,8 +281,8 @@ public class FlowWebViewFragment extends FlowBaseFragment {
      */
     public void setRefreshEnabled(boolean refreshEnabled) {
         this.refreshEnabled = refreshEnabled;
-        if (refresh != null) {
-            refresh.setEnabled(refreshEnabled);
+        if (refreshView != null) {
+            refreshView.setEnabled(refreshEnabled);
         }
     }
 
@@ -427,7 +427,7 @@ public class FlowWebViewFragment extends FlowBaseFragment {
         try {
             webKit.stopLoading();
             webKit.loadUrl("about:blank");
-            refresh.removeAllViews();
+            refreshView.removeAllViews();
             webKit.removeAllViews();
             webKit.destroy();
         } catch (Exception e) {

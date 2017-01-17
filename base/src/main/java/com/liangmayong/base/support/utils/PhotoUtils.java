@@ -66,6 +66,7 @@ public class PhotoUtils {
      *
      * @param activity activity
      * @param id       id
+     * @param crop       crop
      */
     public void startTake(Activity activity, int id, boolean crop) {
         if (crop) {
@@ -80,6 +81,7 @@ public class PhotoUtils {
      *
      * @param fragment fragment
      * @param id       id
+     * @param crop       crop
      */
     public void startTake(Fragment fragment, int id, boolean crop) {
         if (crop) {

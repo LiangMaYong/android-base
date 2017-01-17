@@ -4,8 +4,8 @@ import android.view.View;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
-import com.liangmayong.base.widget.interfaces.IRefresh;
 import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
+import com.liangmayong.base.widget.refresh.RefreshView;
 
 /**
  * Created by LiangMaYong on 2016/12/29.
@@ -13,15 +13,15 @@ import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
 public abstract class FlowRecyclerBoxFragment extends FlowBaseFragment {
 
     private RecyclerBox recyclerBox = null;
-    private IRefresh refresh = null;
+    private RefreshView refreshView = null;
 
     @Override
     protected void initViews(View containerView) {
         recyclerBox = (RecyclerBox) containerView.findViewById(R.id.base_recyclerbox);
-        refresh = (IRefresh) containerView.findViewById(R.id.base_refreshLayout);
-        refresh.setEnabled(isRefreshEnabled());
-        refresh.setChildView(recyclerBox);
-        initBoxView(recyclerBox, refresh);
+        refreshView = (RefreshView) containerView.findViewById(R.id.base_refreshLayout);
+        refreshView.setEnabled(isRefreshEnabled());
+        refreshView.setChildView(recyclerBox);
+        initBoxView(recyclerBox, refreshView);
     }
 
     @Override
@@ -33,9 +33,9 @@ public abstract class FlowRecyclerBoxFragment extends FlowBaseFragment {
      * initBoxView
      *
      * @param recyclerBox recyclerBox
-     * @param refresh     refresh
+     * @param refreshView refreshView
      */
-    protected abstract void initBoxView(RecyclerBox recyclerBox, IRefresh refresh);
+    protected abstract void initBoxView(RecyclerBox recyclerBox, RefreshView refreshView);
 
     /**
      * getRecyclerBox
@@ -49,16 +49,16 @@ public abstract class FlowRecyclerBoxFragment extends FlowBaseFragment {
     /**
      * getRefresh
      *
-     * @return refresh
+     * @return refreshView
      */
-    protected IRefresh getRefresh() {
-        return refresh;
+    protected RefreshView getRefreshView() {
+        return refreshView;
     }
 
     /**
      * isRefreshEnabled
      *
-     * @return refresh enabled
+     * @return refreshView enabled
      */
     protected boolean isRefreshEnabled() {
         return true;

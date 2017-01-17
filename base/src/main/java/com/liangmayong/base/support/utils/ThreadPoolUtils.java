@@ -22,6 +22,7 @@ public final class ThreadPoolUtils {
     }
 
     public enum Type {
+        ScheduledThread,
         FixedThread,
         CachedThread,
         SingleThread,

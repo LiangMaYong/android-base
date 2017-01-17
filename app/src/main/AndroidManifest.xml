@@ -5,7 +5,7 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/base_icon_launcher"
+        android:icon="@mipmap/base_default_icon_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/BaseTheme">
@@ -13,7 +13,7 @@
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:theme="@style/BaseLauncher">
+            android:theme="@style/BaseTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -22,7 +22,7 @@
         </activity>
         <activity
             android:name=".ImageViewActivity"
-            android:theme="@style/BaseTranslucent"
+            android:theme="@style/BaseTheme.Translucent"
             />
     </application>
 

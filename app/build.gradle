@@ -24,4 +24,7 @@ dependencies {
     compile(project(':base')) {
         exclude group: 'com.facebook.fresco'
     }
+    // 内存溢出检测工具
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }

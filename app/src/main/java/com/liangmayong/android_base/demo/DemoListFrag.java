@@ -6,7 +6,7 @@ import com.liangmayong.base.basic.expands.recyclerbox.FlowRecyclerBoxFragment;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.support.builder.BundleBuilder;
 import com.liangmayong.base.support.utils.DimenUtils;
-import com.liangmayong.base.widget.interfaces.IRefresh;
+import com.liangmayong.base.widget.refresh.RefreshView;
 import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
 
 /**
@@ -32,7 +32,7 @@ public class DemoListFrag extends FlowRecyclerBoxFragment {
     }
 
     @Override
-    protected void initBoxView(RecyclerBox recyclerBox, IRefresh refresh) {
+    protected void initBoxView(RecyclerBox recyclerBox, RefreshView refresh) {
         getDefaultToolbar().rightOne().text("Blog").click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,11 +42,11 @@ public class DemoListFrag extends FlowRecyclerBoxFragment {
         inserData();
         recyclerBox.setStaggeredEnable(true);
         recyclerBox.setDecorationSize(DimenUtils.dip2px(getActivity(), 2));
-        refresh.setOnRefreshListener(new IRefresh.OnRefreshListener() {
+        refresh.setOnRefreshListener(new RefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 inserData();
-                getRefresh().setRefreshing(false);
+                getRefreshView().setRefreshing(false);
             }
         });
     }

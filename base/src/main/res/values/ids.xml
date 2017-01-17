@@ -23,21 +23,20 @@
     <item name="base_default_retry_img" type="id"/>
     <item name="base_default_retry_text" type="id"/>
     <!-- base_default_toolbar.xml -->
-    <item name="default_toolbar_status_bar" type="id"/>
-    <item name="default_toolbar_layout" type="id"/>
-    <item name="default_toolbar_message" type="id"/>
-    <item name="default_toolbar_left_one" type="id"/>
-    <item name="default_toolbar_left_two" type="id"/>
-    <item name="default_toolbar_left_three" type="id"/>
-    <item name="default_toolbar_left_four" type="id"/>
-    <item name="default_toolbar_right_four" type="id"/>
-    <item name="default_toolbar_right_three" type="id"/>
-    <item name="default_toolbar_right_two" type="id"/>
-    <item name="default_toolbar_right_one" type="id"/>
-    <item name="default_toolbar_title" type="id"/>
-    <item name="default_toolbar_subtitle" type="id"/>
-    <item name="default_toolbar_progress" type="id"/>
+    <item name="base_default_toolbar_status_bar" type="id"/>
+    <item name="base_default_toolbar_layout" type="id"/>
+    <item name="base_default_toolbar_message" type="id"/>
+    <item name="base_default_toolbar_left_one" type="id"/>
+    <item name="base_default_toolbar_left_two" type="id"/>
+    <item name="base_default_toolbar_left_three" type="id"/>
+    <item name="base_default_toolbar_left_four" type="id"/>
+    <item name="base_default_toolbar_right_four" type="id"/>
+    <item name="base_default_toolbar_right_three" type="id"/>
+    <item name="base_default_toolbar_right_two" type="id"/>
+    <item name="base_default_toolbar_right_one" type="id"/>
+    <item name="base_default_toolbar_title" type="id"/>
+    <item name="base_default_toolbar_subtitle" type="id"/>
+    <item name="base_default_toolbar_progress" type="id"/>
 
-
-    <item name="default_logcat" type="id"/>
+    <item name="base_default_logcat" type="id"/>
 </resources>

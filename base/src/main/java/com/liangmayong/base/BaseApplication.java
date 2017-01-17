@@ -2,7 +2,7 @@ package com.liangmayong.base;
 
 import android.app.Application;
 
-import com.liangmayong.base.support.lifecycle.ActivityLifeCycle;
+import com.liangmayong.base.support.crash.CrashHandler;
 import com.liangmayong.base.support.utils.FrescoUtils;
 import com.liangmayong.base.support.utils.ThreadPoolUtils;
 
@@ -22,8 +22,8 @@ public class BaseApplication extends Application {
         threadPoolUtils.execute(new Runnable() {
             @Override
             public void run() {
-                ActivityLifeCycle.initialize(application);
                 FrescoUtils.initialize(application);
+                CrashHandler.init(application);
             }
         });
     }
@@ -40,7 +40,7 @@ public class BaseApplication extends Application {
      * @return base
      */
     public static String getBaseVersion() {
-        return "1.3.1";
+        return "2.0.0";
     }
 
 }

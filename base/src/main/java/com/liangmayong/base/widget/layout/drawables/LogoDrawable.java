@@ -15,10 +15,10 @@ import java.security.InvalidParameterException;
 /**
  * Created by LiangMaYong on 2016/8/24.
  */
-public class ImageSwitchDrawable extends RefreshDrawable {
+public class LogoDrawable extends RefreshDrawable {
 
-    public static ImageSwitchDrawable newDrawable(PullRefreshLayout refreshLayout) {
-        return new ImageSwitchDrawable(refreshLayout, R.mipmap.base_default_pull_loading_1, R.mipmap.base_default_pull_loading_2, R.mipmap.base_default_pull_loading_3, R.mipmap.base_default_pull_loading_4, R.mipmap.base_default_pull_loading_5, R.mipmap.base_default_pull_loading_6);
+    public static LogoDrawable newDrawable(PullRefreshLayout refreshLayout) {
+        return new LogoDrawable(refreshLayout, R.mipmap.base_default_pull_loading_1, R.mipmap.base_default_pull_loading_2, R.mipmap.base_default_pull_loading_3, R.mipmap.base_default_pull_loading_4, R.mipmap.base_default_pull_loading_5, R.mipmap.base_default_pull_loading_6);
     }
 
     private Paint mPaint;
@@ -41,7 +41,7 @@ public class ImageSwitchDrawable extends RefreshDrawable {
 
     private int[] drawBitmap;
 
-    public ImageSwitchDrawable(PullRefreshLayout layout, int... resIds) {
+    public LogoDrawable(PullRefreshLayout layout, int... resIds) {
         super(layout);
         if (resIds == null || resIds.length < 2)
             throw new InvalidParameterException("The resIds length must be >= 2");

@@ -34,7 +34,7 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
     @Override
     protected void onAbstractCreateView(View containerView) {
         super.onAbstractCreateView(containerView);
-        getStackActivity().onStackFragmentCreateView(this, containerView);
+        getStackActivity().onFlowFragmentCreateView(this, containerView);
         isShow = true;
         isClose = false;
     }

@@ -119,7 +119,7 @@ public final class ApkUtils {
         ApplicationInfo appInfo = null;
         try {
             PackageManager pm = context.getPackageManager();
-            appInfo = pm.getApplicationInfo(packageName, PackageManager.GET_ACTIVITIES);
+            appInfo = pm.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
         } catch (Exception e) {
         }
         return appInfo;

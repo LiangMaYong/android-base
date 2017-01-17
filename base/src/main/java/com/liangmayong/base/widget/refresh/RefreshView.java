@@ -1,4 +1,4 @@
-package com.liangmayong.base.widget.interfaces;
+package com.liangmayong.base.widget.refresh;
 
 import android.view.View;
 import android.view.ViewGroup;
@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 /**
  * Created by LiangMaYong on 2016/12/7.
  */
-public interface IRefresh {
+public interface RefreshView {
 
     void setChildView(ViewGroup view);
 

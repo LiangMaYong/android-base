@@ -58,23 +58,23 @@ public class DefaultToolbar {
     };
 
     public DefaultToolbar(View view) throws Exception {
-        toolbar_layout = (SkinRelativeLayout) view.findViewById(R.id.default_toolbar_layout);
+        toolbar_layout = (SkinRelativeLayout) view.findViewById(R.id.base_default_toolbar_layout);
         if (toolbar_layout == null) {
             throw new Exception("not include base_default_toolbar");
         }
         toolbar_layout.setSkinRefreshListener(skinRefreshListener);
         context = view.getContext();
-        toolbar_title = (TextView) view.findViewById(R.id.default_toolbar_title);
-        toolbar_subtitle = (TextView) view.findViewById(R.id.default_toolbar_subtitle);
-        IconView textView = (IconView) view.findViewById(R.id.default_toolbar_message);
-        IconView right_one = (IconView) view.findViewById(R.id.default_toolbar_right_one);
-        IconView right_two = (IconView) view.findViewById(R.id.default_toolbar_right_two);
-        IconView right_three = (IconView) view.findViewById(R.id.default_toolbar_right_three);
-        IconView right_four = (IconView) view.findViewById(R.id.default_toolbar_right_four);
-        IconView left_one = (IconView) view.findViewById(R.id.default_toolbar_left_one);
-        IconView left_two = (IconView) view.findViewById(R.id.default_toolbar_left_two);
-        IconView left_three = (IconView) view.findViewById(R.id.default_toolbar_left_three);
-        IconView left_four = (IconView) view.findViewById(R.id.default_toolbar_left_four);
+        toolbar_title = (TextView) view.findViewById(R.id.base_default_toolbar_title);
+        toolbar_subtitle = (TextView) view.findViewById(R.id.base_default_toolbar_subtitle);
+        IconView textView = (IconView) view.findViewById(R.id.base_default_toolbar_message);
+        IconView right_one = (IconView) view.findViewById(R.id.base_default_toolbar_right_one);
+        IconView right_two = (IconView) view.findViewById(R.id.base_default_toolbar_right_two);
+        IconView right_three = (IconView) view.findViewById(R.id.base_default_toolbar_right_three);
+        IconView right_four = (IconView) view.findViewById(R.id.base_default_toolbar_right_four);
+        IconView left_one = (IconView) view.findViewById(R.id.base_default_toolbar_left_one);
+        IconView left_two = (IconView) view.findViewById(R.id.base_default_toolbar_left_two);
+        IconView left_three = (IconView) view.findViewById(R.id.base_default_toolbar_left_three);
+        IconView left_four = (IconView) view.findViewById(R.id.base_default_toolbar_left_four);
         message = new ToolMessage(textView);
         toolbar_right_one = new ToolItem(right_one);
         toolbar_right_two = new ToolItem(right_two);
@@ -84,28 +84,28 @@ public class DefaultToolbar {
         toolbar_left_two = new ToolItem(left_two);
         toolbar_left_three = new ToolItem(left_three);
         toolbar_left_four = new ToolItem(left_four);
-        toolbar_progress = (ProgressBar) view.findViewById(R.id.default_toolbar_progress);
+        toolbar_progress = (ProgressBar) view.findViewById(R.id.base_default_toolbar_progress);
         init();
     }
 
     public DefaultToolbar(Activity activity) throws Exception {
-        toolbar_layout = (SkinRelativeLayout) activity.findViewById(R.id.default_toolbar_layout);
+        toolbar_layout = (SkinRelativeLayout) activity.findViewById(R.id.base_default_toolbar_layout);
         if (toolbar_layout == null) {
             throw new Exception("not include base_default_toolbar");
         }
         toolbar_layout.setSkinRefreshListener(skinRefreshListener);
         context = activity;
-        toolbar_title = (TextView) activity.findViewById(R.id.default_toolbar_title);
-        toolbar_subtitle = (TextView) activity.findViewById(R.id.default_toolbar_subtitle);
-        IconView textView = (IconView) activity.findViewById(R.id.default_toolbar_message);
-        IconView right_one = (IconView) activity.findViewById(R.id.default_toolbar_right_one);
-        IconView right_two = (IconView) activity.findViewById(R.id.default_toolbar_right_two);
-        IconView right_three = (IconView) activity.findViewById(R.id.default_toolbar_right_three);
-        IconView right_four = (IconView) activity.findViewById(R.id.default_toolbar_right_four);
-        IconView left_one = (IconView) activity.findViewById(R.id.default_toolbar_left_one);
-        IconView left_two = (IconView) activity.findViewById(R.id.default_toolbar_left_two);
-        IconView left_three = (IconView) activity.findViewById(R.id.default_toolbar_left_three);
-        IconView left_four = (IconView) activity.findViewById(R.id.default_toolbar_left_four);
+        toolbar_title = (TextView) activity.findViewById(R.id.base_default_toolbar_title);
+        toolbar_subtitle = (TextView) activity.findViewById(R.id.base_default_toolbar_subtitle);
+        IconView textView = (IconView) activity.findViewById(R.id.base_default_toolbar_message);
+        IconView right_one = (IconView) activity.findViewById(R.id.base_default_toolbar_right_one);
+        IconView right_two = (IconView) activity.findViewById(R.id.base_default_toolbar_right_two);
+        IconView right_three = (IconView) activity.findViewById(R.id.base_default_toolbar_right_three);
+        IconView right_four = (IconView) activity.findViewById(R.id.base_default_toolbar_right_four);
+        IconView left_one = (IconView) activity.findViewById(R.id.base_default_toolbar_left_one);
+        IconView left_two = (IconView) activity.findViewById(R.id.base_default_toolbar_left_two);
+        IconView left_three = (IconView) activity.findViewById(R.id.base_default_toolbar_left_three);
+        IconView left_four = (IconView) activity.findViewById(R.id.base_default_toolbar_left_four);
         message = new ToolMessage(textView);
         toolbar_right_one = new ToolItem(right_one);
         toolbar_right_two = new ToolItem(right_two);
@@ -115,7 +115,7 @@ public class DefaultToolbar {
         toolbar_left_two = new ToolItem(left_two);
         toolbar_left_three = new ToolItem(left_three);
         toolbar_left_four = new ToolItem(left_four);
-        toolbar_progress = (ProgressBar) activity.findViewById(R.id.default_toolbar_progress);
+        toolbar_progress = (ProgressBar) activity.findViewById(R.id.base_default_toolbar_progress);
         init();
     }
 
