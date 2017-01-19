@@ -20,7 +20,7 @@ import com.liangmayong.base.widget.layout.SquareLinearLayout;
 @BindLayout(R.layout.activity_image)
 @BindTitle("ImageViewActivity")
 public class ImageViewActivity extends BaseActivity {
-    ExitActivityTransition activityTransition = null;
+    private ExitActivityTransition activityTransition = null;
     @BindView(R.id.imgview)
     private SquareLinearLayout imgview;
 

@@ -36,4 +36,8 @@
     <color name="base_logcat_defaultConsoleColor">#000000</color>
 
     <color name="translucent">#00FFFFFF</color>
+
+
+    <color name="base_default_navigation_primary">@color/colorPrimary</color>
+    <color name="base_default_navigation_normal">#FF676767</color>
 </resources>
