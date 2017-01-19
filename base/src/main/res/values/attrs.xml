@@ -45,5 +45,8 @@
         <attr name="warningColor" format="color"/>
         <attr name="consoleColor" format="color"/>
     </declare-styleable>
+    <declare-styleable name="BasicTextView">
+        <attr name="fontPath" format="string"/>
+    </declare-styleable>
 
 </resources>

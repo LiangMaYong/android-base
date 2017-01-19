@@ -275,8 +275,14 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     public void hideSoftKeyBoard() {
         try {
             if (inputMethodManager.isActive() && this.getCurrentFocus() != null) {
-                if (this.getCurrentFocus().getWindowToken() != null) {
-                    inputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                if (getCurrentFocus() != null) {
+                    View view = getCurrentFocus();
+                    if (view.getWindowToken() != null) {
+                        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    }
+                    view.setFocusableInTouchMode(false);
+                    view.clearFocus();
+                    view.setFocusableInTouchMode(true);
                 }
             }
         } catch (Exception e) {

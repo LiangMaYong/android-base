@@ -11,7 +11,7 @@ import com.liangmayong.base.basic.expands.drawer.DrawerBaseActivity;
 import com.liangmayong.base.basic.flow.interfaces.IFrag;
 import com.liangmayong.base.basic.flow.stack.StackManager;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
-import com.liangmayong.base.widget.iconfont.Icon;
+import com.liangmayong.base.widget.iconfont.IconFont;
 
 /**
  * FlowBaseFragment
@@ -48,14 +48,14 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
     public void initDefaultToolbar(DefaultToolbar defaultToolbar) {
         super.initDefaultToolbar(defaultToolbar);
         if (getActivity() instanceof DrawerBaseActivity) {
-            defaultToolbar.leftOne().icon(Icon.icon_menu).click(new View.OnClickListener() {
+            defaultToolbar.leftOne().icon(IconFont.base_icon_menu).click(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     ((DrawerBaseActivity) getActivity()).openDrawer();
                 }
             });
         } else {
-            defaultToolbar.leftOne().icon(Icon.icon_back).click(new View.OnClickListener() {
+            defaultToolbar.leftOne().icon(IconFont.base_icon_back).click(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     closeSelf();

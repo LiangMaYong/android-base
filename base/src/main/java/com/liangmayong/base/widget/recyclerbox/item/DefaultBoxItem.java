@@ -7,39 +7,33 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.widget.iconfont.IconValue;
+import com.liangmayong.base.widget.iconfont.FontValue;
 import com.liangmayong.base.widget.iconfont.IconView;
 
 /**
  * Created by LiangMaYong on 2016/11/7.
  */
-public final class DefaultRecyclerBoxItem extends SuperRecyclerBoxItem<DefaultRecyclerBoxData> {
+public final class DefaultBoxItem extends RecyclerBoxItem<DefaultBoxData> {
 
-    public DefaultRecyclerBoxItem(String title) {
-        super(new DefaultRecyclerBoxData(title, null));
+    public DefaultBoxItem(String title) {
+        super(new DefaultBoxData(title, null));
     }
 
-    public DefaultRecyclerBoxItem(String title, String sub) {
-        super(new DefaultRecyclerBoxData(title, sub));
+    public DefaultBoxItem(String title, String sub) {
+        super(new DefaultBoxData(title, sub));
     }
 
-    public DefaultRecyclerBoxItem(String title, String sub, String r_title, String r_sub) {
-        super(new DefaultRecyclerBoxData(title, sub, r_title, r_sub));
+    public DefaultBoxItem(String title, String sub, String content, String contentSub) {
+        super(new DefaultBoxData(title, sub, content, contentSub));
     }
 
     @Override
     protected View onNewView(LayoutInflater inflater, ViewGroup parent) {
-        return inflater.inflate(R.layout.base_default_item_recyclerbox_view, null);
+        return inflater.inflate(R.layout.base_default_recyclerbox_item, null);
     }
 
-    private boolean showRightIcon = false;
-
-    public boolean isShowRightIcon() {
-        return showRightIcon;
-    }
-
-    public DefaultRecyclerBoxItem showRightIcon(boolean showRightIcon) {
-        this.showRightIcon = showRightIcon;
+    public DefaultBoxItem setShowArrow(boolean showArrow) {
+        getData().setShowArrow(showArrow);
         return this;
     }
 
@@ -49,13 +43,13 @@ public final class DefaultRecyclerBoxItem extends SuperRecyclerBoxItem<DefaultRe
      * @param icon icon
      * @return icon
      */
-    public DefaultRecyclerBoxItem setIcon(IconValue icon) {
+    public DefaultBoxItem setIcon(FontValue icon) {
         getData().setIcon(icon);
         return this;
     }
 
     @Override
-    protected void onBindView(View itemView, DefaultRecyclerBoxData defaultSuperData) {
+    protected void onBindView(View itemView, DefaultBoxData defaultSuperData) {
         ViewHolder holder = new ViewHolder(itemView);
         holder.base_default_adapter_title.setText(defaultSuperData.getTitle());
         if (defaultSuperData.getSub() != null) {
@@ -64,27 +58,26 @@ public final class DefaultRecyclerBoxItem extends SuperRecyclerBoxItem<DefaultRe
         } else {
             holder.base_default_adapter_sub.setVisibility(View.GONE);
         }
-        if (defaultSuperData.getRight_sub() != null) {
-            holder.base_default_adapter_right_sub.setText(defaultSuperData.getRight_sub());
+        if (defaultSuperData.getContentSub() != null) {
+            holder.base_default_adapter_right_sub.setText(defaultSuperData.getContentSub());
             holder.base_default_adapter_right_sub.setVisibility(View.VISIBLE);
         } else {
             holder.base_default_adapter_right_sub.setVisibility(View.GONE);
         }
-        if (defaultSuperData.getRight_title() != null) {
-            holder.base_default_adapter_right_title.setText(defaultSuperData.getRight_title());
+        if (defaultSuperData.getContent() != null) {
+            holder.base_default_adapter_right_title.setText(defaultSuperData.getContent());
             holder.base_default_adapter_right_title.setVisibility(View.VISIBLE);
         } else {
             holder.base_default_adapter_right_title.setVisibility(View.GONE);
         }
-        if (!isShowRightIcon()) {
+        if (defaultSuperData.isShowArrow()) {
             holder.base_default_adapter_arrow.setVisibility(View.GONE);
         } else {
             holder.base_default_adapter_arrow.setVisibility(View.VISIBLE);
-            holder.base_default_adapter_arrow.setIcon("", defaultSuperData.getRight_icon(), IconView.ICON_LEFT);
         }
         if (getData().getIcon() != null) {
             holder.base_default_adapter_icon.setVisibility(View.VISIBLE);
-            holder.base_default_adapter_icon.setIcon("", getData().getIcon(), IconView.ICON_LEFT);
+            holder.base_default_adapter_icon.setIcon(getData().getIcon());
         } else {
             holder.base_default_adapter_icon.setVisibility(View.GONE);
         }

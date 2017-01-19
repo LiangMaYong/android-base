@@ -3,6 +3,7 @@ package com.liangmayong.base.support.audio;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.media.AudioManager;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Build;
@@ -33,17 +34,27 @@ public class AudioRecorder {
     private String audioPath = "";
     private long startMillis = 0;
     private long audioMillis = 0;
+    private AudioFocus focus;
 
     /**
      * HXIMAudioRecorder
      *
      * @param name name
      */
-    public AudioRecorder(String name) {
+    public AudioRecorder(Context context, String name) {
         File file = new File(getTempPath(name));
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
+        focus = new AudioFocus(context);
+        focus.setOnAudioFocusChangeListener(new AudioFocus.OnAudioFocusChangeListener() {
+            @Override
+            public void onAudioFocusChange(int focusChange) {
+                if (focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT || focusChange == AudioManager.AUDIOFOCUS_LOSS) {
+                    stop(false);
+                }
+            }
+        });
         audioPath = file.getPath();
     }
 
@@ -65,6 +76,7 @@ public class AudioRecorder {
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            focus.abandonAudioFocus();
             if (msg.what == 1) {
                 if (audioRecorderListener != null) {
                     File file = new File(audioPath);
@@ -83,6 +95,7 @@ public class AudioRecorder {
             return;
         }
         if (mRecorder == null) {
+            focus.requestFocus();
             mRecorder = new MediaRecorder();
             mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
             mRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
@@ -109,6 +122,7 @@ public class AudioRecorder {
                 mEMA = 0.0;
                 handler.postDelayed(amplitudeRun, 500);
             } catch (Exception e) {
+                focus.abandonAudioFocus();
                 if (audioRecorderListener != null) {
                     audioRecorderListener.onError(e);
                 }
@@ -118,6 +132,7 @@ public class AudioRecorder {
 
     @TargetApi(Build.VERSION_CODES.CUPCAKE)
     public void stop(final boolean save) {
+        focus.abandonAudioFocus();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {

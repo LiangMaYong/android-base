@@ -4,8 +4,8 @@ import android.view.View;
 
 import com.liangmayong.base.basic.expands.recyclerbox.FlowRecyclerBoxFragment;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
-import com.liangmayong.base.support.builder.BundleBuilder;
 import com.liangmayong.base.support.utils.DimenUtils;
+import com.liangmayong.base.widget.recyclerbox.item.DefaultBoxItem;
 import com.liangmayong.base.widget.refresh.RefreshView;
 import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
 
@@ -23,11 +23,12 @@ public class DemoListFrag extends FlowRecyclerBoxFragment {
                 getRecyclerBox().getPool().add(new DemoItem2View("Item" + (i + 1)).setOnItemClickListener(new RecyclerBox.OnRecyclerBoxItemClickListener<String>() {
                     @Override
                     public void onClick(RecyclerBox.Item<String> item, int position, View itemView) {
-                        open(new StackF().initArguments(new BundleBuilder().put("title", item.getData()).builder()));
+                        open(new StackF());
                     }
                 }));
             }
         }
+        getRecyclerBox().getPool().add(new DefaultBoxItem("111111","2222222"));
         getRecyclerBox().getPool().notifyDataSetChanged();
     }
 

@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.liangmayong.base">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -18,10 +18,10 @@
         android:allowBackup="true"
         android:supportsRtl="true">
         <activity
-            android:name=".basic.expands.web.WebViewActivity"
+            android:name="com.liangmayong.base.basic.expands.web.WebViewActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".basic.expands.logcat.LogcatActivity"
+            android:name="com.liangmayong.base.basic.expands.logcat.LogcatActivity"
             android:screenOrientation="portrait"/>
     </application>
 

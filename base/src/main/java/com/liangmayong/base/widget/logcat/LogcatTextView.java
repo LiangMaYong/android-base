@@ -8,14 +8,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
+import com.liangmayong.base.support.utils.ThreadPoolUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by munix on 20/12/16.
@@ -25,7 +26,6 @@ public class LogcatTextView extends ScrollView {
 
     private int verboseColor, debugColor, errorColor, infoColor, warningColor, consoleColor;
     private TextView textView;
-    private boolean isBottom = true;
     private boolean isAuto = false;
     private String logcatTag = "";
 
@@ -50,23 +50,11 @@ public class LogcatTextView extends ScrollView {
         init(attrs);
     }
 
-    @Override
-    protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-        View view = (View) getChildAt(getChildCount() - 1);
-        int d = view.getBottom();
-        d -= (getHeight() + getScrollY());
-        if (d == 0) {
-            isBottom = true;
-        } else {
-            isBottom = false;
-            super.onScrollChanged(l, t, oldl, oldt);
-        }
-    }
-
     private void init(AttributeSet attrs) {
         textView = new TextView(getContext());
         textView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         textView.setPadding(20, 20, 20, 20);
+        textView.setText("loading...");
         addView(textView);
 
         textView.setTextColor(getContext().getResources().getColor(R.color.base_logcat_defaultTextColor));
@@ -109,19 +97,9 @@ public class LogcatTextView extends ScrollView {
     }
 
     private void onLogcatCaptured(String logcat) {
-        textView.setText(Html.fromHtml(logcat));
-        if (isBottom) {
-            scrollToBottom();
+        if (textView != null) {
+            textView.setText(Html.fromHtml(logcat));
         }
-    }
-
-    private void scrollToBottom() {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                fullScroll(ScrollView.FOCUS_DOWN);
-            }
-        });
     }
 
     // handler
@@ -132,6 +110,7 @@ public class LogcatTextView extends ScrollView {
             onLogcatCaptured((String) msg.obj);
             if (!isAuto) {
                 isAuto = true;
+                handler.removeCallbacks(autoRefresh);
                 handler.postDelayed(autoRefresh, 5000);
             }
         }
@@ -166,20 +145,19 @@ public class LogcatTextView extends ScrollView {
      * clearLogcat
      */
     public void clearLogcat() {
-        new Thread() {
+        if (threadPoolUtils == null) {
+            threadPoolUtils = new ThreadPoolUtils(ThreadPoolUtils.Type.SingleThread, 1);
+        }
+        threadPoolUtils.execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    String[] command = new String[]{
-                            "logcat",
-                            "-c",
-                    };
-                    Runtime.getRuntime().exec(command);
+                    Runtime.getRuntime().exec("logcat -c");
                     refreshLogcat();
                 } catch (Exception e) {
                 }
             }
-        }.start();
+        });
     }
 
     public String getLogcatTag() {
@@ -190,22 +168,27 @@ public class LogcatTextView extends ScrollView {
         this.logcatTag = logcatTag;
     }
 
+    private ThreadPoolUtils threadPoolUtils = null;
+
     /**
      * getLogcat
      */
     private void getLogcat() {
-        new Thread() {
+        if (threadPoolUtils == null) {
+            threadPoolUtils = new ThreadPoolUtils(ThreadPoolUtils.Type.SingleThread, 1);
+        }
+        threadPoolUtils.schedule(new Runnable() {
             @Override
             public void run() {
                 try {
                     String processId = Integer.toString(android.os.Process.myPid());
                     Process process = null;
                     String logcat_tag = getLogcatTag();
+                    String command = "logcat -d -v threadtime";
                     if (logcat_tag != null && !"".equals(logcat_tag)) {
-                        process = Runtime.getRuntime().exec("logcat -d -v threadtime -s " + logcat_tag);
-                    } else {
-                        process = Runtime.getRuntime().exec("logcat -d -v threadtime");
+                        command = "logcat -d -v threadtime -s " + logcat_tag;
                     }
+                    process = Runtime.getRuntime().exec(command);
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process
                             .getInputStream()));
                     StringBuilder log = new StringBuilder();
@@ -229,10 +212,10 @@ public class LogcatTextView extends ScrollView {
                                     .substring(2) + "\">" + line + "</font><br><br>");
                         }
                     }
-                    handler.obtainMessage(0, log.toString()).sendToTarget();
+                    handler.obtainMessage(0, command + "<br><br>" + log.toString()).sendToTarget();
                 } catch (Exception e) {
                 }
             }
-        }.start();
+        }, 500, TimeUnit.MILLISECONDS);
     }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">android-base</string>
+    <string name="test">&#xe622;</string>
 </resources>

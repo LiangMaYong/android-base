@@ -7,10 +7,12 @@ import android.view.View;
 import com.liangmayong.base.basic.BaseActivity;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
+import com.liangmayong.base.binding.view.annotations.BindView;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.transitions.ActivityTransition;
 import com.liangmayong.base.support.transitions.ExitActivityTransition;
-import com.liangmayong.base.widget.iconfont.Icon;
+import com.liangmayong.base.widget.iconfont.IconFont;
+import com.liangmayong.base.widget.layout.SquareLinearLayout;
 
 /**
  * Created by LiangMaYong on 2017/1/3.
@@ -19,11 +21,19 @@ import com.liangmayong.base.widget.iconfont.Icon;
 @BindTitle("ImageViewActivity")
 public class ImageViewActivity extends BaseActivity {
     ExitActivityTransition activityTransition = null;
+    @BindView(R.id.imgview)
+    private SquareLinearLayout imgview;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityTransition = ActivityTransition.with(getIntent()).to(findViewById(R.id.imgview)).bg(getWindow().getDecorView()).start(savedInstanceState);
+        imgview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activityTransition.exit(ImageViewActivity.this);
+            }
+        });
     }
 
 
@@ -35,7 +45,7 @@ public class ImageViewActivity extends BaseActivity {
     @Override
     public void initDefaultToolbar(DefaultToolbar defaultToolbar) {
         super.initDefaultToolbar(defaultToolbar);
-        defaultToolbar.leftOne().icon(Icon.icon_back).click(new View.OnClickListener() {
+        defaultToolbar.leftOne().icon(IconFont.base_icon_back).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();

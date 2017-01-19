@@ -26,7 +26,7 @@ public class TransitionMoveData {
     public float bgAlpha;
     public float widthScale;
     public float heightScale;
-    public int duration = 500;
+    public int duration = 450;
     public View toView;
     public View bgView;
 }

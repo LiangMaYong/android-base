@@ -29,7 +29,7 @@ import com.liangmayong.base.support.transitions.core.TransitionAnimation;
 import com.liangmayong.base.support.transitions.core.TransitionMoveData;
 
 public class ActivityTransition {
-    private int duration = 500;
+    private int duration = 450;
     private float bgAlpha = 0.0f;
     private float toAlpha = 1.0f;
     private View toView;

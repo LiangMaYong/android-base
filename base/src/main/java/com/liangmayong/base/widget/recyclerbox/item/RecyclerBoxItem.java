@@ -10,9 +10,9 @@ import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
 /**
  * Created by LiangMaYong on 2016/11/7.
  */
-public abstract class SuperRecyclerBoxItem<Data> extends RecyclerBox.Item<Data> {
+public abstract class RecyclerBoxItem<Data> extends RecyclerBox.Item<Data> {
 
-    public SuperRecyclerBoxItem(Data data) {
+    public RecyclerBoxItem(Data data) {
         super(data);
     }
 

@@ -1,5 +1,6 @@
 package com.liangmayong.base.support.audio;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
@@ -21,13 +22,15 @@ public class AudioPlayer {
         void onError(Exception e);
     }
 
-    public AudioPlayer() {
+    public AudioPlayer(Context context) {
+        focus = new AudioFocus(context);
     }
 
     // player
     private MediaPlayer player;
     // isPlaying
     private boolean isPlaying = false;
+    private AudioFocus focus;
 
     /**
      * isPlaying
@@ -74,6 +77,7 @@ public class AudioPlayer {
                     if (player != null) {
                         player.start();
                     }
+                    focus.requestFocus();
                     if (listener != null) {
                         listener.onPrepared();
                     }
@@ -83,6 +87,7 @@ public class AudioPlayer {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     stopPlay();
+                    focus.abandonAudioFocus();
                     if (listener != null) {
                         listener.onCompletion();
                     }
@@ -92,6 +97,7 @@ public class AudioPlayer {
             if (listener != null) {
                 listener.onError(e);
             }
+            focus.abandonAudioFocus();
         }
     }
 }

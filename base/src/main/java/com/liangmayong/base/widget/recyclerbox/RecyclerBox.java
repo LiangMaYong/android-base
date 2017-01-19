@@ -1506,29 +1506,37 @@ public class RecyclerBox extends RelativeLayout {
          */
         private final void proxyBindView(View itemView) {
             if (itemView != null) {
-                itemView.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!clickable) {
-                            return;
+                if (clickListener != null && clickable) {
+                    itemView.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!clickable) {
+                                return;
+                            }
+                            if (clickListener != null) {
+                                clickListener.onClick(Item.this, getPosition(), v);
+                            }
                         }
-                        if (clickListener != null) {
-                            clickListener.onClick(Item.this, getPosition(), v);
-                        }
-                    }
-                });
-                itemView.setOnLongClickListener(new OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View v) {
-                        if (!longClickable) {
+                    });
+                } else {
+                    itemView.setOnClickListener(null);
+                }
+                if (longClickListener != null && longClickable) {
+                    itemView.setOnLongClickListener(new OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View v) {
+                            if (!longClickable) {
+                                return false;
+                            }
+                            if (longClickListener != null) {
+                                return longClickListener.onLongClick(Item.this, getPosition(), v);
+                            }
                             return false;
                         }
-                        if (longClickListener != null) {
-                            return longClickListener.onLongClick(Item.this, getPosition(), v);
-                        }
-                        return false;
-                    }
-                });
+                    });
+                } else {
+                    itemView.setOnLongClickListener(null);
+                }
             }
             if (itemView != null) {
                 if (getPool().getRecyclerBox().getOrientation() == HORIZONTAL) {

@@ -8,7 +8,7 @@ import com.liangmayong.base.basic.flow.FlowBaseFragment;
 import com.liangmayong.base.basic.interfaces.IBasic;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
-import com.liangmayong.base.widget.iconfont.Icon;
+import com.liangmayong.base.widget.iconfont.IconFont;
 import com.liangmayong.base.widget.logcat.LogcatTextView;
 
 /**
@@ -53,13 +53,13 @@ public class FlowLogcatFragment extends FlowBaseFragment {
     @Override
     public void initDefaultToolbar(DefaultToolbar defaultToolbar) {
         super.initDefaultToolbar(defaultToolbar);
-        defaultToolbar.rightOne().icon(Icon.icon_delete).click(new View.OnClickListener() {
+        defaultToolbar.rightOne().icon(IconFont.base_icon_delete).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 default_logcat.clearLogcat();
             }
         });
-        defaultToolbar.rightTwo().icon(Icon.icon_refresh).click(new View.OnClickListener() {
+        defaultToolbar.rightTwo().icon(IconFont.base_icon_refresh).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 default_logcat.refreshLogcat();

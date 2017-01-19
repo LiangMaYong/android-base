@@ -16,7 +16,7 @@ import com.liangmayong.base.R;
 import com.liangmayong.base.support.skin.handlers.SkinType;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
-import com.liangmayong.base.widget.iconfont.IconValue;
+import com.liangmayong.base.widget.iconfont.FontValue;
 import com.liangmayong.base.widget.iconfont.IconView;
 import com.liangmayong.base.widget.skinview.SkinRelativeLayout;
 
@@ -43,14 +43,14 @@ public class DefaultToolbar {
             if (toolbar_layout != null) {
                 int textColor = skin.getTextColor(skinType);
                 int textPreColor = Color.argb(Color.alpha(textColor), Math.abs(Color.red(textColor) - 0x15), Math.abs(Color.green(textColor) - 0x15), Math.abs(Color.blue(textColor) - 0x15));
-                leftOne().getIconView().setTextColor(textColor, textPreColor);
-                leftTwo().getIconView().setTextColor(textColor, textPreColor);
-                leftThree().getIconView().setTextColor(textColor, textPreColor);
-                leftFour().getIconView().setTextColor(textColor, textPreColor);
-                rightOne().getIconView().setTextColor(textColor, textPreColor);
-                rightTwo().getIconView().setTextColor(textColor, textPreColor);
-                rightThree().getIconView().setTextColor(textColor, textPreColor);
-                rightFour().getIconView().setTextColor(textColor, textPreColor);
+                leftOne().getIconView().setStateColor(textColor, textPreColor);
+                leftTwo().getIconView().setStateColor(textColor, textPreColor);
+                leftThree().getIconView().setStateColor(textColor, textPreColor);
+                leftFour().getIconView().setStateColor(textColor, textPreColor);
+                rightOne().getIconView().setStateColor(textColor, textPreColor);
+                rightTwo().getIconView().setStateColor(textColor, textPreColor);
+                rightThree().getIconView().setStateColor(textColor, textPreColor);
+                rightFour().getIconView().setStateColor(textColor, textPreColor);
                 toolbar_title.setTextColor(textColor);
                 toolbar_subtitle.setTextColor(textColor);
             }
@@ -247,7 +247,6 @@ public class DefaultToolbar {
     public void setTitle(int resId) {
         setTitle(context.getString(resId));
     }
-
 
     /**
      * setSubTitle
@@ -480,8 +479,12 @@ public class DefaultToolbar {
          * @param backgroundColor backgroundColor
          * @param duration        duration
          */
-        public void show(IconValue icon, String text, int textColor, int backgroundColor, int duration) {
-            getMessageView().setIcon(" " + text, icon, IconView.ICON_LEFT);
+        public void show(FontValue icon, String text, int textColor, int backgroundColor, int duration) {
+            if (icon != null) {
+                getMessageView().setText(icon + " " + text);
+            } else {
+                getMessageView().setText(text);
+            }
             getMessageView().setTextColor(textColor);
             getMessageView().setBackgroundColor(backgroundColor);
             if (!isShow) {
@@ -585,24 +588,13 @@ public class DefaultToolbar {
         }
 
         /**
-         * set textSize
+         * set icon
          *
-         * @param size size
+         * @param icon icon
          * @return ToolItem
          */
-        public ToolItem iconSize(float size) {
-            this.getIconView().setIconSize(size);
-            return this;
-        }
-
-        /**
-         * set iconLeft
-         *
-         * @param left left
-         * @return ToolItem
-         */
-        public ToolItem icon(IconValue left) {
-            this.getIconView().setIcon(this.getIconView().getText(), left, IconView.ICON_LEFT);
+        public ToolItem icon(FontValue icon) {
+            this.getIconView().setIcon(icon);
             return this;
         }
 
@@ -748,31 +740,6 @@ public class DefaultToolbar {
         public ToolItem paddingRightDip(int right) {
             getIconView().setPadding(getIconView().getPaddingLeft(), getIconView().getPaddingTop(), dip2Px(right),
                     getIconView().getPaddingBottom());
-            return this;
-        }
-
-        /**
-         * stop showAnimation
-         *
-         * @return icon bar
-         */
-        public ToolItem stopAnimation() {
-            if (getIconView() != null) {
-                getIconView().stopAnimation();
-            }
-            return this;
-        }
-
-        /**
-         * start showAnimation
-         *
-         * @param animaRes showAnimation res id
-         * @return icon bar
-         */
-        public ToolItem startAnimation(int animaRes) {
-            if (getIconView() != null) {
-                getIconView().startAnimation(animaRes);
-            }
             return this;
         }
 

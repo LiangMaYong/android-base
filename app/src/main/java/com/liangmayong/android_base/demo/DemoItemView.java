@@ -6,13 +6,13 @@ import android.widget.TextView;
 import com.liangmayong.android_base.R;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindView;
-import com.liangmayong.base.widget.recyclerbox.item.SuperRecyclerBoxItem;
+import com.liangmayong.base.widget.recyclerbox.item.RecyclerBoxItem;
 
 /**
  * Created by LiangMaYong on 2016/9/25.
  */
 @BindLayout(R.layout.item_view)
-public class DemoItemView extends SuperRecyclerBoxItem<String> {
+public class DemoItemView extends RecyclerBoxItem<String> {
 
     @BindView(R.id.tv_txt)
     private TextView tv_txt;

@@ -86,7 +86,7 @@
             android:maxLines="1"
             android:paddingRight="@dimen/base_toolbar_item_padding"
             android:singleLine="true"
-            android:text=">"
+            android:text="@string/base_icon_arrow"
             android:textColor="#676767"
             android:textSize="@dimen/base_toolbar_item_text_size" />
     </LinearLayout>

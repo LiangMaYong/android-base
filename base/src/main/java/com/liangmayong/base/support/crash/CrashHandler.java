@@ -18,20 +18,26 @@ import java.util.Date;
  */
 public final class CrashHandler implements Thread.UncaughtExceptionHandler {
 
+    public interface OnCrashLogListener {
+        void onCrashLog(String crashlog);
+    }
+
     private Context mContext;
     private Thread.UncaughtExceptionHandler handler;
+    private OnCrashLogListener crashLogListener;
 
     public static void init(Context context) {
-        init(context, null);
+        init(context, null, null);
     }
 
-    public static void init(Context context, Thread.UncaughtExceptionHandler handler) {
-        new CrashHandler(context, handler);
+    public static void init(Context context, Thread.UncaughtExceptionHandler handler, OnCrashLogListener crashLogListener) {
+        new CrashHandler(context, handler, crashLogListener);
     }
 
-    private CrashHandler(Context context, Thread.UncaughtExceptionHandler handler) {
+    private CrashHandler(Context context, Thread.UncaughtExceptionHandler handler, OnCrashLogListener crashLogListener) {
         this.mContext = context.getApplicationContext();
         this.handler = handler;
+        this.crashLogListener = crashLogListener;
         Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
@@ -39,6 +45,9 @@ public final class CrashHandler implements Thread.UncaughtExceptionHandler {
     public void uncaughtException(Thread thread, Throwable ex) {
         String errMsg = getError(thread, ex);
         Logger.e(errMsg);
+        if (crashLogListener != null) {
+            crashLogListener.onCrashLog(errMsg);
+        }
         if (handler != null) {
             handler.uncaughtException(thread, ex);
         }
