@@ -25,6 +25,10 @@
             android:name=".ImageViewActivity"
             android:theme="@style/BaseTheme.Translucent"
             />
+        <service  android:name=".HostMonitor"
+                  android:enabled="true"
+                  android:exported="true">
+        </service>
     </application>
 
 </manifest>

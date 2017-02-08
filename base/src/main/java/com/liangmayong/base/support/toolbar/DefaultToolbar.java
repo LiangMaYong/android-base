@@ -1,14 +1,17 @@
 package com.liangmayong.base.support.toolbar;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -16,6 +19,7 @@ import com.liangmayong.base.R;
 import com.liangmayong.base.support.skin.handlers.SkinType;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
+import com.liangmayong.base.support.utils.AnimationUtil;
 import com.liangmayong.base.widget.iconfont.FontValue;
 import com.liangmayong.base.widget.iconfont.IconView;
 import com.liangmayong.base.widget.skinview.SkinRelativeLayout;
@@ -167,11 +171,36 @@ public class DefaultToolbar {
     }
 
     /**
-     * _gone
+     * gone
      */
     public void gone() {
-        if (toolbar_layout.getVisibility() == View.VISIBLE) {
-            toolbar_layout.startAnimation(hiddenAnimation);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbar_layout.getLayoutParams();
+            if (layoutParams.topMargin >= 0) {
+                startAnimation(0f, -1 * toolbar_layout.getHeight(), anim_time);
+            }
+        } else {
+            if (toolbar_layout.getVisibility() == View.VISIBLE) {
+                toolbar_layout.startAnimation(hiddenAnimation);
+            }
+        }
+    }
+
+    private void startAnimation(float startMargin, float EndMargin, long duration) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            AnimationUtil.anyPropertyAnimation(toolbar_layout, "margin", startMargin, EndMargin,
+                    duration, null, new ValueAnimator.AnimatorUpdateListener() {
+
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+                                float value = (float) animation.getAnimatedValue();
+                                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbar_layout.getLayoutParams();
+                                layoutParams.setMargins(layoutParams.leftMargin, (int) value, layoutParams.rightMargin, layoutParams.bottomMargin);
+                                toolbar_layout.setLayoutParams(layoutParams);
+                            }
+                        }
+                    });
         }
     }
 
@@ -187,12 +216,19 @@ public class DefaultToolbar {
     }
 
     /**
-     * _visible
+     * visible
      */
     public void visible() {
-        if (toolbar_layout.getVisibility() == View.GONE) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbar_layout.getLayoutParams();
+            if (layoutParams.topMargin < 0) {
+                startAnimation(-1 * toolbar_layout.getHeight(), 0f, anim_time);
+            }
+        } else {
             toolbar_layout.setVisibility(View.VISIBLE);
-            toolbar_layout.startAnimation(showAnimation);
+            if (toolbar_layout.getVisibility() == View.GONE) {
+                toolbar_layout.startAnimation(showAnimation);
+            }
         }
     }
 

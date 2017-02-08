@@ -2,6 +2,7 @@ package com.liangmayong.android_base;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.MenuItem;
@@ -11,8 +12,10 @@ import android.widget.ImageView;
 import com.liangmayong.android_base.demo.StackF;
 import com.liangmayong.base.basic.expands.drawer.DrawerBaseActivity;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
+import com.liangmayong.base.support.photo.Photo;
+import com.liangmayong.base.support.photo.PhotoResult;
+import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.utils.PermissionUtils;
-import com.liangmayong.base.support.utils.PhotoUtils;
 
 import java.util.List;
 
@@ -20,6 +23,13 @@ import java.util.List;
  * Created by LiangMaYong on 2016/11/10.
  */
 public class DrawerActivity extends DrawerBaseActivity {
+
+
+    @Override
+    public void onFlowActivityCreate(Bundle savedInstanceState) {
+        super.onFlowActivityCreate(savedInstanceState);
+        SkinManager.editor().setThemeColor(0xFFDA4D3E, 0xFFFFFFFF).commit();
+    }
 
     @Override
     protected int getDrawerHeaderLayoutId() {
@@ -59,7 +69,7 @@ public class DrawerActivity extends DrawerBaseActivity {
 
                     @Override
                     public void gotPermissions() {
-                        PhotoUtils.getInstance().startTake(DrawerActivity.this, 1001, true);
+                        Photo.getInstance().startSelect(DrawerActivity.this, 1001, true);
                     }
 
                     @Override
@@ -77,9 +87,9 @@ public class DrawerActivity extends DrawerBaseActivity {
 
     @Override
     public void onActivityResult(final int requestCode, int resultCode, Intent data) {
-        PhotoUtils.getInstance().handleResult(1001, 160, 160, this, requestCode, resultCode, data, new PhotoUtils.OnPhotoResultListener() {
+        Photo.getInstance().handleResult(1001, 160, 160, this, requestCode, resultCode, data, new PhotoResult.Listener() {
             @Override
-            public void onResult(PhotoUtils.Result result) {
+            public void onResult(PhotoResult result) {
                 if (viewHolder != null) {
                     viewHolder.img.setImageBitmap(result.getThumbnail());
                 }

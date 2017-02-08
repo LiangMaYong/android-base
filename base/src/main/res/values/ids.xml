@@ -23,7 +23,7 @@
     <item name="base_default_retry_img" type="id"/>
     <item name="base_default_retry_text" type="id"/>
     <!-- base_default_toolbar.xml -->
-    <item name="base_default_toolbar_status_bar" type="id"/>
+    <item name="base_default_status_bar" type="id"/>
     <item name="base_default_toolbar_layout" type="id"/>
     <item name="base_default_toolbar_message" type="id"/>
     <item name="base_default_toolbar_left_one" type="id"/>
@@ -37,6 +37,7 @@
     <item name="base_default_toolbar_title" type="id"/>
     <item name="base_default_toolbar_subtitle" type="id"/>
     <item name="base_default_toolbar_progress" type="id"/>
+    <item name="base_default_navigation" type="id"/>
 
     <item name="base_default_logcat" type="id"/>
 </resources>

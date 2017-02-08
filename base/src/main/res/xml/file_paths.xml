@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource>
+    <cache-path
+        name="base_photo_provider"
+        path="base/base_photo_provider/"/>
+</resource>

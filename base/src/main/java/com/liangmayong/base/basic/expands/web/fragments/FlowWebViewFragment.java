@@ -13,7 +13,6 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.basic.expands.logcat.FlowLogcatFragment;
 import com.liangmayong.base.basic.expands.logcat.LogcatActivity;
 import com.liangmayong.base.basic.expands.web.webkit.WebKit;
 import com.liangmayong.base.basic.expands.web.webkit.WebKitChromeClient;
@@ -344,7 +343,7 @@ public class FlowWebViewFragment extends FlowBaseFragment {
             public boolean interceptorUrlLoading(WebKit web, WebKitUrl url) {
                 Bundle extras = new Bundle();
                 extras.putString(IBasic.LOGCAT_EXTRA_TAG, url.getContent());
-                goTo(LogcatActivity.class,extras);
+                goTo(LogcatActivity.class, extras);
                 return true;
             }
         });

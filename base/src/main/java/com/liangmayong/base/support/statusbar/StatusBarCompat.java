@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -12,7 +11,6 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.liangmayong.base.R;
 
@@ -37,9 +35,9 @@ public class StatusBarCompat {
         int b = Color.blue(statusColor);
         double grayLevel = r * 0.299 + g * 0.587 + b * 0.114;
         if (grayLevel >= 192) {
-            compat(activity, statusColor, "", true);
+            compat(activity, statusColor, 0xff000000, true);
         } else {
-            compat(activity, statusColor, "", false);
+            compat(activity, statusColor, 0xff000000, false);
         }
     }
 
@@ -48,44 +46,57 @@ public class StatusBarCompat {
      *
      * @param activity    activity
      * @param statusColor statusColor
-     * @param statusTxt   statusTxt
+     * @param navColor    navColor
+     * @param lightMode   lightMode
      */
-    public static void compat(Activity activity, int statusColor, String statusTxt, boolean lightMode) {
+    public static void compat(Activity activity, int statusColor, int navColor, boolean lightMode) {
         if (lightMode) {
             lightMode(activity);
         } else {
             clearLightMode(activity);
         }
+        untransparentStatusBar(activity);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             ViewGroup content = (ViewGroup) activity.findViewById(android.R.id.content);
             if (content != null) {
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) content.getLayoutParams();
+                layoutParams.weight = 1;
+                layoutParams.height = 0;
+                content.setLayoutParams(layoutParams);
                 ViewGroup contentView = (ViewGroup) content.getParent();
                 if (contentView instanceof LinearLayout) {
                     transparentStatusBar(activity);
-                    TextView statusBarView = (TextView) activity.findViewById(R.id.base_default_toolbar_status_bar);
+                    View statusBarView = activity.findViewById(R.id.base_default_status_bar);
                     if (statusBarView != null) {
                         statusBarView.setLayoutParams(getStatusBarLayoutParams(activity, contentView));
                         statusBarView.setBackgroundColor(statusColor);
-                        statusBarView.setText(statusTxt);
                         return;
                     } else {
-                        statusBarView = new TextView(activity);
-                        statusBarView.setText(statusTxt);
-                        statusBarView.setTextColor(0xffffffff);
-                        statusBarView.setGravity(Gravity.CENTER);
-                        statusBarView.setId(R.id.base_default_toolbar_status_bar);
+                        statusBarView = new View(activity);
+                        statusBarView.setId(R.id.base_default_status_bar);
                         statusBarView.setBackgroundColor(statusColor);
                         contentView.addView(statusBarView, 0, getStatusBarLayoutParams(activity, contentView));
                     }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getNavBarHeight(activity) > 0) {
+                        View navBarView = activity.findViewById(R.id.base_default_navigation);
+                        if (navBarView != null) {
+                            navBarView.setLayoutParams(getStatusBarLayoutParams(activity, contentView));
+                            navBarView.setBackgroundColor(statusColor);
+                            return;
+                        } else {
+                            navBarView = new View(activity);
+                            navBarView.setId(R.id.base_default_navigation);
+                            navBarView.setBackgroundColor(navColor);
+                            contentView.addView(navBarView, getNavBarLayoutParams(activity, contentView));
+                        }
+                    }
                 } else {
-                    untransparentStatusBar(activity);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         activity.getWindow().setStatusBarColor(statusColor);
                         return;
                     }
                 }
             } else {
-                untransparentStatusBar(activity);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     activity.getWindow().setStatusBarColor(statusColor);
                     return;
@@ -195,7 +206,6 @@ public class StatusBarCompat {
                 }
                 result = true;
             } catch (Exception e) {
-
             }
         }
         return result;
@@ -241,21 +251,53 @@ public class StatusBarCompat {
         if (group == null) {
             return null;
         }
+        int height = getStatusBarHeight(activity);
         if (group instanceof FrameLayout) {
             FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    getStatusBarHeight(activity));
+                    height);
             return layoutParams;
         } else if (group instanceof LinearLayout) {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    getStatusBarHeight(activity));
+                    height);
             return layoutParams;
         } else if (group instanceof RelativeLayout) {
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    getStatusBarHeight(activity));
+                    height);
             return layoutParams;
         } else {
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                    getStatusBarHeight(activity));
+                    height);
+            return layoutParams;
+        }
+    }
+
+    /**
+     * getStatusBarLayoutParams
+     *
+     * @param activity activity
+     * @param group    group
+     * @return layout params
+     */
+    private static ViewGroup.LayoutParams getNavBarLayoutParams(Activity activity, ViewGroup group) {
+        if (group == null) {
+            return null;
+        }
+        int height = getNavBarHeight(activity);
+        if (group instanceof FrameLayout) {
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    height);
+            return layoutParams;
+        } else if (group instanceof LinearLayout) {
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    height);
+            return layoutParams;
+        } else if (group instanceof RelativeLayout) {
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    height);
+            return layoutParams;
+        } else {
+            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    height);
             return layoutParams;
         }
     }
@@ -285,6 +327,22 @@ public class StatusBarCompat {
     public static int getStatusBarHeight(Context context) {
         int result = 0;
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
+
+
+    /**
+     * getNavBarHeight
+     *
+     * @param context context
+     * @return status bar height
+     */
+    public static int getNavBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
         if (resourceId > 0) {
             result = context.getResources().getDimensionPixelSize(resourceId);
         }

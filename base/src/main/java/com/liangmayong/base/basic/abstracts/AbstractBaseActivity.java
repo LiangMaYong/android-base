@@ -170,6 +170,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
 
     @Override
     public void onSkinRefresh(ISkin skin) {
+        StatusBarCompat.setTransparent(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (isStatusBarTranslucent()) {
                 StatusBarCompat.setTransparent(this);
@@ -177,11 +178,22 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
                 int themeColor = skin.getThemeColor();
                 if (isStatusBarDark()) {
                     int color = Color.argb(Color.alpha(themeColor), Math.abs(Color.red(themeColor) - 0x15), Math.abs(Color.green(themeColor) - 0x15), Math.abs(Color.blue(themeColor) - 0x15));
-                    StatusBarCompat.compat(this, color);
+                    setStatusBarColor(color);
                 } else {
-                    StatusBarCompat.compat(this, themeColor);
+                    setStatusBarColor(themeColor);
                 }
             }
+        }
+    }
+
+    /**
+     * setStatusBarColor
+     *
+     * @param color color
+     */
+    public void setStatusBarColor(int color) {
+        if (!isStatusBarTranslucent()) {
+            StatusBarCompat.compat(this, color);
         }
     }
 

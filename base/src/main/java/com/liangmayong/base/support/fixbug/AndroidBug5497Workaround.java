@@ -38,33 +38,33 @@ public class AndroidBug5497Workaround {
     private View mChildOfContent;
     private int usableHeightPrevious;
     private FrameLayout.LayoutParams frameLayoutParams;
-    private boolean isfirst = true;
 
     private AndroidBug5497Workaround(Activity activity) {
         try {
-            ViewGroup content = (ViewGroup) activity.findViewById(android.R.id.content);
+            FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
             mChildOfContent = content.getChildAt(0);
             mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 public void onGlobalLayout() {
-                    if (isfirst) {
-                        isfirst = false;
-                    }
                     possiblyResizeChildOfContent();
                 }
             });
-            frameLayoutParams = (FrameLayout.LayoutParams)
-                    mChildOfContent.getLayoutParams();
+            frameLayoutParams = (FrameLayout.LayoutParams) mChildOfContent.getLayoutParams();
         } catch (Exception e) {
         }
     }
 
     private void possiblyResizeChildOfContent() {
-
         int usableHeightNow = computeUsableHeight();
         if (usableHeightNow != usableHeightPrevious) {
             int usableHeightSansKeyboard = mChildOfContent.getRootView().getHeight();
             int heightDifference = usableHeightSansKeyboard - usableHeightNow;
-            frameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
+            if (heightDifference > (usableHeightSansKeyboard / 4)) {
+                // keyboard probably just became visible
+                frameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
+            } else {
+                // keyboard probably just became hidden
+                frameLayoutParams.height = usableHeightSansKeyboard;
+            }
             mChildOfContent.requestLayout();
             usableHeightPrevious = usableHeightNow;
         }

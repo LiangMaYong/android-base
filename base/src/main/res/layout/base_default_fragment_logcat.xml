@@ -9,5 +9,6 @@
     <com.liangmayong.base.widget.logcat.LogcatTextView
         android:id="@id/base_default_logcat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="#333333"/>
 </LinearLayout>

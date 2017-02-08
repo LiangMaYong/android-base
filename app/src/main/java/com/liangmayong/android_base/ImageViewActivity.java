@@ -1,5 +1,6 @@
 package com.liangmayong.android_base;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -27,6 +28,7 @@ public class ImageViewActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         activityTransition = ActivityTransition.with(getIntent()).to(findViewById(R.id.imgview)).bg(getWindow().getDecorView()).start(savedInstanceState);
         imgview.setOnClickListener(new View.OnClickListener() {
             @Override
