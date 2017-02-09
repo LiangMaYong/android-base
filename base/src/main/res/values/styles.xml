@@ -13,19 +13,23 @@
     <style name="BaseTheme.Launcher" parent="BaseTheme.Portrait">
         <item name="colorPrimaryDark">#30333333</item>
         <item name="android:windowBackground">@mipmap/base_default_launcher_background</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="BaseTheme.Translucent" parent="BaseTheme.Portrait">
         <item name="android:windowBackground">@color/translucent</item>
         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="BaseTheme.Portrait" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:screenOrientation">portrait</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="BaseTheme.Landscape" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:screenOrientation">landscape</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
 </resources>

@@ -8,6 +8,11 @@
 
     <include layout="@layout/base_default_toolbar"/>
 
+    <com.liangmayong.base.widget.view.SegmentView
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        app:segmentBackgroundColor="#fcb815"
+        android:layout_height="40dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

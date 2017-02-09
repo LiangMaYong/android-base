@@ -45,6 +45,12 @@
         <attr name="warningColor" format="color"/>
         <attr name="consoleColor" format="color"/>
     </declare-styleable>
+    <declare-styleable name="SegmentView">
+        <attr name="segmentBackgroundColor" format="color"/>
+        <attr name="segmentUnSelectBackgroundColor" format="color"/>
+        <attr name="segmentTextColor" format="color"/>
+        <attr name="segmentUnSelectTextColor" format="color"/>
+    </declare-styleable>
     <declare-styleable name="BasicTextView">
         <attr name="fontPath" format="string"/>
     </declare-styleable>
