@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:configChanges">keyboardHidden|orientation|screenSize</item>
+        <item name="android:windowSoftInputMode">stateAlwaysHidden|adjustResize</item>
         <item name="android:windowBackground">@color/base_default_layout_bg_color</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>

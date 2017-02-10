@@ -8,12 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
+import com.liangmayong.base.R;
 import com.liangmayong.base.basic.interfaces.IBasic;
 import com.liangmayong.base.binding.mvp.Presenter;
 import com.liangmayong.base.binding.mvp.PresenterBinding;
 import com.liangmayong.base.binding.mvp.PresenterHolder;
 import com.liangmayong.base.binding.view.ViewBinding;
+import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
@@ -45,6 +48,9 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
 
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        LinearLayout layout = new LinearLayout(inflater.getContext());
+        layout.setId(R.id.base_default_fragment_content);
+        layout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         View view = getContaierView(inflater, container, savedInstanceState);
         if (view != null) {
             ViewBinding.parserClassByView(this, view);
@@ -68,7 +74,15 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
         onSkinRefresh(SkinManager.get());
         onAbstractCreateView(view);
         view.setVisibility(View.VISIBLE);
-        return view;
+        layout.addView(view);
+        if (shouldFixbug5497Workaround()) {
+            AndroidBug5497Workaround.assistView(layout);
+        }
+        return layout;
+    }
+
+    protected boolean shouldFixbug5497Workaround() {
+        return true;
     }
 
     /**

@@ -1,14 +1,10 @@
 package com.liangmayong.base.support.photo;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
-import android.os.ParcelFileDescriptor;
 import android.support.v4.content.FileProvider;
 
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileNotFoundException;
 
 /**
  * Created by LiangMaYong on 2017/2/8.
@@ -36,7 +32,7 @@ import java.io.FileNotFoundException;
 public class PhotoProvider {
 
     // AUTHORITY
-    private static final String AUTHORITY = "com.liangmayong.base.authority.fileprovider";
+    private static final String AUTHORITY = ".base.authority.fileprovider";
     // PATH
     private static final String PATH = "/base/base_photo_provider/";
     // NAME
@@ -56,7 +52,7 @@ public class PhotoProvider {
             dirFile.mkdirs();
         }
         File file = new File(dir, filename);
-        Uri uri = FileProvider.getUriForFile(context, AUTHORITY, file);
+        Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + AUTHORITY, file);
         return uri;
     }
 
@@ -79,6 +75,6 @@ public class PhotoProvider {
      * @return path
      */
     public static String getCachePath(Context context, final Uri uri) {
-        return uri.toString().replaceAll("content://" + AUTHORITY + "/" + NAME, getCacheDirectory(context));
+        return uri.toString().replaceAll("content://" + context.getPackageName() + AUTHORITY + "/" + NAME, getCacheDirectory(context));
     }
 }

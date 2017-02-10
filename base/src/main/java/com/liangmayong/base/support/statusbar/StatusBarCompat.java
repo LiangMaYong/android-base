@@ -1,9 +1,10 @@
 package com.liangmayong.base.support.statusbar;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -324,7 +325,7 @@ public class StatusBarCompat {
      * @param context context
      * @return status bar height
      */
-    public static int getStatusBarHeight(Context context) {
+    public static int getStatusBarHeight(Activity context) {
         int result = 0;
         int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
@@ -340,12 +341,45 @@ public class StatusBarCompat {
      * @param context context
      * @return status bar height
      */
-    public static int getNavBarHeight(Context context) {
-        int result = 0;
-        int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
+    public static int getNavBarHeight(Activity context) {
+        if (hasNavigationBar(context)) {
+            int result = 0;
+            int resourceId = context.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                result = context.getResources().getDimensionPixelSize(resourceId);
+            }
+            return result;
         }
-        return result;
+        return 0;
+    }
+
+    /**
+     * hasNavigationBar
+     *
+     * @param context context
+     * @return flag
+     */
+    public static boolean hasNavigationBar(Activity context) {
+        DisplayMetrics dm = new DisplayMetrics();
+        Display display = context.getWindowManager().getDefaultDisplay();
+        display.getMetrics(dm);
+        int screenHeight = dm.heightPixels;
+
+        DisplayMetrics realDisplayMetrics = new DisplayMetrics();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            display.getRealMetrics(realDisplayMetrics);
+        } else {
+            Class c;
+            try {
+                c = Class.forName("android.view.Display");
+                Method method = c.getMethod("getRealMetrics", DisplayMetrics.class);
+                method.invoke(display, realDisplayMetrics);
+            } catch (Exception e) {
+                realDisplayMetrics.setToDefaults();
+                e.printStackTrace();
+            }
+        }
+        int screenRealHeight = realDisplayMetrics.heightPixels;
+        return (screenRealHeight - screenHeight) > 0;
     }
 }

@@ -5,7 +5,6 @@ import android.graphics.Rect;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 
 /**
  * Created by LiangMaYong on 2016/10/28.
@@ -18,7 +17,36 @@ public class AndroidBug5497Workaround {
      * @param activity activity
      */
     public static void assistActivity(Activity activity) {
-        new AndroidBug5497Workaround(activity);
+        View content = activity.findViewById(android.R.id.content);
+        assistView(content);
+    }
+
+
+    /**
+     * assistActivity
+     *
+     * @param view view
+     */
+    public static void assistView(View view) {
+        if (view instanceof ViewGroup) {
+            new AndroidBug5497Workaround((ViewGroup) view);
+        }
+    }
+
+
+    /**
+     * unassistView
+     *
+     * @param view view
+     */
+    public static void unassistView(View view) {
+        if (view instanceof ViewGroup) {
+            try {
+                View mChildOfContent = ((ViewGroup) view).getChildAt(0);
+                mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(null);
+            } catch (Exception e) {
+            }
+        }
     }
 
     /**
@@ -28,27 +56,27 @@ public class AndroidBug5497Workaround {
      */
     public static void unassistActivity(Activity activity) {
         try {
-            ViewGroup content = (ViewGroup) activity.findViewById(android.R.id.content);
-            View mChildOfContent = content.getChildAt(0);
-            mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(null);
+            View content = activity.findViewById(android.R.id.content);
+            unassistView(content);
         } catch (Exception e) {
         }
     }
 
+    private View mContent;
     private View mChildOfContent;
     private int usableHeightPrevious;
-    private FrameLayout.LayoutParams frameLayoutParams;
+    private ViewGroup.LayoutParams frameLayoutParams;
 
-    private AndroidBug5497Workaround(Activity activity) {
+    private AndroidBug5497Workaround(ViewGroup view) {
         try {
-            FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
-            mChildOfContent = content.getChildAt(0);
+            mContent = view;
+            mChildOfContent = view.getChildAt(0);
             mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 public void onGlobalLayout() {
                     possiblyResizeChildOfContent();
                 }
             });
-            frameLayoutParams = (FrameLayout.LayoutParams) mChildOfContent.getLayoutParams();
+            frameLayoutParams = mChildOfContent.getLayoutParams();
         } catch (Exception e) {
         }
     }
@@ -56,10 +84,10 @@ public class AndroidBug5497Workaround {
     private void possiblyResizeChildOfContent() {
         int usableHeightNow = computeUsableHeight();
         if (usableHeightNow != usableHeightPrevious) {
-            int usableHeightSansKeyboard = mChildOfContent.getRootView().getHeight();
+            int usableHeightSansKeyboard = mContent.getHeight();
             int heightDifference = usableHeightSansKeyboard - usableHeightNow;
-            if (heightDifference > (usableHeightSansKeyboard / 4)) {
-                // keyboard probably just became visible
+            if (heightDifference > (usableHeightSansKeyboard / 4)) {//modify by chengr
+//              keyboard probably just became visible
                 frameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
             } else {
                 // keyboard probably just became hidden

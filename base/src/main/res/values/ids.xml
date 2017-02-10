@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <item name="base_default_fragment_content" type="id"/>
     <!-- base_default_activity_drawer.xml -->
     <item name="base_drawer_layout" type="id"/>
     <item name="base_drawer_fragment" type="id"/>
