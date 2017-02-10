@@ -13,6 +13,7 @@ import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
 import com.liangmayong.base.support.audio.AudioRecorder;
+import com.liangmayong.base.support.loading.Loading;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.transitions.ActivityTransitionLauncher;
@@ -60,6 +61,7 @@ public class StackF extends FlowBaseFragment {
                 goTo("", "file:///android_asset/demo.html");
             }
         });
+        Loading.showLoading(getActivity(),"正在加载中...");
     }
 
     @Override
