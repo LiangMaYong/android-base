@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,13 +18,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Item"
-            android:textColor="#333333" />
+            android:textColor="#333333"/>
 
-        <com.liangmayong.base.widget.skinview.SkinRippleButton xmlns:skin="http://schemas.android.com/apk/res-auto"
+        <com.liangmayong.base.widget.skinview.SkinButton
+            xmlns:skin="http://schemas.android.com/apk/res-auto"
             android:id="@+id/btn_show"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:text="Button"
-            skin:shape_type="stroke" />
+            skin:shape_type="stroke"/>
     </LinearLayout>
 </LinearLayout>

@@ -4,8 +4,8 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.LinearLayout;
 
 /**
  * AnimationUtil
@@ -24,9 +24,12 @@ public class AnimationUtil {
                         public void onAnimationUpdate(ValueAnimator animation) {
                             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
                                 float value = (float) animation.getAnimatedValue();
-                                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
-                                layoutParams.topMargin = (int) value;
-                                view.setLayoutParams(layoutParams);
+                                try {
+                                    ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
+                                    layoutParams.topMargin = (int) value;
+                                    view.setLayoutParams(layoutParams);
+                                } catch (Exception e) {
+                                }
                             }
                         }
                     });

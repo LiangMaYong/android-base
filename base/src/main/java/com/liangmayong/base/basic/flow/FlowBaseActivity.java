@@ -1,14 +1,9 @@
 package com.liangmayong.base.basic.flow;
 
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.basic.BaseActivity;
@@ -23,10 +18,6 @@ import com.liangmayong.base.basic.flow.stack.StackManager;
  * @version 1.0
  */
 public abstract class FlowBaseActivity extends BaseActivity implements IStack {
-
-    @IdRes
-    // FRAGMENT_ID
-    private static final int FRAGMENT_ID = 0xff01;
 
     // ERROR_MSG_FRIST_STACK_NULL
     private static final String ERROR_MSG_FRIST_STACK_NULL = "Frist fragment can't is null\nby Android-Base";
@@ -68,24 +59,14 @@ public abstract class FlowBaseActivity extends BaseActivity implements IStack {
      * @return fragment id
      */
     protected int generateContainerFragmentId() {
-        return FRAGMENT_ID;
+        return R.id.base_flow_fragment;
     }
 
     /**
      * generateContainerView
      */
     protected void generateContainerView() {
-        RelativeLayout rootView = new RelativeLayout(this);
-        rootView.setPadding(0, 0, 0, 0);
-        FrameLayout frameView = new FrameLayout(this);
-        frameView.setPadding(0, 0, 0, 0);
-        TextView textView = new TextView(this);
-        frameView.addView(textView);
-        frameView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        frameView.setId(generateContainerFragmentId());
-        frameView.setBackgroundColor(0xffeeeeee);
-        rootView.addView(frameView);
-        setContentView(rootView);
+        setContentView(R.layout.base_default_flow_activity);
     }
 
     /**

@@ -6,8 +6,8 @@ import android.widget.TextView;
 import com.liangmayong.android_base.R;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindView;
-import com.liangmayong.base.widget.skinview.SkinRippleButton;
 import com.liangmayong.base.widget.recyclerbox.item.RecyclerBoxItem;
+import com.liangmayong.base.widget.skinview.SkinButton;
 
 /**
  * Created by LiangMaYong on 2016/9/25.
@@ -18,7 +18,7 @@ public class DemoItem2View extends RecyclerBoxItem<String> {
     @BindView(R.id.tv_txt)
     private TextView tv_txt;
     @BindView(R.id.btn_show)
-    private SkinRippleButton btn_show;
+    private SkinButton btn_show;
 
     public DemoItem2View(String s) {
         super(s);

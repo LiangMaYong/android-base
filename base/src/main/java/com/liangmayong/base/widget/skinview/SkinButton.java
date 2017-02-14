@@ -14,15 +14,16 @@ import android.view.MotionEvent;
 import android.widget.Button;
 
 import com.liangmayong.base.R;
+import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.handlers.SkinType;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
-import com.liangmayong.base.support.skin.SkinManager;
+import com.liangmayong.base.widget.skinview.shape.SkinShapeInterface;
 
 /**
  * Created by LiangMaYong on 2016/9/27.
  */
-public class SkinButton extends Button implements SkinInterface {
+public class SkinButton extends Button implements SkinShapeInterface {
 
     protected int mWidth;
     protected int mHeight;

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.handlers.SkinType;
@@ -15,28 +15,27 @@ import com.liangmayong.base.widget.skinview.interfaces.ISkinViewHandler;
 /**
  * Created by LiangMaYong on 2017/2/14.
  */
-public class SkinLinearLayout extends LinearLayout implements ISkinViewHandler {
+public class SkinToolBar extends RelativeLayout implements ISkinViewHandler {
 
     private SkinViewHandler handler = null;
 
-    public SkinLinearLayout(Context context) {
+    public SkinToolBar(Context context) {
         super(context);
         init(null);
     }
 
-    public SkinLinearLayout(Context context, AttributeSet attrs) {
+    public SkinToolBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
-    public SkinLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SkinToolBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public SkinLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public SkinToolBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }

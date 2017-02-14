@@ -18,8 +18,8 @@
     <item name="base_default_adapter_right_title" type="id"/>
     <item name="base_default_adapter_right_sub" type="id"/>
     <item name="base_default_adapter_arrow" type="id"/>
-    <!-- base_default_sub_activity.xml -->
-    <item name="base_sub_fragment" type="id"/>
+    <!-- base_default_flow_activityy.xml -->
+    <item name="base_flow_fragment" type="id"/>
     <!-- base_default_retry_layout.xml -->
     <item name="base_default_retry_img" type="id"/>
     <item name="base_default_retry_text" type="id"/>

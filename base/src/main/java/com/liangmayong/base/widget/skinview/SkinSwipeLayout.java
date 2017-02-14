@@ -6,25 +6,29 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 
-import com.liangmayong.base.support.skin.interfaces.ISkin;
+import com.liangmayong.base.support.skin.handlers.SkinType;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
-import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.widget.refresh.RefreshView;
+import com.liangmayong.base.widget.skinview.handler.SkinViewHandler;
+import com.liangmayong.base.widget.skinview.interfaces.ISkinViewHandler;
 
 /**
  * Created by LiangMaYong on 2016/12/7.
  */
-public class SkinSwipeLayout extends SwipeRefreshLayout implements OnSkinRefreshListener, RefreshView {
+public class SkinSwipeLayout extends SwipeRefreshLayout implements ISkinViewHandler, RefreshView {
 
+    private SkinViewHandler handler = null;
     // childView
     private ViewGroup childView;
 
     public SkinSwipeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(attrs);
     }
 
     public SkinSwipeLayout(Context context) {
         super(context);
+        init(null);
     }
 
     @Override
@@ -69,22 +73,46 @@ public class SkinSwipeLayout extends SwipeRefreshLayout implements OnSkinRefresh
         });
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        if (isInEditMode()) return;
-        SkinManager.registerSkinRefresh(this);
+    private void init(AttributeSet attrs) {
+        handler = new SkinViewHandler(this, new SkinViewHandler.OnSkinColorListener() {
+            @Override
+            public void onColor(int color, int textColor) {
+                setColorSchemeColors(color);
+            }
+        });
+        handler.initAttributeSet(attrs);
+        if (isInEditMode()) {
+            setColorSchemeColors(handler.getSkinColor());
+        }
     }
 
     @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (isInEditMode()) return;
-        SkinManager.unregisterSkinRefresh(this);
+    public void setSkinRefreshListener(OnSkinRefreshListener skinRefreshListener) {
+        handler.setSkinRefreshListener(skinRefreshListener);
     }
 
     @Override
-    public void onSkinRefresh(ISkin skin) {
-        setColorSchemeColors(skin.getThemeColor());
+    public void setSkinType(SkinType skinType) {
+        handler.setSkinType(skinType);
+    }
+
+    @Override
+    public SkinType getSkinType() {
+        return handler.getSkinType();
+    }
+
+    @Override
+    public void setSkinColor(int skinColor, int skinTextColor) {
+        handler.setSkinColor(skinColor, skinTextColor);
+    }
+
+    @Override
+    public int getSkinColor() {
+        return handler.getSkinColor();
+    }
+
+    @Override
+    public int getSkinTextColor() {
+        return handler.getSkinTextColor();
     }
 }

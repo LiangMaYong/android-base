@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
@@ -22,7 +22,7 @@ import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
 import com.liangmayong.base.support.utils.AnimationUtil;
 import com.liangmayong.base.widget.iconfont.FontValue;
 import com.liangmayong.base.widget.iconfont.IconView;
-import com.liangmayong.base.widget.skinview.SkinRelativeLayout;
+import com.liangmayong.base.widget.skinview.SkinToolBar;
 
 
 /**
@@ -34,7 +34,7 @@ public class DefaultToolbar {
     private int anim_time = 300;
     private Context context;
     private Handler handler = new Handler();
-    private SkinRelativeLayout toolbar_layout;
+    private RelativeLayout toolbar_layout;
     private TextView toolbar_title, toolbar_subtitle;
     private ToolMessage message;
     private ToolItem toolbar_right_one, toolbar_right_two, toolbar_right_three, toolbar_right_four;
@@ -63,11 +63,13 @@ public class DefaultToolbar {
     };
 
     public DefaultToolbar(View view) throws Exception {
-        toolbar_layout = (SkinRelativeLayout) view.findViewById(R.id.base_default_toolbar_layout);
+        toolbar_layout = (RelativeLayout) view.findViewById(R.id.base_default_toolbar_layout);
         if (toolbar_layout == null) {
             throw new Exception("not include base_default_toolbar");
         }
-        toolbar_layout.setSkinRefreshListener(skinRefreshListener);
+        if (toolbar_layout instanceof SkinToolBar) {
+            ((SkinToolBar) toolbar_layout).setSkinRefreshListener(skinRefreshListener);
+        }
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) toolbar_layout.getLayoutParams();
         defualt_margin = layoutParams.topMargin;
         context = view.getContext();
@@ -96,11 +98,13 @@ public class DefaultToolbar {
     }
 
     public DefaultToolbar(Activity activity) throws Exception {
-        toolbar_layout = (SkinRelativeLayout) activity.findViewById(R.id.base_default_toolbar_layout);
+        toolbar_layout = (RelativeLayout) activity.findViewById(R.id.base_default_toolbar_layout);
         if (toolbar_layout == null) {
             throw new Exception("not include base_default_toolbar");
         }
-        toolbar_layout.setSkinRefreshListener(skinRefreshListener);
+        if (toolbar_layout instanceof SkinToolBar) {
+            ((SkinToolBar) toolbar_layout).setSkinRefreshListener(skinRefreshListener);
+        }
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) toolbar_layout.getLayoutParams();
         defualt_margin = layoutParams.topMargin;
         context = activity;
@@ -180,7 +184,7 @@ public class DefaultToolbar {
      */
     public void gone() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbar_layout.getLayoutParams();
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) toolbar_layout.getLayoutParams();
             if (layoutParams.topMargin == defualt_margin) {
                 AnimationUtil.startAnimation(toolbar_layout, defualt_margin, -1 * toolbar_layout.getHeight() + defualt_margin, anim_time);
             }
@@ -208,7 +212,7 @@ public class DefaultToolbar {
      */
     public void visible() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbar_layout.getLayoutParams();
+            ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) toolbar_layout.getLayoutParams();
             if (layoutParams.topMargin != defualt_margin) {
                 AnimationUtil.startAnimation(toolbar_layout, -1 * toolbar_layout.getHeight() + defualt_margin, defualt_margin, anim_time);
             }
@@ -244,7 +248,9 @@ public class DefaultToolbar {
         if (this.skinType != skinType) {
             this.skinType = skinType;
         }
-        toolbar_layout.setSkinType(skinType);
+        if (toolbar_layout instanceof SkinToolBar) {
+            ((SkinToolBar) toolbar_layout).setSkinType(skinType);
+        }
     }
 
     /**

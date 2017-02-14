@@ -1,4 +1,4 @@
-package com.liangmayong.base.widget.skinview;
+package com.liangmayong.base.widget.skinview.shape;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -11,19 +11,18 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.handlers.SkinType;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
-import com.liangmayong.base.widget.skinview.shape.SkinShapeInterface;
 
 /**
  * Created by LiangMaYong on 2016/9/27.
  */
-public class SkinTextView extends TextView implements SkinShapeInterface {
+public class SkinShapeLinearLayout extends LinearLayout implements SkinShapeInterface {
 
     protected int mWidth;
     protected int mHeight;
@@ -45,25 +44,26 @@ public class SkinTextView extends TextView implements SkinShapeInterface {
     private SkinType skinType = SkinType.default_type;
 
 
-    public SkinTextView(Context context) {
+    public SkinShapeLinearLayout(Context context) {
         this(context, null);
     }
 
 
-    public SkinTextView(Context context, AttributeSet attrs) {
+    public SkinShapeLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initBG(context, attrs);
     }
 
 
-    public SkinTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public SkinShapeLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initBG(context, attrs);
     }
 
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public SkinTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public SkinShapeLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initBG(context, attrs);
     }
@@ -91,15 +91,15 @@ public class SkinTextView extends TextView implements SkinShapeInterface {
         int preview_color = -1;
         if (attrs != null) {
             final TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SkinViewStyleable);
-            mShapeType = typedArray.getInt(R.styleable.SkinViewStyleable_shape_type, SHAPE_TYPE_TRANSPARENT);
-            mRadius = typedArray.getDimensionPixelSize(R.styleable.SkinViewStyleable_radius, dip2px(context, 2));
+            mShapeType = typedArray.getInt(R.styleable.SkinViewStyleable_shape_type, SHAPE_TYPE_RECTANGLE);
+            mRadius = typedArray.getDimensionPixelSize(R.styleable.SkinViewStyleable_radius, 0);
             mPressedColor = typedArray.getColor(R.styleable.SkinViewStyleable_pressed_color, mPressedColor);
             preview_color = typedArray.getColor(R.styleable.SkinViewStyleable_preview_color, preview_color);
             mBackgroundCoverColor = typedArray.getColor(R.styleable.SkinViewStyleable_background_cover, mBackgroundCoverColor);
             mPressedAlpha = typedArray.getInteger(R.styleable.SkinViewStyleable_pressed_alpha, mPressedAlpha);
             mBackgroundAlpha = typedArray.getInteger(R.styleable.SkinViewStyleable_background_alpha, mBackgroundAlpha);
             mBackgroundTransparent = typedArray.getBoolean(R.styleable.SkinViewStyleable_background_transparent, mBackgroundTransparent);
-            mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.SkinViewStyleable_stroke_width, dip2px(context, 1.4f));
+            mStrokeWidth = typedArray.getDimensionPixelSize(R.styleable.SkinViewStyleable_stroke_width, dip2px(context, 1f));
             int skin = typedArray.getInt(R.styleable.SkinViewStyleable_skin_type, skinType.value());
             skinType = SkinType.valueOf(skin);
             if (typedArray.hasValue(R.styleable.SkinViewStyleable_skin_color)) {
@@ -153,11 +153,6 @@ public class SkinTextView extends TextView implements SkinShapeInterface {
                 }
                 this.mSetSkinColor = true;
                 this.mSetSkinTextColor = true;
-            }
-            if (mShapeType == SHAPE_TYPE_STROKE || mShapeType == SHAPE_TYPE_TRANSPARENT) {
-                setTextColor(mSkinColor);
-            } else {
-                setTextColor(mSkinTextColor);
             }
         }
         mBackgroundPaint = new Paint();
@@ -243,6 +238,7 @@ public class SkinTextView extends TextView implements SkinShapeInterface {
         }
     }
 
+
     protected void eraseOriginalBackgroundColor(int color) {
         if (color != Color.TRANSPARENT) {
             this.setBackgroundColor(Color.TRANSPARENT);
@@ -327,6 +323,7 @@ public class SkinTextView extends TextView implements SkinShapeInterface {
         return mShapeType;
     }
 
+
     protected Path getPath(int left, int top, int right, int bottom) {
         int halfStrokeWidth = mStrokeWidth / 2;
         left += halfStrokeWidth;
@@ -362,19 +359,6 @@ public class SkinTextView extends TextView implements SkinShapeInterface {
      */
     public void setShapeType(int shapeType) {
         mShapeType = shapeType;
-        if (mShapeType == SHAPE_TYPE_STROKE || mShapeType == SHAPE_TYPE_TRANSPARENT) {
-            if (mSetSkinColor) {
-                setTextColor(mSkinColor);
-            } else {
-                setTextColor(SkinManager.get().getColor(skinType));
-            }
-        } else {
-            if (mSetSkinTextColor) {
-                setTextColor(mSkinTextColor);
-            } else {
-                setTextColor(SkinManager.get().getTextColor(skinType));
-            }
-        }
         if (mSetSkinColor) {
             setUnpressedColor(mSkinColor);
         } else {
@@ -406,19 +390,6 @@ public class SkinTextView extends TextView implements SkinShapeInterface {
         } else {
             setUnpressedColor(skin.getColor(skinType));
         }
-        if (mShapeType == SHAPE_TYPE_STROKE || mShapeType == SHAPE_TYPE_TRANSPARENT) {
-            if (mSetSkinColor) {
-                setTextColor(mSkinColor);
-            } else {
-                setTextColor(skin.getColor(skinType));
-            }
-        } else {
-            if (mSetSkinTextColor) {
-                setTextColor(mSkinTextColor);
-            } else {
-                setTextColor(skin.getTextColor(skinType));
-            }
-        }
         if (skinRefreshListener != null) {
             skinRefreshListener.onSkinRefresh(skin);
         }
@@ -430,7 +401,6 @@ public class SkinTextView extends TextView implements SkinShapeInterface {
     public void setSkinRefreshListener(OnSkinRefreshListener skinRefreshListener) {
         this.skinRefreshListener = skinRefreshListener;
     }
-
 
     public void setSkinType(SkinType skinType) {
         this.skinType = skinType;

@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:dividerPadding="0dp"
-              android:orientation="vertical"
-              android:padding="0dp">
+<com.liangmayong.base.widget.skinview.SkinToolBar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/base_default_toolbar_layout"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/base_toolbar_height">
 
-    <com.liangmayong.base.widget.skinview.SkinRelativeLayout
-        android:id="@id/base_default_toolbar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/base_toolbar_height"
-        android:layout_marginLeft="-0.5dip"
-        android:layout_marginTop="-0.5dip">
+    <include layout="@layout/base_default_toolbar_items"/>
 
-        <include layout="@layout/base_default_toolbar_items"/>
-    </com.liangmayong.base.widget.skinview.SkinRelativeLayout>
-
-</LinearLayout>
+</com.liangmayong.base.widget.skinview.SkinToolBar>
