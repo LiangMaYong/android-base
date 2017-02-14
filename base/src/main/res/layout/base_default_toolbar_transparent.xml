@@ -2,13 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:dividerPadding="0dp"
+              android:orientation="vertical"
+              android:padding="0dp">
 
     <com.liangmayong.base.widget.skinview.SkinRelativeLayout
         xmlns:skin="http://schemas.android.com/apk/res-auto"
         android:id="@id/base_default_toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/base_toolbar_height"
+        android:layout_marginLeft="-0.5dip"
+        android:layout_marginTop="-0.5dip"
         skin:shape_type="transparent">
 
         <include layout="@layout/base_default_toolbar_items"/>

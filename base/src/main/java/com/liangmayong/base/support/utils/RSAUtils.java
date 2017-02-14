@@ -25,7 +25,8 @@ import javax.crypto.Cipher;
  */
 public class RSAUtils {
 
-    private static String RSA = "RSA";
+    private static String KEY_RSA = "RSA";
+    private static String CIPHER_RSA = "RSA/ECB/PKCS1Padding";
 
     /**
      * generateRSAKeyPair
@@ -44,7 +45,7 @@ public class RSAUtils {
      */
     public static KeyPair generateRSAKeyPair(int keyLength) {
         try {
-            KeyPairGenerator kpg = KeyPairGenerator.getInstance(RSA);
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance(KEY_RSA);
             kpg.initialize(keyLength);
             return kpg.genKeyPair();
         } catch (NoSuchAlgorithmException e) {
@@ -61,7 +62,7 @@ public class RSAUtils {
      */
     public static byte[] encryptData(byte[] data, PublicKey publicKey) {
         try {
-            Cipher cipher = Cipher.getInstance(RSA);
+            Cipher cipher = Cipher.getInstance(CIPHER_RSA);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             return cipher.doFinal(data);
         } catch (Exception e) {
@@ -79,7 +80,7 @@ public class RSAUtils {
      */
     public static byte[] decryptData(byte[] encryptedData, PrivateKey privateKey) {
         try {
-            Cipher cipher = Cipher.getInstance(RSA);
+            Cipher cipher = Cipher.getInstance(CIPHER_RSA);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             return cipher.doFinal(encryptedData);
         } catch (Exception e) {
@@ -97,7 +98,7 @@ public class RSAUtils {
     public static PublicKey getPublicKey(byte[] keyBytes) throws Exception {
         try {
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
-            KeyFactory keyFactory = KeyFactory.getInstance(RSA);
+            KeyFactory keyFactory = KeyFactory.getInstance(KEY_RSA);
             PublicKey publicKey = keyFactory.generatePublic(keySpec);
             return publicKey;
         } catch (NoSuchAlgorithmException e) {
@@ -119,7 +120,7 @@ public class RSAUtils {
     public static PrivateKey getPrivateKey(byte[] keyBytes) throws Exception {
         try {
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
-            KeyFactory keyFactory = KeyFactory.getInstance(RSA);
+            KeyFactory keyFactory = KeyFactory.getInstance(KEY_RSA);
             PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
             return privateKey;
         } catch (NoSuchAlgorithmException e) {
@@ -144,7 +145,7 @@ public class RSAUtils {
             BigInteger bigIntModulus = new BigInteger(modulus);
             BigInteger bigIntPrivateExponent = new BigInteger(publicExponent);
             RSAPublicKeySpec keySpec = new RSAPublicKeySpec(bigIntModulus, bigIntPrivateExponent);
-            KeyFactory keyFactory = KeyFactory.getInstance(RSA);
+            KeyFactory keyFactory = KeyFactory.getInstance(KEY_RSA);
             PublicKey publicKey = keyFactory.generatePublic(keySpec);
             return publicKey;
         } catch (NoSuchAlgorithmException e) {
@@ -169,7 +170,7 @@ public class RSAUtils {
             BigInteger bigIntModulus = new BigInteger(modulus);
             BigInteger bigIntPrivateExponent = new BigInteger(privateExponent);
             RSAPublicKeySpec keySpec = new RSAPublicKeySpec(bigIntModulus, bigIntPrivateExponent);
-            KeyFactory keyFactory = KeyFactory.getInstance(RSA);
+            KeyFactory keyFactory = KeyFactory.getInstance(KEY_RSA);
             return keyFactory.generatePrivate(keySpec);
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("No algorithm");
@@ -191,7 +192,7 @@ public class RSAUtils {
         try {
             byte[] buffer = Base64Utils.decode(clearKeyComment(publicKeyStr));
 
-            KeyFactory keyFactory = KeyFactory.getInstance(RSA);
+            KeyFactory keyFactory = KeyFactory.getInstance(KEY_RSA);
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
             return keyFactory.generatePublic(keySpec);
         } catch (NoSuchAlgorithmException e) {
@@ -215,7 +216,7 @@ public class RSAUtils {
             byte[] buffer = Base64Utils.decode(clearKeyComment(privateKeyStr));
 
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
-            KeyFactory keyFactory = KeyFactory.getInstance(RSA);
+            KeyFactory keyFactory = KeyFactory.getInstance(KEY_RSA);
             return keyFactory.generatePrivate(keySpec);
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("No algorithm");

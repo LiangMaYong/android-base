@@ -13,7 +13,7 @@ import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
 import com.liangmayong.base.support.audio.AudioRecorder;
-import com.liangmayong.base.support.loading.Loading;
+import com.liangmayong.base.support.shake.Shake;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.transitions.ActivityTransitionLauncher;
@@ -61,7 +61,6 @@ public class StackF extends FlowBaseFragment {
                 goTo("", "file:///android_asset/demo.html");
             }
         });
-        Loading.showLoading(getActivity(),"正在加载中...");
     }
 
     @Override
@@ -70,6 +69,7 @@ public class StackF extends FlowBaseFragment {
         defaultToolbar.rightTwo().icon(IconFont.base_icon_circle_yes).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Shake.shakeActivity(getActivity(), 500, false);
                 getDefaultToolbar().message().show(IconFont.base_icon_circle_yes, " 登录成功", SkinManager.get().getSuccessTextColor(), SkinManager.get().getSuccessColor(), 1500);
             }
         });

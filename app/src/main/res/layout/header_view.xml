@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="vertical">
 
     <com.liangmayong.base.widget.skinview.SkinLinearLayout
         android:layout_width="match_parent"
@@ -16,6 +16,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="这是头部"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"/>
     </com.liangmayong.base.widget.skinview.SkinLinearLayout>
 </LinearLayout>

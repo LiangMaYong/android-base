@@ -28,7 +28,7 @@ public class DrawerActivity extends DrawerBaseActivity {
     @Override
     public void onFlowActivityCreate(Bundle savedInstanceState) {
         super.onFlowActivityCreate(savedInstanceState);
-        SkinManager.editor().setThemeColor(0xFFDA4D3E, 0xFFFFFFFF).commit();
+        SkinManager.editor().setThemeColor(0xFF3399ff, 0xFFFFFFFF).commit();
     }
 
     @Override

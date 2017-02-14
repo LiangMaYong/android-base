@@ -49,6 +49,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         LinearLayout layout = new LinearLayout(inflater.getContext());
+        layout.setPadding(0, 0, 0, 0);
         layout.setId(R.id.base_default_fragment_content);
         layout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         View view = getContaierView(inflater, container, savedInstanceState);

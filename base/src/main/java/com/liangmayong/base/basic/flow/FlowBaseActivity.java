@@ -76,7 +76,9 @@ public abstract class FlowBaseActivity extends BaseActivity implements IStack {
      */
     protected void generateContainerView() {
         RelativeLayout rootView = new RelativeLayout(this);
+        rootView.setPadding(0, 0, 0, 0);
         FrameLayout frameView = new FrameLayout(this);
+        frameView.setPadding(0, 0, 0, 0);
         TextView textView = new TextView(this);
         frameView.addView(textView);
         frameView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));

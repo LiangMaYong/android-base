@@ -5,11 +5,33 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.LinearLayout;
 
 /**
  * AnimationUtil
  */
 public class AnimationUtil {
+
+    private AnimationUtil() {
+    }
+
+    public static void startAnimation(final View view, float startMargin, float EndMargin, long duration) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            anyPropertyAnimation(view, "margin", startMargin, EndMargin,
+                    duration, null, new ValueAnimator.AnimatorUpdateListener() {
+
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+                                float value = (float) animation.getAnimatedValue();
+                                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
+                                layoutParams.topMargin = (int) value;
+                                view.setLayoutParams(layoutParams);
+                            }
+                        }
+                    });
+        }
+    }
 
     public static void anyPropertyAnimation(View view, String property, float srcY, float destY, long duration,
                                             Animator.AnimatorListener listener, ValueAnimator.AnimatorUpdateListener updateListener) {

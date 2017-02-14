@@ -63,6 +63,7 @@ public class StatusBarCompat {
                 LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) content.getLayoutParams();
                 layoutParams.weight = 1;
                 layoutParams.height = 0;
+                layoutParams.topMargin = 0;
                 content.setLayoutParams(layoutParams);
                 ViewGroup contentView = (ViewGroup) content.getParent();
                 if (contentView instanceof LinearLayout) {

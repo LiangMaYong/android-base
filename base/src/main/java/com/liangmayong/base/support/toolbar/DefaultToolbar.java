@@ -1,6 +1,5 @@
 package com.liangmayong.base.support.toolbar;
 
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -9,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
@@ -41,6 +41,7 @@ public class DefaultToolbar {
     private ToolItem toolbar_left_one, toolbar_left_two, toolbar_left_three, toolbar_left_four;
     private ProgressBar toolbar_progress;
     private SkinType skinType = SkinType.default_type;
+    private int defualt_margin = 0;
     private OnSkinRefreshListener skinRefreshListener = new OnSkinRefreshListener() {
         @Override
         public void onSkinRefresh(ISkin skin) {
@@ -67,6 +68,8 @@ public class DefaultToolbar {
             throw new Exception("not include base_default_toolbar");
         }
         toolbar_layout.setSkinRefreshListener(skinRefreshListener);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) toolbar_layout.getLayoutParams();
+        defualt_margin = layoutParams.topMargin;
         context = view.getContext();
         toolbar_title = (TextView) view.findViewById(R.id.base_default_toolbar_title);
         toolbar_subtitle = (TextView) view.findViewById(R.id.base_default_toolbar_subtitle);
@@ -98,6 +101,8 @@ public class DefaultToolbar {
             throw new Exception("not include base_default_toolbar");
         }
         toolbar_layout.setSkinRefreshListener(skinRefreshListener);
+        ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) toolbar_layout.getLayoutParams();
+        defualt_margin = layoutParams.topMargin;
         context = activity;
         toolbar_title = (TextView) activity.findViewById(R.id.base_default_toolbar_title);
         toolbar_subtitle = (TextView) activity.findViewById(R.id.base_default_toolbar_subtitle);
@@ -176,8 +181,8 @@ public class DefaultToolbar {
     public void gone() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbar_layout.getLayoutParams();
-            if (layoutParams.topMargin >= 0) {
-                startAnimation(0f, -1 * toolbar_layout.getHeight(), anim_time);
+            if (layoutParams.topMargin == defualt_margin) {
+                AnimationUtil.startAnimation(toolbar_layout, defualt_margin, -1 * toolbar_layout.getHeight() + defualt_margin, anim_time);
             }
         } else {
             if (toolbar_layout.getVisibility() == View.VISIBLE) {
@@ -186,23 +191,6 @@ public class DefaultToolbar {
         }
     }
 
-    private void startAnimation(float startMargin, float EndMargin, long duration) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            AnimationUtil.anyPropertyAnimation(toolbar_layout, "margin", startMargin, EndMargin,
-                    duration, null, new ValueAnimator.AnimatorUpdateListener() {
-
-                        @Override
-                        public void onAnimationUpdate(ValueAnimator animation) {
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-                                float value = (float) animation.getAnimatedValue();
-                                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbar_layout.getLayoutParams();
-                                layoutParams.setMargins(layoutParams.leftMargin, (int) value, layoutParams.rightMargin, layoutParams.bottomMargin);
-                                toolbar_layout.setLayoutParams(layoutParams);
-                            }
-                        }
-                    });
-        }
-    }
 
     /**
      * switchVisibility
@@ -221,8 +209,8 @@ public class DefaultToolbar {
     public void visible() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) toolbar_layout.getLayoutParams();
-            if (layoutParams.topMargin < 0) {
-                startAnimation(-1 * toolbar_layout.getHeight(), 0f, anim_time);
+            if (layoutParams.topMargin != defualt_margin) {
+                AnimationUtil.startAnimation(toolbar_layout, -1 * toolbar_layout.getHeight() + defualt_margin, defualt_margin, anim_time);
             }
         } else {
             toolbar_layout.setVisibility(View.VISIBLE);
