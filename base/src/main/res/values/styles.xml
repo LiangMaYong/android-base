@@ -5,7 +5,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
-        <item name="toolbarStyle">@style/BaseTheme.Toolbar</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -13,10 +12,6 @@
         <item name="android:windowSoftInputMode">stateAlwaysHidden|adjustResize</item>
         <item name="android:windowBackground">@color/base_default_layout_bg_color</item>
         <item name="android:windowContentOverlay">@null</item>
-    </style>
-
-    <style name="BaseTheme.Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="contentInsetStart">0dp</item>
     </style>
 
     <style name="BaseTheme.Launcher" parent="BaseTheme.Portrait">
