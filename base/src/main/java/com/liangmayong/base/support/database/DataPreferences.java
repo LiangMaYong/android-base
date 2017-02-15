@@ -29,8 +29,6 @@ public class DataPreferences {
     private final PreferencesTable mPreferencesTable;
     //encryptListener
     private OnDataEncryptListener encryptListener = null;
-    //isReload
-    private boolean isReload = false;
     //values
     private final Map<String, String> values = new HashMap<String, String>();
     //default_encryptListener
@@ -77,16 +75,6 @@ public class DataPreferences {
     }
 
     /**
-     * setReload
-     *
-     * @param reload reload
-     */
-    public DataPreferences setReload(boolean reload) {
-        isReload = reload;
-        return this;
-    }
-
-    /**
      * OnDataEncryptListener
      */
     public interface OnDataEncryptListener {
@@ -127,11 +115,11 @@ public class DataPreferences {
         }
         tablename = "pref_" + tablename;
         if (DATA_PREFERENCES_HASH_MAP.containsKey(tablename)) {
-            return DATA_PREFERENCES_HASH_MAP.get(tablename).setReload(false);
+            return DATA_PREFERENCES_HASH_MAP.get(tablename);
         } else {
             DataPreferences preferences = new DataPreferences(tablename);
             DATA_PREFERENCES_HASH_MAP.put(tablename, preferences);
-            return preferences.setReload(false);
+            return preferences;
         }
     }
 
@@ -164,7 +152,15 @@ public class DataPreferences {
      * @return count
      */
     public int clear() {
+        values.clear();
         return mPreferencesTable.deleteAll();
+    }
+
+    /**
+     * clearCache
+     */
+    public void clearCache() {
+        values.clear();
     }
 
     /**
@@ -210,10 +206,11 @@ public class DataPreferences {
      */
     public String getString(String skey, String defsvalue) {
         String svalue = null;
-        if (isReload || !values.containsKey(skey)) {
+        if (!values.containsKey(skey)) {
             DataModel model = mPreferencesTable.getModel("skey = '" + skey + "'");
             if (model != null) {
                 svalue = model.getString("svalue");
+                values.put(skey, svalue);
             }
         } else {
             svalue = values.get(skey);
@@ -236,6 +233,9 @@ public class DataPreferences {
      * @return contains
      */
     public boolean contains(String key) {
+        if (values.containsKey(key)) {
+            return true;
+        }
         DataModel model = mPreferencesTable.getModel("skey = '" + key + "'");
         if (model != null) {
             return true;

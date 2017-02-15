@@ -9,7 +9,7 @@ import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.skin.interfaces.ISkinDefault;
 import com.liangmayong.base.support.skin.interfaces.ISkinHandler;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
-import com.liangmayong.base.support.skin.themes.SkinDefault;
+import com.liangmayong.base.support.skin.themes.DefaultTheme;
 
 /**
  * Created by LiangMaYong on 2016/9/11.
@@ -42,9 +42,11 @@ public class SkinManager {
     }
 
     //skinHandler
-    private static ISkinHandler skinHandler = null;
+    private static volatile ISkinHandler skinHandler = null;
+    private static volatile SkinEditor editor = null;
+    private static volatile ISkin skinTheme = null;
     private static String theme_name = "default";
-    private static String theme_default = SkinDefault.class.getName();
+    private static String theme_default = DefaultTheme.class.getName();
 
     /**
      * switchTheme
@@ -56,10 +58,12 @@ public class SkinManager {
         DataPreferences.getPreferences("theme").setString("theme_name", theme);
         DataPreferences.getPreferences("theme").setString("theme_default", defaultClazz.getName());
         SkinManager.skinHandler = SkinHandler.get(theme, defaultClazz);
+        SkinManager.skinTheme = new SkinTheme(SkinManager.skinHandler);
+        SkinManager.editor = new SkinEditor(SkinManager.skinHandler);
         if (skinHandler != null) {
             SkinEvent.refreshSkin();
             if ((theme_name.equals(theme) || theme_default.equals(defaultClazz.getName()))) {
-                SkinEvent.refreshReceiver();
+                SkinEvent.refreshReceiver(theme);
             }
         }
     }
@@ -70,7 +74,10 @@ public class SkinManager {
      * @return editor
      */
     public static SkinEditor editor() {
-        return new SkinEditor(getSkinHandler());
+        if (editor == null) {
+            editor = new SkinEditor(getSkinHandler());
+        }
+        return editor;
     }
 
     /**
@@ -79,7 +86,10 @@ public class SkinManager {
      * @return skin
      */
     public static ISkin get() {
-        return new SkinTheme(getSkinHandler());
+        if (skinTheme == null) {
+            skinTheme = new SkinTheme(getSkinHandler());
+        }
+        return skinTheme;
     }
 
     /**

@@ -10,7 +10,7 @@ import com.liangmayong.base.support.utils.ContextUtils;
  * Created by LiangMaYong on 2016/12/9.
  */
 
-public class SkinDefault implements ISkinDefault {
+public class DefaultTheme implements ISkinDefault {
 
     @Override
     public int getThemeColor() {

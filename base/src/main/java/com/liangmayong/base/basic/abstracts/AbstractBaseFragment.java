@@ -17,6 +17,7 @@ import com.liangmayong.base.binding.mvp.PresenterBinding;
 import com.liangmayong.base.binding.mvp.PresenterHolder;
 import com.liangmayong.base.binding.view.ViewBinding;
 import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
+import com.liangmayong.base.support.logger.Logger;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
@@ -48,6 +49,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
 
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        long start_time = System.currentTimeMillis();
         LinearLayout layout = new LinearLayout(inflater.getContext());
         layout.setPadding(0, 0, 0, 0);
         layout.setId(R.id.base_default_fragment_content);
@@ -73,12 +75,20 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
             defaultToolbar = null;
         }
         onSkinRefresh(SkinManager.get());
-        onAbstractCreateView(view);
         view.setVisibility(View.VISIBLE);
         layout.addView(view);
         if (shouldFixbug5497Workaround()) {
             AndroidBug5497Workaround.assistView(layout);
         }
+        final View finalView = view;
+        finalView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                onAbstractCreateView(finalView);
+            }
+        }, 0);
+        long end_time = System.currentTimeMillis();
+        Logger.d("Displayed " + getClass().getName() + ":+" + end_time + "ms");
         return layout;
     }
 

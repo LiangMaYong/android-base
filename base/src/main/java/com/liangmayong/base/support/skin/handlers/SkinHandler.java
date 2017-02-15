@@ -3,7 +3,7 @@ package com.liangmayong.base.support.skin.handlers;
 import com.liangmayong.base.support.database.DataPreferences;
 import com.liangmayong.base.support.skin.interfaces.ISkinDefault;
 import com.liangmayong.base.support.skin.interfaces.ISkinHandler;
-import com.liangmayong.base.support.skin.themes.SkinDefault;
+import com.liangmayong.base.support.skin.themes.DefaultTheme;
 
 /**
  * Created by LiangMaYong on 2016/12/9.
@@ -16,7 +16,7 @@ public class SkinHandler implements ISkinHandler {
         try {
             defualt = defaultClazz.newInstance();
         } catch (Exception e) {
-            defualt = new SkinDefault();
+            defualt = new DefaultTheme();
         }
         return new SkinHandler(name + "_handler", defualt);
     }
@@ -247,21 +247,21 @@ public class SkinHandler implements ISkinHandler {
 
     @Override
     public void setColor(String key, int value) {
-        DataPreferences.getPreferences("skin_" + getThemeName()).setReload(true).setInt(key, value);
+        DataPreferences.getPreferences("skin_" + getThemeName()).setInt(key, value);
     }
 
     @Override
     public void setExtra(String key, String value) {
-        DataPreferences.getPreferences("skin_" + getThemeName()).setReload(true).setString(key, value);
+        DataPreferences.getPreferences("skin_" + getThemeName()).setString(key, value);
     }
 
     @Override
     public int getColor(String key, int defaultValue) {
-        return DataPreferences.getPreferences("skin_" + getThemeName()).setReload(true).getInt(key, defaultValue);
+        return DataPreferences.getPreferences("skin_" + getThemeName()).getInt(key, defaultValue);
     }
 
     @Override
     public String getExtra(String key) {
-        return DataPreferences.getPreferences("skin_" + getThemeName()).setReload(true).getString(key, "");
+        return DataPreferences.getPreferences("skin_" + getThemeName()).getString(key, "");
     }
 }

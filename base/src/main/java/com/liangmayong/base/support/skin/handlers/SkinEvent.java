@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Process;
 
+import com.liangmayong.base.support.database.DataPreferences;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
@@ -86,10 +87,11 @@ public class SkinEvent {
     /**
      * refreshReceiver
      */
-    public static void refreshReceiver() {
+    public static void refreshReceiver(String theme) {
         init();
         Intent intent = new Intent(ContextUtils.getApplication().getPackageName() + SKIN_RECEIVER_ACTION);
         intent.putExtra("process", getCurrentProcessName(ContextUtils.getApplication()) + "@" + SkinManager.get().hashCode());
+        intent.putExtra("theme", theme);
         ContextUtils.getApplication().sendBroadcast(intent);
     }
 
@@ -133,8 +135,10 @@ public class SkinEvent {
         @Override
         public void onReceive(Context context, Intent intent) {
             String process = intent.getStringExtra("process");
+            String theme = intent.getStringExtra("theme");
             String current = getCurrentProcessName(context) + "@" + SkinManager.get().hashCode();
             if (process != null && !process.equals(current)) {
+                DataPreferences.getPreferences("skin_" + theme).clearCache();
                 if (listener != null) {
                     listener.onSkinReceiver();
                 }

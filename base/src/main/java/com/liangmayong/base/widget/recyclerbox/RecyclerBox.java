@@ -1324,6 +1324,8 @@ public class RecyclerBox extends RelativeLayout {
         private OnRecyclerBoxItemClickListener<Data> clickListener;
         //longClickListener
         private OnRecyclerBoxItemLongClickListener<Data> longClickListener;
+        // tag
+        private Object tag = null;
 
         /**
          * getOnItemClickListener
@@ -1475,6 +1477,15 @@ public class RecyclerBox extends RelativeLayout {
                 itemType = Md5Utils.encryptInt(getClass().getName());
             }
             return itemType;
+        }
+
+        public Item<Data> setTag(Object tag) {
+            this.tag = tag;
+            return this;
+        }
+
+        public Object getTag() {
+            return tag;
         }
 
         /**

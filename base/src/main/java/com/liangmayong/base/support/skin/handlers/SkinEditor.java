@@ -161,6 +161,6 @@ public class SkinEditor {
      */
     public void commit() {
         SkinEvent.refreshSkin();
-        SkinEvent.refreshReceiver();
+        SkinEvent.refreshReceiver(handler.getThemeName());
     }
 }

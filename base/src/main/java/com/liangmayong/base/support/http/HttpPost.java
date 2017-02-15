@@ -152,7 +152,7 @@ class HttpPost {
                             in.close();
                         }
                     }
-                    byte[] end_data = (lineEnd + prefix + boundary + prefix + lineEnd).getBytes();
+                    byte[] end_data = (prefix + boundary + prefix + lineEnd).getBytes();
                     outputStream.write(end_data);
                     outputStream.flush();
                     outputStream.close();
