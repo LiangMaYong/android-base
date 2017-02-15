@@ -37,6 +37,7 @@ public class ImageViewActivity extends BaseActivity {
                 activityTransition.exit(ImageViewActivity.this);
             }
         });
+        Shake.shakeActivity(this, 500, true);
     }
 
 

@@ -69,7 +69,6 @@ public class StackF extends FlowBaseFragment {
         defaultToolbar.rightTwo().icon(IconFont.base_icon_circle_yes).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Shake.shakeActivity(getActivity(), 500, false);
                 getDefaultToolbar().message().show(IconFont.base_icon_circle_yes, " 登录成功", SkinManager.get().getSuccessTextColor(), SkinManager.get().getSuccessColor(), 1500);
             }
         });
@@ -79,5 +78,6 @@ public class StackF extends FlowBaseFragment {
                 GoToUtils.goLogcat(getActivity(), null);
             }
         });
+        Shake.shakeView(defaultToolbar.leftOne().getView(), 500, true);
     }
 }

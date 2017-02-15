@@ -18,26 +18,39 @@ public class Shake {
         if (content != null) {
             ViewGroup contentView = (ViewGroup) content.getParent();
             if (contentView != null) {
-                shakeView(contentView, duration);
+                shakeView(contentView, duration, 30, 8, vibrate);
             }
-        }
-        if (vibrate) {
-            VibratorUtils.vibrate(activity, duration);
         }
     }
 
-    public static void shakeView(View view, int duration) {
-        final ShakeAnimation shakeAnimation = new ShakeAnimation();
+    public static void shakeView(View view, int duration, boolean vibrate) {
+        shakeView(view, duration, 30, 8, vibrate);
+    }
+
+    public static void shakeView(View view, int duration, int rate, int range, boolean vibrate) {
+        final ShakeAnimation shakeAnimation = new ShakeAnimation(rate, range);
         shakeAnimation.setDuration(duration);
         if (view != null) {
             view.startAnimation(shakeAnimation);
+            if (vibrate) {
+                VibratorUtils.vibrate(view.getContext(), duration);
+            }
         }
     }
 
     private static class ShakeAnimation extends Animation {
+
+        private int rate = 30;
+        private int range = 8;
+
+        public ShakeAnimation(int rate, int range) {
+            this.rate = rate;
+            this.range = range;
+        }
+
         @Override
         protected void applyTransformation(float interpolatedTime, Transformation t) {
-            t.getMatrix().setTranslate((float) Math.sin(interpolatedTime * 40) * 10, 0);
+            t.getMatrix().setTranslate((float) Math.sin(interpolatedTime * rate) * range, 0);
             super.applyTransformation(interpolatedTime, t);
         }
     }
