@@ -7,12 +7,13 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.util.List;
 
 /**
  * ApkUtils
@@ -153,34 +154,37 @@ public final class ApkUtils {
      * @param packageName
      */
     public static void doUnInstall(Context context, String packageName) {
-        Uri packageURI = Uri.parse("package:" + packageName);
-        Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-        uninstallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(uninstallIntent);
+        try {
+            Uri packageURI = Uri.parse("package:" + packageName);
+            Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+            uninstallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(uninstallIntent);
+        } catch (Exception e) {
+        }
     }
 
     /**
      * install apk
      *
      * @param context  context
-     * @param file     file
+     * @param uri      uri
      * @param listener listener
      */
-    public static void doInstall(Context context, File file, OnApkInstallListener listener) {
-        if (!file.exists()) {
-            if (listener != null) {
-                listener.failure(new FileNotFoundException("apk not found:" + file.getAbsolutePath()));
+    public static void doInstall(Context context, Uri uri, OnApkInstallListener listener) {
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(uri, "application/vnd.android.package-archive");
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                context.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }
-        } else {
-            try {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-                listener.startInstall(file);
-            } catch (Exception e) {
-                listener.failure(e);
-            }
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+            listener.onStartInstall(uri);
+        } catch (Exception e) {
+            listener.onFailure(e);
         }
     }
 
@@ -198,7 +202,6 @@ public final class ApkUtils {
             packageInfo = context.getPackageManager().getPackageInfo(packageName, 0);
         } catch (NameNotFoundException e) {
             packageInfo = null;
-            e.printStackTrace();
         }
         if (packageInfo == null) {
             return false;
@@ -219,11 +222,11 @@ public final class ApkUtils {
             Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
             context.startActivity(intent);
             if (listener != null) {
-                listener.startOpen(packageName);
+                listener.onStartOpen(packageName);
             }
         } catch (Exception e) {
             if (listener != null) {
-                listener.failure(e);
+                listener.onFailure(e);
             }
         }
     }
@@ -245,11 +248,11 @@ public final class ApkUtils {
             }
             context.startActivity(intent);
             if (listener != null) {
-                listener.startOpen(packageName);
+                listener.onStartOpen(packageName);
             }
         } catch (Exception e) {
             if (listener != null) {
-                listener.failure(e);
+                listener.onFailure(e);
             }
         }
     }
@@ -265,14 +268,14 @@ public final class ApkUtils {
         /**
          * install app
          */
-        void startInstall(File file);
+        void onStartInstall(Uri uri);
 
         /**
-         * install failure
+         * install onFailure
          *
          * @param e exception
          */
-        void failure(Exception e);
+        void onFailure(Exception e);
     }
 
     /**
@@ -284,15 +287,15 @@ public final class ApkUtils {
     public interface OnApkOpenListener {
 
         /**
-         * openFragment app
+         * onStartOpen
          */
-        void startOpen(String packageName);
+        void onStartOpen(String packageName);
 
         /**
-         * install failure
+         * install onFailure
          *
          * @param e exception
          */
-        void failure(Exception e);
+        void onFailure(Exception e);
     }
 }

@@ -1,6 +1,8 @@
 package com.liangmayong.base.widget.iconfont;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 
 
@@ -10,7 +12,7 @@ import android.util.AttributeSet;
  * @author LiangMaYong
  * @version 1.0
  */
-public class IconView extends FontTextView {
+public class IconView extends FontView {
 
     public IconView(Context context) {
         super(context);
@@ -24,6 +26,7 @@ public class IconView extends FontTextView {
         super(context, attrs, defStyleAttr);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public IconView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }

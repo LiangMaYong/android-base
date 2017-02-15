@@ -28,7 +28,6 @@ dependencies {
     //fresco
     compile 'com.facebook.fresco:fresco:0.14.1'
 }
-
 apply from: 'https://raw.githubusercontent.com/LiangMaYong/android-gradlepublish/master/library.gradle'
 apply from: 'https://raw.githubusercontent.com/LiangMaYong/android-gradlepublish/master/bintray.gradle'
 apply from: 'https://raw.githubusercontent.com/LiangMaYong/android-gradlepublish/master/install.gradle'

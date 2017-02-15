@@ -22,7 +22,7 @@ import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
 import com.liangmayong.base.support.utils.AnimationUtil;
 import com.liangmayong.base.widget.iconfont.FontValue;
 import com.liangmayong.base.widget.iconfont.IconView;
-import com.liangmayong.base.widget.skinview.SkinToolBar;
+import com.liangmayong.base.widget.skinview.SkinRelativeLayout;
 
 
 /**
@@ -67,8 +67,8 @@ public class DefaultToolbar {
         if (toolbar_layout == null) {
             throw new Exception("not include base_default_toolbar");
         }
-        if (toolbar_layout instanceof SkinToolBar) {
-            ((SkinToolBar) toolbar_layout).setSkinRefreshListener(skinRefreshListener);
+        if (toolbar_layout instanceof SkinRelativeLayout) {
+            ((SkinRelativeLayout) toolbar_layout).setSkinRefreshListener(skinRefreshListener);
         }
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) toolbar_layout.getLayoutParams();
         defualt_margin = layoutParams.topMargin;
@@ -102,8 +102,8 @@ public class DefaultToolbar {
         if (toolbar_layout == null) {
             throw new Exception("not include base_default_toolbar");
         }
-        if (toolbar_layout instanceof SkinToolBar) {
-            ((SkinToolBar) toolbar_layout).setSkinRefreshListener(skinRefreshListener);
+        if (toolbar_layout instanceof SkinRelativeLayout) {
+            ((SkinRelativeLayout) toolbar_layout).setSkinRefreshListener(skinRefreshListener);
         }
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) toolbar_layout.getLayoutParams();
         defualt_margin = layoutParams.topMargin;
@@ -248,8 +248,8 @@ public class DefaultToolbar {
         if (this.skinType != skinType) {
             this.skinType = skinType;
         }
-        if (toolbar_layout instanceof SkinToolBar) {
-            ((SkinToolBar) toolbar_layout).setSkinType(skinType);
+        if (toolbar_layout instanceof SkinRelativeLayout) {
+            ((SkinRelativeLayout) toolbar_layout).setSkinType(skinType);
         }
     }
 

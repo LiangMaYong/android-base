@@ -20,6 +20,7 @@
     <!--base default_type item-->
     <color name="base_default_item_bg_pre_color">#dddddd</color>
     <color name="base_default_item_bg_nor_color">#ffffff</color>
+
     <!--base default_type-->
     <color name="base_default_layout_bg_color">#f8f8f8</color>
     <color name="base_default_line_color">#f8f8f8</color>

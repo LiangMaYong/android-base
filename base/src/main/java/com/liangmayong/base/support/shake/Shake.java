@@ -16,7 +16,10 @@ public class Shake {
     public static void shakeActivity(Activity activity, int duration, boolean vibrate) {
         ViewGroup content = (ViewGroup) activity.findViewById(android.R.id.content);
         if (content != null) {
-            shakeView(content, duration);
+            ViewGroup contentView = (ViewGroup) content.getParent();
+            if (contentView != null) {
+                shakeView(contentView, duration);
+            }
         }
         if (vibrate) {
             VibratorUtils.vibrate(activity, duration);

@@ -18,7 +18,7 @@ import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.transitions.ActivityTransitionLauncher;
 import com.liangmayong.base.support.utils.GoToUtils;
-import com.liangmayong.base.widget.iconfont.FontTextView;
+import com.liangmayong.base.widget.iconfont.FontView;
 import com.liangmayong.base.widget.iconfont.IconFont;
 import com.liangmayong.base.widget.skinview.SkinButton;
 
@@ -41,7 +41,7 @@ public class StackF extends FlowBaseFragment {
     boolean flag = false;
     AudioRecorder recorder;
     @BindView(R.id.name)
-    private FontTextView name;
+    private FontView name;
     @BindView(R.id.demo)
     private EditText demo;
 

@@ -2,8 +2,6 @@ package com.liangmayong.base.widget.iconfont;
 
 import android.content.Context;
 
-import com.liangmayong.base.widget.basic.BasicFontTypeface;
-
 /**
  * IconFont
  *
@@ -19,7 +17,7 @@ public final class IconFont {
     public static final String PATH = "fonts/base_iconfont.ttf";
 
     public static void load(Context context) {
-        BasicFontTypeface.loadFont(context, PATH);
+        FontTypeface.loadFont(context, PATH);
     }
 
     public static final FontValue base_icon_about = new FontValue(PATH, 0xe68d);

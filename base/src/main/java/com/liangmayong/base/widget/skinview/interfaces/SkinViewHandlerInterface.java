@@ -6,7 +6,7 @@ import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
 /**
  * Created by LiangMaYong on 2017/2/14.
  */
-public interface ISkinViewHandler {
+public interface SkinViewHandlerInterface {
 
     void setSkinRefreshListener(OnSkinRefreshListener skinRefreshListener);
 

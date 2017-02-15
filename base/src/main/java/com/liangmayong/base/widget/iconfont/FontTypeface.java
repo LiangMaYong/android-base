@@ -1,4 +1,4 @@
-package com.liangmayong.base.widget.basic;
+package com.liangmayong.base.widget.iconfont;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Icon font
+ * FontTypeface
  *
  * @author LiangMaYong
  * @version 1.0
  */
-public class BasicFontTypeface {
+public class FontTypeface {
 
     private final static Map<String, Typeface> TYPEFACE_MAP = new HashMap<String, Typeface>();
 

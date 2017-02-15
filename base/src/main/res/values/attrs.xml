@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SkinViewStyleable">
-        <attr name="pressed_color" format="color"/>
-        <attr name="pressed_alpha" format="integer"/>
-        <attr name="background_transparent" format="boolean"/>
-        <attr name="background_cover" format="color"/>
-        <attr name="background_alpha" format="integer"/>
-        <attr name="preview_color" format="color"/>
+    <!-- BasicViewDrawer -->
+    <declare-styleable name="BasicViewDrawer">
         <attr name="stroke_width" format="dimension"/>
         <attr name="radius" format="dimension"/>
         <attr name="shape_type" format="enum">
@@ -16,6 +11,23 @@
             <enum name="oval" value="3"/>
             <enum name="transparent" value="4"/>
         </attr>
+    </declare-styleable>
+
+    <!-- BasicViewHandler -->
+    <declare-styleable name="BasicViewHandler">
+        <attr name="pressed_color" format="color"/>
+        <attr name="unpressed_color" format="color"/>
+        <attr name="unpressed_cover_color" format="color"/>
+        <attr name="unpressed_transparent" format="boolean"/>
+    </declare-styleable>
+
+    <!-- BasicFontTextView -->
+    <declare-styleable name="BasicFontView">
+        <attr name="fontPath" format="string"/>
+    </declare-styleable>
+
+    <!-- SkinViewStyleable -->
+    <declare-styleable name="SkinViewStyleable">
         <attr name="skin_color" format="color"/>
         <attr name="skin_text_color" format="color"/>
         <attr name="skin_type" format="enum">
@@ -30,6 +42,8 @@
             <enum name="black" value="8"/>
         </attr>
     </declare-styleable>
+
+    <!-- ShapeViewStyleable -->
     <declare-styleable name="ShapeViewStyleable">
         <attr name="shapeSquare" format="boolean"/>
         <attr name="shapeCover" format="reference"/>
@@ -37,6 +51,8 @@
         <attr name="shapeBackground" format="color"/>
         <attr name="shape" format="reference"/>
     </declare-styleable>
+
+    <!-- LogcatTextView -->
     <declare-styleable name="LogcatTextView">
         <attr name="verboseColor" format="color"/>
         <attr name="debugColor" format="color"/>
@@ -45,14 +61,13 @@
         <attr name="warningColor" format="color"/>
         <attr name="consoleColor" format="color"/>
     </declare-styleable>
+
+    <!-- SegmentView -->
     <declare-styleable name="SegmentView">
         <attr name="segmentBackgroundColor" format="color"/>
         <attr name="segmentUnSelectBackgroundColor" format="color"/>
         <attr name="segmentTextColor" format="color"/>
         <attr name="segmentUnSelectTextColor" format="color"/>
-    </declare-styleable>
-    <declare-styleable name="BasicTextView">
-        <attr name="fontPath" format="string"/>
     </declare-styleable>
 
 </resources>

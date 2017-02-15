@@ -3,15 +3,12 @@ package com.liangmayong.base.support.photo;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 
 import java.io.File;
 import java.security.MessageDigest;
-import java.util.List;
 
 /**
  * Created by LiangMaYong on 2017/2/8.
@@ -58,12 +55,7 @@ public class PhotoIntent {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         Uri uri = getUri(context, id);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        for (ResolveInfo resolveInfo : resInfoList) {
-            String packageName = resolveInfo.activityInfo.packageName;
-            context.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        }
+        PhotoCache.grantUriPermission(context,intent,uri);
         return intent;
     }
 
@@ -96,12 +88,7 @@ public class PhotoIntent {
         Uri formUri = getUri(context, id);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, formUri);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-        for (ResolveInfo resolveInfo : resInfoList) {
-            String packageName = resolveInfo.activityInfo.packageName;
-            context.grantUriPermission(packageName, formUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        }
+        PhotoCache.grantUriPermission(context,intent,formUri);
         return intent;
     }
 
@@ -113,7 +100,7 @@ public class PhotoIntent {
      * @return Uri
      */
     public Uri getUri(Context context, int id) {
-        return PhotoProvider.getCacheUri(context, getName(id));
+        return PhotoCache.getCacheUri(context, getName(id));
     }
 
 
@@ -125,7 +112,7 @@ public class PhotoIntent {
      * @return path
      */
     public String getPath(Context context, int id) {
-        return new File(PhotoProvider.getCacheDirectory(context), getName(id)).getPath();
+        return new File(PhotoCache.getCacheDirectory(context), getName(id)).getPath();
     }
 
     public String getName(int id) {

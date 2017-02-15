@@ -7,41 +7,41 @@ import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.TextView;
 
 import com.liangmayong.base.support.utils.DimenUtils;
 import com.liangmayong.base.widget.basic.interfaces.BasicViewDrawer;
 import com.liangmayong.base.widget.basic.interfaces.BasicViewHandler;
 import com.liangmayong.base.widget.basic.interfaces.BasicViewInterface;
+import com.liangmayong.base.widget.iconfont.FontView;
 
 /**
  * Created by LiangMaYong on 2016/9/27.
  */
-public class BasicTextView extends TextView implements BasicViewInterface {
+public class BasicFontView extends FontView implements BasicViewInterface {
 
     private BasicViewDrawer basicViewDrawer = null;
     private BasicViewHandler basicViewHandler = null;
 
 
-    public BasicTextView(Context context) {
+    public BasicFontView(Context context) {
         this(context, null);
     }
 
 
-    public BasicTextView(Context context, AttributeSet attrs) {
+    public BasicFontView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initAttributeSet(context, attrs);
     }
 
 
-    public BasicTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BasicFontView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttributeSet(context, attrs);
     }
 
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public BasicTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public BasicFontView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initAttributeSet(context, attrs);
     }

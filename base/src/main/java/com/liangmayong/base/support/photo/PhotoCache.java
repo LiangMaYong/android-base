@@ -1,10 +1,14 @@
 package com.liangmayong.base.support.photo;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by LiangMaYong on 2017/2/8.
@@ -29,7 +33,7 @@ import java.io.File;
  * android:resource="@xml/file_paths"/>
  * </provider>
  */
-public class PhotoProvider {
+public class PhotoCache {
 
     // AUTHORITY
     private static final String AUTHORITY = ".base.authority.fileprovider";
@@ -47,11 +51,11 @@ public class PhotoProvider {
      */
     public static Uri getCacheUri(Context context, String filename) {
         final String dir = getCacheDirectory(context);
-        File dirFile = new File(dir);
-        if (!dirFile.exists()) {
-            dirFile.mkdirs();
-        }
         File file = new File(dir, filename);
+        File parent = file.getParentFile();
+        if (!parent.exists()) {
+            parent.mkdirs();
+        }
         Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + AUTHORITY, file);
         return uri;
     }
@@ -76,5 +80,23 @@ public class PhotoProvider {
      */
     public static String getCachePath(Context context, final Uri uri) {
         return uri.toString().replaceAll("content://" + context.getPackageName() + AUTHORITY + "/" + NAME, getCacheDirectory(context));
+    }
+
+    /**
+     * grantUriPermission
+     *
+     * @param context context
+     * @param intent  intent
+     * @param uri     uri
+     */
+    public static void grantUriPermission(Context context, Intent intent, Uri uri) {
+        if (intent != null) {
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+            for (ResolveInfo resolveInfo : resInfoList) {
+                String packageName = resolveInfo.activityInfo.packageName;
+                context.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+        }
     }
 }

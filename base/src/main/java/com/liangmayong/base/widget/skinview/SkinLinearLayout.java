@@ -9,13 +9,13 @@ import android.widget.LinearLayout;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.handlers.SkinType;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
-import com.liangmayong.base.widget.skinview.handler.SkinViewHandler;
-import com.liangmayong.base.widget.skinview.interfaces.ISkinViewHandler;
+import com.liangmayong.base.widget.skinview.interfaces.SkinViewHandler;
+import com.liangmayong.base.widget.skinview.interfaces.SkinViewHandlerInterface;
 
 /**
  * Created by LiangMaYong on 2017/2/14.
  */
-public class SkinLinearLayout extends LinearLayout implements ISkinViewHandler {
+public class SkinLinearLayout extends LinearLayout implements SkinViewHandlerInterface {
 
     private SkinViewHandler handler = null;
 

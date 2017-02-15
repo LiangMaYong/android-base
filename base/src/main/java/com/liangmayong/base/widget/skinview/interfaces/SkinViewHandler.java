@@ -1,4 +1,4 @@
-package com.liangmayong.base.widget.skinview.handler;
+package com.liangmayong.base.widget.skinview.interfaces;
 
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -9,13 +9,12 @@ import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.handlers.SkinType;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
-import com.liangmayong.base.widget.skinview.interfaces.ISkinViewHandler;
 
 /**
  * Created by LiangMaYong on 2017/2/14.
  */
 
-public class SkinViewHandler implements ISkinViewHandler, OnSkinRefreshListener {
+public class SkinViewHandler implements SkinViewHandlerInterface, OnSkinRefreshListener {
 
     public interface OnSkinColorListener {
         void onColor(int color, int textColor);

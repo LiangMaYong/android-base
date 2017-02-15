@@ -10,7 +10,7 @@
 
     <include layout="@layout/base_default_toolbar"/>
 
-    <com.liangmayong.base.widget.view.SegmentView
+    <com.liangmayong.base.widget.skinview.SkinSegmentView
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="10dp"
@@ -83,7 +83,7 @@
                     android:background="#eeeeee"
                     android:hint="demo"/>
 
-                <com.liangmayong.base.widget.iconfont.FontTextView
+                <com.liangmayong.base.widget.iconfont.FontView
                     android:id="@+id/name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -161,6 +161,7 @@
         android:layout_height="48dp"
         android:layout_margin="10dp"
         android:elevation="0dp"
-        android:text="HTML"/>
+        android:text="HTML"
+        app:shape_type="rectangle"/>
 
 </LinearLayout>

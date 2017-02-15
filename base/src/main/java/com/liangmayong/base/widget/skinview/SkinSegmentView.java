@@ -1,42 +1,34 @@
 package com.liangmayong.base.widget.skinview;
 
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.widget.RelativeLayout;
 
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.handlers.SkinType;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
-import com.liangmayong.base.widget.skinview.handler.SkinViewHandler;
-import com.liangmayong.base.widget.skinview.interfaces.ISkinViewHandler;
+import com.liangmayong.base.widget.skinview.interfaces.SkinViewHandler;
+import com.liangmayong.base.widget.skinview.interfaces.SkinViewHandlerInterface;
+import com.liangmayong.base.widget.view.SegmentView;
 
 /**
- * Created by LiangMaYong on 2017/2/14.
+ * Created by LiangMaYong on 2016/9/27.
  */
-public class SkinToolBar extends RelativeLayout implements ISkinViewHandler {
+public class SkinSegmentView extends SegmentView implements SkinViewHandlerInterface {
 
     private SkinViewHandler handler = null;
 
-    public SkinToolBar(Context context) {
+    public SkinSegmentView(Context context) {
         super(context);
         init(null);
     }
 
-    public SkinToolBar(Context context, AttributeSet attrs) {
+    public SkinSegmentView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public SkinToolBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SkinSegmentView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(attrs);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public SkinToolBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }
 
@@ -44,12 +36,12 @@ public class SkinToolBar extends RelativeLayout implements ISkinViewHandler {
         handler = new SkinViewHandler(this, new SkinViewHandler.OnSkinColorListener() {
             @Override
             public void onColor(int color, int textColor) {
-                setBackgroundColor(color);
+                setSegmentColors(textColor, color);
             }
         });
         handler.initAttributeSet(attrs);
         if (isInEditMode()) {
-            setBackgroundColor(handler.getSkinColor());
+            setSegmentColors(handler.getSkinTextColor(), handler.getSkinColor());
         }
     }
 

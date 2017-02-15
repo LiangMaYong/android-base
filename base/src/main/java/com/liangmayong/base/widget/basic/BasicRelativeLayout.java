@@ -5,11 +5,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
-import com.liangmayong.base.support.utils.DimenUtils;
 import com.liangmayong.base.widget.basic.interfaces.BasicViewDrawer;
 import com.liangmayong.base.widget.basic.interfaces.BasicViewHandler;
 import com.liangmayong.base.widget.basic.interfaces.BasicViewInterface;
@@ -17,37 +17,38 @@ import com.liangmayong.base.widget.basic.interfaces.BasicViewInterface;
 /**
  * Created by LiangMaYong on 2016/9/27.
  */
-public class BasicTextView extends TextView implements BasicViewInterface {
+public class BasicRelativeLayout extends RelativeLayout implements BasicViewInterface {
 
     private BasicViewDrawer basicViewDrawer = null;
     private BasicViewHandler basicViewHandler = null;
 
 
-    public BasicTextView(Context context) {
+    public BasicRelativeLayout(Context context) {
         this(context, null);
     }
 
 
-    public BasicTextView(Context context, AttributeSet attrs) {
+    public BasicRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initAttributeSet(context, attrs);
     }
 
 
-    public BasicTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
+    public BasicRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttributeSet(context, attrs);
     }
 
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public BasicTextView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public BasicRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initAttributeSet(context, attrs);
     }
 
     protected void initAttributeSet(final Context context, final AttributeSet attrs) {
-        basicViewDrawer = new BasicViewDrawer(context, attrs, SHAPE_TYPE_TRANSPARENT, DimenUtils.dip2px(context, 2), DimenUtils.dip2px(context, 1.4f));
+        basicViewDrawer = new BasicViewDrawer(context, attrs);
         basicViewHandler = new BasicViewHandler(context, attrs);
         this.setWillNotDraw(false);
         this.setDrawingCacheEnabled(true);

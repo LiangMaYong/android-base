@@ -9,6 +9,7 @@ import com.liangmayong.base.basic.BaseActivity;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
+import com.liangmayong.base.support.shake.Shake;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.transitions.ActivityTransition;
 import com.liangmayong.base.support.transitions.ExitActivityTransition;

@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 import com.liangmayong.base.support.skin.handlers.SkinType;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
 import com.liangmayong.base.widget.refresh.RefreshView;
-import com.liangmayong.base.widget.skinview.handler.SkinViewHandler;
-import com.liangmayong.base.widget.skinview.interfaces.ISkinViewHandler;
+import com.liangmayong.base.widget.skinview.interfaces.SkinViewHandler;
+import com.liangmayong.base.widget.skinview.interfaces.SkinViewHandlerInterface;
 
 /**
  * Created by LiangMaYong on 2016/12/7.
  */
-public class SkinSwipeLayout extends SwipeRefreshLayout implements ISkinViewHandler, RefreshView {
+public class SkinSwipeLayout extends SwipeRefreshLayout implements SkinViewHandlerInterface, RefreshView {
 
     private SkinViewHandler handler = null;
     // childView

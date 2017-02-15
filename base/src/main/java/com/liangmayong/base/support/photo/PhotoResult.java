@@ -10,7 +10,6 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.util.Log;
 
 /**
  * Created by LiangMaYong on 2017/2/8.
@@ -127,7 +126,7 @@ public class PhotoResult {
                 cursor.close();
             }
             if (data == null) {
-                data = PhotoProvider.getCachePath(context, uri);
+                data = PhotoCache.getCachePath(context, uri);
             }
         }
         return data;
