@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:skin="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
@@ -9,6 +10,36 @@
     <com.liangmayong.base.widget.logcat.LogcatTextView
         android:id="@id/base_default_logcat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#333333"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#333333"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@id/base_edit_logcat_tag"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="input logcat tag"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textColor="#ffffff"
+            android:textColorHint="#616161"
+            android:textCursorDrawable="@null"/>
+
+        <com.liangmayong.base.widget.skinview.SkinButton
+            android:id="@id/base_btn_logcat_set"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="10dp"
+            android:text="SET"
+            skin:radius="50dp"/>
+    </LinearLayout>
 </LinearLayout>

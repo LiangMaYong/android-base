@@ -32,8 +32,8 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
     private boolean isFrist = false;
 
     @Override
-    protected void onAbstractCreateView(View containerView) {
-        super.onAbstractCreateView(containerView);
+    protected void onCreateViewAbstract(View containerView) {
+        super.onCreateViewAbstract(containerView);
         getStackActivity().onFlowFragmentCreateView(this, containerView);
         isShow = true;
         isClose = false;
@@ -73,7 +73,7 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
         if (getActivity() instanceof DrawerBaseActivity) {
             open(fragment, null, SINGLE_INSTANCE);
         } else {
-            getStackActivity().getStackManager().addFragment(this, fragment, null);
+            open(fragment, null, KEEP_CURRENT);
         }
     }
 
@@ -87,8 +87,22 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
         if (getActivity() instanceof DrawerBaseActivity) {
             open(fragment, bundle, SINGLE_INSTANCE);
         } else {
-            getStackActivity().getStackManager().addFragment(this, fragment, bundle);
+            open(fragment, null, KEEP_CURRENT);
         }
+    }
+
+    /**
+     * open fragment
+     *
+     * @param fragment  fragment
+     * @param bundle    bundle
+     * @param stackMode stackMode
+     */
+    protected void open(FlowBaseFragment fragment, Bundle bundle, int stackMode) {
+        if (getStackActivity() == null) {
+            return;
+        }
+        getStackActivity().getStackManager().addFragment(this, fragment, bundle, stackMode);
     }
 
     /**
@@ -128,22 +142,14 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
     }
 
     /**
-     * open fragment
-     *
-     * @param fragment  fragment
-     * @param bundle    bundle
-     * @param stackMode stackMode
-     */
-    protected void open(FlowBaseFragment fragment, Bundle bundle, int stackMode) {
-        getStackActivity().getStackManager().addFragment(this, fragment, bundle, stackMode);
-    }
-
-    /**
      * Jump to the specified fragment and do not hide the current page.
      *
      * @param to To jump to the page
      */
     public void dialogFragment(Fragment to, int dialog_in, int dialog_out) {
+        if (getStackActivity() == null) {
+            return;
+        }
         getStackActivity().getStackManager().dialogFragment(to, dialog_in, dialog_out);
     }
 
@@ -176,8 +182,6 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
         if (activity == null) {
             if (getActivity() instanceof FlowBaseActivity) {
                 activity = (FlowBaseActivity) getActivity();
-            } else {
-                throw new ClassCastException("this activity must be interface IStack");
             }
         }
         return activity;

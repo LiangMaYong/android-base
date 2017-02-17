@@ -12,33 +12,35 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class AESUtils {
 
+    private static String KEY_AES = "AES";
+    private static String CIPHER_AES = "AES/CBC/PKCS5Padding";
+    private static String ivE = "nationalnational";
+    private static AESUtils des = null;
+
     private AESUtils() {
     }
 
-    private static String ivE = "nationalnational";
+    private static AESUtils getAes() {
+        if (des == null) {
+            des = new AESUtils();
+        }
+        return des;
+    }
 
     /**
      * encrypt
      *
-     * @param src        src
-     * @param encryptKey encryptKey
-     * @return
+     * @param encryptByte encryptByte
+     * @param encryptKey  encryptKey
+     * @return encrypt string
      */
-    public static String encrypt(byte[] src, String encryptKey, boolean convertKey) {
-        try {
-            if (convertKey) {
-                encryptKey = getKey(encryptKey);
-            }
-            IvParameterSpec iv = new IvParameterSpec(ivE.getBytes());
-            SecretKeySpec skeySpec = new SecretKeySpec(encryptKey.getBytes(), "AES");
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
-            byte[] encrypted = cipher.doFinal(src);
-            return Base64Utils.encode(encrypted);
-        } catch (Exception ex) {
-            return null;
+    public static String encrypt(byte[] encryptByte, String encryptKey, boolean convertKey) {
+        if (convertKey) {
+            encryptKey = getKey(encryptKey);
         }
+        return getAes()._encrypt(encryptByte, encryptKey);
     }
+
 
     /**
      * decrypt
@@ -48,14 +50,45 @@ public class AESUtils {
      * @return bytes
      */
     public static byte[] decrypt(String encryptString, String encryptKey, boolean convertKey) {
+        if (convertKey) {
+            encryptKey = getKey(encryptKey);
+        }
+        return getAes()._decrypt(encryptString, encryptKey);
+    }
+
+    /**
+     * _encrypt
+     *
+     * @param src        src
+     * @param encryptKey encryptKey
+     * @return
+     */
+    public String _encrypt(byte[] src, String encryptKey) {
         try {
-            if (convertKey) {
-                encryptKey = getKey(encryptKey);
-            }
+            IvParameterSpec iv = new IvParameterSpec(ivE.getBytes());
+            SecretKeySpec skeySpec = new SecretKeySpec(encryptKey.getBytes(), KEY_AES);
+            Cipher cipher = Cipher.getInstance(CIPHER_AES);
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+            byte[] encrypted = cipher.doFinal(src);
+            return Base64Utils.encode(encrypted);
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    /**
+     * _decrypt
+     *
+     * @param encryptString encryptString
+     * @param encryptKey    encryptKey
+     * @return bytes
+     */
+    public byte[] _decrypt(String encryptString, String encryptKey) {
+        try {
             byte[] encryptByte = Base64Utils.decode(encryptString);
             IvParameterSpec iv = new IvParameterSpec(ivE.getBytes());
-            SecretKeySpec skeySpec = new SecretKeySpec(encryptKey.getBytes(), "AES");
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            SecretKeySpec skeySpec = new SecretKeySpec(encryptKey.getBytes(), KEY_AES);
+            Cipher cipher = Cipher.getInstance(CIPHER_AES);
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
             return cipher.doFinal(encryptByte);
         } catch (Exception e) {

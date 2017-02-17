@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.liangmayong.base.binding.mvp.Presenter;
 import com.liangmayong.base.binding.mvp.PresenterHolder;
-import com.liangmayong.base.binding.view.interfaces.ITitle;
+import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
@@ -15,21 +15,10 @@ import com.liangmayong.base.support.toolbar.DefaultToolbar;
 /**
  * Created by LiangMaYong on 2016/9/14.
  */
-public interface IBasic extends OnSkinRefreshListener, ITitle {
+public interface IBasic extends OnSkinRefreshListener, AndroidBug5497Workaround.OnSoftKeyboardListener {
 
-    String LOGCAT_EXTRA_TAG = "logcat_tag";
     String WEB_EXTRA_URL = "web_extra_url";
     String WEB_EXTRA_TITLE = "web_extra_title";
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////  Title   ///////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    @Override
-    void onBindTitle(String title);
-
-    @Override
-    String getBindTitle();
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////  Toolbar   ///////////////////////////////////////////////////////

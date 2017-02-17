@@ -10,8 +10,7 @@
     <FrameLayout
         android:id="@id/base_drawer_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff"/>
+        android:layout_height="match_parent"/>
 
     <android.support.design.widget.NavigationView
         android:id="@id/base_drawer_navigation_view"

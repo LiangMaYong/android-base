@@ -21,11 +21,14 @@ import com.liangmayong.base.binding.mvp.Presenter;
 import com.liangmayong.base.binding.mvp.PresenterBinding;
 import com.liangmayong.base.binding.mvp.PresenterHolder;
 import com.liangmayong.base.binding.view.ViewBinding;
+import com.liangmayong.base.binding.view.data.ViewData;
 import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.statusbar.StatusBarCompat;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
+import com.liangmayong.base.support.transitions.ActivityTransition;
+import com.liangmayong.base.support.transitions.ExitActivityTransition;
 import com.liangmayong.base.support.utils.GoToUtils;
 import com.liangmayong.base.support.utils.ToastUtils;
 
@@ -40,23 +43,61 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     //defaultToolbar
     private DefaultToolbar defaultToolbar = null;
     private PresenterHolder presenterHolder = null;
-    private String bindTitle = "";
     private InputMethodManager inputMethodManager = null;
     private final Handler handler = new Handler();
     private final List<View> mIgnoreTouchHideKeyboard = new ArrayList<View>();
+    private Bundle savedInstanceState = null;
+    private ExitActivityTransition activityTransition = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
         if (shouldFixbug5497Workaround()) {
-            AndroidBug5497Workaround.assistActivity(this);
+            AndroidBug5497Workaround.assistActivity(this, this);
         }
         inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         SkinManager.registerSkinRefresh(this);
         presenterHolder = PresenterBinding.bind(this);
-        ViewBinding.parserActivity(this);
+        View view = ViewBinding.parserClassByLayout(this, this);
+        if (view != null) {
+            setContentView(view);
+        }
     }
+
+    /**
+     * transitionStart
+     */
+    protected void transitionStart(View to, View root) {
+        if (to == null) {
+            return;
+        }
+        if (root == null) {
+            root = getWindow().getDecorView();
+        }
+        activityTransition = ActivityTransition.with(getIntent()).to(to).bg(root).start(savedInstanceState);
+    }
+
+    /**
+     * transitionExit
+     */
+    protected void transitionExit() {
+        if (activityTransition != null) {
+            activityTransition.exit(this);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (activityTransition != null) {
+            activityTransition.exit(this);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    protected abstract void onCreateAbstract(@Nullable Bundle savedInstanceState);
 
     @Override
     protected void onDestroy() {
@@ -87,68 +128,49 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
         }
     }
 
+    /**
+     * callOnCreateAbstract
+     */
+    private final void callOnCreateAbstract() {
+        ViewBinding.parserClassByViewSync(AbstractBaseActivity.this, getWindow().getDecorView(), new ViewBinding.OnViewBindingListener() {
+            @Override
+            public void onBind(ViewData data) {
+                try {
+                    defaultToolbar = new DefaultToolbar(AbstractBaseActivity.this);
+                    if (data != null) {
+                        defaultToolbar.setTitle(data.getTitle());
+                    }
+                    initDefaultToolbar(defaultToolbar);
+                } catch (Exception e) {
+                    defaultToolbar = null;
+                }
+                onSkinRefresh(SkinManager.get());
+                onCreateAbstract(savedInstanceState);
+            }
+        });
+    }
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
-        ViewBinding.parserClassByView(this, getWindow().getDecorView());
-        try {
-            defaultToolbar = new DefaultToolbar(this);
-            defaultToolbar.setTitle(getBindTitle() != null ? getBindTitle() : "");
-            initDefaultToolbar(defaultToolbar);
-        } catch (Exception e) {
-            defaultToolbar = null;
-        }
-        onSkinRefresh(SkinManager.get());
+        callOnCreateAbstract();
     }
+
 
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        ViewBinding.parserClassByView(this, getWindow().getDecorView());
-        try {
-            defaultToolbar = new DefaultToolbar(this);
-            defaultToolbar.setTitle(getBindTitle() != null ? getBindTitle() : "");
-            initDefaultToolbar(defaultToolbar);
-        } catch (Exception e) {
-            defaultToolbar = null;
-        }
-        onSkinRefresh(SkinManager.get());
+        callOnCreateAbstract();
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         super.setContentView(view, params);
-        ViewBinding.parserClassByView(this, getWindow().getDecorView());
-        try {
-            defaultToolbar = new DefaultToolbar(this);
-            defaultToolbar.setTitle(getBindTitle() != null ? getBindTitle() : "");
-            initDefaultToolbar(defaultToolbar);
-        } catch (Exception e) {
-            defaultToolbar = null;
-        }
-        onSkinRefresh(SkinManager.get());
+        callOnCreateAbstract();
     }
 
     protected boolean shouldFixbug5497Workaround() {
         return true;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////   Title   ///////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    @Override
-    public void onBindTitle(String title) {
-        this.bindTitle = title;
-        if (title != null && getDefaultToolbar() != null) {
-            getDefaultToolbar().setTitle(title);
-        }
-    }
-
-    @Override
-    public String getBindTitle() {
-        return bindTitle;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -358,6 +380,10 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
             return !flag;
         }
         return false;
+    }
+
+    @Override
+    public void onSoftKeyboardStateChange(boolean visible) {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

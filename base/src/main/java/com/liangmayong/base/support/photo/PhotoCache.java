@@ -38,7 +38,7 @@ public class PhotoCache {
     // AUTHORITY
     private static final String AUTHORITY = ".base.authority.fileprovider";
     // PATH
-    private static final String PATH = "/base/base_photo_provider/";
+    private static final String PATH = "/base/base_photo_provider";
     // NAME
     private static final String NAME = "base_photo_provider";
 
@@ -67,7 +67,7 @@ public class PhotoCache {
      * @return dir
      */
     public static String getCacheDirectory(Context context) {
-        final String dir = context.getCacheDir().getPath() + PATH;
+        final String dir = constrictFolder(context.getCacheDir().getPath() + PATH, "/");
         return dir;
     }
 
@@ -98,5 +98,32 @@ public class PhotoCache {
                 context.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }
         }
+    }
+
+
+    /**
+     * constrictFolder
+     *
+     * @param path      path
+     * @param separator separator
+     * @return path
+     */
+    private static String constrictFolder(String path, String separator) {
+        path = path.replaceAll("://", "#").replaceAll("\\\\", "/");
+        String last = "";
+        while (!last.equals(path)) {
+            last = path;
+            path = last.replaceAll("//[^/]+/..//", "/");
+        }
+        last = "";
+        while (!last.equals(path)) {
+            last = path;
+            path = last.replaceAll("/([./]/)+/", "/");
+        }
+        while (path.contains("//")) {
+            path = path.replaceAll("//", "/");
+        }
+        path = path.replaceAll("#", "://").replaceAll(":///", "://").replaceAll("/", separator);
+        return path;
     }
 }

@@ -774,7 +774,7 @@ public class RecyclerBox extends RelativeLayout {
         recyclerView.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1));
         recyclerView.addOnScrollListener(scrollListener);
         pool = new Pool();
-        pool.attachTo(this);
+        pool.setRecyclerBox(this);
         contentLayout.addView(recyclerView);
 
         //insert footLayout
@@ -1057,15 +1057,13 @@ public class RecyclerBox extends RelativeLayout {
 
 
         /**
-         * attachTo
+         * setRecyclerBox
          *
-         * @param recyclerView recyclerBox
+         * @param recyclerBox recyclerBox
          */
-        private void attachTo(RecyclerBox recyclerView) {
-            if (recyclerView != null) {
-                this.recyclerBox = recyclerView;
-                this.recyclerBox.getRecyclerListView().setAdapter(adapter);
-                isAttach = true;
+        private void setRecyclerBox(RecyclerBox recyclerBox) {
+            if (recyclerBox != null) {
+                this.recyclerBox = recyclerBox;
             }
         }
 
@@ -1111,7 +1109,7 @@ public class RecyclerBox extends RelativeLayout {
          * notifyDataSetChanged
          */
         public void notifyDataSetChanged() {
-            if (!isAttach) {
+            if (!attachAdapter()) {
                 return;
             }
             adapter.proxyNotifyDataSetChanged();
@@ -1121,7 +1119,7 @@ public class RecyclerBox extends RelativeLayout {
          * notifyDataSetChanged
          */
         public void notifyItemChanged(int position) {
-            if (!isAttach) {
+            if (!attachAdapter()) {
                 return;
             }
             adapter.proxyNotifyItemChanged(position);
@@ -1131,7 +1129,7 @@ public class RecyclerBox extends RelativeLayout {
          * notifyDataSetChanged
          */
         public void notifyItemChanged(int position, Object payload) {
-            if (!isAttach) {
+            if (!attachAdapter()) {
                 return;
             }
             adapter.proxyNotifyItemChanged(position, payload);
@@ -1213,6 +1211,22 @@ public class RecyclerBox extends RelativeLayout {
          */
         public void clear() {
             this.items.removeAll(this.items);
+        }
+
+        /**
+         * attachAdapter
+         *
+         * @return isAttach
+         */
+        private boolean attachAdapter() {
+            if (!isAttach) {
+                if (recyclerBox != null) {
+                    this.recyclerBox.getRecyclerListView().setAdapter(adapter);
+                    isAttach = true;
+                }
+                return false;
+            }
+            return isAttach;
         }
     }
 

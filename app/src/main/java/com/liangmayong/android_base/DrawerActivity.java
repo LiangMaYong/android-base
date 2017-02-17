@@ -24,13 +24,6 @@ import java.util.List;
  */
 public class DrawerActivity extends DrawerBaseActivity {
 
-
-    @Override
-    public void onFlowActivityCreate(Bundle savedInstanceState) {
-        super.onFlowActivityCreate(savedInstanceState);
-        SkinManager.editor().setThemeColor(0xFF3399ff, 0xFFFFFFFF).commit();
-    }
-
     @Override
     protected int getDrawerHeaderLayoutId() {
         return R.layout.navi_head;

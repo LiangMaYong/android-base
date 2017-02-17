@@ -39,7 +39,7 @@ public class ExternalProvider {
     // AUTHORITY
     private static final String AUTHORITY = ".base.authority.fileprovider";
     // PATH
-    private static final String PATH = "/Android/data/com.liangmayong.base/base_external_provider/";
+    private static final String PATH = "/Android/data/com.liangmayong.base/base_external_provider";
     // NAME
     private static final String NAME = "base_external_provider";
 
@@ -68,7 +68,7 @@ public class ExternalProvider {
      * @return dir
      */
     public static String getExternalDirectory(Context context) {
-        final String dir = Environment.getExternalStorageDirectory() + PATH;
+        final String dir = constrictFolder(Environment.getExternalStorageDirectory() + PATH, "/");
         return dir;
     }
 
@@ -99,5 +99,31 @@ public class ExternalProvider {
                 context.grantUriPermission(packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }
         }
+    }
+
+    /**
+     * constrictFolder
+     *
+     * @param path      path
+     * @param separator separator
+     * @return path
+     */
+    private static String constrictFolder(String path, String separator) {
+        path = path.replaceAll("://", "#").replaceAll("\\\\", "/");
+        String last = "";
+        while (!last.equals(path)) {
+            last = path;
+            path = last.replaceAll("//[^/]+/..//", "/");
+        }
+        last = "";
+        while (!last.equals(path)) {
+            last = path;
+            path = last.replaceAll("/([./]/)+/", "/");
+        }
+        while (path.contains("//")) {
+            path = path.replaceAll("//", "/");
+        }
+        path = path.replaceAll("#", "://").replaceAll(":///", "://").replaceAll("/", separator);
+        return path;
     }
 }

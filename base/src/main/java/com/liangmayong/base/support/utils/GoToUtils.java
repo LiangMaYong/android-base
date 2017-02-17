@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.liangmayong.base.basic.expands.logcat.FlowLogcatFragment;
 import com.liangmayong.base.basic.expands.logcat.LogcatActivity;
 import com.liangmayong.base.basic.expands.web.WebViewActivity;
 import com.liangmayong.base.basic.interfaces.IBasic;
@@ -65,7 +66,7 @@ public final class GoToUtils {
      */
     public static void goLogcat(Context context, String tag) {
         Bundle extras = new Bundle();
-        extras.putString(IBasic.LOGCAT_EXTRA_TAG, tag != null ? tag : "");
+        extras.putString(FlowLogcatFragment.EXTRA_LOGCAT_TAG, tag != null ? tag : "");
         goTo(context, LogcatActivity.class, extras);
     }
 

@@ -13,7 +13,6 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.basic.expands.logcat.LogcatActivity;
 import com.liangmayong.base.basic.expands.web.webkit.WebKit;
 import com.liangmayong.base.basic.expands.web.webkit.WebKitChromeClient;
 import com.liangmayong.base.basic.expands.web.webkit.WebKitClient;
@@ -25,6 +24,7 @@ import com.liangmayong.base.basic.interfaces.IBasic;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
+import com.liangmayong.base.support.utils.GoToUtils;
 import com.liangmayong.base.widget.iconfont.IconFont;
 import com.liangmayong.base.widget.refresh.RefreshView;
 
@@ -341,9 +341,7 @@ public class FlowWebViewFragment extends FlowBaseFragment {
         interceptors.add(new WebKitInterceptor("logcat:") {
             @Override
             public boolean interceptorUrlLoading(WebKit web, WebKitUrl url) {
-                Bundle extras = new Bundle();
-                extras.putString(IBasic.LOGCAT_EXTRA_TAG, url.getContent());
-                goTo(LogcatActivity.class, extras);
+                GoToUtils.goLogcat(getContext(), null);
                 return true;
             }
         });

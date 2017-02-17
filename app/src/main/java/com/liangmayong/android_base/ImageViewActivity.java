@@ -9,10 +9,7 @@ import com.liangmayong.base.basic.BaseActivity;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
-import com.liangmayong.base.support.shake.Shake;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
-import com.liangmayong.base.support.transitions.ActivityTransition;
-import com.liangmayong.base.support.transitions.ExitActivityTransition;
 import com.liangmayong.base.widget.iconfont.IconFont;
 import com.liangmayong.base.widget.layout.SquareLinearLayout;
 
@@ -22,7 +19,6 @@ import com.liangmayong.base.widget.layout.SquareLinearLayout;
 @BindLayout(R.layout.activity_image)
 @BindTitle("ImageViewActivity")
 public class ImageViewActivity extends BaseActivity {
-    private ExitActivityTransition activityTransition = null;
     @BindView(R.id.imgview)
     private SquareLinearLayout imgview;
 
@@ -30,20 +26,17 @@ public class ImageViewActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
-        activityTransition = ActivityTransition.with(getIntent()).to(findViewById(R.id.imgview)).bg(getWindow().getDecorView()).start(savedInstanceState);
+        transitionStart(findViewById(R.id.imgview), null);
+    }
+
+    @Override
+    protected void onCreateAbstract(@Nullable Bundle savedInstanceState) {
         imgview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activityTransition.exit(ImageViewActivity.this);
+                finish();
             }
         });
-        Shake.shakeActivity(this, 500, true);
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        activityTransition.exit(this);
     }
 
     @Override

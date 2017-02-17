@@ -2,20 +2,27 @@ package com.liangmayong.base.basic.expands.logcat;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
-import com.liangmayong.base.basic.interfaces.IBasic;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.widget.iconfont.IconFont;
 import com.liangmayong.base.widget.logcat.LogcatTextView;
+import com.liangmayong.base.widget.skinview.SkinButton;
 
 /**
  * Created by LiangMaYong on 2017/1/4.
  */
 @BindTitle("Logcat")
 public class FlowLogcatFragment extends FlowBaseFragment {
+
+    // extra_logcat_tag
+    public static final String EXTRA_LOGCAT_TAG = "extra_logcat_tag";
+    private LogcatTextView base_default_logcat;
+    private EditText base_edit_logcat_tag;
+    private SkinButton base_btn_logcat_set;
 
     /**
      * newInstance
@@ -25,7 +32,7 @@ public class FlowLogcatFragment extends FlowBaseFragment {
      */
     public static FlowLogcatFragment newInstance(String tag) {
         Bundle extras = new Bundle();
-        extras.putString(IBasic.LOGCAT_EXTRA_TAG, tag);
+        extras.putString(FlowLogcatFragment.EXTRA_LOGCAT_TAG, tag);
         return (FlowLogcatFragment) new FlowLogcatFragment().initArguments(extras);
     }
 
@@ -38,16 +45,15 @@ public class FlowLogcatFragment extends FlowBaseFragment {
         return new FlowLogcatFragment();
     }
 
-    private LogcatTextView default_logcat;
-
     @Override
     protected void initViews(View containerView) {
         _initView(containerView);
         if (getArguments() != null) {
-            String tag = getArguments().getString(IBasic.LOGCAT_EXTRA_TAG);
-            default_logcat.setLogcatTag(tag);
+            String tag = getArguments().getString(EXTRA_LOGCAT_TAG);
+            base_default_logcat.setLogcatTag(tag);
+            base_edit_logcat_tag.setText(tag);
         }
-        default_logcat.refreshLogcat();
+        base_default_logcat.refreshLogcat();
     }
 
     @Override
@@ -56,13 +62,13 @@ public class FlowLogcatFragment extends FlowBaseFragment {
         defaultToolbar.rightOne().icon(IconFont.base_icon_delete).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                default_logcat.clearLogcat();
+                base_default_logcat.clearLogcat();
             }
         });
         defaultToolbar.rightTwo().icon(IconFont.base_icon_refresh).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                default_logcat.refreshLogcat();
+                base_default_logcat.refreshLogcat();
             }
         });
     }
@@ -73,6 +79,20 @@ public class FlowLogcatFragment extends FlowBaseFragment {
     }
 
     private void _initView(View rootView) {
-        default_logcat = (LogcatTextView) rootView.findViewById(R.id.base_default_logcat);
+        base_default_logcat = (LogcatTextView) rootView.findViewById(R.id.base_default_logcat);
+        base_edit_logcat_tag = (EditText) rootView.findViewById(R.id.base_edit_logcat_tag);
+        base_btn_logcat_set = (SkinButton) rootView.findViewById(R.id.base_btn_logcat_set);
+        base_btn_logcat_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submit();
+            }
+        });
+    }
+
+    private void submit() {
+        // validate
+        String tag = base_edit_logcat_tag.getText().toString().trim();
+        base_default_logcat.setLogcatTag(tag);
     }
 }

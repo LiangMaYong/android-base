@@ -16,7 +16,6 @@ import com.liangmayong.base.support.utils.ThreadPoolUtils;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by munix on 20/12/16.
@@ -26,7 +25,6 @@ public class LogcatTextView extends ScrollView {
 
     private int verboseColor, debugColor, errorColor, infoColor, warningColor, consoleColor;
     private TextView textView;
-    private boolean isAuto = false;
     private String logcatTag = "";
 
     public LogcatTextView(Context context) {
@@ -92,10 +90,6 @@ public class LogcatTextView extends ScrollView {
         textView.setBackgroundColor(consoleColor);
     }
 
-    public void refreshLogcat() {
-        getLogcat();
-    }
-
     private void onLogcatCaptured(String logcat) {
         if (textView != null) {
             textView.setText(Html.fromHtml(logcat));
@@ -103,41 +97,11 @@ public class LogcatTextView extends ScrollView {
     }
 
     // handler
-    private Handler handler = new Handler() {
+    private final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             onLogcatCaptured((String) msg.obj);
-            if (!isAuto) {
-                isAuto = true;
-                handler.removeCallbacks(autoRefresh);
-                handler.postDelayed(autoRefresh, 5000);
-            }
-        }
-    };
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        if (!isInEditMode()) {
-            refreshLogcat();
-        }
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (!isInEditMode()) {
-            handler.removeCallbacks(autoRefresh);
-        }
-    }
-
-    // autoRefresh
-    private Runnable autoRefresh = new Runnable() {
-        @Override
-        public void run() {
-            refreshLogcat();
-            isAuto = false;
         }
     };
 
@@ -166,6 +130,7 @@ public class LogcatTextView extends ScrollView {
 
     public void setLogcatTag(String logcatTag) {
         this.logcatTag = logcatTag;
+        refreshLogcat();
     }
 
     private ThreadPoolUtils threadPoolUtils = null;
@@ -173,20 +138,20 @@ public class LogcatTextView extends ScrollView {
     /**
      * getLogcat
      */
-    private void getLogcat() {
+    public void refreshLogcat() {
         if (threadPoolUtils == null) {
             threadPoolUtils = new ThreadPoolUtils(ThreadPoolUtils.Type.SingleThread, 1);
         }
-        threadPoolUtils.schedule(new Runnable() {
+        threadPoolUtils.execute(new Runnable() {
             @Override
             public void run() {
                 try {
                     String processId = Integer.toString(android.os.Process.myPid());
                     Process process = null;
                     String logcat_tag = getLogcatTag();
-                    String command = "logcat -d -v threadtime";
+                    String command = "logcat -d -v time";
                     if (logcat_tag != null && !"".equals(logcat_tag)) {
-                        command = "logcat -d -v threadtime -s " + logcat_tag;
+                        command = "logcat -d -v time -s " + logcat_tag;
                     }
                     process = Runtime.getRuntime().exec(command);
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process
@@ -197,13 +162,13 @@ public class LogcatTextView extends ScrollView {
                         if (line.contains(processId)) {
                             int lineColor = verboseColor;
 
-                            if (line.contains(" I ")) {
+                            if (line.contains(" I/")) {
                                 lineColor = infoColor;
-                            } else if (line.contains(" E ")) {
+                            } else if (line.contains(" E/")) {
                                 lineColor = errorColor;
-                            } else if (line.contains(" D ")) {
+                            } else if (line.contains(" D/")) {
                                 lineColor = debugColor;
-                            } else if (line.contains(" W ")) {
+                            } else if (line.contains(" W/")) {
                                 lineColor = warningColor;
                             }
 
@@ -216,6 +181,6 @@ public class LogcatTextView extends ScrollView {
                 } catch (Exception e) {
                 }
             }
-        }, 500, TimeUnit.MILLISECONDS);
+        });
     }
 }

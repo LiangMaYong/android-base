@@ -2,11 +2,11 @@
 <resource>
     <cache-path
         name="base_photo_provider"
-        path="base/base_photo_provider/"/>
+        path="base/base_photo_provider"/>
     <files-path
         name="base_files_provider"
-        path="base/base_files_provider/"/>
+        path="base/base_files_provider"/>
     <external-path
         name="base_external_provider"
-        path="Android/data/com.liangmayong.base/base_external_provider/"/>
+        path="Android/data/com.liangmayong.base/base_external_provider"/>
 </resource>

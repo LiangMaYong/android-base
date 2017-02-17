@@ -15,13 +15,6 @@ import com.liangmayong.base.basic.flow.stack.StackManager;
 public interface IStack {
 
     /**
-     * onFlowActivityCreate
-     *
-     * @param savedInstanceState savedInstanceState
-     */
-    void onFlowActivityCreate(Bundle savedInstanceState);
-
-    /**
      * onFlowFragmentCreateView
      *
      * @param fragment fragment

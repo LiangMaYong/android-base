@@ -17,6 +17,8 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public final class DESUtils {
 
+    private static String KEY_DES = "DES";
+    private static String CIPHER_DES = "DES/CBC/PKCS5Padding";
     private String iv = "national";
     private static DESUtils des = null;
 
@@ -44,20 +46,6 @@ public final class DESUtils {
         return getDes()._encrypt(encryptByte, encryptKey);
     }
 
-    @SuppressLint("TrulyRandom")
-    private String _encrypt(byte[] encryptByte, String encryptKey) {
-        try {
-            IvParameterSpec zeroIv = new IvParameterSpec(iv.getBytes());
-            SecretKeySpec key = new SecretKeySpec(encryptKey.getBytes(), "DES");
-            Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, key, zeroIv);
-            byte[] encryptedData = cipher.doFinal(encryptByte);
-            return Base64Utils.encode(encryptedData);
-        } catch (Exception e) {
-        }
-        return null;
-    }
-
     /**
      * decrypt
      *
@@ -72,6 +60,24 @@ public final class DESUtils {
         return getDes()._decrypt(encryptString, encryptKey);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @SuppressLint("TrulyRandom")
+    private String _encrypt(byte[] encryptByte, String encryptKey) {
+        try {
+            IvParameterSpec zeroIv = new IvParameterSpec(iv.getBytes());
+            SecretKeySpec key = new SecretKeySpec(encryptKey.getBytes(), KEY_DES);
+            Cipher cipher = Cipher.getInstance(CIPHER_DES);
+            cipher.init(Cipher.ENCRYPT_MODE, key, zeroIv);
+            byte[] encryptedData = cipher.doFinal(encryptByte);
+            return Base64Utils.encode(encryptedData);
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
     /**
      * _decrypt
      *
@@ -83,8 +89,8 @@ public final class DESUtils {
         try {
             byte[] encryptByte = Base64Utils.decode(encryptString);
             IvParameterSpec zeroIv = new IvParameterSpec(iv.getBytes());
-            SecretKeySpec key = new SecretKeySpec(encryptKey.getBytes(), "DES");
-            Cipher cipher = Cipher.getInstance("DES/CBC/PKCS5Padding");
+            SecretKeySpec key = new SecretKeySpec(encryptKey.getBytes(), KEY_DES);
+            Cipher cipher = Cipher.getInstance(CIPHER_DES);
             cipher.init(Cipher.DECRYPT_MODE, key, zeroIv);
             return cipher.doFinal(encryptByte);
         } catch (Exception e) {

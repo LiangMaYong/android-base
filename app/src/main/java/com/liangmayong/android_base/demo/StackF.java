@@ -78,6 +78,6 @@ public class StackF extends FlowBaseFragment {
                 GoToUtils.goLogcat(getActivity(), null);
             }
         });
-        Shake.shakeView(defaultToolbar.leftOne().getView(), 500, true);
+        Shake.shakeView(defaultToolbar.leftOne().getView(), 500, false);
     }
 }

@@ -55,7 +55,7 @@ public class PhotoIntent {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         Uri uri = getUri(context, id);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        PhotoCache.grantUriPermission(context,intent,uri);
+        PhotoCache.grantUriPermission(context, intent, uri);
         return intent;
     }
 
@@ -88,7 +88,7 @@ public class PhotoIntent {
         Uri formUri = getUri(context, id);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, formUri);
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        PhotoCache.grantUriPermission(context,intent,formUri);
+        PhotoCache.grantUriPermission(context, intent, formUri);
         return intent;
     }
 

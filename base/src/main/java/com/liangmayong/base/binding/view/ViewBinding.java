@@ -1,11 +1,10 @@
 package com.liangmayong.base.binding.view;
 
-import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.Fragment;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.liangmayong.base.binding.view.annotations.BindColor;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
@@ -14,7 +13,8 @@ import com.liangmayong.base.binding.view.annotations.BindOnLongClick;
 import com.liangmayong.base.binding.view.annotations.BindString;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
-import com.liangmayong.base.binding.view.interfaces.ITitle;
+import com.liangmayong.base.binding.view.data.ViewData;
+import com.liangmayong.base.support.utils.ThreadPoolUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -27,34 +27,31 @@ import java.lang.reflect.Method;
  */
 public final class ViewBinding {
 
-    /**
-     * parserActivity
-     *
-     * @param act Activity
-     * @return view
-     */
-    public static View parserActivity(Activity act) {
-        if (null == act)
-            return null;
-        Class<?> cl = act.getClass();
-        View root = null;
-        if (isLayout(cl)) {
-            BindLayout layout = cl.getAnnotation(BindLayout.class);
-            root = LayoutInflater.from(act).inflate(layout.value(), null);
-            act.setContentView(root);
+    // threadPool
+    private static final ThreadPoolUtils threadPool = new ThreadPoolUtils(ThreadPoolUtils.Type.CachedThread, 5);
+
+    public interface OnViewBindingListener {
+        void onBind(ViewData viewData);
+    }
+
+    // handler
+    private static final Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            MsgHolder holder = (MsgHolder) msg.obj;
+            holder.listener.onBind(holder.data);
         }
-        if (isTitle(act, cl)) {
-            BindTitle title = cl.getAnnotation(BindTitle.class);
-            if (title.id() != 0) {
-                ((ITitle) act).onBindTitle(act.getString(title.id()));
-            } else {
-                ((ITitle) act).onBindTitle(title.value());
-            }
+    };
+
+    private static class MsgHolder {
+        private OnViewBindingListener listener;
+        private ViewData data;
+
+        public MsgHolder(OnViewBindingListener listener, ViewData data) {
+            this.listener = listener;
+            this.data = data;
         }
-        View decorView = act.getWindow().getDecorView();
-        initFields(cl.getDeclaredFields(), decorView, act);
-        initMethods(cl.getDeclaredMethods(), decorView, act);
-        return root;
     }
 
     /**
@@ -63,30 +60,61 @@ public final class ViewBinding {
      * @param obj  obj
      * @param root root View
      */
-    public static void parserClassByView(Object obj, View root) {
-        if (null == obj || null == root)
+    public static void parserClassByViewSync(final Object obj, final View root, final OnViewBindingListener viewBindingListener) {
+        if (null == obj || null == root) {
+            if (viewBindingListener != null) {
+                viewBindingListener.onBind(null);
+            }
             return;
+        }
+        String titleStr = null;
         Class<?> cl = obj.getClass();
-        if (isTitle(obj, cl)) {
+        if (isTitle(cl)) {
             BindTitle title = cl.getAnnotation(BindTitle.class);
             if (title.id() != 0) {
-                ((ITitle) obj).onBindTitle(root.getContext().getString(title.id()));
+                titleStr = root.getContext().getString(title.id());
             } else {
-                ((ITitle) obj).onBindTitle(title.value());
+                titleStr = title.value();
             }
         }
         initFields(cl.getDeclaredFields(), root, obj);
         initMethods(cl.getDeclaredMethods(), root, obj);
+        if (viewBindingListener != null) {
+            ViewData data = new ViewData();
+            data.setTitle(titleStr);
+            viewBindingListener.onBind(data);
+        }
     }
 
     /**
-     * parserLayout
+     * parserClassByView
+     *
+     * @param obj                 obj
+     * @param root                root View
+     * @param viewBindingListener runnable
+     */
+    public static void parserClassByView(final Object obj, final View root, final OnViewBindingListener viewBindingListener) {
+        threadPool.execute(new Runnable() {
+            @Override
+            public void run() {
+                parserClassByViewSync(obj, root, new OnViewBindingListener() {
+                    @Override
+                    public void onBind(ViewData data) {
+                        handler.obtainMessage(0, new MsgHolder(viewBindingListener, data)).sendToTarget();
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * parserClassByLayout
      *
      * @param obj     obj
      * @param context context
      * @return view
      */
-    public static View parserLayout(Object obj, Context context) {
+    public static View parserClassByLayout(Object obj, Context context) {
         if (null == obj || null == context)
             return null;
         Class<?> cl = obj.getClass();
@@ -96,84 +124,6 @@ public final class ViewBinding {
             root = LayoutInflater.from(context).inflate(layout.value(), null);
         }
         return root;
-    }
-
-    /**
-     * parserClass
-     *
-     * @param obj     obj
-     * @param context context
-     * @return view
-     */
-    public static View parserClass(Object obj, Context context) {
-        if (null == obj || null == context)
-            return null;
-        Class<?> cl = obj.getClass();
-        View root = null;
-        if (isLayout(cl)) {
-            BindLayout layout = cl.getAnnotation(BindLayout.class);
-            root = LayoutInflater.from(context).inflate(layout.value(), null);
-        }
-        if (isTitle(obj, cl)) {
-            BindTitle title = cl.getAnnotation(BindTitle.class);
-            if (title.id() != 0) {
-                ((ITitle) obj).onBindTitle(root.getContext().getString(title.id()));
-            } else {
-                ((ITitle) obj).onBindTitle(title.value());
-            }
-        }
-        initFields(cl.getDeclaredFields(), root, obj);
-        initMethods(cl.getDeclaredMethods(), root, obj);
-        return root;
-    }
-
-    /**
-     * parserFragment
-     *
-     * @param fragment fragment
-     * @param group    group
-     * @return View
-     */
-    public static View parserFragment(Fragment fragment, ViewGroup group) {
-        Class<?> cl = fragment.getClass();
-        View view = null;
-        if (isLayout(cl)) {
-            BindLayout layout = cl.getAnnotation(BindLayout.class);
-            view = fragment.getActivity().getLayoutInflater().inflate(layout.value(), group, false);
-        }
-        if (isTitle(fragment, cl)) {
-            BindTitle title = cl.getAnnotation(BindTitle.class);
-            if (title.id() != 0) {
-                ((ITitle) fragment).onBindTitle(fragment.getActivity().getString(title.id()));
-            } else {
-                ((ITitle) fragment).onBindTitle(title.value());
-            }
-        }
-
-        if (null != view) {
-            initFields(cl.getDeclaredFields(), view, fragment);
-            initMethods(cl.getDeclaredMethods(), view, fragment);
-        }
-        return view;
-    }
-
-    /**
-     * parserView
-     *
-     * @param view view
-     */
-    public static void parserView(View view) {
-        Class<?> cl = view.getClass();
-        if (isTitle(view, cl)) {
-            BindTitle title = cl.getAnnotation(BindTitle.class);
-            if (title.id() != 0) {
-                ((ITitle) view).onBindTitle(view.getContext().getString(title.id()));
-            } else {
-                ((ITitle) view).onBindTitle(title.value());
-            }
-        }
-        initFields(cl.getDeclaredFields(), view, view);
-        initMethods(cl.getDeclaredMethods(), view, view);
     }
 
     /**
@@ -279,8 +229,8 @@ public final class ViewBinding {
      * @param cls cls
      * @return true or false
      */
-    private static boolean isTitle(Object object, Class<?> cls) {
-        return cls.isAnnotationPresent(BindTitle.class) && object instanceof ITitle;
+    private static boolean isTitle(Class<?> cls) {
+        return cls.isAnnotationPresent(BindTitle.class);
     }
 
     /**

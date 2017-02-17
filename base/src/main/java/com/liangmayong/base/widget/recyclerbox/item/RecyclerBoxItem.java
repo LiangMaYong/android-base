@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.liangmayong.base.binding.view.ViewBinding;
+import com.liangmayong.base.binding.view.data.ViewData;
 import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
 
 /**
@@ -20,15 +21,19 @@ public abstract class RecyclerBoxItem<Data> extends RecyclerBox.Item<Data> {
     protected final View newView(LayoutInflater inflater, ViewGroup parent) {
         View rootView = onNewView(inflater, parent);
         if (rootView == null) {
-            rootView = ViewBinding.parserLayout(this, inflater.getContext());
+            rootView = ViewBinding.parserClassByLayout(this, inflater.getContext());
         }
         return rootView;
     }
 
     @Override
-    protected final void bindView(View itemView, Data data) {
-        ViewBinding.parserClassByView(this, itemView);
-        onBindView(itemView, data);
+    protected final void bindView(final View itemView, final Data data) {
+        ViewBinding.parserClassByViewSync(RecyclerBoxItem.this, itemView, new ViewBinding.OnViewBindingListener() {
+            @Override
+            public void onBind(ViewData viewData) {
+                onBindView(itemView, data);
+            }
+        });
     }
 
     /**

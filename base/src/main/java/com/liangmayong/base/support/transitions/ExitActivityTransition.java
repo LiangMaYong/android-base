@@ -22,13 +22,14 @@ import android.animation.TimeInterpolator;
 import android.app.Activity;
 import android.view.animation.DecelerateInterpolator;
 
-import com.liangmayong.base.support.transitions.core.TransitionMoveData;
 import com.liangmayong.base.support.transitions.core.TransitionAnimation;
+import com.liangmayong.base.support.transitions.core.TransitionMoveData;
 
 public class ExitActivityTransition {
     private final TransitionMoveData moveData;
     private TimeInterpolator interpolator;
     private Animator.AnimatorListener listener;
+    private boolean isCallFinish = false;
 
 
     public ExitActivityTransition(TransitionMoveData moveData) {
@@ -46,16 +47,18 @@ public class ExitActivityTransition {
     }
 
     public void exit(final Activity activity) {
-        if (interpolator == null) {
-            interpolator = new DecelerateInterpolator();
-        }
-        TransitionAnimation.startExitAnimation(moveData, interpolator, new Runnable() {
-            @Override
-            public void run() {
-                activity.finish();
-                activity.overridePendingTransition(0, 0);
+        if (!isCallFinish) {
+            isCallFinish = true;
+            if (interpolator == null) {
+                interpolator = new DecelerateInterpolator();
             }
-        },listener);
+            TransitionAnimation.startExitAnimation(moveData, interpolator, new Runnable() {
+                @Override
+                public void run() {
+                    activity.finish();
+                    activity.overridePendingTransition(0, 0);
+                }
+            }, listener);
+        }
     }
-
 }

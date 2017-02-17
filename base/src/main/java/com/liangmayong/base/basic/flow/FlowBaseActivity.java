@@ -1,13 +1,14 @@
 package com.liangmayong.base.basic.flow;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.basic.BaseActivity;
-import com.liangmayong.base.basic.flow.fragments.StackErrorFragment;
+import com.liangmayong.base.basic.flow.fragments.ErrorFragment;
 import com.liangmayong.base.basic.flow.interfaces.IStack;
 import com.liangmayong.base.basic.flow.stack.StackManager;
 
@@ -31,10 +32,6 @@ public abstract class FlowBaseActivity extends BaseActivity implements IStack {
     }
 
     @Override
-    public void onFlowActivityCreate(Bundle savedInstanceState) {
-    }
-
-    @Override
     public void onFlowFragmentCreateView(FlowBaseFragment fragment, View view) {
     }
 
@@ -42,15 +39,18 @@ public abstract class FlowBaseActivity extends BaseActivity implements IStack {
     protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         generateContainerView();
+    }
+
+    @Override
+    protected void onCreateAbstract(@Nullable Bundle savedInstanceState) {
         FlowBaseFragment fragment = getFristFragment();
         if (fragment == null) {
-            fragment = new StackErrorFragment(ERROR_MSG_FRIST_STACK_NULL);
+            fragment = ErrorFragment.newInstance(ERROR_MSG_FRIST_STACK_NULL);
         }
         fragment.setFrist(true);
         manager = new StackManager(this, generateContainerFragmentId());
         manager.setFragment(fragment);
         onConfigFlowFragmentAnims();
-        onFlowActivityCreate(savedInstanceState);
     }
 
     /**
