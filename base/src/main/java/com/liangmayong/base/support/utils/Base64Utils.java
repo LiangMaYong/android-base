@@ -249,7 +249,7 @@ public final class Base64Utils {
             if (c == legalChars[62]) {
                 return 62;
             } else if (c == legalChars[63]) {
-                return 62;
+                return 63;
             } else if (c == '=') {
                 return 0;
             } else {
