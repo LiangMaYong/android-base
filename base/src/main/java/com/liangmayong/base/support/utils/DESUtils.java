@@ -1,7 +1,6 @@
 package com.liangmayong.base.support.utils;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -73,10 +72,8 @@ public final class DESUtils {
             Cipher cipher = Cipher.getInstance(CIPHER_DES);
             cipher.init(Cipher.ENCRYPT_MODE, key, zeroIv);
             byte[] encryptedData = cipher.doFinal(encryptByte);
-            Log.e("TAG", encryptKey + "");
             return Base64Utils.encode(encryptedData);
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }
@@ -91,15 +88,12 @@ public final class DESUtils {
     private byte[] _decrypt(String encryptString, String encryptKey) {
         try {
             byte[] encryptByte = Base64Utils.decode(encryptString);
-            Log.e("TAG", encryptByte.length + "");
             IvParameterSpec zeroIv = new IvParameterSpec(iv.getBytes());
             SecretKeySpec key = new SecretKeySpec(encryptKey.getBytes(), KEY_DES);
             Cipher cipher = Cipher.getInstance(CIPHER_DES);
             cipher.init(Cipher.DECRYPT_MODE, key, zeroIv);
-            Log.e("TAG", encryptKey + "");
             return cipher.doFinal(encryptByte);
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }
