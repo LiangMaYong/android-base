@@ -239,7 +239,22 @@ public final class Base64Utils {
     }
 
     private static int decode(char c, char[] legalChars) {
-        String s = new String(legalChars);
-        return s.indexOf(c);
+        if (c >= 'A' && c <= 'Z')
+            return ((int) c) - 65;
+        else if (c >= 'a' && c <= 'z')
+            return ((int) c) - 97 + 26;
+        else if (c >= '0' && c <= '9')
+            return ((int) c) - 48 + 26 + 26;
+        else {
+            if (c == legalChars[62]) {
+                return 62;
+            } else if (c == legalChars[63]) {
+                return 62;
+            } else if (c == '=') {
+                return 0;
+            } else {
+                throw new RuntimeException("unexpected code: " + c);
+            }
+        }
     }
 }
