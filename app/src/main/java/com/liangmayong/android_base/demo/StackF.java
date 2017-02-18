@@ -17,7 +17,6 @@ import com.liangmayong.base.support.shake.Shake;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.transitions.ActivityTransitionLauncher;
-import com.liangmayong.base.support.utils.DESUtils;
 import com.liangmayong.base.support.utils.GoToUtils;
 import com.liangmayong.base.widget.iconfont.FontView;
 import com.liangmayong.base.widget.iconfont.IconFont;
@@ -62,10 +61,6 @@ public class StackF extends FlowBaseFragment {
                 goTo("", "file:///android_asset/demo.html");
             }
         });
-        String s = DESUtils.encrypt("ssssssssssss".getBytes(), "ssssss", true);
-        showToast(s);
-        String s1 = new String(DESUtils.decrypt(s, "ssssss", true));
-        showToast(s1.toString());
     }
 
     @Override
