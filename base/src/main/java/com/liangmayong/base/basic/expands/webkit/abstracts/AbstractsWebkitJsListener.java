@@ -1,13 +1,13 @@
-package com.liangmayong.base.basic.expands.web.webkit;
+package com.liangmayong.base.basic.expands.webkit.abstracts;
 
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.WebView;
 
 /**
- * Created by liangmayong on 2017/1/2.
+ * Created by LiangMaYong on 2017/2/18.
  */
-public interface WebKitJsListener {
+public interface AbstractsWebkitJsListener {
 
     boolean onJsAlert(WebView view, String url, String message, JsResult result);
 

@@ -1,70 +1,45 @@
-package com.liangmayong.base.basic.expands.web.webkit;
+package com.liangmayong.base.basic.expands.webkit.abstracts;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.util.AttributeSet;
+import android.view.View;
+import android.webkit.DownloadListener;
 import android.webkit.WebViewClient;
 
-import com.liangmayong.base.support.utils.DeviceUtils;
+import com.liangmayong.base.basic.expands.webkit.callback.WebCallback;
 import com.liangmayong.base.support.utils.StringUtils;
-
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by LiangMaYong on 2016/11/3.
+ * Created by LiangMaYong on 2017/2/18.
  */
-
-public class WebKit extends android.webkit.WebView implements WebKitCallback.OnWebKitCallbackListener {
+public class AbstractsWebKit extends android.webkit.WebView implements WebCallback.Callback {
 
     /**
      * Java call js function format with parameters
      */
     private static final String FUNC_FORMAT_WITH_PARAMETERS = "javascript:window.%s('%s')";
-
     /**
      * Java call js function format without parameters
      */
     private static final String FUNC_FORMAT = "javascript:window.%s()";
+    // client
     private WebViewClient client;
 
-    public WebKit(Context context) {
+    public AbstractsWebKit(Context context) {
         super(context);
-        initWebView();
+        initWebKit();
     }
 
-    public WebKit(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initWebView();
-    }
-
-    public WebKit(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initWebView();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public WebKit(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initWebView();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.HONEYCOMB)
-    public WebKit(Context context, AttributeSet attrs, int defStyleAttr, boolean privateBrowsing) {
-        super(context, attrs, defStyleAttr, privateBrowsing);
-        initWebView();
-    }
-
-    private void initWebView() {
+    protected void initWebKit() {
         removeSearchBoxJavaBridgeInterface();
-        setDownloadListener(new WebKitDownloadListener() {
+        setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
                 Uri uri = Uri.parse(url);
@@ -72,7 +47,34 @@ public class WebKit extends android.webkit.WebView implements WebKitCallback.OnW
                 getContext().startActivity(intent);
             }
         });
+        if (Build.VERSION.SDK_INT >= 9) {
+            setOverScrollMode(View.OVER_SCROLL_NEVER);
+        }
+        getSettings().setJavaScriptEnabled(true);
+        getSettings().setDomStorageEnabled(true);
+        getSettings().setDatabaseEnabled(true);
+        getSettings().setBuiltInZoomControls(false);
+        getSettings().setAppCacheEnabled(true);
+        if (Build.VERSION.SDK_INT >= 19) {
+            getSettings().setLoadsImagesAutomatically(true);
+        } else {
+            getSettings().setLoadsImagesAutomatically(false);
+        }
+        getSettings().setDefaultTextEncodingName("UTF-8");
     }
+
+    @Override
+    public void setWebViewClient(WebViewClient client) {
+        super.setWebViewClient(client);
+        this.client = client;
+    }
+
+    public void onPageFinished() {
+        if (client != null) {
+            client.onPageFinished(this, getUrl());
+        }
+    }
+
 
     /**
      * injectionAssetsJS
@@ -99,32 +101,10 @@ public class WebKit extends android.webkit.WebView implements WebKitCallback.OnW
                 loadUrl("javascript: " + wholeJS);
             }
             fromFile.close();
-            try {
-                call(jsName + ".init", new JSONObject(DeviceUtils.getDeviceInfo(getContext())).toString());
-            } catch (Exception e) {
-            }
         } catch (IOException e) {
         }
     }
 
-    @SuppressLint("NewApi")
-    private void removeSearchBoxJavaBridgeInterface() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && !(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)) {
-            removeJavascriptInterface("searchBoxJavaBridge_");
-        }
-    }
-
-    public void onPageFinished() {
-        if (client != null) {
-            client.onPageFinished(this, getUrl());
-        }
-    }
-
-    @Override
-    public void setWebViewClient(WebViewClient client) {
-        super.setWebViewClient(client);
-        this.client = client;
-    }
 
     /**
      * callFunction
@@ -155,25 +135,21 @@ public class WebKit extends android.webkit.WebView implements WebKitCallback.OnW
     }
 
     @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        if (!isInEditMode()) {
-            WebKitCallback.registerCallbackListener(this);
-        }
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (!isInEditMode()) {
-            WebKitCallback.unregisterCallbackListener(this);
-        }
-    }
-
-    @Override
     public void onCall(String url, String functionName, String jsonString) {
         if (getUrl().equals(url)) {
             call(functionName, jsonString);
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    ///////  Private
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    @SuppressLint("NewApi")
+    private void removeSearchBoxJavaBridgeInterface() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && !(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)) {
+            removeJavascriptInterface("searchBoxJavaBridge_");
         }
     }
 }

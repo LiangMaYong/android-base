@@ -10,10 +10,16 @@
 <button onclick="toast('hello toast')" type="button" style="width:100%;height:50px;">Toast</button>
 <br/>
 <br/>
-<button onclick="toolbar_message('hello toolbar message')" type="button"
-        style="width:100%;height:50px;">
-    Toolbar Message
-</button>
+<button onclick="success('success')" type="button"
+        style="width:100%;height:50px;">success</button>
+<br/>
+<br/>
+<button onclick="warning('warning')" type="button"
+        style="width:100%;height:50px;">warning</button>
+<br/>
+<br/>
+<button onclick="danger('danger')" type="button"
+        style="width:100%;height:50px;">danger</button>
 <br/>
 <br/>
 <button onclick="hide_toolbar()" type="button" style="width:100%;height:50px;">hide_toolbar
@@ -51,8 +57,16 @@
        jsBridge.toast(msg);
     }
 
-    function toolbar_message(msg){
-       jsBridge.toolbar_message(msg);
+    function danger(msg){
+       jsBridge.danger(msg);
+    }
+
+    function success(msg){
+       jsBridge.success(msg);
+    }
+
+    function warning(msg){
+       jsBridge.warning(msg);
     }
 
     function finish(){

@@ -5,21 +5,12 @@
 * | Author: LiangMaYong <ibeam@qq.com>
 * +---------------------------------
 **/
-function JsBridge()
+function AndroidJsBridge()
 {
     var deviceInfo;
-    var userInfo;
 
     this.init = function(info){
        deviceInfo = eval('(' + info + ')');
-    };
-
-    this.auth = function(info){
-       userInfo = eval('(' + info + ')');
-    };
-
-    this.getUserInfo = function(){
-       return userInfo;
     };
 
     this.getDeviceInfo = function(){
@@ -27,15 +18,31 @@ function JsBridge()
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
+    //////// Action
     ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    this.toolbar_message = function(msg,textColor,bgColor){
-       window.location.href ="toolbar-message:"+msg+"?textColor="+textColor+"&bgColor="+bgColor;
-    };
 
     this.toast = function(msg){
-       window.location.href ="toast:"+msg;
+       this.action("toast?toast="+msg);
+    };
+
+    this.open = function(url){
+       this.action("open?url="+url);
+    };
+
+    this.logcat = function(tag){
+       this.action("logcat?tag="+ (tag != null ? tag:""));
+    };
+
+    this.success = function(msg){
+       this.action("success?msg="+msg);
+    };
+
+    this.danger = function(msg){
+       this.action("danger?msg="+msg);
+    };
+
+    this.warning = function(msg){
+       this.action("warning?msg="+msg);
     };
 
     this.finish = function(){
@@ -48,10 +55,6 @@ function JsBridge()
 
     this.back_finish = function(){
        this.action("back_finish");
-    };
-
-    this.open = function(url){
-       this.action("open?url="+url);
     };
 
     this.reload = function(){
@@ -73,18 +76,6 @@ function JsBridge()
     this.action = function(action){
        window.location.href ="action:"+action;
     };
-
-    this.logcat = function(tag){
-       window.location.href ="logcat:"+ (tag != null ? tag:"");
-    };
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    this.demo = function(){
-        alert(window.location.href);
-    };
 }
-var &jsBridge& = new JsBridge();
+var &jsBridge& = new AndroidJsBridge();
 

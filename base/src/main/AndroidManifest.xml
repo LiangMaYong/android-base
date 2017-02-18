@@ -20,7 +20,7 @@
         android:allowBackup="true"
         android:supportsRtl="true">
         <activity
-            android:name="com.liangmayong.base.basic.expands.web.WebViewActivity"
+            android:name="com.liangmayong.base.basic.expands.webkit.WebActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.liangmayong.base.basic.expands.logcat.LogcatActivity"

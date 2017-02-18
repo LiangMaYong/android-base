@@ -1,8 +1,13 @@
 package com.liangmayong.base;
 
 import android.app.Application;
+import android.support.annotation.NonNull;
 
+import com.liangmayong.base.basic.expands.logcat.LogcatActivity;
+import com.liangmayong.base.basic.expands.webkit.WebActivity;
 import com.liangmayong.base.support.crash.CrashHandler;
+import com.liangmayong.base.support.router.Router;
+import com.liangmayong.base.support.router.RouterProvider;
 import com.liangmayong.base.support.utils.FrescoUtils;
 import com.liangmayong.base.support.utils.ThreadPoolUtils;
 
@@ -26,6 +31,15 @@ public class BaseApplication extends Application {
                 CrashHandler.init(application);
             }
         });
+        Router.addRouterProvider(new BaseRouterProvider("Base"));
+    }
+
+    private static class BaseRouterProvider extends RouterProvider {
+        public BaseRouterProvider(@NonNull String providerName) {
+            super(providerName);
+            routerActivity("Logcat", LogcatActivity.class);
+            routerActivity("Web", WebActivity.class);
+        }
     }
 
     @Override
@@ -42,5 +56,4 @@ public class BaseApplication extends Application {
     public static String getBaseVersion() {
         return "2.0.0";
     }
-
 }

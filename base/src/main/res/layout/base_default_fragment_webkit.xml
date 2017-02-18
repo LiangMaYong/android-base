@@ -6,8 +6,9 @@
 
     <include layout="@layout/base_default_toolbar"/>
 
-    <com.liangmayong.base.widget.skinview.SkinSwipeLayout
-        android:id="@id/base_web_refreshLayout"
+    <FrameLayout
+        android:id="@id/base_web_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
 </LinearLayout>

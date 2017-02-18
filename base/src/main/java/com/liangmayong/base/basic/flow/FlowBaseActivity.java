@@ -48,6 +48,7 @@ public abstract class FlowBaseActivity extends BaseActivity implements IStack {
             fragment = ErrorFragment.newInstance(ERROR_MSG_FRIST_STACK_NULL);
         }
         fragment.setFrist(true);
+        fragment.initArguments(getIntent().getExtras());
         manager = new StackManager(this, generateContainerFragmentId());
         manager.setFragment(fragment);
         onConfigFlowFragmentAnims();

@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 
+import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.handlers.SkinType;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
 import com.liangmayong.base.widget.refresh.RefreshView;
@@ -84,6 +85,20 @@ public class SkinSwipeLayout extends SwipeRefreshLayout implements SkinViewHandl
         if (isInEditMode()) {
             setColorSchemeColors(handler.getSkinColor());
         }
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        if (isInEditMode()) return;
+        SkinManager.registerSkinRefresh(handler);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (isInEditMode()) return;
+        SkinManager.unregisterSkinRefresh(handler);
     }
 
     @Override

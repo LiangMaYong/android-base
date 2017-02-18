@@ -16,7 +16,7 @@ import com.liangmayong.base.widget.skinview.SkinButton;
  * Created by LiangMaYong on 2017/1/4.
  */
 @BindTitle("Logcat")
-public class FlowLogcatFragment extends FlowBaseFragment {
+public class LogcatFragment extends FlowBaseFragment {
 
     // extra_logcat_tag
     public static final String EXTRA_LOGCAT_TAG = "extra_logcat_tag";
@@ -30,10 +30,10 @@ public class FlowLogcatFragment extends FlowBaseFragment {
      * @param tag title
      * @return FlowLogcatFragment
      */
-    public static FlowLogcatFragment newInstance(String tag) {
+    public static LogcatFragment newInstance(String tag) {
         Bundle extras = new Bundle();
-        extras.putString(FlowLogcatFragment.EXTRA_LOGCAT_TAG, tag);
-        return (FlowLogcatFragment) new FlowLogcatFragment().initArguments(extras);
+        extras.putString(LogcatFragment.EXTRA_LOGCAT_TAG, tag);
+        return (LogcatFragment) new LogcatFragment().initArguments(extras);
     }
 
     /**
@@ -41,8 +41,8 @@ public class FlowLogcatFragment extends FlowBaseFragment {
      *
      * @return FlowLogcatFragment
      */
-    public static FlowLogcatFragment newInstance() {
-        return new FlowLogcatFragment();
+    public static LogcatFragment newInstance() {
+        return new LogcatFragment();
     }
 
     @Override

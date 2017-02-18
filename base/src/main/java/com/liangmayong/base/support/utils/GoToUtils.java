@@ -5,10 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.liangmayong.base.basic.expands.logcat.FlowLogcatFragment;
 import com.liangmayong.base.basic.expands.logcat.LogcatActivity;
-import com.liangmayong.base.basic.expands.web.WebViewActivity;
+import com.liangmayong.base.basic.expands.logcat.LogcatFragment;
 import com.liangmayong.base.basic.interfaces.IBasic;
+import com.liangmayong.base.support.router.Router;
 
 /**
  * Created by LiangMaYong on 2016/9/18.
@@ -16,16 +16,6 @@ import com.liangmayong.base.basic.interfaces.IBasic;
 public final class GoToUtils {
 
     private GoToUtils() {
-    }
-
-    /**
-     * goTo
-     *
-     * @param context context
-     * @param cls     cls
-     */
-    public static void goTo(Context context, Class<? extends Activity> cls) {
-        goTo(context, cls, null);
     }
 
     /**
@@ -54,32 +44,17 @@ public final class GoToUtils {
         Bundle extras = new Bundle();
         extras.putString(IBasic.WEB_EXTRA_TITLE, title);
         extras.putString(IBasic.WEB_EXTRA_URL, url);
-        goTo(context, WebViewActivity.class, extras);
-    }
-
-
-    /**
-     * goToLogcat
-     *
-     * @param context context
-     * @param tag     tag
-     */
-    public static void goLogcat(Context context, String tag) {
-        Bundle extras = new Bundle();
-        extras.putString(FlowLogcatFragment.EXTRA_LOGCAT_TAG, tag != null ? tag : "");
-        goTo(context, LogcatActivity.class, extras);
+        goToRouter(context, "Base:Web", extras);
     }
 
     /**
-     * goHome
+     * goTo
      *
      * @param context context
+     * @param cls     cls
      */
-    public static void goHome(Context context) {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+    public static void goTo(Context context, Class<? extends Activity> cls) {
+        goTo(context, cls, null);
     }
 
     /**
@@ -111,6 +86,62 @@ public final class GoToUtils {
     }
 
     /**
+     * goToRouter
+     *
+     * @param context context
+     * @param name    name
+     */
+    public static void goToRouter(Context context, String name) {
+        goToRouter(context, name, null);
+    }
+
+    /**
+     * goToRouter
+     *
+     * @param context context
+     * @param name    name
+     * @param extras  extras
+     */
+    public static void goToRouter(Context context, String name, Bundle extras) {
+        Intent intent = Router.invokeActivity(context, name);
+        if (intent != null) {
+            if (extras != null) {
+                intent.putExtras(extras);
+            }
+            context.startActivity(intent);
+        }
+    }
+
+    /**
+     * goToRouterForResult
+     *
+     * @param activity    activity
+     * @param name        name
+     * @param requestCode requestCode
+     */
+    public static void goToRouterForResult(Activity activity, String name, int requestCode) {
+        goToRouterForResult(activity, name, null, requestCode);
+    }
+
+    /**
+     * goToRouterForResult
+     *
+     * @param activity    activity
+     * @param name        name
+     * @param extras      extras
+     * @param requestCode requestCode
+     */
+    public static void goToRouterForResult(Activity activity, String name, Bundle extras, int requestCode) {
+        Intent intent = Router.invokeActivity(activity, name);
+        if (intent != null) {
+            if (extras != null) {
+                intent.putExtras(extras);
+            }
+            activity.startActivityForResult(intent, requestCode);
+        }
+    }
+
+    /**
      * goToForResult
      *
      * @param activity    activity
@@ -135,5 +166,30 @@ public final class GoToUtils {
             intent.putExtras(extras);
         }
         activity.startActivityForResult(intent, requestCode);
+    }
+
+
+    /**
+     * goToLogcat
+     *
+     * @param context context
+     * @param tag     tag
+     */
+    public static void goLogcat(Context context, String tag) {
+        Bundle extras = new Bundle();
+        extras.putString(LogcatFragment.EXTRA_LOGCAT_TAG, tag != null ? tag : "");
+        goToRouter(context, "Base:Logcat", extras);
+    }
+
+    /**
+     * goHome
+     *
+     * @param context context
+     */
+    public static void goHome(Context context) {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }
