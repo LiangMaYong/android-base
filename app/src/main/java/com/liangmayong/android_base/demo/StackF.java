@@ -12,12 +12,11 @@ import com.liangmayong.base.basic.flow.FlowBaseFragment;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
-import com.liangmayong.base.support.audio.AudioRecorder;
-import com.liangmayong.base.support.shake.Shake;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.transitions.ActivityTransitionLauncher;
 import com.liangmayong.base.support.utils.GoToUtils;
+import com.liangmayong.base.support.utils.ShakeUtils;
 import com.liangmayong.base.widget.iconfont.FontView;
 import com.liangmayong.base.widget.iconfont.IconFont;
 import com.liangmayong.base.widget.skinview.SkinButton;
@@ -38,8 +37,6 @@ public class StackF extends FlowBaseFragment {
     @BindView(R.id.imgview)
     private ImageView imgview;
 
-    boolean flag = false;
-    AudioRecorder recorder;
     @BindView(R.id.name)
     private FontView name;
     @BindView(R.id.demo)
@@ -78,6 +75,6 @@ public class StackF extends FlowBaseFragment {
                 GoToUtils.goLogcat(getActivity(), null);
             }
         });
-        Shake.shakeView(defaultToolbar.leftOne().getView(), 500, false);
+        ShakeUtils.shakeView(defaultToolbar.leftOne().getView(), 500, false);
     }
 }

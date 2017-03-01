@@ -35,6 +35,17 @@ public class SkinManager {
     }
 
     /**
+     * refresh
+     *
+     * @param refreshListener refreshListener
+     */
+    public static void refresh(OnSkinRefreshListener refreshListener) {
+        if (refreshListener != null) {
+            refreshListener.onSkinRefresh(get());
+        }
+    }
+
+    /**
      * refreshSkin
      */
     public static void refreshSkin() {

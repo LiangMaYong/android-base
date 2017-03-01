@@ -2,8 +2,6 @@ package com.liangmayong.base.basic.abstracts;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,14 +16,13 @@ import com.liangmayong.base.binding.mvp.Presenter;
 import com.liangmayong.base.binding.mvp.PresenterBinding;
 import com.liangmayong.base.binding.mvp.PresenterHolder;
 import com.liangmayong.base.binding.view.ViewBinding;
-import com.liangmayong.base.binding.view.data.ViewData;
+import com.liangmayong.base.binding.view.data.ViewBindingData;
 import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
 import com.liangmayong.base.support.logger.Logger;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.utils.GoToUtils;
-import com.liangmayong.base.support.utils.ThreadPoolUtils;
 import com.liangmayong.base.support.utils.ToastUtils;
 
 /**
@@ -33,19 +30,18 @@ import com.liangmayong.base.support.utils.ToastUtils;
  */
 public abstract class AbstractBaseFragment extends Fragment implements IBasic {
 
-    // threadPool
-    private final ThreadPoolUtils threadPool = new ThreadPoolUtils(ThreadPoolUtils.Type.CachedThread, 5);
     private DefaultToolbar defaultToolbar = null;
     private PresenterHolder presenterHolder = null;
-    private LinearLayout rootView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        long start_time = System.currentTimeMillis();
-        presenterHolder = PresenterBinding.bind(this);
-        long end_time = System.currentTimeMillis();
-        Logger.d("BindPresenter " + getClass().getName() + ":+" + (end_time - start_time) + "ms " + start_time + " to " + end_time);
+        if (presenterHolder == null) {
+            long start_time = System.currentTimeMillis();
+            presenterHolder = PresenterBinding.bind(this);
+            long end_time = System.currentTimeMillis();
+            Logger.d("BindPresenter " + getClass().getName() + ":+" + (end_time - start_time) + "ms " + start_time + " to " + end_time);
+        }
         SkinManager.registerSkinRefresh(this);
     }
 
@@ -54,42 +50,52 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
         super.onDestroy();
         if (presenterHolder != null) {
             presenterHolder.onDettach();
+            presenterHolder = null;
         }
         SkinManager.unregisterSkinRefresh(this);
     }
 
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if (null != rootView) {
-            ViewGroup parent = (ViewGroup) rootView.getParent();
-            if (null != parent) {
-                parent.removeView(rootView);
+        long start_time = System.currentTimeMillis();
+        LinearLayout rootView = new LinearLayout(inflater.getContext());
+        rootView.setPadding(0, 0, 0, 0);
+        rootView.setId(R.id.base_default_fragment_content);
+        rootView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        rootView.setOrientation(LinearLayout.VERTICAL);
+        View view = getContaierView(inflater, container, savedInstanceState);
+        if (view == null) {
+            if (getContaierLayoutId() > 0) {
+                view = inflater.inflate(getContaierLayoutId(), container, false);
+            } else {
+                view = ViewBinding.parserClassByLayout(this, inflater.getContext());
             }
-        } else {
-            long start_time = System.currentTimeMillis();
-            rootView = new LinearLayout(inflater.getContext());
-            rootView.setPadding(0, 0, 0, 0);
-            rootView.setId(R.id.base_default_fragment_content);
-            rootView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-            View view = getContaierView(inflater, container, savedInstanceState);
-            if (view == null) {
-                if (getContaierLayoutId() > 0) {
-                    view = inflater.inflate(getContaierLayoutId(), container, false);
-                } else {
-                    view = ViewBinding.parserClassByLayout(this, inflater.getContext());
-                }
-            }
-            onSkinRefresh(SkinManager.get());
-            view.setVisibility(View.VISIBLE);
-            rootView.addView(view);
-            if (shouldFixbug5497Workaround()) {
-                AndroidBug5497Workaround.assistView(rootView, this);
-            }
-            onCallInitViewAndData(rootView);
-            long end_time = System.currentTimeMillis();
-            Logger.d("Displayed " + getClass().getName() + ":+" + (end_time - start_time) + "ms " + start_time + " to " + end_time);
         }
+        long end_time = System.currentTimeMillis();
+        Logger.d("Displayed " + getClass().getName() + ":+" + (end_time - start_time) + "ms " + start_time + " to " + end_time);
+        rootView.addView(view);
+        rootView.setVisibility(View.VISIBLE);
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        SkinManager.refresh(this);
+        if (shouldFixbug5497Workaround()) {
+            AndroidBug5497Workaround.assistView(view, this);
+        }
+        ViewBindingData data = ViewBinding.parserClassByView(AbstractBaseFragment.this, view);
+        try {
+            defaultToolbar = new DefaultToolbar(view);
+            if (data != null) {
+                defaultToolbar.setTitle(data.getTitle());
+            }
+            initDefaultToolbar(defaultToolbar);
+        } catch (Exception e) {
+            defaultToolbar = null;
+        }
+        initViews(view);
     }
 
     protected boolean shouldFixbug5497Workaround() {
@@ -140,37 +146,9 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
     }
 
     /**
-     * onCreateViewAbstract
-     */
-    protected void onCreateViewAbstract(final View rootView) {
-        ViewBinding.parserClassByView(AbstractBaseFragment.this, rootView, new ViewBinding.OnViewBindingListener() {
-            @Override
-            public void onBind(ViewData data) {
-                try {
-                    defaultToolbar = new DefaultToolbar(rootView);
-                    if (data != null) {
-                        defaultToolbar.setTitle(data.getTitle());
-                    }
-                    initDefaultToolbar(defaultToolbar);
-                } catch (Exception e) {
-                    defaultToolbar = null;
-                }
-                mHandler.postDelayed(callInitViewAndData, getCallInitDelayTime());
-            }
-        });
-    }
-
-    /**
      * onInitView
      */
     protected abstract void initViews(View containerView);
-
-    /**
-     * initDataOnThread
-     */
-    protected void initDataOnThread() {
-    }
-
 
     /**
      * initArguments
@@ -181,51 +159,6 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
     public AbstractBaseFragment initArguments(Bundle extras) {
         setArguments(extras);
         return this;
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////    Delay   ///////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            try {
-                initViews(rootView);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    };
-
-    private Runnable callInitViewAndData = new Runnable() {
-        @Override
-        public void run() {
-            threadPool.execute(new Runnable() {
-                @Override
-                public void run() {
-                    initDataOnThread();
-                    mHandler.sendEmptyMessage(0);
-                }
-            });
-        }
-    };
-
-    protected int getCallInitDelayTime() {
-        return 0;
-    }
-
-    private void onCallInitViewAndData(View rootView) {
-        onCreateViewAbstract(rootView);
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (!isVisibleToUser) {
-            mHandler.removeCallbacks(callInitViewAndData);
-        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

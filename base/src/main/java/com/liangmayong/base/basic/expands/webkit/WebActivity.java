@@ -10,7 +10,7 @@ import com.liangmayong.base.basic.flow.FlowBaseFragment;
 
 public class WebActivity extends FlowBaseActivity {
     @Override
-    protected FlowBaseFragment getFristFragment() {
+    protected FlowBaseFragment getFirstFragment() {
         return new WebFragment();
     }
 }

@@ -1,53 +1,82 @@
 package com.liangmayong.android_base.demo;
 
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 
-import com.liangmayong.base.basic.expands.recyclerbox.FlowRecyclerBoxFragment;
+import com.liangmayong.android_base.R;
+import com.liangmayong.base.basic.expands.list.FlowListFragment;
+import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
-import com.liangmayong.base.support.utils.DimenUtils;
-import com.liangmayong.base.widget.recyclerbox.item.DefaultBoxItem;
-import com.liangmayong.base.widget.refresh.RefreshView;
-import com.liangmayong.base.widget.recyclerbox.RecyclerBox;
+import com.liangmayong.base.support.adapter.SuperListAdapter;
+import com.liangmayong.base.support.toolbar.DefaultToolbar;
+
+import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by LiangMaYong on 2016/10/17.
  */
+@BindLayout(R.layout.activity_item2)
 @BindTitle("标题")
-public class DemoListFrag extends FlowRecyclerBoxFragment {
+public class DemoListFrag extends FlowListFragment {
 
-    private void inserData() {
-        for (int i = 0; i < 20; i++) {
-            if (i % 3 == 0) {
-                getRecyclerBox().getPool().add(new DemoItemView("Item" + (i + 1)));
-            } else {
-                getRecyclerBox().getPool().add(new DemoItem2View("Item" + (i + 1)).setOnItemClickListener(new RecyclerBox.OnRecyclerBoxItemClickListener<String>() {
-                    @Override
-                    public void onClick(RecyclerBox.Item<String> item, int position, View itemView) {
-                        open(new StackF());
-                    }
-                }));
-            }
-        }
-        getRecyclerBox().getPool().add(new DefaultBoxItem("111111","2222222"));
-        getRecyclerBox().getPool().notifyDataSetChanged();
+    private SuperListAdapter listAdapter = null;
+
+    @Override
+    protected void initListViews(ListView listView) {
+        listAdapter = new SuperListAdapter();
+        listAdapter.add(new DemoItem2View("111111111111111111111"));
+        listAdapter.add(new DemoItemView(1));
+        listView.setAdapter(listAdapter);
+        listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
+        listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
+        listAdapter.add(new DemoItemView(3));
+        listAdapter.add(new DemoItemView(4));
+        listAdapter.add(new DemoItemView(5));
+        listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
     }
 
     @Override
-    protected void initBoxView(RecyclerBox recyclerBox, RefreshView refresh) {
-        getDefaultToolbar().rightOne().text("Blog").click(new View.OnClickListener() {
+    public void initDefaultToolbar(DefaultToolbar defaultToolbar) {
+        super.initDefaultToolbar(defaultToolbar);
+        defaultToolbar.rightOne().text("ADD").click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goTo("Blog", "file:///android_asset/demo.html");
+                listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
+                listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
+                listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
+                listAdapter.add(new DemoItemView(1));
+                listAdapter.add(new DemoItemView(2));
+                listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
+                listAdapter.add(new DemoItemView(3));
+                listAdapter.add(new DemoItemView(4));
+                listAdapter.add(new DemoItemView(5));
+                listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
             }
         });
-        inserData();
-        recyclerBox.setStaggeredEnable(true);
-        recyclerBox.setDecorationSize(DimenUtils.dip2px(getActivity(), 2));
-        refresh.setOnRefreshListener(new RefreshView.OnRefreshListener() {
+        defaultToolbar.rightTwo().text("RA").click(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
-                inserData();
-                getRefreshView().setRefreshing(false);
+            public void onClick(View v) {
+                listAdapter.notifyDataSetChanged();
+            }
+        });
+        defaultToolbar.rightFour().text("R2").click(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listAdapter.notifyItemChanged(2);
+            }
+        });
+        defaultToolbar.rightThree().text("C").click(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DemoItem2View item2View = (DemoItem2View) listAdapter.getItem(2);
+                item2View.setData("333333333333333333");
+                DemoItem2View item3View = (DemoItem2View) listAdapter.getItem(3);
+                item3View.setData("1111111111111111111");
+                item3View.notifyItemChanged();
             }
         });
     }

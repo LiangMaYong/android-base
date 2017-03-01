@@ -11,7 +11,7 @@ import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.widget.iconfont.IconFont;
-import com.liangmayong.base.widget.layout.SquareLinearLayout;
+import com.liangmayong.base.widget.view.RectangleLayout;
 
 /**
  * Created by LiangMaYong on 2017/1/3.
@@ -20,7 +20,7 @@ import com.liangmayong.base.widget.layout.SquareLinearLayout;
 @BindTitle("ImageViewActivity")
 public class ImageViewActivity extends BaseActivity {
     @BindView(R.id.imgview)
-    private SquareLinearLayout imgview;
+    private RectangleLayout imgview;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class ImageViewActivity extends BaseActivity {
         imgview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                onBackPressed();
             }
         });
     }

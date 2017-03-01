@@ -16,7 +16,7 @@
 
     <style name="BaseTheme.Launcher" parent="BaseTheme.Portrait">
         <item name="colorPrimaryDark">#30333333</item>
-        <item name="android:windowBackground">@mipmap/base_default_launcher_background</item>
+        <item name="android:windowBackground">@mipmap/base_default_launcher_bg</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 

@@ -9,7 +9,7 @@ import com.liangmayong.base.basic.flow.FlowBaseFragment;
 
 public class LogcatActivity extends FlowBaseActivity {
     @Override
-    protected FlowBaseFragment getFristFragment() {
+    protected FlowBaseFragment getFirstFragment() {
         return new LogcatFragment().initArguments(getIntent().getExtras());
     }
 }

@@ -6,7 +6,7 @@
 
 
     <FrameLayout
-        android:id="@id/base_flow_fragment"
+        android:id="@id/base_default_flow_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

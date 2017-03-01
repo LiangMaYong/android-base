@@ -1,40 +1,31 @@
 package com.liangmayong.android_base.demo;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.liangmayong.android_base.R;
-import com.liangmayong.base.binding.view.annotations.BindLayout;
-import com.liangmayong.base.binding.view.annotations.BindView;
-import com.liangmayong.base.widget.recyclerbox.item.RecyclerBoxItem;
-import com.liangmayong.base.widget.skinview.SkinButton;
+import com.liangmayong.base.support.adapter.SuperItemView;
 
 /**
  * Created by LiangMaYong on 2016/9/25.
  */
-@BindLayout(R.layout.item2_view)
-public class DemoItem2View extends RecyclerBoxItem<String> {
-
-    @BindView(R.id.tv_txt)
+public class DemoItem2View extends SuperItemView<String> {
     private TextView tv_txt;
-    @BindView(R.id.btn_show)
-    private SkinButton btn_show;
 
     public DemoItem2View(String s) {
         super(s);
     }
 
     @Override
-    protected void onBindView(View itemView, String s) {
+    public View newView(LayoutInflater inflater, ViewGroup parent) {
+        return inflater.from(parent.getContext()).inflate(R.layout.item2_view, parent, false);
+    }
+
+    @Override
+    public void bindView(View view, String s) {
+        tv_txt = (TextView) view.findViewById(R.id.tv_txt);
         tv_txt.setText(s);
-        setClickable(false);
-        if (getOnItemClickListener() != null) {
-            btn_show.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    getOnItemClickListener().onClick(DemoItem2View.this, getPosition(), v);
-                }
-            });
-        }
     }
 }

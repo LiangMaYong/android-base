@@ -1,8 +1,6 @@
 package com.liangmayong.base.binding.view;
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -13,8 +11,7 @@ import com.liangmayong.base.binding.view.annotations.BindOnLongClick;
 import com.liangmayong.base.binding.view.annotations.BindString;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
-import com.liangmayong.base.binding.view.data.ViewData;
-import com.liangmayong.base.support.utils.ThreadPoolUtils;
+import com.liangmayong.base.binding.view.data.ViewBindingData;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -27,45 +24,15 @@ import java.lang.reflect.Method;
  */
 public final class ViewBinding {
 
-    // threadPool
-    private static final ThreadPoolUtils threadPool = new ThreadPoolUtils(ThreadPoolUtils.Type.CachedThread, 5);
-
-    public interface OnViewBindingListener {
-        void onBind(ViewData viewData);
-    }
-
-    // handler
-    private static final Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            MsgHolder holder = (MsgHolder) msg.obj;
-            holder.listener.onBind(holder.data);
-        }
-    };
-
-    private static class MsgHolder {
-        private OnViewBindingListener listener;
-        private ViewData data;
-
-        public MsgHolder(OnViewBindingListener listener, ViewData data) {
-            this.listener = listener;
-            this.data = data;
-        }
-    }
-
     /**
-     * parserClassByView
+     * parserClassByViewOnThread
      *
      * @param obj  obj
      * @param root root View
      */
-    public static void parserClassByViewSync(final Object obj, final View root, final OnViewBindingListener viewBindingListener) {
+    public static ViewBindingData parserClassByView(final Object obj, final View root) {
         if (null == obj || null == root) {
-            if (viewBindingListener != null) {
-                viewBindingListener.onBind(null);
-            }
-            return;
+            return null;
         }
         String titleStr = null;
         Class<?> cl = obj.getClass();
@@ -79,32 +46,10 @@ public final class ViewBinding {
         }
         initFields(cl.getDeclaredFields(), root, obj);
         initMethods(cl.getDeclaredMethods(), root, obj);
-        if (viewBindingListener != null) {
-            ViewData data = new ViewData();
-            data.setTitle(titleStr);
-            viewBindingListener.onBind(data);
-        }
-    }
-
-    /**
-     * parserClassByView
-     *
-     * @param obj                 obj
-     * @param root                root View
-     * @param viewBindingListener runnable
-     */
-    public static void parserClassByView(final Object obj, final View root, final OnViewBindingListener viewBindingListener) {
-        threadPool.execute(new Runnable() {
-            @Override
-            public void run() {
-                parserClassByViewSync(obj, root, new OnViewBindingListener() {
-                    @Override
-                    public void onBind(ViewData data) {
-                        handler.obtainMessage(0, new MsgHolder(viewBindingListener, data)).sendToTarget();
-                    }
-                });
-            }
-        });
+        ViewBindingData data = new ViewBindingData();
+        data.setTitle(titleStr);
+        data.setView(root);
+        return data;
     }
 
     /**
@@ -125,6 +70,10 @@ public final class ViewBinding {
         }
         return root;
     }
+
+    ///////////////////////////////////////////////////////////////////////////
+    //////// Private
+    ///////////////////////////////////////////////////////////////////////////
 
     /**
      * initFields

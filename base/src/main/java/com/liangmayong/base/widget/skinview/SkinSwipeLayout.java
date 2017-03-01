@@ -9,14 +9,13 @@ import android.view.ViewGroup;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.handlers.SkinType;
 import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
-import com.liangmayong.base.widget.refresh.RefreshView;
 import com.liangmayong.base.widget.skinview.interfaces.SkinViewHandler;
 import com.liangmayong.base.widget.skinview.interfaces.SkinViewHandlerInterface;
 
 /**
  * Created by LiangMaYong on 2016/12/7.
  */
-public class SkinSwipeLayout extends SwipeRefreshLayout implements SkinViewHandlerInterface, RefreshView {
+public class SkinSwipeLayout extends SwipeRefreshLayout implements SkinViewHandlerInterface {
 
     private SkinViewHandler handler = null;
     // childView
@@ -60,20 +59,11 @@ public class SkinSwipeLayout extends SwipeRefreshLayout implements SkinViewHandl
         super.setEnabled(enabled);
     }
 
-    @Override
-    public void setOnRefreshListener(final RefreshView.OnRefreshListener listener) {
-        super.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (listener != null) {
-                    listener.onRefresh();
-                } else {
-                    setRefreshing(false);
-                }
-            }
-        });
-    }
-
+    /**
+     * init
+     *
+     * @param attrs attrs
+     */
     private void init(AttributeSet attrs) {
         handler = new SkinViewHandler(this, new SkinViewHandler.OnSkinColorListener() {
             @Override

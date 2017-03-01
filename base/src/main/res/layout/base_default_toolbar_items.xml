@@ -82,6 +82,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="@dimen/base_toolbar_height"
+        android:layout_marginRight="@dimen/base_toolbar_item_margin"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/base_toolbar_height">
 

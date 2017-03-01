@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -285,6 +286,20 @@ public class SegmentView extends LinearLayout {
             int[][] state = {{stateSelected}, {-stateSelected}, {stateFocesed}, {-stateFocesed}};
             ColorStateList colors = new ColorStateList(state, new int[]{selected, color, selected, color});
             setTextColor(colors);
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            if (!isSelected()) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    mBackgroundDrawable.setColor(mUnSelectedBackgroundColors - 0x00111111);
+                    invalidate();
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    mBackgroundDrawable.setColor(mUnSelectedBackgroundColors);
+                    invalidate();
+                }
+            }
+            return super.onTouchEvent(event);
         }
 
         @SuppressWarnings("deprecation")

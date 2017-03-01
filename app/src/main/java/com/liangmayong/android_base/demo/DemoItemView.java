@@ -1,30 +1,32 @@
 package com.liangmayong.android_base.demo;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.liangmayong.android_base.R;
-import com.liangmayong.base.binding.view.annotations.BindLayout;
-import com.liangmayong.base.binding.view.annotations.BindView;
-import com.liangmayong.base.widget.recyclerbox.item.RecyclerBoxItem;
+import com.liangmayong.base.support.adapter.SuperItemView;
 
 /**
  * Created by LiangMaYong on 2016/9/25.
  */
-@BindLayout(R.layout.item_view)
-public class DemoItemView extends RecyclerBoxItem<String> {
-
-    @BindView(R.id.tv_txt)
+public class DemoItemView extends SuperItemView<Integer> {
     private TextView tv_txt;
-    @BindView(R.id.tv_sub_txt)
-    private TextView tv_sub_txt;
 
-    public DemoItemView(String s) {
+    public DemoItemView(Integer s) {
         super(s);
     }
 
     @Override
-    protected void onBindView(View itemView, String s) {
-        tv_txt.setText(s);
+    public View newView(LayoutInflater inflater, ViewGroup parent) {
+        return inflater.inflate(R.layout.item_view, parent, false);
+    }
+
+    @Override
+    public void bindView(View view, Integer s) {
+        tv_txt = (TextView) view.findViewById(R.id.tv_txt);
+        tv_txt.setText(s + "-----------");
     }
 }
+

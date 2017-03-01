@@ -23,10 +23,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.2.1'
     //recyclerview
     compile 'com.android.support:recyclerview-v7:24.2.1'
-    //design
-    compile 'com.android.support:design:24.2.1'
-    //fresco
-    compile 'com.facebook.fresco:fresco:0.14.1'
 }
 apply from: 'https://raw.githubusercontent.com/LiangMaYong/android-gradlepublish/master/library.gradle'
 apply from: 'https://raw.githubusercontent.com/LiangMaYong/android-gradlepublish/master/bintray.gradle'

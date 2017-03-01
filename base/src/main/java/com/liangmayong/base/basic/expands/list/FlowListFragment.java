@@ -1,0 +1,34 @@
+package com.liangmayong.base.basic.expands.list;
+
+import android.view.View;
+import android.widget.ListView;
+
+import com.liangmayong.base.R;
+import com.liangmayong.base.basic.flow.FlowBaseFragment;
+
+/**
+ * Created by LiangMaYong on 2017/3/1.
+ */
+
+public abstract class FlowListFragment extends FlowBaseFragment {
+    // listView
+    private ListView listView = null;
+
+    @Override
+    protected final void initViews(View containerView) {
+        listView = (ListView) containerView.findViewById(R.id.base_default_listview);
+        initListViews(listView);
+    }
+
+    @Override
+    protected int getContaierLayoutId() {
+        return R.layout.base_default_fragment_list;
+    }
+
+    /**
+     * initListViews
+     *
+     * @param listView listView
+     */
+    protected abstract void initListViews(ListView listView);
+}

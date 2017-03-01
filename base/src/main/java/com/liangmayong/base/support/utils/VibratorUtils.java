@@ -13,6 +13,9 @@ import android.os.Vibrator;
 
 public class VibratorUtils {
 
+    private VibratorUtils() {
+    }
+
     public static void vibrate(final Context context, long milliseconds) {
         boolean flag = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

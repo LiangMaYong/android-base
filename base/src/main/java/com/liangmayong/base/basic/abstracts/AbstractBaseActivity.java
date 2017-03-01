@@ -21,7 +21,7 @@ import com.liangmayong.base.binding.mvp.Presenter;
 import com.liangmayong.base.binding.mvp.PresenterBinding;
 import com.liangmayong.base.binding.mvp.PresenterHolder;
 import com.liangmayong.base.binding.view.ViewBinding;
-import com.liangmayong.base.binding.view.data.ViewData;
+import com.liangmayong.base.binding.view.data.ViewBindingData;
 import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
 import com.liangmayong.base.support.skin.SkinManager;
 import com.liangmayong.base.support.skin.interfaces.ISkin;
@@ -59,7 +59,9 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
         inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         SkinManager.registerSkinRefresh(this);
-        presenterHolder = PresenterBinding.bind(this);
+        if (presenterHolder == null) {
+            presenterHolder = PresenterBinding.bind(this);
+        }
         View view = ViewBinding.parserClassByLayout(this, this);
         if (view != null) {
             setContentView(view);
@@ -103,7 +105,10 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     protected void onDestroy() {
         super.onDestroy();
         SkinManager.unregisterSkinRefresh(this);
-        presenterHolder.onDettach();
+        if (presenterHolder != null) {
+            presenterHolder.onDettach();
+            presenterHolder = null;
+        }
     }
 
     @Override
@@ -132,22 +137,18 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
      * callOnCreateAbstract
      */
     private final void callOnCreateAbstract() {
-        ViewBinding.parserClassByViewSync(AbstractBaseActivity.this, getWindow().getDecorView(), new ViewBinding.OnViewBindingListener() {
-            @Override
-            public void onBind(ViewData data) {
-                try {
-                    defaultToolbar = new DefaultToolbar(AbstractBaseActivity.this);
-                    if (data != null) {
-                        defaultToolbar.setTitle(data.getTitle());
-                    }
-                    initDefaultToolbar(defaultToolbar);
-                } catch (Exception e) {
-                    defaultToolbar = null;
-                }
-                onSkinRefresh(SkinManager.get());
-                onCreateAbstract(savedInstanceState);
+        ViewBindingData data = ViewBinding.parserClassByView(AbstractBaseActivity.this, getWindow().getDecorView());
+        try {
+            defaultToolbar = new DefaultToolbar(AbstractBaseActivity.this);
+            if (data != null) {
+                defaultToolbar.setTitle(data.getTitle());
             }
-        });
+            initDefaultToolbar(defaultToolbar);
+        } catch (Exception e) {
+            defaultToolbar = null;
+        }
+        onSkinRefresh(SkinManager.get());
+        onCreateAbstract(savedInstanceState);
     }
 
     @Override

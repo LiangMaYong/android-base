@@ -86,7 +86,7 @@ public final class GeoUtils {
      * @param endPoint   endPoint
      * @return Distance
      */
-    public static double getDistance(Dot startPoint, Dot endPoint) {
+    public static double getDistance(Geo startPoint, Geo endPoint) {
         double mLat1 = startPoint.getLatitude(); // point1 lat
         double mLon1 = startPoint.getLongitude(); // point1 long
         double mLat2 = endPoint.getLatitude(); // point1 lat
@@ -101,15 +101,15 @@ public final class GeoUtils {
      * @param endPoint   endPoint
      * @return Angle
      */
-    public static double getAngle(Dot startPoint, Dot endPoint) {
+    public static double getAngle(Geo startPoint, Geo endPoint) {
         double rotateAngle = 0;
         double slat, slng, elat, elng;
         slat = startPoint.getLatitude();// x
         slng = startPoint.getLongitude();// y
         elat = endPoint.getLatitude();
         elng = endPoint.getLongitude();
-        Dot Lotpoint = new Dot(slat, elng);
-        Dot Latpoint = new Dot(elat, slng);
+        Geo Lotpoint = new Geo(slat, elng);
+        Geo Latpoint = new Geo(elat, slng);
         double x = getDistance(startPoint, Latpoint);// w
         double y = getDistance(startPoint, Lotpoint);// h
         double z = Math.sqrt((Math.pow(x, 2) + Math.pow(y, 2)));
@@ -146,11 +146,11 @@ public final class GeoUtils {
         return rotateAngle;
     }
 
-    public static class Dot {
+    public static class Geo {
         private double longitude;
         private double latitude;
 
-        public Dot(double longitude, double latitude) {
+        public Geo(double longitude, double latitude) {
             this.longitude = longitude;
             this.latitude = latitude;
         }
@@ -187,7 +187,7 @@ public final class GeoUtils {
      * @param geohash geohash
      * @return Dot
      */
-    public static Dot decodeGeoHash(String geohash) {
+    public static Geo decodeGeoHash(String geohash) {
         StringBuilder buffer = new StringBuilder();
         buffer.append(unbase32(geohash));
 
@@ -214,7 +214,7 @@ public final class GeoUtils {
 
         double lon = decodeGeoHash(lonset, -180, 180);
         double lat = decodeGeoHash(latset, -90, 90);
-        return new Dot(lon, lat);
+        return new Geo(lon, lat);
     }
 
     private static double decodeGeoHash(BitSet bs, double floor, double ceiling) {
@@ -253,10 +253,19 @@ public final class GeoUtils {
      * @param point point
      * @return geohash
      */
-    public static String encodeGeoHash(Dot point) {
+    public static String encodeGeoHash(Geo point) {
         return encodeGeoHash(point.longitude, point.latitude);
     }
 
+
+    /**
+     * getBits
+     *
+     * @param lat
+     * @param floor
+     * @param ceiling
+     * @return
+     */
     private static BitSet getBits(double lat, double floor, double ceiling) {
         BitSet buffer = new BitSet(numbits);
         for (int i = 0; i < numbits; i++) {
@@ -271,6 +280,12 @@ public final class GeoUtils {
         return buffer;
     }
 
+    /**
+     * base32
+     *
+     * @param i i
+     * @return
+     */
     private static String base32(long i) {
         char[] buf = new char[65];
         int charPos = 64;
@@ -288,6 +303,12 @@ public final class GeoUtils {
         return new String(buf, charPos, (65 - charPos));
     }
 
+    /**
+     * unbase32
+     *
+     * @param geohash geohash
+     * @return geohash
+     */
     private static String unbase32(String geohash) {
         StringBuilder buffer = new StringBuilder();
         for (char c : geohash.toCharArray()) {

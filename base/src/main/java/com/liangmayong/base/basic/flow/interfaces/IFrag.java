@@ -45,14 +45,4 @@ public interface IFrag {
      */
     void onNewIntent();
 
-    /**
-     * onNowHidden
-     */
-    void onNowHidden();
-
-    /**
-     * onNextShow
-     */
-    void onNextShow();
-
 }

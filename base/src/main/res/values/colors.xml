@@ -11,7 +11,7 @@
 
     <!--base toolbar-->
     <color name="base_toolbar_item_text_color">#ffffff</color>
-    <color name="base_toolbar_item_bg_pre_color">#33333333</color>
+    <color name="base_toolbar_item_bg_pre_color">#20333333</color>
     <color name="base_toolbar_item_bg_nor_color">#00ffffff</color>
     <color name="base_toolbar_progress_nor_color">#00ffffff</color>
     <color name="base_toolbar_progress_pro_color">#90dddddd</color>
@@ -36,9 +36,8 @@
     <color name="base_logcat_defaultTextColor">#FFFFFF</color>
     <color name="base_logcat_defaultConsoleColor">#000000</color>
 
-    <color name="translucent">#00FFFFFF</color>
-
-
     <color name="base_default_navigation_primary">@color/colorPrimary</color>
     <color name="base_default_navigation_normal">#FF676767</color>
+
+    <color name="translucent">#00FFFFFF</color>
 </resources>

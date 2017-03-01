@@ -68,7 +68,7 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
 
     @Override
     protected void initViews(View containerView) {
-        base_web_frame = (FrameLayout) containerView.findViewById(R.id.base_web_frame);
+        base_web_frame = (FrameLayout) containerView.findViewById(R.id.base_default_web_frame);
         abstractsWebKit = new AbstractsWebKit(getActivity());
         abstractsWebKit.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         base_web_frame.addView(abstractsWebKit);
@@ -93,7 +93,7 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
 
     @Override
     protected int getContaierLayoutId() {
-        return R.layout.base_default_fragment_webkit;
+        return R.layout.base_default_fragment_web;
     }
 
     @Override

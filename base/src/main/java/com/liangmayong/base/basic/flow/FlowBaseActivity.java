@@ -9,7 +9,7 @@ import android.view.View;
 import com.liangmayong.base.R;
 import com.liangmayong.base.basic.BaseActivity;
 import com.liangmayong.base.basic.flow.fragments.ErrorFragment;
-import com.liangmayong.base.basic.flow.interfaces.IStack;
+import com.liangmayong.base.basic.flow.interfaces.IFlow;
 import com.liangmayong.base.basic.flow.stack.StackManager;
 
 /**
@@ -18,10 +18,10 @@ import com.liangmayong.base.basic.flow.stack.StackManager;
  * @author LiangMaYong
  * @version 1.0
  */
-public abstract class FlowBaseActivity extends BaseActivity implements IStack {
+public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
 
-    // ERROR_MSG_FRIST_STACK_NULL
-    private static final String ERROR_MSG_FRIST_STACK_NULL = "Frist fragment can't is null\nby Android-Base";
+    // ERROR_MSG_FIRST_STACK_NULL
+    private static final String ERROR_MSG_FIRST_STACK_NULL = "First fragment can't is null\nby Android-Base";
 
     //manager
     private StackManager manager;
@@ -32,7 +32,7 @@ public abstract class FlowBaseActivity extends BaseActivity implements IStack {
     }
 
     @Override
-    public void onFlowFragmentCreateView(FlowBaseFragment fragment, View view) {
+    public void onFlowFragmentViewCreated(FlowBaseFragment fragment, View view) {
     }
 
     @Override
@@ -43,9 +43,9 @@ public abstract class FlowBaseActivity extends BaseActivity implements IStack {
 
     @Override
     protected void onCreateAbstract(@Nullable Bundle savedInstanceState) {
-        FlowBaseFragment fragment = getFristFragment();
+        FlowBaseFragment fragment = getFirstFragment();
         if (fragment == null) {
-            fragment = ErrorFragment.newInstance(ERROR_MSG_FRIST_STACK_NULL);
+            fragment = ErrorFragment.newInstance(ERROR_MSG_FIRST_STACK_NULL);
         }
         fragment.setFrist(true);
         fragment.initArguments(getIntent().getExtras());
@@ -60,7 +60,7 @@ public abstract class FlowBaseActivity extends BaseActivity implements IStack {
      * @return fragment id
      */
     protected int generateContainerFragmentId() {
-        return R.id.base_flow_fragment;
+        return R.id.base_default_flow_frame;
     }
 
     /**
@@ -148,11 +148,11 @@ public abstract class FlowBaseActivity extends BaseActivity implements IStack {
     }
 
     /**
-     * getFristFragment
+     * getFirstFragment
      *
      * @return ftist fragment
      */
-    protected abstract FlowBaseFragment getFristFragment();
+    protected abstract FlowBaseFragment getFirstFragment();
 
     /**
      * get visible fragment

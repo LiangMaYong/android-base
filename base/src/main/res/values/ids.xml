@@ -2,29 +2,24 @@
 <resources>
     <item name="base_default_fragment_content" type="id"/>
 
-    <!-- base_default_activity_drawer.xml -->
-    <item name="base_drawer_layout" type="id"/>
-    <item name="base_drawer_fragment" type="id"/>
-    <item name="base_drawer_navigation_view" type="id"/>
+    <!-- base_default_fragment_recycler.xml-->
+    <item name="base_default_recyclerview" type="id"/>
+    <!-- base_default_fragment_list.xml-->
+    <item name="base_default_listview" type="id"/>
+    <!-- base_default_fragment_web.xml -->
+    <item name="base_default_web_frame" type="id"/>
 
-    <!-- base_default_fragment_recyclerbox_pullll.xml and  base_default_fragment_recyclerbox_swipepe.xml-->
-    <item name="base_refreshLayout" type="id"/>
-    <item name="base_recyclerbox" type="id"/>
-
-    <!-- base_default_fragment_webkit.xml-->
-    <item name="base_web_frame" type="id"/>
-
-    <!-- base_default_item_recyclerbox_viewox_view.xml -->
-    <item name="base_default_adapter_linear" type="id"/>
-    <item name="base_default_adapter_icon" type="id"/>
-    <item name="base_default_adapter_title" type="id"/>
-    <item name="base_default_adapter_sub" type="id"/>
-    <item name="base_default_adapter_right_title" type="id"/>
-    <item name="base_default_adapter_right_sub" type="id"/>
-    <item name="base_default_adapter_arrow" type="id"/>
+    <!-- base_default_super_item.xml -->
+    <item name="base_default_item_linear" type="id"/>
+    <item name="base_default_item_icon" type="id"/>
+    <item name="base_default_item_title" type="id"/>
+    <item name="base_default_item_sub" type="id"/>
+    <item name="base_default_item_right_title" type="id"/>
+    <item name="base_default_item_right_sub" type="id"/>
+    <item name="base_default_item_arrow" type="id"/>
 
     <!-- base_default_flow_activityy.xml -->
-    <item name="base_flow_fragment" type="id"/>
+    <item name="base_default_flow_frame" type="id"/>
 
     <!-- base_default_retry_layout.xml -->
     <item name="base_default_retry_img" type="id"/>
@@ -48,6 +43,6 @@
     <item name="base_default_navigation" type="id"/>
 
     <item name="base_default_logcat" type="id"/>
-    <item name="base_edit_logcat_tag" type="id"/>
-    <item name="base_btn_logcat_set" type="id"/>
+    <item name="base_default_edit_logcat_tag" type="id"/>
+    <item name="base_default_btn_logcat_set" type="id"/>
 </resources>

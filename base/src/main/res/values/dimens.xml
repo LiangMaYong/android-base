@@ -1,8 +1,9 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="base_toolbar_height">48dp</dimen>
-    <dimen name="base_toolbar_item_min_width">40dp</dimen>
-    <dimen name="base_toolbar_item_padding">15dp</dimen>
+    <dimen name="base_toolbar_item_min_width">48dp</dimen>
+    <dimen name="base_toolbar_item_margin">5dp</dimen>
+    <dimen name="base_toolbar_item_padding">5dp</dimen>
     <dimen name="base_toolbar_item_text_size">18sp</dimen>
     <dimen name="base_toolbar_title_size">18sp</dimen>
     <dimen name="base_toolbar_subtitle_size">14sp</dimen>
