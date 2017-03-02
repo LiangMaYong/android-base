@@ -50,7 +50,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     private ExitActivityTransition activityTransition = null;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.savedInstanceState = savedInstanceState;
         if (shouldFixbug5497Workaround()) {
@@ -62,10 +62,11 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
         if (presenterHolder == null) {
             presenterHolder = PresenterBinding.bind(this);
         }
-        View view = ViewBinding.parserClassByLayout(this, this);
+        View view = ViewBinding.parserClassByLayout(AbstractBaseActivity.this, AbstractBaseActivity.this);
         if (view != null) {
             setContentView(view);
         }
+        onCreateOverride(savedInstanceState);
     }
 
     /**
@@ -99,7 +100,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
         }
     }
 
-    protected abstract void onCreateAbstract(@Nullable Bundle savedInstanceState);
+    protected abstract void onCreateOverride(@Nullable Bundle savedInstanceState);
 
     @Override
     protected void onDestroy() {
@@ -134,9 +135,9 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     }
 
     /**
-     * callOnCreateAbstract
+     * callOnRebindingView
      */
-    private final void callOnCreateAbstract() {
+    private final void callOnRebindingView() {
         ViewBindingData data = ViewBinding.parserClassByView(AbstractBaseActivity.this, getWindow().getDecorView());
         try {
             defaultToolbar = new DefaultToolbar(AbstractBaseActivity.this);
@@ -148,26 +149,25 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
             defaultToolbar = null;
         }
         onSkinRefresh(SkinManager.get());
-        onCreateAbstract(savedInstanceState);
     }
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
         super.setContentView(layoutResID);
-        callOnCreateAbstract();
+        callOnRebindingView();
     }
 
 
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        callOnCreateAbstract();
+        callOnRebindingView();
     }
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         super.setContentView(view, params);
-        callOnCreateAbstract();
+        callOnRebindingView();
     }
 
     protected boolean shouldFixbug5497Workaround() {

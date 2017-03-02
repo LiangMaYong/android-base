@@ -17,7 +17,7 @@ This is android base.
 
 @BindString -> String
 
-@BindP -> Presenter
+@BindPresenter -> Presenter
 
 ## BindView Plugins
 

@@ -517,10 +517,8 @@ public class DefaultToolbar {
             }
             getMessageView().setTextColor(textColor);
             getMessageView().setBackgroundColor(backgroundColor);
-            if (!isShow) {
-                _visible();
-                getMessageView().startAnimation(mMessageShowAnimation);
-            }
+            _visible();
+            getMessageView().startAnimation(mMessageShowAnimation);
             handler.removeCallbacks(hideRun);
             if (duration != -1) {
                 handler.postDelayed(hideRun, duration < 1000 ? 1000 : duration);

@@ -36,13 +36,8 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
     }
 
     @Override
-    protected final void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreateOverride(@Nullable Bundle savedInstanceState) {
         generateContainerView();
-    }
-
-    @Override
-    protected void onCreateAbstract(@Nullable Bundle savedInstanceState) {
         FlowBaseFragment fragment = getFirstFragment();
         if (fragment == null) {
             fragment = ErrorFragment.newInstance(ERROR_MSG_FIRST_STACK_NULL);

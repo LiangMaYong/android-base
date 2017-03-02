@@ -217,7 +217,7 @@ public final class Airing {
         if (isDebugable()) {
             Log.d(TAG, "send Airing:" + newAction + " extras:" + bundle);
         }
-        getApplication().sendBroadcast(intent);
+        getApplication().sendBroadcast(intent, getApplication().getPackageName() + ".permission.AIRING_RECEIVER");
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

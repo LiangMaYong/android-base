@@ -65,6 +65,7 @@ public class Presenter<V> {
      * @param throwable throwable
      */
     protected void handleThrowable(Throwable throwable) {
+        throwable.printStackTrace();
     }
 
     /**
@@ -72,17 +73,6 @@ public class Presenter<V> {
      */
     public void onDettach() {
         isAttached = false;
-    }
-
-    /**
-     * callback
-     *
-     * @param run run
-     */
-    protected void callback(Runnable run) {
-        if (isAttached() && run != null) {
-            run.run();
-        }
     }
 }
 

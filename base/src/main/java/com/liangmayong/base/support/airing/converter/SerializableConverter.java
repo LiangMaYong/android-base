@@ -24,6 +24,9 @@ public class SerializableConverter implements AiringConverter {
 
     @Override
     public Object toEvent(Bundle extras) {
+        if (extras == null) {
+            return null;
+        }
         String type = extras.containsKey(AIRING_OBJ_TYPE_EXTRA) ? extras.getString(AIRING_OBJ_TYPE_EXTRA) : "";
         if (getType().equals(type)) {
             try {

@@ -15,6 +15,8 @@ import com.liangmayong.base.binding.view.data.ViewBindingData;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * ViewBinding

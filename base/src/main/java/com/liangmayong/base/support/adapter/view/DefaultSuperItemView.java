@@ -13,9 +13,9 @@ import com.liangmayong.base.support.adapter.SuperItemView;
 /**
  * Created by LiangMaYong on 2017/3/1.
  */
-public class DefaultSuperItemView extends SuperItemView<DefaultSuperItemView.DefaultSuperItemData> {
+public class DefaultSuperItemView extends SuperItemView<DefaultSuperItemView.Data> {
 
-    public DefaultSuperItemView(DefaultSuperItemData superDefaultData) {
+    public DefaultSuperItemView(Data superDefaultData) {
         super(superDefaultData);
     }
 
@@ -25,7 +25,7 @@ public class DefaultSuperItemView extends SuperItemView<DefaultSuperItemView.Def
     }
 
     @Override
-    protected void bindView(View itemView, DefaultSuperItemData defaultData) {
+    protected void bindView(View itemView, Data defaultData) {
         ViewHolder holder = new ViewHolder(itemView);
         holder.base_default_item_title.setText(defaultData.getTitle());
         if (defaultData.getSub() != null) {
@@ -87,7 +87,7 @@ public class DefaultSuperItemView extends SuperItemView<DefaultSuperItemView.Def
     /**
      * Created by LiangMaYong on 2016/11/7.
      */
-    public static final class DefaultSuperItemData {
+    public static final class Data {
         private String title;
         private String sub;
         private Object tag;
@@ -96,39 +96,43 @@ public class DefaultSuperItemView extends SuperItemView<DefaultSuperItemView.Def
         private boolean showArrow = false;
         private int iconRes = 0;
 
-        public DefaultSuperItemData(String title, String sub) {
+        public Data(String title) {
+            this.title = title;
+        }
+
+        public Data(String title, String sub) {
             this.title = title;
             this.sub = sub;
         }
 
-        public DefaultSuperItemData(String title, String sub, String content, String content_sub) {
+        public Data(String title, String sub, String content, String content_sub) {
             this.title = title;
             this.sub = sub;
             this.content = content;
             this.contentSub = content_sub;
         }
 
-        public DefaultSuperItemData setTitle(String title) {
+        public Data setTitle(String title) {
             this.title = title;
             return this;
         }
 
-        public DefaultSuperItemData setSub(String sub) {
+        public Data setSub(String sub) {
             this.sub = sub;
             return this;
         }
 
-        public DefaultSuperItemData setContent(String content) {
+        public Data setContent(String content) {
             this.content = content;
             return this;
         }
 
-        public DefaultSuperItemData setContentSub(String content_sub) {
+        public Data setContentSub(String content_sub) {
             this.contentSub = content_sub;
             return this;
         }
 
-        public DefaultSuperItemData setShowArrow(boolean showArrow) {
+        public Data setShowArrow(boolean showArrow) {
             this.showArrow = showArrow;
             return this;
         }

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.liangmayong.base.basic.BaseActivity;
+import com.liangmayong.base.binding.mvp.annotations.BindPresenter;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
@@ -30,7 +31,7 @@ public class ImageViewActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreateAbstract(@Nullable Bundle savedInstanceState) {
+    protected void onCreateOverride(@Nullable Bundle savedInstanceState) {
         imgview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,7 +1,5 @@
 package com.liangmayong.android_base.demo;
 
-import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -10,11 +8,11 @@ import com.liangmayong.base.basic.expands.list.FlowListFragment;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.support.adapter.SuperListAdapter;
+import com.liangmayong.base.support.adapter.view.DefaultSuperItemView;
+import com.liangmayong.base.support.airing.Airing;
+import com.liangmayong.base.support.airing.AiringContent;
+import com.liangmayong.base.support.airing.OnAiringListener;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
-
-import java.io.File;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Created by LiangMaYong on 2016/10/17.
@@ -33,10 +31,18 @@ public class DemoListFrag extends FlowListFragment {
         listView.setAdapter(listAdapter);
         listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
         listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
+        listAdapter.add(new DefaultSuperItemView(new DefaultSuperItemView.Data("Title")));
         listAdapter.add(new DemoItemView(3));
         listAdapter.add(new DemoItemView(4));
         listAdapter.add(new DemoItemView(5));
         listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
+        Airing.getDefault().observer(this).register("add", new OnAiringListener() {
+            @Override
+            public void onAiring(AiringContent content) {
+                showToast("onAiring");
+            }
+        });
+        Airing.getDefault().sender("add").postEmtpyToTarget();
     }
 
     @Override
