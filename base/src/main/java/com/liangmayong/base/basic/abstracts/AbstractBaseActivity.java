@@ -62,11 +62,10 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
         if (presenterHolder == null) {
             presenterHolder = PresenterBinding.bind(this);
         }
-        View view = ViewBinding.parserClassByLayout(AbstractBaseActivity.this, AbstractBaseActivity.this);
+        View view = ViewBinding.parserClassByLayout(AbstractBaseActivity.this, (ViewGroup) getWindow().getDecorView());
         if (view != null) {
             setContentView(view);
         }
-        onCreateOverride(savedInstanceState);
     }
 
     /**
@@ -99,8 +98,6 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
             super.onBackPressed();
         }
     }
-
-    protected abstract void onCreateOverride(@Nullable Bundle savedInstanceState);
 
     @Override
     protected void onDestroy() {
@@ -138,13 +135,13 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
      * callOnRebindingView
      */
     private final void callOnRebindingView() {
-        ViewBindingData data = ViewBinding.parserClassByView(AbstractBaseActivity.this, getWindow().getDecorView());
+        final ViewBindingData data = ViewBinding.parserClassByView(AbstractBaseActivity.this, getWindow().getDecorView());
         try {
             defaultToolbar = new DefaultToolbar(AbstractBaseActivity.this);
             if (data != null) {
                 defaultToolbar.setTitle(data.getTitle());
             }
-            initDefaultToolbar(defaultToolbar);
+            onInitDefaultToolbar(defaultToolbar);
         } catch (Exception e) {
             defaultToolbar = null;
         }
@@ -184,7 +181,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void initDefaultToolbar(DefaultToolbar defaultToolbar) {
+    public void onInitDefaultToolbar(DefaultToolbar defaultToolbar) {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -269,11 +266,6 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     @Override
     public void goTo(Class<? extends Activity> cls, Bundle extras) {
         GoToUtils.goTo(this, cls, extras);
-    }
-
-    @Override
-    public void goTo(String title, String url) {
-        GoToUtils.goTo(this, title, url);
     }
 
     @Override

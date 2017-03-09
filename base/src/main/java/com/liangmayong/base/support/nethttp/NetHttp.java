@@ -5,7 +5,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * HttpUtils
+ * NetHttp
  *
  * @author LiangMaYong
  * @version 1.0

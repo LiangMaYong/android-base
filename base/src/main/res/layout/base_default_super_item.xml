@@ -76,6 +76,6 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/base_default_item_arrow"/>
+            android:src="@mipmap/base_default_ic_item_arrow"/>
     </LinearLayout>
 </RelativeLayout>

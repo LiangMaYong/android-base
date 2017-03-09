@@ -137,8 +137,14 @@ public class DefaultSuperItemView extends SuperItemView<DefaultSuperItemView.Dat
             return this;
         }
 
-        public void setIconRes(int iconRes) {
+        public Data setIconRes(int iconRes) {
             this.iconRes = iconRes;
+            return this;
+        }
+
+        public Data setTag(Object tag) {
+            this.tag = tag;
+            return this;
         }
 
         public int getIconRes() {
@@ -167,10 +173,6 @@ public class DefaultSuperItemView extends SuperItemView<DefaultSuperItemView.Dat
 
         public Object getTag() {
             return tag;
-        }
-
-        public void setTag(Object tag) {
-            this.tag = tag;
         }
 
         @Override

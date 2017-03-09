@@ -2,6 +2,7 @@
 <resources>
     <item name="base_default_fragment_content" type="id"/>
 
+    <item name="base_default_swipe_layout" type="id"/>
     <!-- base_default_fragment_recycler.xml-->
     <item name="base_default_recyclerview" type="id"/>
     <!-- base_default_fragment_list.xml-->

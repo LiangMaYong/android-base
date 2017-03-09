@@ -68,7 +68,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
             if (getContaierLayoutId() > 0) {
                 view = inflater.inflate(getContaierLayoutId(), container, false);
             } else {
-                view = ViewBinding.parserClassByLayout(this, inflater.getContext());
+                view = ViewBinding.parserClassByLayout(this, container);
             }
         }
         long end_time = System.currentTimeMillis();
@@ -91,7 +91,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
             if (data != null) {
                 defaultToolbar.setTitle(data.getTitle());
             }
-            initDefaultToolbar(defaultToolbar);
+            onInitDefaultToolbar(defaultToolbar);
         } catch (Exception e) {
             defaultToolbar = null;
         }
@@ -171,7 +171,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
     }
 
     @Override
-    public void initDefaultToolbar(DefaultToolbar defaultToolbar) {
+    public void onInitDefaultToolbar(DefaultToolbar defaultToolbar) {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -213,11 +213,6 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
     @Override
     public void goTo(Class<? extends Activity> cls, Bundle extras) {
         GoToUtils.goTo(getActivity(), cls, extras);
-    }
-
-    @Override
-    public void goTo(String title, String url) {
-        GoToUtils.goTo(getActivity(), title, url);
     }
 
     @Override

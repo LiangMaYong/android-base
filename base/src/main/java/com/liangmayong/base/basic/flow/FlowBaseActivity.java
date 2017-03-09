@@ -32,20 +32,17 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
     }
 
     @Override
-    public void onFlowFragmentViewCreated(FlowBaseFragment fragment, View view) {
-    }
-
-    @Override
-    protected void onCreateOverride(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         generateContainerView();
         FlowBaseFragment fragment = getFirstFragment();
         if (fragment == null) {
             fragment = ErrorFragment.newInstance(ERROR_MSG_FIRST_STACK_NULL);
+        } else {
+            fragment.initArguments(getIntent().getExtras());
         }
-        fragment.setFrist(true);
-        fragment.initArguments(getIntent().getExtras());
-        manager = new StackManager(this, generateContainerFragmentId());
-        manager.setFragment(fragment);
+        manager = new StackManager(this, getSupportFragmentManager(), generateContainerFragmentId());
+        manager.setFirstFragment(fragment);
         onConfigFlowFragmentAnims();
     }
 
@@ -93,8 +90,8 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (getVisibleFragment() != null) {
-            boolean flag = getVisibleFragment().onTouchEvent(event);
+        if (getLastFragment() != null) {
+            boolean flag = getLastFragment().onTouchEvent(event);
             if (flag) {
                 return true;
             } else {
@@ -106,8 +103,8 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if (getVisibleFragment() != null) {
-            return getVisibleFragment().onKeyUp(keyCode, event);
+        if (getLastFragment() != null) {
+            return getLastFragment().onKeyUp(keyCode, event);
         }
         return super.onKeyUp(keyCode, event);
     }
@@ -116,8 +113,8 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
     public final boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
-                if (getVisibleFragment() != null) {
-                    boolean flag = getVisibleFragment().onKeyDown(keyCode, event);
+                if (getLastFragment() != null) {
+                    boolean flag = getLastFragment().onKeyDown(keyCode, event);
                     if (!flag) {
                         if (manager != null) {
                             manager.onBackPressed();
@@ -134,8 +131,8 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
                 }
                 return true;
             default:
-                if (getVisibleFragment() != null) {
-                    return getVisibleFragment().onKeyDown(keyCode, event);
+                if (getLastFragment() != null) {
+                    return getLastFragment().onKeyDown(keyCode, event);
                 }
                 break;
         }
@@ -155,7 +152,7 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
      * @return visible fragment
      */
     @Override
-    public final FlowBaseFragment getVisibleFragment() {
+    public final FlowBaseFragment getLastFragment() {
         if (manager != null) {
             return manager.getVisibleFragment();
         }

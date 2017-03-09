@@ -36,7 +36,7 @@ public interface IBasic extends OnSkinRefreshListener, AndroidBug5497Workaround.
      *
      * @param defaultToolbar defaultToolbar
      */
-    void initDefaultToolbar(DefaultToolbar defaultToolbar);
+    void onInitDefaultToolbar(DefaultToolbar defaultToolbar);
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,14 +91,6 @@ public interface IBasic extends OnSkinRefreshListener, AndroidBug5497Workaround.
      * @param extras extras
      */
     void goTo(Class<? extends Activity> cls, Bundle extras);
-
-    /**
-     * goTo
-     *
-     * @param title title
-     * @param url   url
-     */
-    void goTo(String title, String url);
 
     /**
      * goToForResult

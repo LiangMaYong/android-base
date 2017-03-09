@@ -1,7 +1,6 @@
 package com.liangmayong.android_base;
 
 import com.liangmayong.android_base.demo.DemoListFrag;
-import com.liangmayong.android_base.demo.StackF;
 import com.liangmayong.base.basic.flow.FlowBaseActivity;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
@@ -18,7 +17,7 @@ public class TestActivity extends FlowBaseActivity {
     @Override
     protected FlowBaseFragment getFirstFragment() {
         SkinManager.editor().setThemeColor(0xFF3399FF, 0xFFFFFFFF).commit();
-        return new StackF();
+        return new DemoListFrag();
     }
 
 }

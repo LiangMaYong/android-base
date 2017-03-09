@@ -55,14 +55,14 @@ public class StackF extends FlowBaseFragment {
         btn_test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goTo("", "file:///android_asset/demo.html");
+                GoToUtils.goWeb(getActivity(), "", "file:///android_asset/demo.html");
             }
         });
     }
 
     @Override
-    public void initDefaultToolbar(DefaultToolbar defaultToolbar) {
-        super.initDefaultToolbar(defaultToolbar);
+    public void onInitDefaultToolbar(DefaultToolbar defaultToolbar) {
+        super.onInitDefaultToolbar(defaultToolbar);
         defaultToolbar.rightTwo().icon(IconFont.base_icon_circle_yes).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

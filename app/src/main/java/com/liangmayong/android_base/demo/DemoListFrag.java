@@ -1,17 +1,16 @@
 package com.liangmayong.android_base.demo;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 
 import com.liangmayong.android_base.R;
-import com.liangmayong.base.basic.expands.list.FlowListFragment;
+import com.liangmayong.base.basic.expands.recycler.FlowRecyclerFragment;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.support.adapter.SuperListAdapter;
+import com.liangmayong.base.support.adapter.SuperRecyclerAdapter;
 import com.liangmayong.base.support.adapter.view.DefaultSuperItemView;
-import com.liangmayong.base.support.airing.Airing;
-import com.liangmayong.base.support.airing.AiringContent;
-import com.liangmayong.base.support.airing.OnAiringListener;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 
 /**
@@ -19,16 +18,18 @@ import com.liangmayong.base.support.toolbar.DefaultToolbar;
  */
 @BindLayout(R.layout.activity_item2)
 @BindTitle("标题")
-public class DemoListFrag extends FlowListFragment {
+public class DemoListFrag extends FlowRecyclerFragment {
 
-    private SuperListAdapter listAdapter = null;
+    private SuperRecyclerAdapter listAdapter = null;
 
     @Override
-    protected void initListViews(ListView listView) {
-        listAdapter = new SuperListAdapter();
+    protected void initRecyclerViews(RecyclerView recyclerView) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        listAdapter = new SuperRecyclerAdapter();
+        listAdapter.setReverse(true);
         listAdapter.add(new DemoItem2View("111111111111111111111"));
         listAdapter.add(new DemoItemView(1));
-        listView.setAdapter(listAdapter);
+        recyclerView.setAdapter(listAdapter);
         listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
         listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
         listAdapter.add(new DefaultSuperItemView(new DefaultSuperItemView.Data("Title")));
@@ -36,18 +37,11 @@ public class DemoListFrag extends FlowListFragment {
         listAdapter.add(new DemoItemView(4));
         listAdapter.add(new DemoItemView(5));
         listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
-        Airing.getDefault().observer(this).register("add", new OnAiringListener() {
-            @Override
-            public void onAiring(AiringContent content) {
-                showToast("onAiring");
-            }
-        });
-        Airing.getDefault().sender("add").postEmtpyToTarget();
     }
 
     @Override
-    public void initDefaultToolbar(DefaultToolbar defaultToolbar) {
-        super.initDefaultToolbar(defaultToolbar);
+    public void onInitDefaultToolbar(DefaultToolbar defaultToolbar) {
+        super.onInitDefaultToolbar(defaultToolbar);
         defaultToolbar.rightOne().text("ADD").click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

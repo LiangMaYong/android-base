@@ -396,6 +396,42 @@ public class DefaultToolbar {
     }
 
     /**
+     * getLayout
+     *
+     * @return toolbar_layout
+     */
+    public RelativeLayout getLayout() {
+        return toolbar_layout;
+    }
+
+    /**
+     * getTitleView
+     *
+     * @return toolbar_title
+     */
+    public TextView getTitleView() {
+        return toolbar_title;
+    }
+
+    /**
+     * getSubTitleView
+     *
+     * @return toolbar_subtitle
+     */
+    public TextView getSubTitleView() {
+        return toolbar_subtitle;
+    }
+
+    /**
+     * getProgressView
+     *
+     * @return toolbar_progress
+     */
+    public ProgressBar getProgressView() {
+        return toolbar_progress;
+    }
+
+    /**
      * ToolMessage
      */
     public class ToolMessage {

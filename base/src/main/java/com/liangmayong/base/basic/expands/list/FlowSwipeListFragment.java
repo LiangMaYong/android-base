@@ -1,5 +1,6 @@
 package com.liangmayong.base.basic.expands.list;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ListView;
 
@@ -10,19 +11,21 @@ import com.liangmayong.base.basic.flow.FlowBaseFragment;
  * Created by LiangMaYong on 2017/3/1.
  */
 
-public abstract class FlowListFragment extends FlowBaseFragment {
+public abstract class FlowSwipeListFragment extends FlowBaseFragment {
     // listView
     private ListView listView = null;
+    private SwipeRefreshLayout swipeLayout = null;
 
     @Override
     protected final void initViews(View containerView) {
         listView = (ListView) containerView.findViewById(R.id.base_default_listview);
-        initListViews(listView);
+        swipeLayout = (SwipeRefreshLayout) containerView.findViewById(R.id.base_default_swipe_layout);
+        initListViews(swipeLayout, listView);
     }
 
     @Override
     protected int getContaierLayoutId() {
-        return R.layout.base_default_fragment_list;
+        return R.layout.base_default_fragment_list_swipe;
     }
 
     /**
@@ -30,7 +33,7 @@ public abstract class FlowListFragment extends FlowBaseFragment {
      *
      * @param listView listView
      */
-    protected abstract void initListViews(ListView listView);
+    protected abstract void initListViews(SwipeRefreshLayout swipeLayout, ListView listView);
 
     /**
      * getListView
@@ -39,5 +42,14 @@ public abstract class FlowListFragment extends FlowBaseFragment {
      */
     public ListView getListView() {
         return listView;
+    }
+
+    /**
+     * getSwipeLayout
+     *
+     * @return swipeLayout
+     */
+    public SwipeRefreshLayout getSwipeLayout() {
+        return swipeLayout;
     }
 }

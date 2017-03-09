@@ -57,8 +57,8 @@ public class LogcatFragment extends FlowBaseFragment {
     }
 
     @Override
-    public void initDefaultToolbar(DefaultToolbar defaultToolbar) {
-        super.initDefaultToolbar(defaultToolbar);
+    public void onInitDefaultToolbar(DefaultToolbar defaultToolbar) {
+        super.onInitDefaultToolbar(defaultToolbar);
         defaultToolbar.rightOne().icon(IconFont.base_icon_delete).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

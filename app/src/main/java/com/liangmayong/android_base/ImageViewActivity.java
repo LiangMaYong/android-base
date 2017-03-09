@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.liangmayong.base.basic.BaseActivity;
-import com.liangmayong.base.binding.mvp.annotations.BindPresenter;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
@@ -28,10 +27,6 @@ public class ImageViewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         transitionStart(findViewById(R.id.imgview), null);
-    }
-
-    @Override
-    protected void onCreateOverride(@Nullable Bundle savedInstanceState) {
         imgview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,8 +36,8 @@ public class ImageViewActivity extends BaseActivity {
     }
 
     @Override
-    public void initDefaultToolbar(DefaultToolbar defaultToolbar) {
-        super.initDefaultToolbar(defaultToolbar);
+    public void onInitDefaultToolbar(DefaultToolbar defaultToolbar) {
+        super.onInitDefaultToolbar(defaultToolbar);
         defaultToolbar.leftOne().icon(IconFont.base_icon_back).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

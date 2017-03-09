@@ -67,6 +67,21 @@ public interface ISuperAdapter {
     void replaceItems(List<SuperItemView<?>> items);
 
     /**
+     * getItems
+     *
+     * @return get items
+     */
+    List<SuperItemView<?>> getItems();
+
+    /**
+     * contains
+     *
+     * @param item item
+     * @return contains
+     */
+    boolean contains(SuperItemView<?> item);
+
+    /**
      * notifyItemChanged
      *
      * @param position position

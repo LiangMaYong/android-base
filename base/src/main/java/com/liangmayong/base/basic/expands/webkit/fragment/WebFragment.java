@@ -97,7 +97,7 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
     }
 
     @Override
-    public void initDefaultToolbar(DefaultToolbar defaultToolbar) {
+    public void onInitDefaultToolbar(DefaultToolbar defaultToolbar) {
         defaultToolbar.leftOne().icon(IconFont.base_icon_back).click(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -241,7 +241,6 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
     protected List<AbstractsWebkitLoadingInterceptor> generateLoadingInterceptors() {
         List<AbstractsWebkitLoadingInterceptor> interceptors = new ArrayList<AbstractsWebkitLoadingInterceptor>();
         interceptors.add(new AbstractsWebkitLoadingInterceptor("action:") {
-
             @Override
             public boolean interceptorUrlLoading(AbstractsWebKit web, UrlParam url) {
                 if ("finish".equals(url.getContent())) {

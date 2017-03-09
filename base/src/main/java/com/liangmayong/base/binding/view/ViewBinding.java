@@ -1,8 +1,8 @@
 package com.liangmayong.base.binding.view;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.liangmayong.base.binding.view.annotations.BindColor;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
@@ -15,8 +15,6 @@ import com.liangmayong.base.binding.view.data.ViewBindingData;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * ViewBinding
@@ -57,18 +55,18 @@ public final class ViewBinding {
     /**
      * parserClassByLayout
      *
-     * @param obj     obj
-     * @param context context
+     * @param obj        obj
+     * @param parentView parentView
      * @return view
      */
-    public static View parserClassByLayout(Object obj, Context context) {
-        if (null == obj || null == context)
+    public static View parserClassByLayout(Object obj, ViewGroup parentView) {
+        if (null == obj || null == parentView)
             return null;
         Class<?> cl = obj.getClass();
         View root = null;
         if (isLayout(cl)) {
             BindLayout layout = cl.getAnnotation(BindLayout.class);
-            root = LayoutInflater.from(context).inflate(layout.value(), null);
+            root = LayoutInflater.from(parentView.getContext()).inflate(layout.value(), parentView, false);
         }
         return root;
     }

@@ -1,6 +1,5 @@
 package com.liangmayong.base.basic.flow.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,10 +25,10 @@ public class ErrorFragment extends FlowBaseFragment {
      * @param error error
      * @return FlowLogcatFragment
      */
-    public static ErrorFragment newInstance(String error) {
+    public static FlowBaseFragment newInstance(String error) {
         Bundle extras = new Bundle();
         extras.putString(ErrorFragment.EXTRA_ERROR_TAG, error);
-        return (ErrorFragment) new ErrorFragment().initArguments(extras);
+        return new ErrorFragment().initArguments(extras);
     }
 
     private String error = "";

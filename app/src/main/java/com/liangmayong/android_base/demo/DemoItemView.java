@@ -1,17 +1,19 @@
 package com.liangmayong.android_base.demo;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.liangmayong.android_base.R;
-import com.liangmayong.base.support.adapter.SuperItemView;
+import com.liangmayong.base.binding.view.annotations.BindLayout;
+import com.liangmayong.base.binding.view.annotations.BindView;
+import com.liangmayong.base.support.adapter.view.BindingSuperItemView;
 
 /**
  * Created by LiangMaYong on 2016/9/25.
  */
-public class DemoItemView extends SuperItemView<Integer> {
+@BindLayout(R.layout.item_view)
+public class DemoItemView extends BindingSuperItemView<Integer> {
+    @BindView(R.id.tv_txt)
     private TextView tv_txt;
 
     public DemoItemView(Integer s) {
@@ -19,14 +21,8 @@ public class DemoItemView extends SuperItemView<Integer> {
     }
 
     @Override
-    public View newView(LayoutInflater inflater, ViewGroup parent) {
-        return inflater.inflate(R.layout.item_view, parent, false);
-    }
-
-    @Override
-    public void bindView(View view, Integer s) {
-        tv_txt = (TextView) view.findViewById(R.id.tv_txt);
-        tv_txt.setText(s + "-----------");
+    protected void onBindView(View itemView, Integer integer) {
+        tv_txt.setText(integer + "-----------");
     }
 }
 

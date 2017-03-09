@@ -23,6 +23,15 @@ public class SuperRecyclerAdapter extends RecyclerView.Adapter<SuperRecyclerAdap
     private final Map<Integer, Integer> viewtypeSizes = new HashMap<Integer, Integer>();
     // viewtypePositions
     private final Map<Integer, LinkedList<Integer>> viewtypePositions = new HashMap<Integer, LinkedList<Integer>>();
+    private boolean reverse = false;
+
+    public boolean isReverse() {
+        return reverse;
+    }
+
+    public void setReverse(boolean reverse) {
+        this.reverse = reverse;
+    }
 
     @Override
     public final ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -76,6 +85,9 @@ public class SuperRecyclerAdapter extends RecyclerView.Adapter<SuperRecyclerAdap
      * @return item
      */
     public SuperItemView<?> getItem(int position) {
+        if (isReverse()) {
+            return items.get(items.size() - position - 1);
+        }
         return items.get(position);
     }
 
@@ -142,6 +154,16 @@ public class SuperRecyclerAdapter extends RecyclerView.Adapter<SuperRecyclerAdap
     public void replaceItems(List<SuperItemView<?>> items) {
         this.items.removeAll(this.items);
         this.items.addAll(items);
+    }
+
+    @Override
+    public List<SuperItemView<?>> getItems() {
+        return items;
+    }
+
+    @Override
+    public boolean contains(SuperItemView<?> item) {
+        return items.contains(item);
     }
 
     /**

@@ -15,19 +15,11 @@ import com.liangmayong.base.basic.flow.stack.StackManager;
 public interface IFlow {
 
     /**
-     * onFlowFragmentViewCreated
-     *
-     * @param fragment fragment
-     * @param view     view
-     */
-    void onFlowFragmentViewCreated(FlowBaseFragment fragment, View view);
-
-    /**
-     * getVisibleFragment
+     * getLastFragment
      *
      * @return visible
      */
-    FlowBaseFragment getVisibleFragment();
+    FlowBaseFragment getLastFragment();
 
     /**
      * set anim

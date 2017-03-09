@@ -21,6 +21,15 @@ public class SuperListAdapter extends BaseAdapter implements ISuperAdapter {
     private AbsListView listView = null;
     private final List<SuperItemView<?>> items = new ArrayList<SuperItemView<?>>();
     private Map<String, List<View>> recyclerViewTypeMap = new HashMap<String, List<View>>();
+    private boolean reverse = false;
+
+    public boolean isReverse() {
+        return reverse;
+    }
+
+    public void setReverse(boolean reverse) {
+        this.reverse = reverse;
+    }
 
     @Override
     public final int getCount() {
@@ -29,6 +38,9 @@ public class SuperListAdapter extends BaseAdapter implements ISuperAdapter {
 
     @Override
     public final SuperItemView<?> getItem(int position) {
+        if (isReverse()) {
+            return items.get(items.size() - position - 1);
+        }
         return items.get(position);
     }
 
@@ -45,7 +57,7 @@ public class SuperListAdapter extends BaseAdapter implements ISuperAdapter {
         SuperItemView<?> item = getItem(position);
         convertView = getRecyclerTypeView(item.getViewType());
         if (convertView == null) {
-            convertView = item.callNewView(this, position,parent);
+            convertView = item.callNewView(this, position, parent);
             if (recyclerViewTypeMap.containsKey(item.getViewType())) {
                 recyclerViewTypeMap.get(item.getViewType()).add(convertView);
             } else {
@@ -191,4 +203,13 @@ public class SuperListAdapter extends BaseAdapter implements ISuperAdapter {
         this.items.addAll(items);
     }
 
+    @Override
+    public List<SuperItemView<?>> getItems() {
+        return items;
+    }
+
+    @Override
+    public boolean contains(SuperItemView<?> item) {
+        return items.contains(item);
+    }
 }

@@ -1,8 +1,6 @@
 package com.liangmayong.base.basic.flow;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,23 +19,9 @@ import com.liangmayong.base.widget.iconfont.IconFont;
  */
 public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
 
-    public static final int STANDARD = StackManager.STANDARD;
-    public static final int SINGLE_TOP = StackManager.SINGLE_TOP;
-    public static final int SINGLE_TASK = StackManager.SINGLE_TASK;
-    public static final int SINGLE_INSTANCE = StackManager.SINGLE_INSTANCE;
-    public static final int KEEP_CURRENT = StackManager.KEEP_CURRENT;
+    public static final int STACK_STANDARD = StackManager.STACK_STANDARD;
+    public static final int STACK_SINGLE_INSTANCE = StackManager.STACK_SINGLE_INSTANCE;
     private FlowBaseActivity activity;
-    private boolean isClose = false;
-    private boolean isFrist = false;
-    private boolean isShow = false;
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        getFlowActivity().onFlowFragmentViewCreated(this, view);
-        isClose = false;
-        isShow = true;
-        super.onViewCreated(view, savedInstanceState);
-    }
 
     @Override
     public FlowBaseFragment initArguments(Bundle extras) {
@@ -45,8 +29,8 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
     }
 
     @Override
-    public void initDefaultToolbar(DefaultToolbar defaultToolbar) {
-        super.initDefaultToolbar(defaultToolbar);
+    public void onInitDefaultToolbar(DefaultToolbar defaultToolbar) {
+        super.onInitDefaultToolbar(defaultToolbar);
         defaultToolbar.leftOne().icon(IconFont.base_icon_back).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +45,7 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
      * @param fragment fragment
      */
     public void open(FlowBaseFragment fragment) {
-        open(fragment, null, KEEP_CURRENT);
+        open(fragment, null, STACK_STANDARD);
     }
 
     /**
@@ -71,7 +55,7 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
      * @param bundle   bundle
      */
     protected void open(FlowBaseFragment fragment, Bundle bundle) {
-        open(fragment, null, KEEP_CURRENT);
+        open(fragment, bundle, STACK_STANDARD);
     }
 
     /**
@@ -85,7 +69,7 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
         if (getFlowActivity() == null) {
             return;
         }
-        getFlowActivity().getStackManager().addFragment(this, fragment, bundle, stackMode);
+        getFlowActivity().getStackManager().openFragment(this, fragment, bundle, stackMode);
     }
 
     /**
@@ -104,7 +88,7 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
      * @param bundle   bundle
      */
     protected void closeSelfAndOpen(FlowBaseFragment fragment, Bundle bundle) {
-        closeSelfAndOpen(fragment, bundle, KEEP_CURRENT);
+        closeSelfAndOpen(fragment, bundle, STACK_STANDARD);
     }
 
     /**
@@ -116,28 +100,9 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
      */
     protected void closeSelfAndOpen(FlowBaseFragment fragment, Bundle bundle, int stackMode) {
         open(fragment, bundle, stackMode);
-        if (!isLast()) {
+        if (!isLastFragment()) {
             close(this);
         }
-    }
-
-    /**
-     * Jump to the specified fragment and do not hide the current page.
-     *
-     * @param to To jump to the page
-     */
-    public void dialogFragment(Fragment to, int dialog_in, int dialog_out) {
-        if (getFlowActivity() == null) {
-            return;
-        }
-        getFlowActivity().getStackManager().dialogFragment(to, dialog_in, dialog_out);
-    }
-
-    /**
-     * close this current Fragment
-     */
-    protected void closeSelf() {
-        getFlowActivity().getStackManager().close(this, true);
     }
 
     /**
@@ -150,7 +115,14 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
             closeSelf();
             return;
         }
-        getFlowActivity().getStackManager().close(fragment, false);
+        getFlowActivity().getStackManager().closeFragment(fragment, false);
+    }
+
+    /**
+     * closeFragment this current Fragment
+     */
+    protected void closeSelf() {
+        getFlowActivity().getStackManager().closeFragment(this, true);
     }
 
     /**
@@ -196,68 +168,16 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
     public void onNewIntent() {
     }
 
-    @Override
-    public void onClosed() {
-        isClose = true;
-    }
-
     /**
-     * isClosed
+     * isLastFragment
      *
-     * @return isClose
+     * @return isLastFragment
      */
-    public boolean isClosed() {
-        return isClose;
-    }
-
-
-    /**
-     * setFrist
-     *
-     * @param frist frist
-     */
-    public void setFrist(boolean frist) {
-        isFrist = frist;
-    }
-
-    /**
-     * isFrist
-     *
-     * @return isFrist
-     */
-    public boolean isFrist() {
-        return isFrist;
-    }
-
-    /**
-     * isShow
-     *
-     * @return isShow
-     */
-    public boolean isShow() {
-        return isShow;
-    }
-
-    /**
-     * isLast
-     *
-     * @return isLast
-     */
-    public boolean isLast() {
-        if (getFlowActivity() != null && getFlowActivity().getVisibleFragment().equals(this)) {
+    public boolean isLastFragment() {
+        if (getFlowActivity() != null && getFlowActivity().getLastFragment().equals(this)) {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (hidden) {
-            this.isShow = true;
-        } else {
-            this.isShow = false;
-        }
     }
 
     /**

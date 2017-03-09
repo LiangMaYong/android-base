@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.liangmayong.base.basic.expands.logcat.LogcatActivity;
 import com.liangmayong.base.basic.expands.logcat.LogcatFragment;
 import com.liangmayong.base.basic.interfaces.IBasic;
 import com.liangmayong.base.support.router.Router;
@@ -31,20 +30,6 @@ public final class GoToUtils {
             intent.putExtras(extras);
         }
         context.startActivity(intent);
-    }
-
-    /**
-     * goTo
-     *
-     * @param context context
-     * @param title   title
-     * @param url     url
-     */
-    public static void goTo(Context context, String title, String url) {
-        Bundle extras = new Bundle();
-        extras.putString(IBasic.WEB_EXTRA_TITLE, title);
-        extras.putString(IBasic.WEB_EXTRA_URL, url);
-        goToRouter(context, "Base:Web", extras);
     }
 
     /**
@@ -168,6 +153,20 @@ public final class GoToUtils {
         activity.startActivityForResult(intent, requestCode);
     }
 
+
+    /**
+     * goTo
+     *
+     * @param context context
+     * @param title   title
+     * @param url     url
+     */
+    public static void goWeb(Context context, String title, String url) {
+        Bundle extras = new Bundle();
+        extras.putString(IBasic.WEB_EXTRA_TITLE, title);
+        extras.putString(IBasic.WEB_EXTRA_URL, url);
+        goToRouter(context, "Base:Web", extras);
+    }
 
     /**
      * goToLogcat
