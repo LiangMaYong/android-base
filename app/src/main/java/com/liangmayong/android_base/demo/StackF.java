@@ -12,14 +12,14 @@ import com.liangmayong.base.basic.flow.FlowBaseFragment;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
-import com.liangmayong.base.support.skin.SkinManager;
+import com.liangmayong.base.support.theme.ThemeManager;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.transitions.ActivityTransitionLauncher;
 import com.liangmayong.base.support.utils.GoToUtils;
 import com.liangmayong.base.support.utils.ShakeUtils;
 import com.liangmayong.base.widget.iconfont.FontView;
 import com.liangmayong.base.widget.iconfont.IconFont;
-import com.liangmayong.base.widget.skinview.SkinButton;
+import com.liangmayong.base.widget.themeview.ThemeButton;
 
 /**
  * Created by LiangMaYong on 2016/12/29.
@@ -33,7 +33,7 @@ public class StackF extends FlowBaseFragment {
     @BindView(R.id.et_content)
     private TextView et_content;
     @BindView(R.id.btn_test)
-    private SkinButton btn_test;
+    private ThemeButton btn_test;
     @BindView(R.id.imgview)
     private ImageView imgview;
 
@@ -66,7 +66,7 @@ public class StackF extends FlowBaseFragment {
         defaultToolbar.rightTwo().icon(IconFont.base_icon_circle_yes).click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getDefaultToolbar().message().show(IconFont.base_icon_circle_yes, " 登录成功", SkinManager.get().getSuccessTextColor(), SkinManager.get().getSuccessColor(), 1500);
+                getDefaultToolbar().message().show(IconFont.base_icon_circle_yes, " 登录成功", ThemeManager.getTheme().getSuccessTextColor(), ThemeManager.getTheme().getSuccessColor(), 1500);
             }
         });
         defaultToolbar.rightOne().icon(IconFont.base_icon_message).click(new View.OnClickListener() {

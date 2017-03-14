@@ -240,7 +240,7 @@ public final class ActivityPermission {
      * @author LiangMaYong
      * @version 1.0
      */
-    private static class Request {
+    public static class Request {
 
         private Activity activity;
         private int requestId;

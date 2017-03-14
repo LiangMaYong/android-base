@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
+import com.liangmayong.base.support.photo.intent.PhotoIntent;
+
 /**
  * Created by LiangMaYong on 2017/2/8.
  */

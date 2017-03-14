@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
 
 import com.liangmayong.base.R;
 import com.liangmayong.base.basic.BaseActivity;
@@ -23,12 +22,12 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
     // ERROR_MSG_FIRST_STACK_NULL
     private static final String ERROR_MSG_FIRST_STACK_NULL = "First fragment can't is null\nby Android-Base";
 
-    //manager
-    private StackManager manager;
+    //stackManager
+    private StackManager stackManager;
 
     @Override
     public StackManager getStackManager() {
-        return manager;
+        return stackManager;
     }
 
     @Override
@@ -41,8 +40,8 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
         } else {
             fragment.initArguments(getIntent().getExtras());
         }
-        manager = new StackManager(this, getSupportFragmentManager(), generateContainerFragmentId());
-        manager.setFirstFragment(fragment);
+        stackManager = new StackManager(this, getSupportFragmentManager(), generateContainerFragmentId());
+        stackManager.setFirstFragment(fragment);
         onConfigFlowFragmentAnims();
     }
 
@@ -70,7 +69,7 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
         int anim_next_out = R.anim.base_anim_out_enter;
         int anim_quit_in = R.anim.base_anim_in_exit;
         int anim_quit_out = R.anim.base_anim_out_exit;
-        setStackFragmentAnims(anim_next_in, anim_next_out, anim_quit_in, anim_quit_out);
+        setFlowFragmentAnims(anim_next_in, anim_next_out, anim_quit_in, anim_quit_out);
     }
 
     /**
@@ -82,9 +81,9 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
      * @param quitOut Exit animation for the current page
      */
     @Override
-    public void setStackFragmentAnims(int nextIn, int nextOut, int quitIn, int quitOut) {
-        if (manager != null) {
-            manager.setAnim(nextIn, nextOut, quitIn, quitOut);
+    public void setFlowFragmentAnims(int nextIn, int nextOut, int quitIn, int quitOut) {
+        if (stackManager != null) {
+            stackManager.setFragmentAnim(nextIn, nextOut, quitIn, quitOut);
         }
     }
 
@@ -116,15 +115,15 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
                 if (getLastFragment() != null) {
                     boolean flag = getLastFragment().onKeyDown(keyCode, event);
                     if (!flag) {
-                        if (manager != null) {
-                            manager.onBackPressed();
+                        if (stackManager != null) {
+                            stackManager.onBackPressed();
                         } else {
                             return super.onKeyDown(keyCode, event);
                         }
                     }
                 } else {
-                    if (manager != null) {
-                        manager.onBackPressed();
+                    if (stackManager != null) {
+                        stackManager.onBackPressed();
                     } else {
                         return super.onKeyDown(keyCode, event);
                     }
@@ -146,17 +145,19 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
      */
     protected abstract FlowBaseFragment getFirstFragment();
 
+
     /**
-     * get visible fragment
+     * getTheme visible fragment
      *
      * @return visible fragment
      */
     @Override
     public final FlowBaseFragment getLastFragment() {
-        if (manager != null) {
-            return manager.getVisibleFragment();
+        if (stackManager != null) {
+            return stackManager.getVisibleFragment();
         }
         return null;
     }
+
 
 }

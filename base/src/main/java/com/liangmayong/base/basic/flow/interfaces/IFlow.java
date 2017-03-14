@@ -1,8 +1,5 @@
 package com.liangmayong.base.basic.flow.interfaces;
 
-import android.os.Bundle;
-import android.view.View;
-
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
 import com.liangmayong.base.basic.flow.stack.StackManager;
 
@@ -29,7 +26,7 @@ public interface IFlow {
      * @param quitIn  quitIn
      * @param quitOut quitOut
      */
-    void setStackFragmentAnims(int nextIn, int nextOut, int quitIn, int quitOut);
+    void setFlowFragmentAnims(int nextIn, int nextOut, int quitIn, int quitOut);
 
 
     /**

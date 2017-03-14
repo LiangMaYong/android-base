@@ -26,7 +26,6 @@ public class AndroidBug5497Workaround {
         assistView(content, softKeyboardListener);
     }
 
-
     /**
      * assistActivity
      *
@@ -35,35 +34,6 @@ public class AndroidBug5497Workaround {
     public static void assistView(View view, OnSoftKeyboardListener softKeyboardListener) {
         if (view instanceof ViewGroup) {
             new AndroidBug5497Workaround((ViewGroup) view, softKeyboardListener);
-        }
-    }
-
-
-    /**
-     * unassistView
-     *
-     * @param view view
-     */
-    public static void unassistView(View view) {
-        if (view instanceof ViewGroup) {
-            try {
-                View mChildOfContent = ((ViewGroup) view).getChildAt(0);
-                mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(null);
-            } catch (Exception e) {
-            }
-        }
-    }
-
-    /**
-     * unassistActivity
-     *
-     * @param activity activity
-     */
-    public static void unassistActivity(Activity activity) {
-        try {
-            View content = activity.findViewById(android.R.id.content);
-            unassistView(content);
-        } catch (Exception e) {
         }
     }
 

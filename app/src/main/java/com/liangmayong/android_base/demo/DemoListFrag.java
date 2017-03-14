@@ -8,9 +8,11 @@ import com.liangmayong.android_base.R;
 import com.liangmayong.base.basic.expands.recycler.FlowRecyclerFragment;
 import com.liangmayong.base.binding.view.annotations.BindLayout;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
-import com.liangmayong.base.support.adapter.SuperListAdapter;
 import com.liangmayong.base.support.adapter.SuperRecyclerAdapter;
 import com.liangmayong.base.support.adapter.view.DefaultSuperItemView;
+import com.liangmayong.base.support.theme.ThemeManager;
+import com.liangmayong.base.support.theme.defaults.ThemeDay;
+import com.liangmayong.base.support.theme.defaults.ThemeNight;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 
 /**
@@ -55,12 +57,14 @@ public class DemoListFrag extends FlowRecyclerFragment {
                 listAdapter.add(new DemoItemView(4));
                 listAdapter.add(new DemoItemView(5));
                 listAdapter.add(new DemoItem2View("33333333333333333333333333333"));
+                ThemeManager.getEditor().setTheme(ThemeDay.class).commit();
             }
         });
         defaultToolbar.rightTwo().text("RA").click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listAdapter.notifyDataSetChanged();
+                ThemeManager.getEditor().setTheme(ThemeNight.class).commit();
             }
         });
         defaultToolbar.rightFour().text("R2").click(new View.OnClickListener() {

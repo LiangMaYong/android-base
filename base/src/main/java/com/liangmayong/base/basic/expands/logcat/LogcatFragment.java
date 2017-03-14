@@ -10,7 +10,7 @@ import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.widget.iconfont.IconFont;
 import com.liangmayong.base.widget.view.LogcatTextView;
-import com.liangmayong.base.widget.skinview.SkinButton;
+import com.liangmayong.base.widget.themeview.ThemeButton;
 
 /**
  * Created by LiangMaYong on 2017/1/4.
@@ -22,7 +22,7 @@ public class LogcatFragment extends FlowBaseFragment {
     public static final String EXTRA_LOGCAT_TAG = "extra_logcat_tag";
     private LogcatTextView base_default_logcat;
     private EditText base_edit_logcat_tag;
-    private SkinButton base_btn_logcat_set;
+    private ThemeButton base_btn_logcat_set;
 
     /**
      * newInstance
@@ -81,7 +81,7 @@ public class LogcatFragment extends FlowBaseFragment {
     private void _initView(View rootView) {
         base_default_logcat = (LogcatTextView) rootView.findViewById(R.id.base_default_logcat);
         base_edit_logcat_tag = (EditText) rootView.findViewById(R.id.base_default_edit_logcat_tag);
-        base_btn_logcat_set = (SkinButton) rootView.findViewById(R.id.base_default_btn_logcat_set);
+        base_btn_logcat_set = (ThemeButton) rootView.findViewById(R.id.base_default_btn_logcat_set);
         base_btn_logcat_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

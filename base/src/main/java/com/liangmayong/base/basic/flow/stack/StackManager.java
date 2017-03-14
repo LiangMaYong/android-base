@@ -61,7 +61,7 @@ public class StackManager {
      * @param quitIn  The current page into the animation
      * @param quitOut Exit animation for the current page
      */
-    public void setAnim(int nextIn, int nextOut, int quitIn, int quitOut) {
+    public void setFragmentAnim(int nextIn, int nextOut, int quitIn, int quitOut) {
         this.nextIn = nextIn;
         this.nextOut = nextOut;
         quitInAnimation = AnimationUtils.loadAnimation(activity, quitIn);
@@ -72,39 +72,14 @@ public class StackManager {
      * closeFragment
      *
      * @param fragment fragment
-     * @param back     back
      */
-    public void closeFragment(final FlowBaseFragment fragment, boolean back) {
-        if (back && fragment.isLastFragment()) {
+    public void closeFragment(final FlowBaseFragment fragment) {
+        if (getVisibleFragment().equals(fragment)) {
             onBackPressed();
             return;
         }
-        View view = fragment.getView();
-        if (view != null) {
-            if (quitOutAnimation != null) {
-                view.startAnimation(quitOutAnimation);
-                quitOutAnimation.setAnimationListener(new Animation.AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        stack.closeFragment(fragment);
-                        closeFragment(fragment);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-            } else {
-                stack.closeFragment(fragment);
-                closeFragment(fragment);
-            }
-        }
+        stack.closeFragment(fragment);
+        realCloseFragment(fragment);
     }
 
     /**
@@ -122,11 +97,11 @@ public class StackManager {
         switch (stackMode) {
             case STACK_SINGLE_INSTANCE:
                 stack.putSingleInstance(to);
-                openFragment(from, to);
+                realOpenFragment(from, to);
                 break;
             default:
                 stack.putStandard(to);
-                openFragment(from, to);
+                realOpenFragment(from, to);
                 break;
         }
     }
@@ -140,7 +115,7 @@ public class StackManager {
         FlowBaseFragment to = (FlowBaseFragment) last[1];
 
         if (to == null || !to.isAdded()) {
-            closeAllFragment();
+            realCloseAllFragment();
             activity.finish();
             return;
         }
@@ -160,7 +135,7 @@ public class StackManager {
                     @Override
                     public void onAnimationEnd(Animation animation) {
                         stack.onBackPressed();
-                        closeFragment(from);
+                        realCloseFragment(from);
                     }
 
                     @Override
@@ -170,7 +145,7 @@ public class StackManager {
                 });
             } else {
                 stack.onBackPressed();
-                closeFragment(from);
+                realCloseFragment(from);
             }
         }
         if (to != null) {
@@ -182,11 +157,11 @@ public class StackManager {
     }
 
     /**
-     * get visible fragment
+     * getTheme visible fragment
      *
      * @return visible fragment
      */
-    public final FlowBaseFragment getVisibleFragment() {
+    public FlowBaseFragment getVisibleFragment() {
         Fragment[] last = stack.getLast();
         final FlowBaseFragment from = (FlowBaseFragment) last[0];
         return from;
@@ -197,7 +172,7 @@ public class StackManager {
     }
 
     /////////////////////////////////////////////////////////////////////////////
-    ///////// protected
+    ///////// private
     /////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -206,7 +181,7 @@ public class StackManager {
      * @param from current fragment
      * @param to   next fragment
      */
-    protected void openFragment(final Fragment from, final Fragment to) {
+    private void realOpenFragment(final Fragment from, final Fragment to) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         if (nextIn != 0 && nextOut != 0) {
             transaction.setCustomAnimations(nextIn, nextOut);
@@ -221,7 +196,7 @@ public class StackManager {
      *
      * @param mTargetFragment fragment
      */
-    protected void closeFragment(Fragment mTargetFragment) {
+    private void realCloseFragment(Fragment mTargetFragment) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.remove(mTargetFragment).commit();
     }
@@ -229,7 +204,7 @@ public class StackManager {
     /**
      * Close all fragment
      */
-    protected void closeAllFragment() {
+    private void realCloseAllFragment() {
         int backStackCount = fragmentManager.getBackStackEntryCount();
         for (int i = 0; i < backStackCount; i++) {
             int backStackId = fragmentManager.getBackStackEntryAt(i).getId();

@@ -1,5 +1,6 @@
 package com.liangmayong.base.basic.expands.webkit.config;
 
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitDeviceListener;
 import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitLoadingInterceptor;
 
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class WebConfig {
     // INTERCEPTORS
     private static final List<AbstractsWebkitLoadingInterceptor> INTERCEPTORS = new ArrayList<AbstractsWebkitLoadingInterceptor>();
 
+    private static AbstractsWebkitDeviceListener deviceListener = null;
+
     /**
      * interceptor
      *
@@ -28,6 +31,14 @@ public class WebConfig {
             removeInterceptor(interceptor.getScheme());
             INTERCEPTORS.add(interceptor);
         }
+    }
+
+    public static AbstractsWebkitDeviceListener getDeviceListener() {
+        return deviceListener;
+    }
+
+    public static void setDeviceListener(AbstractsWebkitDeviceListener deviceListener) {
+        WebConfig.deviceListener = deviceListener;
     }
 
     /**

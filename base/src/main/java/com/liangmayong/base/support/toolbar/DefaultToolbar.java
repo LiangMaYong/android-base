@@ -16,13 +16,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.support.skin.handlers.SkinType;
-import com.liangmayong.base.support.skin.interfaces.ISkin;
-import com.liangmayong.base.support.skin.listeners.OnSkinRefreshListener;
+import com.liangmayong.base.support.theme.Theme;
+import com.liangmayong.base.support.theme.ThemeType;
+import com.liangmayong.base.support.theme.listener.OnThemeListener;
 import com.liangmayong.base.support.utils.AnimationUtil;
 import com.liangmayong.base.widget.iconfont.FontValue;
 import com.liangmayong.base.widget.iconfont.IconView;
-import com.liangmayong.base.widget.skinview.SkinRelativeLayout;
+import com.liangmayong.base.widget.themeview.ThemeRelativeLayout;
 
 
 /**
@@ -40,13 +40,13 @@ public class DefaultToolbar {
     private ToolItem toolbar_right_one, toolbar_right_two, toolbar_right_three, toolbar_right_four;
     private ToolItem toolbar_left_one, toolbar_left_two, toolbar_left_three, toolbar_left_four;
     private ProgressBar toolbar_progress;
-    private SkinType skinType = SkinType.default_type;
+    private ThemeType themeType = ThemeType.default_type;
     private int defualt_margin = 0;
-    private OnSkinRefreshListener skinRefreshListener = new OnSkinRefreshListener() {
+    private OnThemeListener themeListener = new OnThemeListener() {
         @Override
-        public void onSkinRefresh(ISkin skin) {
+        public void onThemeEdited(Theme theme) {
             if (toolbar_layout != null) {
-                int textColor = skin.getTextColor(skinType);
+                int textColor = theme.getTextColor(themeType);
                 int textPreColor = Color.argb(Color.alpha(textColor), Math.abs(Color.red(textColor) - 0x15), Math.abs(Color.green(textColor) - 0x15), Math.abs(Color.blue(textColor) - 0x15));
                 leftOne().getIconView().setStateColor(textColor, textPreColor);
                 leftTwo().getIconView().setStateColor(textColor, textPreColor);
@@ -67,8 +67,8 @@ public class DefaultToolbar {
         if (toolbar_layout == null) {
             throw new Exception("not include base_default_toolbar");
         }
-        if (toolbar_layout instanceof SkinRelativeLayout) {
-            ((SkinRelativeLayout) toolbar_layout).setSkinRefreshListener(skinRefreshListener);
+        if (toolbar_layout instanceof ThemeRelativeLayout) {
+            ((ThemeRelativeLayout) toolbar_layout).setThemeListener(themeListener);
         }
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) toolbar_layout.getLayoutParams();
         defualt_margin = layoutParams.topMargin;
@@ -102,8 +102,8 @@ public class DefaultToolbar {
         if (toolbar_layout == null) {
             throw new Exception("not include base_default_toolbar");
         }
-        if (toolbar_layout instanceof SkinRelativeLayout) {
-            ((SkinRelativeLayout) toolbar_layout).setSkinRefreshListener(skinRefreshListener);
+        if (toolbar_layout instanceof ThemeRelativeLayout) {
+            ((ThemeRelativeLayout) toolbar_layout).setThemeListener(themeListener);
         }
         ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) toolbar_layout.getLayoutParams();
         defualt_margin = layoutParams.topMargin;
@@ -240,16 +240,16 @@ public class DefaultToolbar {
     }
 
     /**
-     * setSkinType
+     * setThemeType
      *
-     * @param skinType skinType
+     * @param themeType themeType
      */
-    public void setSkinType(SkinType skinType) {
-        if (this.skinType != skinType) {
-            this.skinType = skinType;
+    public void setThemeType(ThemeType themeType) {
+        if (this.themeType != themeType) {
+            this.themeType = themeType;
         }
-        if (toolbar_layout instanceof SkinRelativeLayout) {
-            ((SkinRelativeLayout) toolbar_layout).setSkinType(skinType);
+        if (toolbar_layout instanceof ThemeRelativeLayout) {
+            ((ThemeRelativeLayout) toolbar_layout).setThemeType(themeType);
         }
     }
 

@@ -9,7 +9,6 @@ import com.liangmayong.base.basic.flow.FlowBaseFragment;
 /**
  * Created by LiangMaYong on 2017/3/1.
  */
-
 public abstract class FlowListFragment extends FlowBaseFragment {
     // listView
     private ListView listView = null;

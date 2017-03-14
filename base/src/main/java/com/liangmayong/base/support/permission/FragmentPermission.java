@@ -239,7 +239,7 @@ public final class FragmentPermission {
      * @author LiangMaYong
      * @version 1.0
      */
-    private static class Request {
+    public static class Request {
         private Fragment fragment;
         private int requestId;
         private String[] permissionsNeeded;

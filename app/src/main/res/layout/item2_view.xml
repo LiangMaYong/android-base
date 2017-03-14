@@ -20,7 +20,7 @@
             android:text="Item"
             android:textColor="#333333"/>
 
-        <com.liangmayong.base.widget.skinview.SkinButton
+        <com.liangmayong.base.widget.themeview.ThemeButton
             xmlns:skin="http://schemas.android.com/apk/res-auto"
             android:id="@+id/btn_show"
             android:layout_width="match_parent"

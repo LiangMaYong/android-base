@@ -64,6 +64,6 @@ public class BaseApplication extends Application {
      * @return base
      */
     public static String getBaseVersion() {
-        return "2.1.0";
+        return "2.3.0";
     }
 }

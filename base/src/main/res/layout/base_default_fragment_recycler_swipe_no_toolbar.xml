@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.liangmayong.base.widget.skinview.SkinSwipeLayout
+    <com.liangmayong.base.widget.themeview.ThemeSwipeLayout
         android:id="@id/base_default_swipe_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -14,5 +14,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"/>
-    </com.liangmayong.base.widget.skinview.SkinSwipeLayout>
+    </com.liangmayong.base.widget.themeview.ThemeSwipeLayout>
 </LinearLayout>

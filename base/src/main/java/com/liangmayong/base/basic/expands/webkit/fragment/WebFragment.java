@@ -24,8 +24,8 @@ import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitLoadin
 import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitProgressListener;
 import com.liangmayong.base.basic.expands.webkit.config.WebConfig;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
-import com.liangmayong.base.basic.interfaces.IBasic;
-import com.liangmayong.base.support.skin.SkinManager;
+import com.liangmayong.base.basic.interfaces.IBase;
+import com.liangmayong.base.support.theme.ThemeManager;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.utils.DeviceUtils;
 import com.liangmayong.base.support.utils.GoToUtils;
@@ -61,8 +61,8 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            this.title = getArguments().getString(IBasic.WEB_EXTRA_TITLE);
-            this.url = getArguments().getString(IBasic.WEB_EXTRA_URL);
+            this.title = getArguments().getString(IBase.WEB_EXTRA_TITLE);
+            this.url = getArguments().getString(IBase.WEB_EXTRA_URL);
         }
     }
 
@@ -205,15 +205,15 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
     }
 
     private void action_success(String msg) {
-        getDefaultToolbar().message().show(IconFont.base_icon_circle_yes, " " + msg, SkinManager.get().getSuccessTextColor(), SkinManager.get().getSuccessColor(), 1500);
+        getDefaultToolbar().message().show(IconFont.base_icon_circle_yes, " " + msg, ThemeManager.getTheme().getSuccessTextColor(), ThemeManager.getTheme().getSuccessColor(), 1500);
     }
 
     private void action_warning(String msg) {
-        getDefaultToolbar().message().show(IconFont.base_icon_circle_warning, " " + msg, SkinManager.get().getWarningTextColor(), SkinManager.get().getWarningColor(), 1500);
+        getDefaultToolbar().message().show(IconFont.base_icon_circle_warning, " " + msg, ThemeManager.getTheme().getWarningTextColor(), ThemeManager.getTheme().getWarningColor(), 1500);
     }
 
     private void action_danger(String msg) {
-        getDefaultToolbar().message().show(IconFont.base_icon_circle_error, " " + msg, SkinManager.get().getDangerTextColor(), SkinManager.get().getDangerColor(), 1500);
+        getDefaultToolbar().message().show(IconFont.base_icon_circle_error, " " + msg, ThemeManager.getTheme().getDangerTextColor(), ThemeManager.getTheme().getDangerColor(), 1500);
     }
 
     private void action_finish() {
@@ -344,6 +344,9 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
 
     @Override
     public String generateDevice(Context context) {
+        if (WebConfig.getDeviceListener() != null) {
+            return WebConfig.getDeviceListener().generateDevice(context);
+        }
         return new JSONObject(DeviceUtils.getDeviceInfo(context)).toString();
     }
 }

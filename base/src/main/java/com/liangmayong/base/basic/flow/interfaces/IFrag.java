@@ -35,9 +35,4 @@ public interface IFrag {
      */
     boolean onBackPressed();
 
-    /**
-     * onNewIntent
-     */
-    void onNewIntent();
-
 }

@@ -11,6 +11,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 
+import com.liangmayong.base.support.photo.intent.PhotoCache;
+import com.liangmayong.base.support.photo.intent.PhotoIntent;
+
 /**
  * Created by LiangMaYong on 2017/2/8.
  */

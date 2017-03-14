@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.liangmayong.base.widget.skinview.SkinRelativeLayout
+<com.liangmayong.base.widget.themeview.ThemeRelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/base_default_toolbar_layout"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/base_toolbar_height">
+    android:layout_height="@dimen/base_toolbar_height"
+    app:theme_type="default_type">
 
     <include layout="@layout/base_default_toolbar_items"/>
 
-</com.liangmayong.base.widget.skinview.SkinRelativeLayout>
+</com.liangmayong.base.widget.themeview.ThemeRelativeLayout>

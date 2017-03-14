@@ -10,7 +10,7 @@
 
     <include layout="@layout/base_default_toolbar"/>
 
-    <com.liangmayong.base.widget.skinview.SkinSegmentView
+    <com.liangmayong.base.widget.themeview.ThemeSegmentView
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="10dp"
@@ -122,7 +122,7 @@
         android:layout_height="1dp"
         android:background="#eeeeee"/>
 
-    <com.liangmayong.base.widget.skinview.SkinButton
+    <com.liangmayong.base.widget.themeview.ThemeButton
         android:id="@+id/btn_test"
         android:layout_width="match_parent"
         android:layout_height="48dp"

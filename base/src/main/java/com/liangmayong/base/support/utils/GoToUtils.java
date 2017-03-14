@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.liangmayong.base.basic.expands.logcat.LogcatFragment;
-import com.liangmayong.base.basic.interfaces.IBasic;
+import com.liangmayong.base.basic.interfaces.IBase;
 import com.liangmayong.base.support.router.Router;
 
 /**
@@ -163,8 +163,8 @@ public final class GoToUtils {
      */
     public static void goWeb(Context context, String title, String url) {
         Bundle extras = new Bundle();
-        extras.putString(IBasic.WEB_EXTRA_TITLE, title);
-        extras.putString(IBasic.WEB_EXTRA_URL, url);
+        extras.putString(IBase.WEB_EXTRA_TITLE, title);
+        extras.putString(IBase.WEB_EXTRA_URL, url);
         goToRouter(context, "Base:Web", extras);
     }
 

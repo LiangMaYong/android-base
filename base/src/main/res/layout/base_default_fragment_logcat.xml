@@ -32,7 +32,7 @@
             android:textColorHint="#616161"
             android:textCursorDrawable="@null"/>
 
-        <com.liangmayong.base.widget.skinview.SkinButton
+        <com.liangmayong.base.widget.themeview.ThemeButton
             android:id="@id/base_default_btn_logcat_set"
             android:layout_width="60dp"
             android:layout_height="40dp"

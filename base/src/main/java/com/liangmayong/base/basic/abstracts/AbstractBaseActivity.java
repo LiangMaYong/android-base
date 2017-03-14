@@ -16,16 +16,16 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.liangmayong.base.basic.interfaces.IBasic;
+import com.liangmayong.base.basic.interfaces.IBase;
 import com.liangmayong.base.binding.mvp.Presenter;
 import com.liangmayong.base.binding.mvp.PresenterBinding;
 import com.liangmayong.base.binding.mvp.PresenterHolder;
 import com.liangmayong.base.binding.view.ViewBinding;
 import com.liangmayong.base.binding.view.data.ViewBindingData;
 import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
-import com.liangmayong.base.support.skin.SkinManager;
-import com.liangmayong.base.support.skin.interfaces.ISkin;
 import com.liangmayong.base.support.statusbar.StatusBarCompat;
+import com.liangmayong.base.support.theme.Theme;
+import com.liangmayong.base.support.theme.ThemeManager;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.transitions.ActivityTransition;
 import com.liangmayong.base.support.transitions.ExitActivityTransition;
@@ -38,7 +38,7 @@ import java.util.List;
 /**
  * Created by LiangMaYong on 2016/12/29.
  */
-public abstract class AbstractBaseActivity extends AppCompatActivity implements IBasic {
+public abstract class AbstractBaseActivity extends AppCompatActivity implements IBase {
 
     //defaultToolbar
     private DefaultToolbar defaultToolbar = null;
@@ -58,7 +58,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
         }
         inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        SkinManager.registerSkinRefresh(this);
+        ThemeManager.registerThemeListener(this);
         if (presenterHolder == null) {
             presenterHolder = PresenterBinding.bind(this);
         }
@@ -102,7 +102,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SkinManager.unregisterSkinRefresh(this);
+        ThemeManager.unregisterThemeListener(this);
         if (presenterHolder != null) {
             presenterHolder.onDettach();
             presenterHolder = null;
@@ -145,7 +145,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
         } catch (Exception e) {
             defaultToolbar = null;
         }
-        onSkinRefresh(SkinManager.get());
+        ThemeManager.notifyTheme(this);
     }
 
     @Override
@@ -185,17 +185,17 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////  Skin     ////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////  Theme     ////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void onSkinRefresh(ISkin skin) {
+    public void onThemeEdited(Theme theme) {
         StatusBarCompat.setTransparent(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (isStatusBarTranslucent()) {
                 StatusBarCompat.setTransparent(this);
             } else {
-                int themeColor = skin.getThemeColor();
+                int themeColor = theme.getThemeColor();
                 if (isStatusBarDark()) {
                     int color = Color.argb(Color.alpha(themeColor), Math.abs(Color.red(themeColor) - 0x15), Math.abs(Color.green(themeColor) - 0x15), Math.abs(Color.blue(themeColor) - 0x15));
                     setStatusBarColor(color);

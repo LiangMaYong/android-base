@@ -45,7 +45,7 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
      * @param fragment fragment
      */
     public void open(FlowBaseFragment fragment) {
-        open(fragment, null, STACK_STANDARD);
+        open(fragment, null);
     }
 
     /**
@@ -55,21 +55,10 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
      * @param bundle   bundle
      */
     protected void open(FlowBaseFragment fragment, Bundle bundle) {
-        open(fragment, bundle, STACK_STANDARD);
-    }
-
-    /**
-     * open fragment
-     *
-     * @param fragment  fragment
-     * @param bundle    bundle
-     * @param stackMode stackMode
-     */
-    protected void open(FlowBaseFragment fragment, Bundle bundle, int stackMode) {
         if (getFlowActivity() == null) {
             return;
         }
-        getFlowActivity().getStackManager().openFragment(this, fragment, bundle, stackMode);
+        getFlowActivity().getStackManager().openFragment(this, fragment, bundle, STACK_STANDARD);
     }
 
     /**
@@ -77,32 +66,21 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
      *
      * @param fragment fragment
      */
-    protected void closeSelfAndOpen(FlowBaseFragment fragment) {
-        closeSelfAndOpen(fragment, null);
-    }
-
-    /**
-     * closeSelfAndOpen
-     *
-     * @param fragment fragment
-     * @param bundle   bundle
-     */
-    protected void closeSelfAndOpen(FlowBaseFragment fragment, Bundle bundle) {
-        closeSelfAndOpen(fragment, bundle, STACK_STANDARD);
+    protected void openSingleInstance(FlowBaseFragment fragment) {
+        open(fragment, null);
     }
 
     /**
      * closeAndOpen fragment
      *
-     * @param fragment  fragment
-     * @param bundle    bundle
-     * @param stackMode stackMode
+     * @param fragment fragment
+     * @param bundle   bundle
      */
-    protected void closeSelfAndOpen(FlowBaseFragment fragment, Bundle bundle, int stackMode) {
-        open(fragment, bundle, stackMode);
-        if (!isLastFragment()) {
-            close(this);
+    protected void openSingleInstance(FlowBaseFragment fragment, Bundle bundle) {
+        if (getFlowActivity() == null) {
+            return;
         }
+        getFlowActivity().getStackManager().openFragment(this, fragment, bundle, STACK_SINGLE_INSTANCE);
     }
 
     /**
@@ -111,18 +89,14 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
      * @param fragment the specified fragment
      */
     protected void close(FlowBaseFragment fragment) {
-        if (fragment.equals(this)) {
-            closeSelf();
-            return;
-        }
-        getFlowActivity().getStackManager().closeFragment(fragment, false);
+        getFlowActivity().getStackManager().closeFragment(fragment);
     }
 
     /**
      * closeFragment this current Fragment
      */
     protected void closeSelf() {
-        getFlowActivity().getStackManager().closeFragment(this, true);
+        getFlowActivity().getStackManager().closeFragment(this);
     }
 
     /**
@@ -157,26 +131,6 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
 
     @Override
     public boolean onBackPressed() {
-        return false;
-    }
-
-    /**
-     * Override this method in order to facilitate the singleTop mode to be
-     * called in
-     */
-    @Override
-    public void onNewIntent() {
-    }
-
-    /**
-     * isLastFragment
-     *
-     * @return isLastFragment
-     */
-    public boolean isLastFragment() {
-        if (getFlowActivity() != null && getFlowActivity().getLastFragment().equals(this)) {
-            return true;
-        }
         return false;
     }
 

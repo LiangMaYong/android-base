@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.basic.interfaces.IBasic;
+import com.liangmayong.base.basic.interfaces.IBase;
 import com.liangmayong.base.binding.mvp.Presenter;
 import com.liangmayong.base.binding.mvp.PresenterBinding;
 import com.liangmayong.base.binding.mvp.PresenterHolder;
@@ -19,8 +19,8 @@ import com.liangmayong.base.binding.view.ViewBinding;
 import com.liangmayong.base.binding.view.data.ViewBindingData;
 import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
 import com.liangmayong.base.support.logger.Logger;
-import com.liangmayong.base.support.skin.SkinManager;
-import com.liangmayong.base.support.skin.interfaces.ISkin;
+import com.liangmayong.base.support.theme.Theme;
+import com.liangmayong.base.support.theme.ThemeManager;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.utils.GoToUtils;
 import com.liangmayong.base.support.utils.ToastUtils;
@@ -28,7 +28,7 @@ import com.liangmayong.base.support.utils.ToastUtils;
 /**
  * Created by LiangMaYong on 2016/12/29.
  */
-public abstract class AbstractBaseFragment extends Fragment implements IBasic {
+public abstract class AbstractBaseFragment extends Fragment implements IBase {
 
     private DefaultToolbar defaultToolbar = null;
     private PresenterHolder presenterHolder = null;
@@ -42,7 +42,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
             long end_time = System.currentTimeMillis();
             Logger.d("BindPresenter " + getClass().getName() + ":+" + (end_time - start_time) + "ms " + start_time + " to " + end_time);
         }
-        SkinManager.registerSkinRefresh(this);
+        ThemeManager.registerThemeListener(this);
     }
 
     @Override
@@ -52,7 +52,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
             presenterHolder.onDettach();
             presenterHolder = null;
         }
-        SkinManager.unregisterSkinRefresh(this);
+        ThemeManager.unregisterThemeListener(this);
     }
 
     @Override
@@ -81,7 +81,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SkinManager.refresh(this);
+        ThemeManager.notifyTheme(this);
         if (shouldFixbug5497Workaround()) {
             AndroidBug5497Workaround.assistView(view, this);
         }
@@ -175,11 +175,11 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////  Skin     ////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////  Theme     ////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public void onSkinRefresh(ISkin skin) {
+    public void onThemeEdited(Theme theme) {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -236,22 +236,22 @@ public abstract class AbstractBaseFragment extends Fragment implements IBasic {
 
     @Override
     public void hideSoftKeyBoard() {
-        if (getActivity() instanceof IBasic) {
-            ((IBasic) getActivity()).hideSoftKeyBoard();
+        if (getActivity() instanceof IBase) {
+            ((IBase) getActivity()).hideSoftKeyBoard();
         }
     }
 
     @Override
     public void showSoftKeyBoard(final EditText editText) {
-        if (getActivity() instanceof IBasic) {
-            ((IBasic) getActivity()).showSoftKeyBoard(editText);
+        if (getActivity() instanceof IBase) {
+            ((IBase) getActivity()).showSoftKeyBoard(editText);
         }
     }
 
     @Override
     public void ignoreTouchHideSoftKeyboard(View view) {
-        if (getActivity() instanceof IBasic) {
-            ((IBasic) getActivity()).ignoreTouchHideSoftKeyboard(view);
+        if (getActivity() instanceof IBase) {
+            ((IBase) getActivity()).ignoreTouchHideSoftKeyboard(view);
         }
     }
 

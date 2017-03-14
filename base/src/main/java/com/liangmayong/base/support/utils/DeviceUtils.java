@@ -8,7 +8,6 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
 import com.liangmayong.base.BaseApplication;
-import com.liangmayong.base.support.database.DataPreferences;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -29,7 +28,6 @@ public class DeviceUtils {
             info.put("BUILD.SDK_INT", Build.VERSION.SDK + "");
         }
         info.put("APP.NAME", getAppName(context));
-        info.put("APP.USER", getUserId(getDeviceId(context)));
         info.put("APP.VERSION_NAME", getVersionName(context));
         info.put("APP.VERSION_CODE", getVersionCode(context) + "");
         info.put("APP.BASIC_VERSION", BaseApplication.getBaseVersion());
@@ -48,26 +46,6 @@ public class DeviceUtils {
         } catch (Exception e) {
         }
         return info;
-    }
-
-    /**
-     * setUserId
-     *
-     * @param userId userId
-     */
-    public static void setUserId(String userId) {
-        DataPreferences.getPreferences("android_base_device_utils").setString("userId", userId);
-    }
-
-
-    /**
-     * getUserId
-     *
-     * @param defValue defValue
-     * @return userId
-     */
-    public static String getUserId(String defValue) {
-        return DataPreferences.getPreferences("android_base_device_utils").getString("userId", defValue);
     }
 
     /**
