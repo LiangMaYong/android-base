@@ -343,10 +343,11 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
     }
 
     @Override
-    public String generateDevice(Context context) {
+    public Map<String,String> generateDeviceInfo(Context context) {
+        Map<String,String> deviceInfo = DeviceUtils.getDeviceInfo(context);
         if (WebConfig.getDeviceListener() != null) {
-            return WebConfig.getDeviceListener().generateDevice(context);
+            deviceInfo.putAll(WebConfig.getDeviceListener().generateDeviceInfo(context));
         }
-        return new JSONObject(DeviceUtils.getDeviceInfo(context)).toString();
+        return deviceInfo;
     }
 }

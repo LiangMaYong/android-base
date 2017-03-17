@@ -9,6 +9,8 @@ import android.webkit.WebView;
 
 import com.liangmayong.base.basic.expands.webkit.config.WebConfig;
 
+import org.json.JSONObject;
+
 /**
  * Created by LiangMaYong on 2017/2/18.
  */
@@ -36,7 +38,7 @@ public class AbstractsWebkitClient extends android.webkit.WebViewClient {
                     String jsName = WebConfig.getConfig("jsBridgeName", "jsBridge");
                     webKit.injectionAssetsJS("javascript/android_js_bridge.js", jsName);
                     try {
-                        webKit.call(jsName + ".init", deviceListener.generateDevice(view.getContext()));
+                        webKit.call(jsName + ".init", new JSONObject(deviceListener.generateDeviceInfo(view.getContext())).toString());
                     } catch (Exception e) {
                     }
                 }

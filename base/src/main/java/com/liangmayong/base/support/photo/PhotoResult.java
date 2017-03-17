@@ -20,6 +20,8 @@ import com.liangmayong.base.support.photo.intent.PhotoIntent;
 public class PhotoResult {
 
     private int requestId = 0;
+    private int realWidth = 0;
+    private int realHeight = 0;
     private int width = 0;
     private int height = 0;
     private Uri uri = null;
@@ -31,11 +33,39 @@ public class PhotoResult {
         this.height = height;
         this.uri = uri;
         this.context = context;
+        try {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(getPath(), options);
+            this.realWidth = options.outWidth;
+            this.realHeight = options.outHeight;
+        } catch (Exception e) {
+            this.realWidth = width;
+            this.realHeight = height;
+        }
     }
 
 
     public Bitmap getThumbnail() {
         return getThumbnail(getPath(), width, height);
+    }
+
+    /**
+     * getRealWidth
+     *
+     * @return realWidth
+     */
+    public int getRealWidth() {
+        return realWidth;
+    }
+
+    /**
+     * getRealHeight
+     *
+     * @return realHeight
+     */
+    public int getRealHeight() {
+        return realHeight;
     }
 
     /**
