@@ -190,13 +190,12 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
 
     @Override
     public void onThemeEdited(Theme theme) {
-        StatusBarCompat.setTransparent(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (isStatusBarTranslucent()) {
+            if (shouldStatusBarTranslucent()) {
                 StatusBarCompat.setTransparent(this);
             } else {
                 int themeColor = theme.getThemeColor();
-                if (isStatusBarDark()) {
+                if (shouldStatusBarDark()) {
                     int color = Color.argb(Color.alpha(themeColor), Math.abs(Color.red(themeColor) - 0x15), Math.abs(Color.green(themeColor) - 0x15), Math.abs(Color.blue(themeColor) - 0x15));
                     setStatusBarColor(color);
                 } else {
@@ -212,26 +211,26 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
      * @param color color
      */
     public void setStatusBarColor(int color) {
-        if (!isStatusBarTranslucent()) {
+        if (!shouldStatusBarTranslucent()) {
             StatusBarCompat.compat(this, color);
         }
     }
 
     /**
-     * isStatusBarTranslucent
+     * shouldStatusBarTranslucent
      *
      * @return true or false
      */
-    protected boolean isStatusBarTranslucent() {
+    protected boolean shouldStatusBarTranslucent() {
         return false;
     }
 
     /**
-     * isStatusBarDark
+     * shouldStatusBarDark
      *
      * @return true or false
      */
-    protected boolean isStatusBarDark() {
+    protected boolean shouldStatusBarDark() {
         return false;
     }
 

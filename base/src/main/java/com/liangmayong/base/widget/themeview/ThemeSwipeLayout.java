@@ -94,7 +94,7 @@ public class ThemeSwipeLayout extends SwipeRefreshLayout implements ThemeViewHan
     /**
      * setThemeListener
      *
-     * @param themeListener skinRefreshListener
+     * @param themeListener themeListener
      */
     public void setThemeListener(OnThemeListener themeListener) {
         handler.setThemeListener(themeListener);
@@ -109,8 +109,8 @@ public class ThemeSwipeLayout extends SwipeRefreshLayout implements ThemeViewHan
     }
 
     @Override
-    public void setThemeColor(int skinColor, int skinTextColor) {
-        handler.setThemeColor(skinColor, skinTextColor);
+    public void setThemeColor(int themeColor, int themeTextColor) {
+        handler.setThemeColor(themeColor, themeTextColor);
     }
 
     @Override

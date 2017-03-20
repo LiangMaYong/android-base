@@ -21,11 +21,11 @@
             android:textColor="#333333"/>
 
         <com.liangmayong.base.widget.themeview.ThemeButton
-            xmlns:skin="http://schemas.android.com/apk/res-auto"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/btn_show"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:text="Button"
-            skin:shape_type="stroke"/>
+            app:shape_type="stroke"/>
     </LinearLayout>
 </LinearLayout>

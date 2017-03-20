@@ -82,7 +82,7 @@ public class ThemeButton extends BasicButton implements ThemeViewHandlerInterfac
     /**
      * setThemeListener
      *
-     * @param themeListener skinRefreshListener
+     * @param themeListener themeListener
      */
     public void setThemeListener(OnThemeListener themeListener) {
         handler.setThemeListener(themeListener);
@@ -102,8 +102,8 @@ public class ThemeButton extends BasicButton implements ThemeViewHandlerInterfac
     }
 
     @Override
-    public void setThemeColor(int skinColor, int skinTextColor) {
-        handler.setThemeColor(skinColor, skinTextColor);
+    public void setThemeColor(int themeColor, int themeTextColor) {
+        handler.setThemeColor(themeColor, themeTextColor);
     }
 
     @Override

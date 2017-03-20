@@ -31,15 +31,15 @@ public class ThemeViewHandler implements ThemeViewHandlerInterface, OnThemeListe
     private int mThemeTextColor;
     private boolean mSetThemeColor = false;
     private boolean mSetThemeTextColor = false;
-    private ThemeType themeType = ThemeType.primary;
+    private ThemeType themeType = ThemeType.default_type;
     private View view;
 
-    // skinRefreshListener
-    private OnThemeListener skinRefreshListener = null;
+    // themeRefreshListener
+    private OnThemeListener themeRefreshListener = null;
 
     @Override
     public void setThemeListener(OnThemeListener themeListener) {
-        this.skinRefreshListener = themeListener;
+        this.themeRefreshListener = themeListener;
     }
 
     public void setThemeType(ThemeType themeType) {
@@ -56,9 +56,9 @@ public class ThemeViewHandler implements ThemeViewHandlerInterface, OnThemeListe
     }
 
     @Override
-    public void setThemeColor(int skinColor, int skinTextColor) {
-        this.mThemeColor = skinColor;
-        this.mThemeTextColor = skinTextColor;
+    public void setThemeColor(int themeColor, int themeTextColor) {
+        this.mThemeColor = themeColor;
+        this.mThemeTextColor = themeTextColor;
         this.mSetThemeColor = true;
         this.mSetThemeTextColor = true;
         if (theme != null) {
@@ -118,10 +118,10 @@ public class ThemeViewHandler implements ThemeViewHandlerInterface, OnThemeListe
     }
 
     @Override
-    public void onThemeEdited(Theme skin) {
-        this.theme = skin;
-        if (skinRefreshListener != null) {
-            skinRefreshListener.onThemeEdited(skin);
+    public void onThemeEdited(Theme theme) {
+        this.theme = theme;
+        if (themeRefreshListener != null) {
+            themeRefreshListener.onThemeEdited(theme);
         }
         if (themeColorListener != null) {
             themeColorListener.onColor(getThemeColor(), getThemeTextColor());
@@ -131,8 +131,8 @@ public class ThemeViewHandler implements ThemeViewHandlerInterface, OnThemeListe
     public void initAttributeSet(final AttributeSet attrs) {
         if (attrs != null) {
             final TypedArray typedArray = view.getContext().obtainStyledAttributes(attrs, R.styleable.ThemeView);
-            int skin = typedArray.getInt(R.styleable.ThemeView_theme_type, themeType.value());
-            themeType = ThemeType.valueOf(skin);
+            int theme = typedArray.getInt(R.styleable.ThemeView_theme_type, themeType.value());
+            themeType = ThemeType.valueOf(theme);
             if (typedArray.hasValue(R.styleable.ThemeView_theme_color)) {
                 mThemeColor = typedArray.getColor(R.styleable.ThemeView_theme_color, ThemeManager.getTheme().getColor(themeType));
                 mSetThemeColor = true;

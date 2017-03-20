@@ -97,12 +97,12 @@ public class Theme {
         return property.getBlackTextColor();
     }
 
-    public int getColor(ThemeType skinType) {
-        return property.getColor(skinType);
+    public int getColor(ThemeType themeType) {
+        return property.getColor(themeType);
     }
 
-    public int getTextColor(ThemeType skinType) {
-        return property.getTextColor(skinType);
+    public int getTextColor(ThemeType themeType) {
+        return property.getTextColor(themeType);
     }
 
     public String getThemeName() {

@@ -12,7 +12,7 @@ public interface ThemeViewHandlerInterface {
 
     void setThemeType(ThemeType themeType);
 
-    void setThemeColor(int skinColor, int skinTextColor);
+    void setThemeColor(int themeColor, int themeTextColor);
 
     int getThemeColor();
 
