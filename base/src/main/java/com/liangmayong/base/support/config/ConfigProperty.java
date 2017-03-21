@@ -40,12 +40,12 @@ public class ConfigProperty {
     private class DatabaseHelper extends SQLiteOpenHelper {
 
         public DatabaseHelper(Context context, String dbname) {
-            super(context, dbname, null, DB_VERSION);
+            super(context, dbname + "_property.db", null, DB_VERSION);
         }
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " + F_KEY + " TEXT NOT NULL," + F_PROPERTY + " TEXT, " + F_TIMESTAMP + " INTEGER);");
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " + F_KEY + " DB_TYPE_TEXT NOT NULL," + F_PROPERTY + " DB_TYPE_TEXT, " + F_TIMESTAMP + " DB_TYPE_INTEGER);");
         }
 
         @Override
