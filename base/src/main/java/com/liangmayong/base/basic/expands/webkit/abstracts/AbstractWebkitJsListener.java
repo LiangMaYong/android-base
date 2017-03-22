@@ -7,7 +7,7 @@ import android.webkit.WebView;
 /**
  * Created by LiangMaYong on 2017/2/18.
  */
-public interface AbstractsWebkitJsListener {
+public interface AbstractWebkitJsListener {
 
     boolean onJsAlert(WebView view, String url, String message, JsResult result);
 

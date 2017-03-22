@@ -9,12 +9,12 @@ import android.webkit.WebView;
 /**
  * Created by LiangMaYong on 2017/2/18.
  */
-public class AbstractsWebkitChromeClient extends WebChromeClient {
+public class AbstractWebkitChromeClient extends WebChromeClient {
 
-    private AbstractsWebkitJsListener jsListener = null;
-    private AbstractsWebkitProgressListener progressListener = null;
+    private AbstractWebkitJsListener jsListener = null;
+    private AbstractWebkitProgressListener progressListener = null;
 
-    public AbstractsWebkitChromeClient(AbstractsWebkitJsListener jsListener, AbstractsWebkitProgressListener progressListener) {
+    public AbstractWebkitChromeClient(AbstractWebkitJsListener jsListener, AbstractWebkitProgressListener progressListener) {
         this.jsListener = jsListener;
         this.progressListener = progressListener;
     }
@@ -22,10 +22,10 @@ public class AbstractsWebkitChromeClient extends WebChromeClient {
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
         if (progressListener != null) {
-            if (view instanceof AbstractsWebKit) {
-                progressListener.onProgressChanged((AbstractsWebKit) view, newProgress);
+            if (view instanceof AbstractWebKit) {
+                progressListener.onProgressChanged((AbstractWebKit) view, newProgress);
                 if (newProgress == 100) {
-                    ((AbstractsWebKit) view).onPageFinished();
+                    ((AbstractWebKit) view).onPageFinished();
                 }
             }
         }

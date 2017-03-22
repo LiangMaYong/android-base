@@ -13,15 +13,15 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import com.liangmayong.base.R;
-import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebKit;
-import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitChromeClient;
-import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitClient;
-import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitDeviceListener;
-import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitHeaders;
-import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitInterceptor;
-import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitJsListener;
-import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitLoadingInterceptor;
-import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitProgressListener;
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractWebKit;
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractWebkitChromeClient;
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractWebkitClient;
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractWebkitDeviceListener;
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractWebkitHeaders;
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractWebkitInterceptor;
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractWebkitJsListener;
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractWebkitLoadingInterceptor;
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractWebkitProgressListener;
 import com.liangmayong.base.basic.expands.webkit.config.WebConfig;
 import com.liangmayong.base.basic.flow.FlowBaseFragment;
 import com.liangmayong.base.basic.interfaces.IBase;
@@ -30,8 +30,6 @@ import com.liangmayong.base.support.toolbar.DefaultToolbar;
 import com.liangmayong.base.support.utils.DeviceUtils;
 import com.liangmayong.base.support.utils.GoToUtils;
 import com.liangmayong.base.widget.iconfont.IconFont;
-
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,16 +40,16 @@ import java.util.Map;
  * Created by LiangMaYong on 2017/2/18.
  */
 
-public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHeaders
-        , AbstractsWebkitInterceptor
-        , AbstractsWebkitJsListener
-        , AbstractsWebkitProgressListener
-        , AbstractsWebkitDeviceListener {
+public class WebFragment extends FlowBaseFragment implements AbstractWebkitHeaders
+        , AbstractWebkitInterceptor
+        , AbstractWebkitJsListener
+        , AbstractWebkitProgressListener
+        , AbstractWebkitDeviceListener {
 
     // base_web_frame
     private FrameLayout base_web_frame;
     // abstractsWebKit
-    private AbstractsWebKit abstractsWebKit;
+    private AbstractWebKit abstractsWebKit;
     // title
     private String title = "";
     // url
@@ -69,17 +67,17 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
     @Override
     protected void initViews(View containerView) {
         base_web_frame = (FrameLayout) containerView.findViewById(R.id.base_default_web_frame);
-        abstractsWebKit = new AbstractsWebKit(getActivity());
+        abstractsWebKit = new AbstractWebKit(getActivity());
         abstractsWebKit.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         base_web_frame.addView(abstractsWebKit);
-        abstractsWebKit.setWebViewClient(new AbstractsWebkitClient(this, this, this) {
+        abstractsWebKit.setWebViewClient(new AbstractWebkitClient(this, this, this) {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 setTitle(view.getTitle());
             }
         });
-        abstractsWebKit.setWebChromeClient(new AbstractsWebkitChromeClient(this, this));
+        abstractsWebKit.setWebChromeClient(new AbstractWebkitChromeClient(this, this));
         if (url == null || "".equals(url) || "null".equals(url)) {
             url = "about:blank";
         }
@@ -87,7 +85,7 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
         setTitle(title);
     }
 
-    public AbstractsWebKit getAbstractsWebKit() {
+    public AbstractWebKit getAbstractsWebKit() {
         return abstractsWebKit;
     }
 
@@ -238,11 +236,11 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
      *
      * @return generateLoadingInterceptors
      */
-    protected List<AbstractsWebkitLoadingInterceptor> generateLoadingInterceptors() {
-        List<AbstractsWebkitLoadingInterceptor> interceptors = new ArrayList<AbstractsWebkitLoadingInterceptor>();
-        interceptors.add(new AbstractsWebkitLoadingInterceptor("action:") {
+    protected List<AbstractWebkitLoadingInterceptor> generateLoadingInterceptors() {
+        List<AbstractWebkitLoadingInterceptor> interceptors = new ArrayList<AbstractWebkitLoadingInterceptor>();
+        interceptors.add(new AbstractWebkitLoadingInterceptor("action:") {
             @Override
-            public boolean interceptorUrlLoading(AbstractsWebKit web, UrlParam url) {
+            public boolean interceptorUrlLoading(AbstractWebKit web, UrlParam url) {
                 if ("finish".equals(url.getContent())) {
                     action_finish();
                 } else if ("reload".equals(url.getContent())) {
@@ -301,13 +299,13 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
     }
 
     @Override
-    public boolean shouldOverrideUrlLoading(AbstractsWebKit view, String url) {
-        List<AbstractsWebkitLoadingInterceptor> interceptors = generateLoadingInterceptors();
+    public boolean shouldOverrideUrlLoading(AbstractWebKit view, String url) {
+        List<AbstractWebkitLoadingInterceptor> interceptors = generateLoadingInterceptors();
         if (interceptors != null && interceptors.size() > 0) {
             for (int i = 0; i < interceptors.size(); i++) {
                 String lowurl = url.toLowerCase();
                 if (lowurl.startsWith(interceptors.get(i).getScheme())) {
-                    boolean flag = interceptors.get(i).interceptorUrlLoading(view, new AbstractsWebkitLoadingInterceptor.UrlParam(url, interceptors.get(i).getScheme()));
+                    boolean flag = interceptors.get(i).interceptorUrlLoading(view, new AbstractWebkitLoadingInterceptor.UrlParam(url, interceptors.get(i).getScheme()));
                     if (flag) {
                         return true;
                     }
@@ -338,7 +336,7 @@ public class WebFragment extends FlowBaseFragment implements AbstractsWebkitHead
     }
 
     @Override
-    public void onProgressChanged(AbstractsWebKit view, int newProgress) {
+    public void onProgressChanged(AbstractWebKit view, int newProgress) {
         setProgress(newProgress);
     }
 

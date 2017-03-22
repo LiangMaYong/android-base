@@ -1,7 +1,5 @@
 package com.liangmayong.base.basic.expands.webkit.abstracts;
 
-import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebKit;
-
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,11 +8,11 @@ import java.util.Map;
  * Created by LiangMaYong on 2016/11/1.
  */
 
-public abstract class AbstractsWebkitLoadingInterceptor {
+public abstract class AbstractWebkitLoadingInterceptor {
 
     private final String scheme;
 
-    public AbstractsWebkitLoadingInterceptor(String scheme) {
+    public AbstractWebkitLoadingInterceptor(String scheme) {
         this.scheme = scheme.toLowerCase();
     }
 
@@ -22,7 +20,7 @@ public abstract class AbstractsWebkitLoadingInterceptor {
         return scheme;
     }
 
-    public abstract boolean interceptorUrlLoading(AbstractsWebKit web, UrlParam url);
+    public abstract boolean interceptorUrlLoading(AbstractWebKit web, UrlParam url);
 
     /**
      * Created by LiangMaYong on 2017/1/3.

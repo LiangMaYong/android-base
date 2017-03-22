@@ -14,14 +14,14 @@ import org.json.JSONObject;
 /**
  * Created by LiangMaYong on 2017/2/18.
  */
-public class AbstractsWebkitClient extends android.webkit.WebViewClient {
+public class AbstractWebkitClient extends android.webkit.WebViewClient {
 
-    private AbstractsWebkitInterceptor interceptor = null;
-    private AbstractsWebkitHeaders headers = null;
-    private AbstractsWebkitDeviceListener deviceListener = null;
+    private AbstractWebkitInterceptor interceptor = null;
+    private AbstractWebkitHeaders headers = null;
+    private AbstractWebkitDeviceListener deviceListener = null;
     private boolean mPageFinished = false;
 
-    public AbstractsWebkitClient(AbstractsWebkitInterceptor interceptor, AbstractsWebkitHeaders headers, AbstractsWebkitDeviceListener deviceListener) {
+    public AbstractWebkitClient(AbstractWebkitInterceptor interceptor, AbstractWebkitHeaders headers, AbstractWebkitDeviceListener deviceListener) {
         this.interceptor = interceptor;
         this.headers = headers;
         this.deviceListener = deviceListener;
@@ -33,8 +33,8 @@ public class AbstractsWebkitClient extends android.webkit.WebViewClient {
         if (!mPageFinished) {
             mPageFinished = true;
             if (url != null && !"about:blank".equals(url)) {
-                if (view instanceof AbstractsWebKit) {
-                    AbstractsWebKit webKit = (AbstractsWebKit) view;
+                if (view instanceof AbstractWebKit) {
+                    AbstractWebKit webKit = (AbstractWebKit) view;
                     String jsName = WebConfig.getConfig("jsBridgeName", "jsBridge");
                     webKit.injectionAssetsJS("javascript/android_js_bridge.js", jsName);
                     try {
@@ -56,10 +56,10 @@ public class AbstractsWebkitClient extends android.webkit.WebViewClient {
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             String url = request.getUrl().toString();
-            if (view instanceof AbstractsWebKit) {
+            if (view instanceof AbstractWebKit) {
                 boolean flag = false;
                 if (interceptor != null) {
-                    flag = interceptor.shouldOverrideUrlLoading((AbstractsWebKit) view, url);
+                    flag = interceptor.shouldOverrideUrlLoading((AbstractWebKit) view, url);
                 }
                 if (flag) {
                     return true;
@@ -76,10 +76,10 @@ public class AbstractsWebkitClient extends android.webkit.WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        if (view instanceof AbstractsWebKit) {
+        if (view instanceof AbstractWebKit) {
             boolean flag = false;
             if (interceptor != null) {
-                flag = interceptor.shouldOverrideUrlLoading((AbstractsWebKit) view, url);
+                flag = interceptor.shouldOverrideUrlLoading((AbstractWebKit) view, url);
             }
             if (flag) {
                 return true;

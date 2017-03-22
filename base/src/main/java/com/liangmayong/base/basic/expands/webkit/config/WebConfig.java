@@ -1,7 +1,8 @@
 package com.liangmayong.base.basic.expands.webkit.config;
 
-import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitDeviceListener;
-import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractsWebkitLoadingInterceptor;
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractWebkitDeviceListener;
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractWebkitDownloadListener;
+import com.liangmayong.base.basic.expands.webkit.abstracts.AbstractWebkitLoadingInterceptor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,28 +18,38 @@ public class WebConfig {
     // HEADERS
     private static final Map<String, String> HEADERS = new HashMap<String, String>();
     // INTERCEPTORS
-    private static final List<AbstractsWebkitLoadingInterceptor> INTERCEPTORS = new ArrayList<AbstractsWebkitLoadingInterceptor>();
+    private static final List<AbstractWebkitLoadingInterceptor> INTERCEPTORS = new ArrayList<AbstractWebkitLoadingInterceptor>();
 
-    private static AbstractsWebkitDeviceListener deviceListener = null;
+    private static AbstractWebkitDeviceListener deviceListener = null;
+
+    private static AbstractWebkitDownloadListener downloadListener = null;
 
     /**
      * interceptor
      *
      * @param interceptor interceptor
      */
-    public static void addInterceptor(AbstractsWebkitLoadingInterceptor interceptor) {
+    public static void addInterceptor(AbstractWebkitLoadingInterceptor interceptor) {
         if (interceptor != null) {
             removeInterceptor(interceptor.getScheme());
             INTERCEPTORS.add(interceptor);
         }
     }
 
-    public static AbstractsWebkitDeviceListener getDeviceListener() {
+    public static AbstractWebkitDeviceListener getDeviceListener() {
         return deviceListener;
     }
 
-    public static void setDeviceListener(AbstractsWebkitDeviceListener deviceListener) {
+    public static void setDeviceListener(AbstractWebkitDeviceListener deviceListener) {
         WebConfig.deviceListener = deviceListener;
+    }
+
+    public static AbstractWebkitDownloadListener getDownloadListener() {
+        return downloadListener;
+    }
+
+    public static void setDownloadListener(AbstractWebkitDownloadListener downloadListener) {
+        WebConfig.downloadListener = downloadListener;
     }
 
     /**
@@ -143,7 +154,7 @@ public class WebConfig {
      *
      * @return interceptors
      */
-    public static List<AbstractsWebkitLoadingInterceptor> getInterceptors() {
+    public static List<AbstractWebkitLoadingInterceptor> getInterceptors() {
         return INTERCEPTORS;
     }
 }

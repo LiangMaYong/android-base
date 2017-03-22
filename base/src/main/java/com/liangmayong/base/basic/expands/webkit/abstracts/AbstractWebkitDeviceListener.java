@@ -7,6 +7,6 @@ import java.util.Map;
 /**
  * Created by LiangMaYong on 2017/2/18.
  */
-public interface AbstractsWebkitDeviceListener {
+public interface AbstractWebkitDeviceListener {
     Map<String, String> generateDeviceInfo(Context context);
 }

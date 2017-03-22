@@ -10,6 +10,7 @@ import android.webkit.DownloadListener;
 import android.webkit.WebViewClient;
 
 import com.liangmayong.base.basic.expands.webkit.callback.WebCallback;
+import com.liangmayong.base.basic.expands.webkit.config.WebConfig;
 import com.liangmayong.base.support.utils.StringUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -19,7 +20,7 @@ import java.io.InputStream;
 /**
  * Created by LiangMaYong on 2017/2/18.
  */
-public class AbstractsWebKit extends android.webkit.WebView implements WebCallback.Callback {
+public class AbstractWebKit extends android.webkit.WebView implements WebCallback.Callback {
 
     /**
      * Java call js function format with parameters
@@ -32,7 +33,7 @@ public class AbstractsWebKit extends android.webkit.WebView implements WebCallba
     // client
     private WebViewClient client;
 
-    public AbstractsWebKit(Context context) {
+    public AbstractWebKit(Context context) {
         super(context);
         initWebKit();
     }
@@ -42,9 +43,13 @@ public class AbstractsWebKit extends android.webkit.WebView implements WebCallba
         setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                Uri uri = Uri.parse(url);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                getContext().startActivity(intent);
+                if (WebConfig.getDownloadListener() != null) {
+                    WebConfig.getDownloadListener().onDownloadStart(url, userAgent, contentDisposition, mimetype, contentLength);
+                } else {
+                    Uri uri = Uri.parse(url);
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    getContext().startActivity(intent);
+                }
             }
         });
         if (Build.VERSION.SDK_INT >= 9) {
