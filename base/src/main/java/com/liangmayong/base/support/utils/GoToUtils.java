@@ -181,6 +181,15 @@ public final class GoToUtils {
     }
 
     /**
+     * goCrash
+     *
+     * @param context context
+     */
+    public static void goCrash(Context context) {
+        goToRouter(context, "Base:Crash");
+    }
+
+    /**
      * goHome
      *
      * @param context context

@@ -104,7 +104,7 @@ public abstract class SQLiteDAO {
 
         public void createTable() {
             try {
-                SQLiteDatabase db = helper.getWritableDatabase();
+                SQLiteDatabase db = getWritableDatabase();
                 try {
                     onCreate(db);
                 } finally {

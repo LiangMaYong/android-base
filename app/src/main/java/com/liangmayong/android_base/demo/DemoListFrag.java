@@ -14,6 +14,7 @@ import com.liangmayong.base.support.theme.ThemeManager;
 import com.liangmayong.base.support.theme.defaults.ThemeDay;
 import com.liangmayong.base.support.theme.defaults.ThemeNight;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
+import com.liangmayong.base.support.utils.GoToUtils;
 
 /**
  * Created by LiangMaYong on 2016/10/17.
@@ -70,7 +71,7 @@ public class DemoListFrag extends FlowRecyclerFragment {
         defaultToolbar.rightFour().text("R2").click(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listAdapter.notifyItemChanged(2);
+                GoToUtils.goCrash(getContext());
             }
         });
         defaultToolbar.rightThree().text("C").click(new View.OnClickListener() {

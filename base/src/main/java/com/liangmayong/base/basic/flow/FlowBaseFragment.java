@@ -62,16 +62,16 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
     }
 
     /**
-     * closeSelfAndOpen
+     * openSingleInstance
      *
      * @param fragment fragment
      */
     protected void openSingleInstance(FlowBaseFragment fragment) {
-        open(fragment, null);
+        openSingleInstance(fragment, null);
     }
 
     /**
-     * closeAndOpen fragment
+     * openSingleInstance
      *
      * @param fragment fragment
      * @param bundle   bundle

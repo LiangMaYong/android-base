@@ -44,6 +44,7 @@
     <item name="base_default_navigation" type="id"/>
 
     <item name="base_default_logcat" type="id"/>
+    <item name="base_default_crash" type="id"/>
     <item name="base_default_edit_logcat_tag" type="id"/>
     <item name="base_default_btn_logcat_set" type="id"/>
 </resources>

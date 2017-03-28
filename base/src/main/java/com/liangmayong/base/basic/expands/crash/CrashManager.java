@@ -1,4 +1,4 @@
-package com.liangmayong.base.support.crash;
+package com.liangmayong.base.basic.expands.crash;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import com.liangmayong.base.basic.expands.crash.dao.CrashDao;
+import com.liangmayong.base.basic.expands.crash.model.CrashModel;
 import com.liangmayong.base.support.logger.Logger;
 
 import java.io.ByteArrayOutputStream;
@@ -33,19 +35,20 @@ public final class CrashManager implements Thread.UncaughtExceptionHandler {
      * @param context context
      */
     public static void init(Context context) {
-        if (crashManager == null) {
-            crashManager = new CrashManager(context, null, null);
-        }
+        init(context, null, null);
     }
 
     /**
-     * @return
+     * init
+     *
+     * @param context
+     * @param handler
+     * @param crashLogListener
      */
-    public static CrashManager get() {
+    public static void init(Context context, Thread.UncaughtExceptionHandler handler, OnCrashLogListener crashLogListener) {
         if (crashManager == null) {
-            throw new IllegalArgumentException("CrashManager not init");
+            crashManager = new CrashManager(context, handler, crashLogListener);
         }
-        return crashManager;
     }
 
     private CrashManager(Context context, Thread.UncaughtExceptionHandler handler, OnCrashLogListener crashLogListener) {
@@ -55,28 +58,16 @@ public final class CrashManager implements Thread.UncaughtExceptionHandler {
         Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
-    /**
-     * setCrashLogListener
-     *
-     * @param crashLogListener crashLogListener
-     */
-    public void setCrashLogListener(OnCrashLogListener crashLogListener) {
-        this.crashLogListener = crashLogListener;
-    }
-
-    /**
-     * setHandler
-     *
-     * @param handler handler
-     */
-    public void setHandler(Thread.UncaughtExceptionHandler handler) {
-        this.handler = handler;
-    }
-
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
         String errMsg = getError(thread, ex);
         Logger.e(errMsg);
+        CrashDao crashDao = new CrashDao(mContext);
+        CrashModel crashModel = new CrashModel();
+        crashModel.setTitle(getTitle(thread, ex));
+        crashModel.setLog(errMsg);
+        crashModel.setTime(System.currentTimeMillis());
+        crashDao.addCrash(crashModel);
         if (crashLogListener != null) {
             crashLogListener.onCrashLog(errMsg);
         }
@@ -86,21 +77,54 @@ public final class CrashManager implements Thread.UncaughtExceptionHandler {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
+    private String getTitle(Thread td, Throwable ex) {
+        String title = "";
+        if (ex != null) {
+            try {
+                ByteArrayOutputStream baos = null;
+                try {
+                    baos = new ByteArrayOutputStream();
+                    PrintStream ps = new PrintStream(baos);
+                    while (ex != null) {
+                        ex.printStackTrace(ps);
+                        ex = null;
+                    }
+                    baos.flush();
+                    byte[] bytes = baos.toByteArray();
+                    baos.close();
+                    ps.close();
+                    title += new String(bytes, "utf-8");
+                } catch (Exception e) {
+                }
+            } catch (Exception e) {
+            }
+        }
+        return title;
+    }
+
+    /**
+     * getError
+     *
+     * @param td
+     * @param ex
+     * @return
+     */
     private String getError(Thread td, Throwable ex) {
         String errInfo = "";
         if (ex != null) {
             try {
-                errInfo += "\r\n|====================================================================|\r\n";
+                errInfo += "\r\n|========================================|\r\n";
                 // write currtime
                 errInfo += getCurrTime();
                 // write device
-                errInfo += getUEPROF();
+                errInfo += getDeviceInfo();
                 // write clientInfo
                 errInfo += getPkgInfo();
                 // write thread
                 if (td != null) {
                     errInfo += td.toString();
                 }
+                errInfo += "\r\n";
                 errInfo += "\r\n";
 
                 ByteArrayOutputStream baos = null;
@@ -120,14 +144,14 @@ public final class CrashManager implements Thread.UncaughtExceptionHandler {
                     errInfo += new String(bytes, "utf-8");
                 } catch (Exception e) {
                 }
-                errInfo += "\r\n|====================================================================|\r\n";
+                errInfo += "\r\n|========================================|\r\n";
             } catch (Exception e) {
             }
         }
         return errInfo;
     }
 
-    private String getUEPROF() {
+    private String getDeviceInfo() {
         StringBuilder mBuffer = new StringBuilder();
 
         int appCode = 1;
@@ -136,7 +160,6 @@ public final class CrashManager implements Thread.UncaughtExceptionHandler {
                     mContext.getPackageName(), 0);
             appCode = info.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
-
             e.printStackTrace();
         }
         mBuffer.setLength(0);
