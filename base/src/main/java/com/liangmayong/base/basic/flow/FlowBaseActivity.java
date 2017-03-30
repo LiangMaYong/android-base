@@ -58,7 +58,7 @@ public abstract class FlowBaseActivity extends BaseActivity implements IFlow {
      * generateContainerView
      */
     protected void generateContainerView() {
-        setContentView(R.layout.base_default_flow_activity);
+        setContentView(R.layout.base_default_activity_flow);
     }
 
     /**

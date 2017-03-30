@@ -1,6 +1,7 @@
 package com.liangmayong.base.basic.abstracts;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -61,6 +62,11 @@ public abstract class AbstractBaseFragment extends Fragment implements IBase {
         LinearLayout rootView = new LinearLayout(inflater.getContext());
         rootView.setPadding(0, 0, 0, 0);
         rootView.setId(R.id.base_default_fragment_content);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            rootView.setBackgroundColor(inflater.getContext().getColor(R.color.base_default_layout_bg_color));
+        } else {
+            rootView.setBackgroundColor(inflater.getContext().getResources().getColor(R.color.base_default_layout_bg_color));
+        }
         rootView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         rootView.setOrientation(LinearLayout.VERTICAL);
         View view = getContaierView(inflater, container, savedInstanceState);

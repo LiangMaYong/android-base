@@ -39,6 +39,13 @@ public class CrashLogFragment extends FlowBaseFragment {
             j = i + crashModel.getTitle().length();
         }
         styled.setSpan(new ForegroundColorSpan(Color.RED), i, j, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        int ki = crashModel.getLog().indexOf("(");
+        int kj = crashModel.getLog().indexOf(")", ki);
+        while (ki >= 0 && kj > 0) {
+            styled.setSpan(new ForegroundColorSpan(0xff333333), ki, kj + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ki = crashModel.getLog().indexOf("(", kj);
+            kj = crashModel.getLog().indexOf(")", ki);
+        }
         viewHolder.base_default_crash.setText(styled);
     }
 

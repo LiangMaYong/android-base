@@ -19,7 +19,9 @@
     <item name="base_default_item_right_sub" type="id"/>
     <item name="base_default_item_arrow" type="id"/>
 
-    <!-- base_default_flow_activityy.xml -->
+    <item name="base_default_swipeback_frame" type="id"/>
+
+    <!-- base_default_flow_activity.xml -->
     <item name="base_default_flow_frame" type="id"/>
 
     <!-- base_default_retry_layout.xml -->

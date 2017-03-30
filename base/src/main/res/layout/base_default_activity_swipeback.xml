@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.liangmayong.base.basic.expands.swipeback.core.SwipeBackLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/base_default_swipeback_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+    

@@ -26,14 +26,15 @@
         android:supportsRtl="true">
         <activity
             android:name="com.liangmayong.base.basic.expands.crash.CrashActivity"
+            android:theme="@style/BaseTheme.Translucent"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.liangmayong.base.basic.expands.logcat.LogcatActivity"
+            android:theme="@style/BaseTheme.Translucent"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.liangmayong.base.basic.expands.webkit.WebActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name="com.liangmayong.base.basic.expands.logcat.LogcatActivity"
-            android:screenOrientation="portrait"/>
-
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.base.authority.fileprovider"
