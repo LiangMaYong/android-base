@@ -166,6 +166,13 @@ public class SuperRecyclerAdapter extends RecyclerView.Adapter<SuperRecyclerAdap
         return items.contains(item);
     }
 
+    @Override
+    public void notifyItemChanged(int firstPosition, int lastPosition) {
+        for (int i = firstPosition; i <= lastPosition; i++) {
+            notifyItemChanged(i);
+        }
+    }
+
     /**
      * ViewHolder
      */

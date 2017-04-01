@@ -76,7 +76,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/base_default_item_arrow"
+            android:id="@id/base_default_item_arrow"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginRight="10dp"

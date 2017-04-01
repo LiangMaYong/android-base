@@ -87,4 +87,13 @@ public interface ISuperAdapter {
      * @param position position
      */
     void notifyItemChanged(int position);
+
+
+    /**
+     * notifyItemChanged
+     *
+     * @param firstPosition firstPosition
+     * @param lastPosition  lastPosition
+     */
+    void notifyItemChanged(int firstPosition, int lastPosition);
 }
