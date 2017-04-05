@@ -341,8 +341,8 @@ public class WebFragment extends FlowBaseFragment implements AbstractWebkitHeade
     }
 
     @Override
-    public Map<String,String> generateDeviceInfo(Context context) {
-        Map<String,String> deviceInfo = DeviceUtils.getDeviceInfo(context);
+    public Map<String, String> generateDeviceInfo(Context context) {
+        Map<String, String> deviceInfo = DeviceUtils.getDeviceInfo(context);
         if (WebConfig.getDeviceListener() != null) {
             deviceInfo.putAll(WebConfig.getDeviceListener().generateDeviceInfo(context));
         }

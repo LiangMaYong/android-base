@@ -248,9 +248,9 @@ public abstract class AbstractBaseFragment extends Fragment implements IBase {
     }
 
     @Override
-    public void showSoftKeyBoard(final EditText editText) {
+    public void showSoftKeyBoard(final EditText editText,long delay) {
         if (getActivity() instanceof IBase) {
-            ((IBase) getActivity()).showSoftKeyBoard(editText);
+            ((IBase) getActivity()).showSoftKeyBoard(editText,delay);
         }
     }
 
@@ -258,6 +258,13 @@ public abstract class AbstractBaseFragment extends Fragment implements IBase {
     public void ignoreTouchHideSoftKeyboard(View view) {
         if (getActivity() instanceof IBase) {
             ((IBase) getActivity()).ignoreTouchHideSoftKeyboard(view);
+        }
+    }
+
+    @Override
+    public void touchHideSoftKeyboard(View view) {
+        if (getActivity() instanceof IBase) {
+            ((IBase) getActivity()).touchHideSoftKeyboard(view);
         }
     }
 

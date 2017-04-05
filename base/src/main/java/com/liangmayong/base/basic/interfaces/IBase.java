@@ -129,7 +129,7 @@ public interface IBase extends OnThemeListener, AndroidBug5497Workaround.OnSoftK
      *
      * @param editText editText
      */
-    void showSoftKeyBoard(EditText editText);
+    void showSoftKeyBoard(EditText editText, long delay);
 
     /**
      * ignoreTouchHideSoftKeyboard
@@ -137,6 +137,13 @@ public interface IBase extends OnThemeListener, AndroidBug5497Workaround.OnSoftK
      * @param view view
      */
     void ignoreTouchHideSoftKeyboard(View view);
+
+    /**
+     * touchHideSoftKeyboard
+     *
+     * @param view view
+     */
+    void touchHideSoftKeyboard(View view);
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ///////////////////////////////////////////////////// Presenter ////////////////////////////////////////////////////////

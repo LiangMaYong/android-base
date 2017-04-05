@@ -316,8 +316,11 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void showSoftKeyBoard(final EditText editText) {
+    public void showSoftKeyBoard(final EditText editText, long delay) {
         try {
+            if (delay > 1000) {
+                delay = 1000;
+            }
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -326,7 +329,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
                     editText.requestFocus();
                     inputMethodManager.showSoftInput(editText, 0);
                 }
-            }, 500);
+            }, delay);
         } catch (Exception e) {
         }
     }
@@ -335,6 +338,13 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     public void ignoreTouchHideSoftKeyboard(View view) {
         if (!mIgnoreTouchHideKeyboard.contains(view)) {
             mIgnoreTouchHideKeyboard.add(view);
+        }
+    }
+
+    @Override
+    public void touchHideSoftKeyboard(View view) {
+        if (!mIgnoreTouchHideKeyboard.contains(view)) {
+            mIgnoreTouchHideKeyboard.remove(view);
         }
     }
 
