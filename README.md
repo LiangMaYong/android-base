@@ -34,7 +34,7 @@ public class ${NAME} extends Presenter<${NAME}.IView> {
 ## LICENSE
 Copyright © LiangMaYong
 
-Distributed under [MIT](https://github.com/LiangMaYong/android-base/blob/master/LICENSE) license.
+Distributed under [MIT](https://github.com/LiangMaYong/android-base/blob/master/LICENSE.txt) license.
 
 ## Author
 LiangMaYong
