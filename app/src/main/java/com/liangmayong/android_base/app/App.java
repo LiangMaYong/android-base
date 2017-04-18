@@ -1,4 +1,4 @@
-package com.liangmayong.android_base;
+package com.liangmayong.android_base.app;
 
 import com.liangmayong.base.BaseApplication;
 

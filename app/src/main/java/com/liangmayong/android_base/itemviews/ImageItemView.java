@@ -1,4 +1,4 @@
-package com.liangmayong.android_base.demo;
+package com.liangmayong.android_base.itemviews;
 
 import android.view.View;
 import android.widget.TextView;
@@ -11,18 +11,18 @@ import com.liangmayong.base.support.adapter.view.BindingSuperItemView;
 /**
  * Created by LiangMaYong on 2016/9/25.
  */
-@BindLayout(R.layout.item2_view)
-public class DemoItem2View extends BindingSuperItemView<String> {
+@BindLayout(R.layout.item_image_view)
+public class ImageItemView extends BindingSuperItemView<Integer> {
 
     @BindView(R.id.tv_txt)
     private TextView tv_txt;
 
-    public DemoItem2View(String s) {
+    public ImageItemView(Integer s) {
         super(s);
     }
 
     @Override
-    protected void onBindView(View itemView, String s) {
-        tv_txt.setText(s);
+    protected void onBindView(View itemView, Integer s) {
+        tv_txt.setText(s + "");
     }
 }

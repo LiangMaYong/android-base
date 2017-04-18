@@ -31,12 +31,18 @@ public abstract class FlowBaseFragment extends BaseFragment implements IFrag {
     @Override
     public void onInitDefaultToolbar(DefaultToolbar defaultToolbar) {
         super.onInitDefaultToolbar(defaultToolbar);
-        defaultToolbar.leftOne().icon(IconFont.base_icon_back).click(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeSelf();
-            }
-        });
+        if (shouldShowBack()) {
+            defaultToolbar.leftOne().icon(IconFont.base_icon_back).click(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    closeSelf();
+                }
+            });
+        }
+    }
+
+    protected boolean shouldShowBack() {
+        return true;
     }
 
     /**

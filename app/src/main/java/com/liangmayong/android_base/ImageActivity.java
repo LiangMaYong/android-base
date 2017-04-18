@@ -17,8 +17,8 @@ import com.liangmayong.base.widget.view.RectangleLayout;
  * Created by LiangMaYong on 2017/1/3.
  */
 @BindLayout(R.layout.activity_image)
-@BindTitle("ImageViewActivity")
-public class ImageViewActivity extends BaseActivity {
+@BindTitle("ImageActivity")
+public class ImageActivity extends BaseActivity {
     @BindView(R.id.imgview)
     private RectangleLayout imgview;
 

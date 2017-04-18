@@ -13,6 +13,14 @@
         android:orientation="vertical"
         android:padding="20dp">
 
+        <ImageView
+            android:id="@+id/imgview"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="10dp"
+            android:src="@mipmap/img_src"/>
+
         <TextView
             android:id="@+id/tv_txt"
             android:layout_width="wrap_content"
@@ -20,12 +28,5 @@
             android:text="Item"
             android:textColor="#333333"/>
 
-        <com.liangmayong.base.widget.themeview.ThemeButton
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/btn_show"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="Button"
-            app:shape_type="stroke"/>
     </LinearLayout>
 </LinearLayout>

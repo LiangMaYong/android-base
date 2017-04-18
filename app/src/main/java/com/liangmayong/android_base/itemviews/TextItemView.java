@@ -1,4 +1,4 @@
-package com.liangmayong.android_base.demo;
+package com.liangmayong.android_base.itemviews;
 
 import android.view.View;
 import android.widget.TextView;
@@ -11,12 +11,12 @@ import com.liangmayong.base.support.adapter.view.BindingSuperItemView;
 /**
  * Created by LiangMaYong on 2016/9/25.
  */
-@BindLayout(R.layout.item_view)
-public class DemoItemView extends BindingSuperItemView<Integer> {
+@BindLayout(R.layout.item_text_view)
+public class TextItemView extends BindingSuperItemView<Integer> {
     @BindView(R.id.tv_txt)
     private TextView tv_txt;
 
-    public DemoItemView(Integer s) {
+    public TextItemView(Integer s) {
         super(s);
     }
 
