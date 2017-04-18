@@ -5,9 +5,9 @@ Android Base Expand
 
 ### BindView
 
-Version 1.1
+Version v1.1
 
-Download : [Download](https://raw.githubusercontent.com/LiangMaYong/android-base/master/expand/as-plugins/bindview/bindview-plugin-1.1.zip)
+Download : [Download](https://raw.githubusercontent.com/LiangMaYong/android-base/master/expand/as-plugins/bindview/bindview-plugin-v1.1.zip)
 
 
 ### Install plugin
