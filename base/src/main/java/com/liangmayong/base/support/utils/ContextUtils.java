@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Process;
 import android.view.ContextThemeWrapper;
 
+import com.liangmayong.base.BaseApplication;
+
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.Iterator;
@@ -89,6 +91,10 @@ public final class ContextUtils {
      * @return application
      */
     public static Application getApplication() {
+        Application mApp = BaseApplication.getApplication();
+        if (mApp != null) {
+            return mApp;
+        }
         if (application == null || application.get() == null) {
             synchronized (ContextUtils.class) {
                 if (application == null) {

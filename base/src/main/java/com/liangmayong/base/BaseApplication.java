@@ -5,9 +5,9 @@ import android.content.pm.ApplicationInfo;
 import android.support.annotation.NonNull;
 
 import com.liangmayong.base.basic.expands.crash.CrashActivity;
+import com.liangmayong.base.basic.expands.crash.CrashManager;
 import com.liangmayong.base.basic.expands.logcat.LogcatActivity;
 import com.liangmayong.base.basic.expands.webkit.WebActivity;
-import com.liangmayong.base.basic.expands.crash.CrashManager;
 import com.liangmayong.base.support.router.Router;
 import com.liangmayong.base.support.router.RouterProvider;
 
@@ -17,12 +17,24 @@ import com.liangmayong.base.support.router.RouterProvider;
  */
 public class BaseApplication extends Application {
 
+    private static Application mApplication;
+
+    /**
+     * getApplication
+     *
+     * @return mApplication
+     */
+    public static Application getApplication() {
+        return mApplication;
+    }
+
     /**
      * initialize
      *
-     * @param application application
+     * @param application mApplication
      */
     public static void initialize(final Application application) {
+        BaseApplication.mApplication = application;
         CrashManager.init(application);
         Router.addRouterProvider(new BaseRouterProvider("Base"));
     }
