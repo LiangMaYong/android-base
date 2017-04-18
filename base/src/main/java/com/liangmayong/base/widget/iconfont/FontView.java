@@ -3,6 +3,7 @@ package com.liangmayong.base.widget.iconfont;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
@@ -16,6 +17,7 @@ import com.liangmayong.base.R;
 public class FontView extends TextView {
 
     private String fontPath = "";
+    private Typeface typeface = null;
 
     public FontView(Context context) {
         super(context);
@@ -44,8 +46,9 @@ public class FontView extends TextView {
      * @param attrs attrs set
      */
     private void init(AttributeSet attrs) {
-        String iconfontPath = IconFont.PATH;
+        typeface = this.getTypeface();
         if (attrs != null) {
+            String iconfontPath = null;
             TypedArray a = getContext().getTheme()
                     .obtainStyledAttributes(attrs, R.styleable.BasicFontView, 0, 0);
             try {
@@ -55,8 +58,10 @@ public class FontView extends TextView {
             } finally {
                 a.recycle();
             }
+            if (iconfontPath != null) {
+                setFontTypeface(iconfontPath);
+            }
         }
-        setFontTypeface(iconfontPath);
     }
 
     /**
@@ -88,6 +93,8 @@ public class FontView extends TextView {
     public void setText(CharSequence text, BufferType type) {
         if (text instanceof FontValue) {
             setFontTypeface(((FontValue) text).getFont());
+        } else {
+            setTypeface(typeface);
         }
         super.setText(text, type);
     }

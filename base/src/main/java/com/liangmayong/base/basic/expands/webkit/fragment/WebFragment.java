@@ -203,15 +203,15 @@ public class WebFragment extends FlowBaseFragment implements AbstractWebkitHeade
     }
 
     private void action_success(String msg) {
-        getDefaultToolbar().message().show(IconFont.base_icon_circle_yes, " " + msg, ThemeManager.getTheme().getSuccessTextColor(), ThemeManager.getTheme().getSuccessColor(), 1500);
+        getDefaultToolbar().message().show(msg, ThemeManager.getTheme().getSuccessTextColor(), ThemeManager.getTheme().getSuccessColor(), 1500);
     }
 
     private void action_warning(String msg) {
-        getDefaultToolbar().message().show(IconFont.base_icon_circle_warning, " " + msg, ThemeManager.getTheme().getWarningTextColor(), ThemeManager.getTheme().getWarningColor(), 1500);
+        getDefaultToolbar().message().show(msg, ThemeManager.getTheme().getWarningTextColor(), ThemeManager.getTheme().getWarningColor(), 1500);
     }
 
     private void action_danger(String msg) {
-        getDefaultToolbar().message().show(IconFont.base_icon_circle_error, " " + msg, ThemeManager.getTheme().getDangerTextColor(), ThemeManager.getTheme().getDangerColor(), 1500);
+        getDefaultToolbar().message().show(msg, ThemeManager.getTheme().getDangerTextColor(), ThemeManager.getTheme().getDangerColor(), 1500);
     }
 
     private void action_finish() {

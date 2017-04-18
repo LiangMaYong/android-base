@@ -516,18 +516,6 @@ public class DefaultToolbar {
         }
 
         /**
-         * show
-         *
-         * @param text            text
-         * @param textColor       textColor
-         * @param backgroundColor backgroundColor
-         * @param duration        duration
-         */
-        public void show(String text, int textColor, int backgroundColor, int duration) {
-            show(null, text, textColor, backgroundColor, duration);
-        }
-
-        /**
          * getMessageView
          *
          * @return message
@@ -539,18 +527,13 @@ public class DefaultToolbar {
         /**
          * show
          *
-         * @param icon            icon
          * @param text            text
          * @param textColor       textColor
          * @param backgroundColor backgroundColor
          * @param duration        duration
          */
-        public void show(FontValue icon, String text, int textColor, int backgroundColor, int duration) {
-            if (icon != null) {
-                getMessageView().setText(icon + " " + text);
-            } else {
-                getMessageView().setText(text);
-            }
+        public void show(String text, int textColor, int backgroundColor, int duration) {
+            getMessageView().setText(text);
             getMessageView().setTextColor(textColor);
             getMessageView().setBackgroundColor(backgroundColor);
             _visible();
