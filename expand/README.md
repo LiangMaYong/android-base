@@ -3,11 +3,11 @@ Android Base Expand
 
 ## Android Studio Plugins
 
-### BindView1.1
+### BindView
 
 Version 1.1
 
-Download : [Download](https://raw.githubusercontent.com/LiangMaYong/android-base/master/expand/as-plugins/1.1/BindView-Plugin-1.1.zip)
+Download : [Download](https://raw.githubusercontent.com/LiangMaYong/android-base/master/expand/as-plugins/bindview/bindview-plugin-1.1.zip)
 
 
 ### Install plugin
