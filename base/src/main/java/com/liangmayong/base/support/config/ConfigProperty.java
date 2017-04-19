@@ -6,8 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by LiangMaYong on 2017/3/13.
@@ -45,7 +50,7 @@ public class ConfigProperty {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " + F_KEY + " DB_TYPE_TEXT NOT NULL," + F_PROPERTY + " DB_TYPE_TEXT, " + F_TIMESTAMP + " DB_TYPE_INTEGER);");
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " + F_KEY + " TEXT NOT NULL," + F_PROPERTY + " BLOD, " + F_TIMESTAMP + " INTEGER);");
         }
 
         @Override
@@ -70,13 +75,13 @@ public class ConfigProperty {
      * @param key      key
      * @param property property
      */
-    public void setProperty(Context context, String key, String property) {
+    public <T> void setProperty(Context context, String key, T property) {
         if (hasProperty(context, key)) {
             DatabaseHelper databaseHelper = new DatabaseHelper(context, getName());
             SQLiteDatabase db = databaseHelper.getWritableDatabase();
             try {
                 ContentValues contentValues = new ContentValues();
-                contentValues.put(F_PROPERTY, property);
+                contentValues.put(F_PROPERTY, toByteArray(property));
                 contentValues.put(F_TIMESTAMP, System.currentTimeMillis());
                 db.update(TABLE_NAME, contentValues, F_KEY + " = '" + key + "'", null);
             } finally {
@@ -91,7 +96,7 @@ public class ConfigProperty {
             try {
                 ContentValues values = new ContentValues();
                 values.put(F_KEY, key);
-                values.put(F_PROPERTY, property);
+                values.put(F_PROPERTY, toByteArray(property));
                 values.put(F_TIMESTAMP, System.currentTimeMillis());
                 db.insert(TABLE_NAME, null, values);
             } finally {
@@ -102,15 +107,8 @@ public class ConfigProperty {
         }
     }
 
-    /**
-     * getProperty
-     *
-     * @param context context
-     * @param key     key
-     * @return property
-     */
-    public String getProperty(Context context, String key) {
-        return getProperty(context, key, "");
+    public <T extends Serializable> T getProperty(Context context, String key) {
+        return getProperty(context, key, null);
     }
 
     /**
@@ -121,8 +119,8 @@ public class ConfigProperty {
      * @param defProperty defProperty
      * @return property
      */
-    public String getProperty(Context context, String key, String defProperty) {
-        String property = defProperty;
+    public <T extends Serializable> T getProperty(Context context, String key, T defProperty) {
+        T property = defProperty;
         try {
             DatabaseHelper databaseHelper = new DatabaseHelper(context, getName());
             SQLiteDatabase db = databaseHelper.getWritableDatabase();
@@ -132,7 +130,7 @@ public class ConfigProperty {
                 if (cursor.moveToNext()) {
                     try {
                         int columnIndex = cursor.getColumnIndex(F_PROPERTY);
-                        property = cursor.getString(columnIndex);
+                        property = toObject(cursor.getBlob(columnIndex));
                     } catch (Exception e) {
                     }
                 }
@@ -147,7 +145,6 @@ public class ConfigProperty {
         }
         return property;
     }
-
 
     /**
      * deleteProperty
@@ -221,8 +218,8 @@ public class ConfigProperty {
      * @param context context
      * @return caches
      */
-    public Map<String, String> getPropertys(Context context) {
-        Map<String, String> map = new HashMap<String, String>();
+    public List<String> getPropertys(Context context) {
+        List<String> list = new ArrayList<>();
         try {
             DatabaseHelper databaseHelper = new DatabaseHelper(context, getName());
             SQLiteDatabase db = databaseHelper.getReadableDatabase();
@@ -230,24 +227,12 @@ public class ConfigProperty {
             try {
                 while (cursor.moveToNext()) {
                     String key = "";
-                    String body = "";
-                    long timestamp = System.currentTimeMillis();
                     try {
                         int columnIndex = cursor.getColumnIndex(F_KEY);
                         key = cursor.getString(columnIndex);
                     } catch (Exception e) {
                     }
-                    try {
-                        int columnIndex = cursor.getColumnIndex(F_TIMESTAMP);
-                        timestamp = cursor.getLong(columnIndex);
-                    } catch (Exception e) {
-                    }
-                    try {
-                        int columnIndex = cursor.getColumnIndex(F_PROPERTY);
-                        body = cursor.getString(columnIndex);
-                    } catch (Exception e) {
-                    }
-                    map.put(key + "@" + timestamp, body);
+                    list.add(key);
                 }
             } finally {
                 if (!cursor.isClosed()) {
@@ -258,7 +243,7 @@ public class ConfigProperty {
             }
         } catch (Exception e) {
         }
-        return map;
+        return list;
     }
 
     /**
@@ -285,5 +270,47 @@ public class ConfigProperty {
         } catch (Exception e) {
         }
         return count;
+    }
+
+
+    /**
+     * toByteArray
+     *
+     * @param obj obj
+     * @return bytes
+     */
+    private byte[] toByteArray(Object obj) {
+        byte[] bytes = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(bos);
+            oos.writeObject(obj);
+            oos.flush();
+            bytes = bos.toByteArray();
+            oos.close();
+            bos.close();
+        } catch (Exception ex) {
+        }
+        return bytes;
+    }
+
+    /**
+     * toObject
+     *
+     * @param bytes bytes
+     * @param <O>   obj
+     * @return obj
+     */
+    private <O> O toObject(byte[] bytes) {
+        O data = null;
+        try {
+            ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+            ObjectInputStream ois = new ObjectInputStream(bis);
+            data = (O) ois.readObject();
+            ois.close();
+            bis.close();
+        } catch (Exception ex) {
+        }
+        return data;
     }
 }
