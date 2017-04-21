@@ -19,10 +19,9 @@ import android.widget.EditText;
 import com.liangmayong.base.basic.interfaces.IBase;
 import com.liangmayong.base.binding.mvp.Presenter;
 import com.liangmayong.base.binding.mvp.PresenterBinding;
-import com.liangmayong.base.binding.mvp.PresenterHolder;
 import com.liangmayong.base.binding.view.ViewBinding;
-import com.liangmayong.base.binding.view.data.ViewBindingData;
 import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
+import com.liangmayong.base.support.logger.Logger;
 import com.liangmayong.base.support.statusbar.StatusBarCompat;
 import com.liangmayong.base.support.theme.Theme;
 import com.liangmayong.base.support.theme.ThemeManager;
@@ -42,7 +41,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
 
     //defaultToolbar
     private DefaultToolbar defaultToolbar = null;
-    private PresenterHolder presenterHolder = null;
+    private PresenterBinding presenterBinding = null;
     private InputMethodManager inputMethodManager = null;
     private final Handler handler = new Handler();
     private final List<View> mIgnoreTouchHideKeyboard = new ArrayList<View>();
@@ -59,10 +58,13 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
         inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         ThemeManager.registerThemeListener(this);
-        if (presenterHolder == null) {
-            presenterHolder = PresenterBinding.bind(this);
+        if (presenterBinding == null) {
+            long start_time = System.currentTimeMillis();
+            presenterBinding = PresenterBinding.binding(this);
+            long end_time = System.currentTimeMillis();
+            Logger.d("BindPresenter " + getClass().getName() + ":+" + (end_time - start_time) + "ms " + start_time + " to " + end_time);
         }
-        View view = ViewBinding.parserClassByLayout(AbstractBaseActivity.this, (ViewGroup) getWindow().getDecorView());
+        View view = ViewBinding.parserLayoutByObject(AbstractBaseActivity.this, (ViewGroup) getWindow().getDecorView());
         if (view != null) {
             setContentView(view);
         }
@@ -103,9 +105,9 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     protected void onDestroy() {
         super.onDestroy();
         ThemeManager.unregisterThemeListener(this);
-        if (presenterHolder != null) {
-            presenterHolder.onDettach();
-            presenterHolder = null;
+        if (presenterBinding != null) {
+            presenterBinding.unbinding();
+            presenterBinding = null;
         }
     }
 
@@ -135,7 +137,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
      * callOnRebindingView
      */
     private final void callOnRebindingView() {
-        final ViewBindingData data = ViewBinding.parserClassByView(AbstractBaseActivity.this, getWindow().getDecorView());
+        final ViewBinding.Data data = ViewBinding.parserViewByObject(AbstractBaseActivity.this, getWindow().getDecorView());
         try {
             defaultToolbar = new DefaultToolbar(AbstractBaseActivity.this);
             if (data != null) {
@@ -393,22 +395,11 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public PresenterHolder getPresenterHolder() {
-        return presenterHolder;
-    }
-
-    @Override
     public <T extends Presenter> T getPresenter(Class<T> cls) {
-        if (presenterHolder == null) {
+        if (presenterBinding == null) {
             return null;
         }
-        return presenterHolder.getPresenter(cls);
+        return presenterBinding.getPresenter(cls);
     }
 
-    @Override
-    public void addPresenter(Class<? extends Presenter>... presenterType) {
-        if (presenterHolder != null) {
-            PresenterBinding.bind(presenterHolder, presenterType);
-        }
-    }
 }

@@ -111,12 +111,11 @@ public class SuperListAdapter extends BaseAdapter implements ISuperAdapter {
                 getItem(position).callBindView(position, view);
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
     /**
-     * notifyDataSetChanged
+     * notifyItemChanged
      *
      * @param firstPosition firstPosition
      * @param lastPosition  lastPosition

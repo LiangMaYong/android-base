@@ -4,69 +4,74 @@ import com.liangmayong.base.binding.mvp.annotations.BindPresenter;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by LiangMaYong on 2016/9/17.
  */
 public class PresenterBinding {
 
-    private PresenterBinding() {
+    private static final Map<Object, PresenterBinding> BINDS = new HashMap<>();
+
+    public static PresenterBinding binding(Object object) {
+        if (BINDS.containsKey(object)) {
+            return BINDS.get(object);
+        }
+        PresenterBinding binding = new PresenterBinding(object);
+        BINDS.put(object, binding);
+        return binding;
     }
 
-    /**
-     * bindPresenter
-     *
-     * @param object object
-     * @return presenter holder
-     */
-    @SuppressWarnings("rawtypes")
-    public static PresenterHolder bind(Object object) {
-        PresenterHolder handler = new PresenterHolder();
-        if (object == null)
-            return handler;
-        Class<?> clazz = object.getClass();
+    private Map<String, Presenter> persenters = new HashMap<String, Presenter>();
+    private Object target = null;
+
+    private PresenterBinding(Object object) {
+        this.target = object;
+        this.bindAll();
+    }
+
+    private void bindAll() {
+        Class<?> clazz = target.getClass();
         for (; clazz != Object.class; clazz = clazz.getSuperclass()) {
             BindPresenter presenter = clazz.getAnnotation(BindPresenter.class);
             if (presenter != null) {
                 Class<? extends Presenter>[] presenterTypes = presenter.value();
                 for (Class<? extends Presenter> presenterType : presenterTypes) {
-                    if (verifyPresenter(presenterType, object.getClass())) {
-                        try {
-                            Presenter pre = presenterType.getConstructor().newInstance();
-                            handler.addPresenter(pre);
-                        } catch (Exception e) {
-                        }
-                    }
+                    getPresenter(presenterType);
                 }
             }
         }
-        handler.onAttach(object);
-        return handler;
     }
 
-    /**
-     * bind
-     *
-     * @param handler    holder
-     * @param presenters presenters
-     */
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public static void bind(PresenterHolder handler, Class<? extends Presenter>... presenters) {
-        if (handler == null || handler.getTarget() == null || presenters == null)
-            return;
-        for (Class<? extends Presenter> presenterType : presenters) {
-            if (verifyPresenter(presenterType, handler.getTarget().getClass())) {
-                if (!handler.hasPresenter(presenterType)) {
-                    try {
-                        Presenter pre = presenterType.getConstructor().newInstance();
-                        handler.addPresenter(pre);
-                        pre.onAttach(handler.getPersenters());
-                    } catch (Exception e) {
-                    }
-                }
+    public void unbinding() {
+        if (!persenters.isEmpty()) {
+            for (Map.Entry<String, Presenter> entry : persenters.entrySet()) {
+                entry.getValue().onDettach();
             }
+            persenters.clear();
         }
     }
+
+    public <T extends Presenter> T getPresenter(Class<T> tClass) {
+        if (persenters.containsKey(tClass.getName())) {
+            return (T) persenters.get(tClass.getName());
+        } else {
+            T presenter = null;
+            try {
+                if (verifyPresenter(tClass, target.getClass())) {
+                    presenter = tClass.getConstructor().newInstance();
+                    persenters.put(tClass.getName(), presenter);
+                    presenter.onAttach(target);
+                }
+            } catch (Exception e) {
+            }
+            return presenter;
+        }
+    }
+
+
+    /////////////////////////////////////////////////////////
 
     /**
      * verifyPresenter

@@ -12,6 +12,10 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
+
 /**
  * DoGet tool class
  *
@@ -134,10 +138,21 @@ class NetHandlerGet {
                     Object object = null;
                     HttpURLConnection connection = null;
                     try {
-                        connection = (HttpURLConnection) new URL(url).openConnection();
+                        URL requestUrl = new URL(url);
+                        if (url.toLowerCase().startsWith("https")) {
+                            HttpsURLConnection https = (HttpsURLConnection) requestUrl.openConnection();
+                            https.setHostnameVerifier(new HostnameVerifier() {
+                                public boolean verify(String hostname, SSLSession session) {
+                                    return true;
+                                }
+                            });
+                            connection = https;
+                        } else {
+                            connection = (HttpURLConnection) requestUrl.openConnection();
+                        }
                         connection.addRequestProperty("Cookie", cookie);
-                        connection.setConnectTimeout(5000);
-                        connection.setReadTimeout(5000);
+                        connection.setConnectTimeout(NetHttp.connect_time_out);
+                        connection.setReadTimeout(NetHttp.read_out_time);
                         connection.setRequestMethod("GET");
                         connection.setDoInput(true);
                         connection.connect();

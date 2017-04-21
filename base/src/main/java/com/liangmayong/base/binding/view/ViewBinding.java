@@ -11,7 +11,6 @@ import com.liangmayong.base.binding.view.annotations.BindOnLongClick;
 import com.liangmayong.base.binding.view.annotations.BindString;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.binding.view.annotations.BindView;
-import com.liangmayong.base.binding.view.data.ViewBindingData;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -25,12 +24,41 @@ import java.lang.reflect.Method;
 public final class ViewBinding {
 
     /**
+     * Created by LiangMaYong on 2017/2/16.
+     */
+    public static class Data {
+        // title
+        private String title;
+        // view
+        private View view;
+
+        public String getTitle() {
+            if (title == null) {
+                return "";
+            }
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public void setView(View view) {
+            this.view = view;
+        }
+
+        public View getView() {
+            return view;
+        }
+    }
+
+    /**
      * parserClassByViewOnThread
      *
      * @param obj  obj
      * @param root root View
      */
-    public static ViewBindingData parserClassByView(final Object obj, final View root) {
+    public static Data parserViewByObject(final Object obj, final View root) {
         if (null == obj || null == root) {
             return null;
         }
@@ -46,20 +74,20 @@ public final class ViewBinding {
         }
         initFields(cl.getDeclaredFields(), root, obj);
         initMethods(cl.getDeclaredMethods(), root, obj);
-        ViewBindingData data = new ViewBindingData();
+        Data data = new Data();
         data.setTitle(titleStr);
         data.setView(root);
         return data;
     }
 
     /**
-     * parserClassByLayout
+     * parserLayoutByObject
      *
      * @param obj        obj
      * @param parentView parentView
      * @return view
      */
-    public static View parserClassByLayout(Object obj, ViewGroup parentView) {
+    public static View parserLayoutByObject(Object obj, ViewGroup parentView) {
         if (null == obj || null == parentView)
             return null;
         Class<?> cl = obj.getClass();
@@ -86,43 +114,42 @@ public final class ViewBinding {
         for (Field field : allField) {
             // View
             if (isView(field)) {
-                BindView xkView = field.getAnnotation(BindView.class);
-                View v = root.findViewById(xkView.value());
+                BindView bindView = field.getAnnotation(BindView.class);
+                View v = root.findViewById(bindView.value());
                 if (null != v) {
                     try {
                         field.setAccessible(true);
                         field.set(object, v);
-                    } catch (IllegalArgumentException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                    } catch (Exception e) {
                     }
                 }
             }
             // String
             if (isString(field)) {
-                BindString xkString = field.getAnnotation(BindString.class);
-                String s = root.getContext().getString(xkString.value());
+                BindString bindString = field.getAnnotation(BindString.class);
+                String s = root.getContext().getString(bindString.value());
                 if (null != s) {
                     try {
                         field.setAccessible(true);
                         field.set(object, s);
                     } catch (Exception e) {
-                        e.printStackTrace();
                     }
                 }
             }
 
             // Color
             if (isColor(field)) {
-                BindColor xkColor = field.getAnnotation(BindColor.class);
+                BindColor bindColor = field.getAnnotation(BindColor.class);
                 try {
-                    @SuppressWarnings("deprecation")
-                    int color = root.getContext().getResources().getColor(xkColor.value());
+                    int color;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        color = root.getContext().getColor(bindColor.value());
+                    } else {
+                        color = root.getContext().getResources().getColor(bindColor.value());
+                    }
                     field.setAccessible(true);
                     field.set(object, color);
                 } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
         }

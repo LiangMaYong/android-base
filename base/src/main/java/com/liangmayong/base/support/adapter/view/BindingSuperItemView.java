@@ -20,14 +20,14 @@ public abstract class BindingSuperItemView<Data> extends SuperItemView<Data> {
     protected final View newView(LayoutInflater inflater, ViewGroup parent) {
         View rootView = onNewView(inflater, parent);
         if (rootView == null) {
-            rootView = ViewBinding.parserClassByLayout(this, parent);
+            rootView = ViewBinding.parserLayoutByObject(this, parent);
         }
         return rootView;
     }
 
     @Override
     public final void bindView(View itemView, final Data data) {
-        ViewBinding.parserClassByView(BindingSuperItemView.this, itemView);
+        ViewBinding.parserViewByObject(BindingSuperItemView.this, itemView);
         onBindView(itemView, data);
     }
 

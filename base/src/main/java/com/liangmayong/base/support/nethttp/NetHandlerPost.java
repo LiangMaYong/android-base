@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
+
 /**
  * HttpPost
  *
@@ -311,12 +315,22 @@ class NetHandlerPost {
         HttpURLConnection connection = null;
         try {
             URL requestUrl = new URL(url);
-            connection = (HttpURLConnection) requestUrl.openConnection();
+            if (url.toLowerCase().startsWith("https")) {
+                HttpsURLConnection https = (HttpsURLConnection) requestUrl.openConnection();
+                https.setHostnameVerifier(new HostnameVerifier() {
+                    public boolean verify(String hostname, SSLSession session) {
+                        return true;
+                    }
+                });
+                connection = https;
+            } else {
+                connection = (HttpURLConnection) requestUrl.openConnection();
+            }
             connection.setDoInput(true);
             connection.setDoOutput(true);
             connection.setUseCaches(false);
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
+            connection.setConnectTimeout(NetHttp.connect_time_out);
+            connection.setReadTimeout(NetHttp.read_out_time);
             // read result
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Connection", "Keep-Alive");

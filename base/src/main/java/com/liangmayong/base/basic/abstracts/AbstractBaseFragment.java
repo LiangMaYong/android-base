@@ -15,9 +15,7 @@ import com.liangmayong.base.R;
 import com.liangmayong.base.basic.interfaces.IBase;
 import com.liangmayong.base.binding.mvp.Presenter;
 import com.liangmayong.base.binding.mvp.PresenterBinding;
-import com.liangmayong.base.binding.mvp.PresenterHolder;
 import com.liangmayong.base.binding.view.ViewBinding;
-import com.liangmayong.base.binding.view.data.ViewBindingData;
 import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
 import com.liangmayong.base.support.logger.Logger;
 import com.liangmayong.base.support.theme.Theme;
@@ -32,14 +30,14 @@ import com.liangmayong.base.support.utils.ToastUtils;
 public abstract class AbstractBaseFragment extends Fragment implements IBase {
 
     private DefaultToolbar defaultToolbar = null;
-    private PresenterHolder presenterHolder = null;
+    private PresenterBinding presenterBinding = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (presenterHolder == null) {
+        if (presenterBinding == null) {
             long start_time = System.currentTimeMillis();
-            presenterHolder = PresenterBinding.bind(this);
+            presenterBinding = PresenterBinding.binding(this);
             long end_time = System.currentTimeMillis();
             Logger.d("BindPresenter " + getClass().getName() + ":+" + (end_time - start_time) + "ms " + start_time + " to " + end_time);
         }
@@ -49,9 +47,9 @@ public abstract class AbstractBaseFragment extends Fragment implements IBase {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (presenterHolder != null) {
-            presenterHolder.onDettach();
-            presenterHolder = null;
+        if (presenterBinding != null) {
+            presenterBinding.unbinding();
+            presenterBinding = null;
         }
         ThemeManager.unregisterThemeListener(this);
     }
@@ -74,7 +72,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IBase {
             if (getContaierLayoutId() > 0) {
                 view = inflater.inflate(getContaierLayoutId(), container, false);
             } else {
-                view = ViewBinding.parserClassByLayout(this, container);
+                view = ViewBinding.parserLayoutByObject(this, container);
             }
         }
         long end_time = System.currentTimeMillis();
@@ -91,7 +89,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IBase {
         if (shouldFixbug5497Workaround()) {
             AndroidBug5497Workaround.assistView(view, this);
         }
-        ViewBindingData data = ViewBinding.parserClassByView(AbstractBaseFragment.this, view);
+        ViewBinding.Data data = ViewBinding.parserViewByObject(AbstractBaseFragment.this, view);
         try {
             defaultToolbar = new DefaultToolbar(view);
             if (data != null) {
@@ -248,9 +246,9 @@ public abstract class AbstractBaseFragment extends Fragment implements IBase {
     }
 
     @Override
-    public void showSoftKeyBoard(final EditText editText,long delay) {
+    public void showSoftKeyBoard(final EditText editText, long delay) {
         if (getActivity() instanceof IBase) {
-            ((IBase) getActivity()).showSoftKeyBoard(editText,delay);
+            ((IBase) getActivity()).showSoftKeyBoard(editText, delay);
         }
     }
 
@@ -277,22 +275,11 @@ public abstract class AbstractBaseFragment extends Fragment implements IBase {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
-    public PresenterHolder getPresenterHolder() {
-        return presenterHolder;
-    }
-
-    @Override
     public <T extends Presenter> T getPresenter(Class<T> cls) {
-        if (presenterHolder == null) {
+        if (presenterBinding == null) {
             return null;
         }
-        return presenterHolder.getPresenter(cls);
+        return presenterBinding.getPresenter(cls);
     }
 
-    @Override
-    public void addPresenter(Class<? extends Presenter>... presenterType) {
-        if (presenterHolder != null) {
-            PresenterBinding.bind(presenterHolder, presenterType);
-        }
-    }
 }

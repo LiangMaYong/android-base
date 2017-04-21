@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.liangmayong.base.binding.mvp.Presenter;
-import com.liangmayong.base.binding.mvp.PresenterHolder;
 import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
 import com.liangmayong.base.support.theme.Theme;
 import com.liangmayong.base.support.theme.listener.OnThemeListener;
@@ -150,13 +149,6 @@ public interface IBase extends OnThemeListener, AndroidBug5497Workaround.OnSoftK
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
-     * getPresenterHolder
-     *
-     * @return presenter holder
-     */
-    PresenterHolder getPresenterHolder();
-
-    /**
      * getPresenter
      *
      * @param cls cls
@@ -164,11 +156,4 @@ public interface IBase extends OnThemeListener, AndroidBug5497Workaround.OnSoftK
      * @return presenter
      */
     <T extends Presenter> T getPresenter(Class<T> cls);
-
-    /**
-     * presenterType
-     *
-     * @param presenterType presenterType
-     */
-    void addPresenter(Class<? extends Presenter>... presenterType);
 }
