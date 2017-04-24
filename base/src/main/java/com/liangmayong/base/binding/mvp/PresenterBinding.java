@@ -83,7 +83,7 @@ public class PresenterBinding {
     @SuppressWarnings("rawtypes")
     private static boolean verifyPresenter(Class<? extends Presenter> presenter, Class<?> viewClass) {
         Class<?> viewPresenterClass = getViewClass(presenter);
-        if (isClassGeneric(viewClass, viewPresenterClass)) {
+        if (viewPresenterClass.isAssignableFrom(viewClass)) {
             return true;
         }
         return false;
@@ -107,45 +107,5 @@ public class PresenterBinding {
             return entityClass;
         }
         return null;
-    }
-
-    /**
-     * isGeneric
-     *
-     * @param clazz          clazz
-     * @param clazzInterface clazzInterface
-     * @return true or false
-     */
-    private static boolean isClassGeneric(Class<?> clazz, Class<?> clazzInterface) {
-        for (; clazz != Object.class; clazz = clazz.getSuperclass()) {
-            if (isInterfaceGeneric(clazz, clazzInterface)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * isInterfaceGeneric
-     *
-     * @param clazz          clazz
-     * @param clazzInterface clazzInterface
-     * @return flag
-     */
-    private static boolean isInterfaceGeneric(Class<?> clazz, Class<?> clazzInterface) {
-        if (clazzInterface.equals(clazz)) {
-            return true;
-        }
-        Class<?>[] classes = clazz.getInterfaces();
-        for (int i = 0; i < classes.length; i++) {
-            if (clazzInterface.equals(classes[i])) {
-                return true;
-            }
-            Class<?> clz = classes[i];
-            if (isInterfaceGeneric(clz, clazzInterface)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
