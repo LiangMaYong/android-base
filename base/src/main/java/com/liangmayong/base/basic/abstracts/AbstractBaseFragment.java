@@ -89,7 +89,7 @@ public abstract class AbstractBaseFragment extends Fragment implements IBase {
         if (shouldFixbug5497Workaround()) {
             AndroidBug5497Workaround.assistView(view, this);
         }
-        ViewBinding.Data data = ViewBinding.parserViewByObject(AbstractBaseFragment.this, view);
+        ViewBinding.Data data = ViewBinding.parserViewByObject(AbstractBaseFragment.this, view, AbstractBaseFragment.class.getSuperclass());
         try {
             defaultToolbar = new DefaultToolbar(view);
             if (data != null) {

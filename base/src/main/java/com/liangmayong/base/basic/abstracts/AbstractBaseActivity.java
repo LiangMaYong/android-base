@@ -137,7 +137,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
      * callOnRebindingView
      */
     private final void callOnRebindingView() {
-        final ViewBinding.Data data = ViewBinding.parserViewByObject(AbstractBaseActivity.this, getWindow().getDecorView());
+        final ViewBinding.Data data = ViewBinding.parserViewByObject(AbstractBaseActivity.this, getWindow().getDecorView(), AbstractBaseActivity.class.getSuperclass());
         try {
             defaultToolbar = new DefaultToolbar(AbstractBaseActivity.this);
             if (data != null) {

@@ -52,13 +52,20 @@ public final class ViewBinding {
         }
     }
 
+    public static Data parserViewByObject(final Object obj, final View root) {
+        if (obj == null) {
+            return null;
+        }
+        return parserViewByObject(obj, root, obj.getClass().getSuperclass());
+    }
+
     /**
-     * parserClassByViewOnThread
+     * parserViewByObject
      *
      * @param obj  obj
      * @param root root View
      */
-    public static Data parserViewByObject(final Object obj, final View root) {
+    public static Data parserViewByObject(final Object obj, final View root, Class<?> baseClass) {
         if (null == obj || null == root) {
             return null;
         }
@@ -72,8 +79,11 @@ public final class ViewBinding {
                 titleStr = title.value();
             }
         }
-        initFields(cl.getDeclaredFields(), root, obj);
-        initMethods(cl.getDeclaredMethods(), root, obj);
+        Class<?> clazz = cl;
+        for (; clazz != baseClass; clazz = clazz.getSuperclass()) {
+            initFields(clazz.getDeclaredFields(), root, obj);
+            initMethods(clazz.getDeclaredMethods(), root, obj);
+        }
         Data data = new Data();
         data.setTitle(titleStr);
         data.setView(root);
