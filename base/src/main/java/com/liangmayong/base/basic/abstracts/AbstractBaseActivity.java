@@ -104,6 +104,8 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        handler.removeCallbacksAndMessages(null);
         ThemeManager.unregisterThemeListener(this);
         if (presenterBinding != null) {
             presenterBinding.unbinding();
