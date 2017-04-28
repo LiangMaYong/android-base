@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.liangmayong.base.R;
+import com.liangmayong.base.airbus.AirBus;
 import com.liangmayong.base.basic.interfaces.IBase;
 import com.liangmayong.base.binding.mvp.Presenter;
 import com.liangmayong.base.binding.mvp.PresenterBinding;
@@ -57,7 +58,14 @@ public abstract class AbstractBaseFragment extends Fragment implements IBase {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        AirBus.getDefault().unregister(this);
+    }
+
+    @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        AirBus.getDefault().register(this);
         long start_time = System.currentTimeMillis();
         LinearLayout rootView = new LinearLayout(inflater.getContext());
         rootView.setPadding(0, 0, 0, 0);

@@ -21,6 +21,11 @@
         android:protectionLevel="signature"/>
     <uses-permission android:name="${applicationId}.permission.AIRING_RECEIVER"/>
 
+    <permission
+        android:name="${applicationId}.permission.AIRBUS_RECEIVER"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="${applicationId}.permission.AIRBUS_RECEIVER"/>
+
     <application
         android:allowBackup="true"
         android:supportsRtl="true">

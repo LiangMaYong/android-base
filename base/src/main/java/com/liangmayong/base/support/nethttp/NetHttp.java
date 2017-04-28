@@ -16,7 +16,7 @@ public class NetHttp {
     }
 
     public static int connect_time_out = 5000;
-    public static int read_out_time = 10000;
+    public static int read_out_time = 5000;
     //executorService
     private static ExecutorService executorService = Executors.newFixedThreadPool(5);
 

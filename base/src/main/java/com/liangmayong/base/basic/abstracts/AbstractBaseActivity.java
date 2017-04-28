@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.liangmayong.base.airbus.AirBus;
 import com.liangmayong.base.basic.interfaces.IBase;
 import com.liangmayong.base.binding.mvp.Presenter;
 import com.liangmayong.base.binding.mvp.PresenterBinding;
@@ -53,6 +54,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AirBus.getDefault().register(this);
         this.savedInstanceState = savedInstanceState;
         if (shouldFixbug5497Workaround()) {
             AndroidBug5497Workaround.assistActivity(this, this);
@@ -106,7 +108,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        AirBus.getDefault().unregister(this);
         handler.removeCallbacksAndMessages(null);
         ThemeManager.unregisterThemeListener(this);
         if (presenterBinding != null) {

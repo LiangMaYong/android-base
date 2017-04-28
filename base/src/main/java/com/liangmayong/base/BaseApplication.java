@@ -52,7 +52,7 @@ public class BaseApplication extends Application {
     }
 
     /**
-     * isDebugable
+     * isDebug
      *
      * @return true or false
      */

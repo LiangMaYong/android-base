@@ -1,21 +1,20 @@
 package com.liangmayong.android_base.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.liangmayong.android_base.ImageActivity;
-import com.liangmayong.android_base.itemviews.TextItemView;
+import com.liangmayong.android_base.air.Demo;
 import com.liangmayong.android_base.itemviews.ImageItemView;
-import com.liangmayong.base.basic.expands.list.FlowListFragment;
+import com.liangmayong.android_base.itemviews.TextItemView;
+import com.liangmayong.base.airbus.AirBus;
 import com.liangmayong.base.basic.expands.list.FlowSwipeListFragment;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
 import com.liangmayong.base.support.adapter.SuperItemView;
 import com.liangmayong.base.support.adapter.SuperListAdapter;
-import com.liangmayong.base.support.theme.ThemeManager;
 import com.liangmayong.base.support.transitions.ActivityTransitionLauncher;
 import com.liangmayong.base.support.utils.GoToUtils;
 
@@ -55,6 +54,7 @@ public class ListFragment extends FlowSwipeListFragment {
             }
         });
         refreshList();
+        AirBus.getDefault().post(new Demo("Demo event"));
     }
 
     protected void refreshList() {
