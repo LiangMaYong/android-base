@@ -48,73 +48,84 @@ public final class FragmentPermission {
      * readPhoneStatePermissions
      *
      * @param fragment fragment
-     * @param id       id
      * @param listener listener
      */
-    public static void readPhoneStatePermissions(Fragment fragment, int id, OnPermissionListener listener) {
+    public static void readPhoneStatePermissions(Fragment fragment, OnPermissionListener listener) {
         String[] permissionsNeeded = {Manifest.permission.READ_PHONE_STATE};
-        requestPermissions(fragment, id, permissionsNeeded, listener);
+        requestPermissions(fragment, permissionsNeeded, listener);
     }
 
     /**
      * cameraPermissions
      *
      * @param fragment fragment
-     * @param id       id
      * @param listener listener
      */
-    public static void cameraPermissions(Fragment fragment, int id, OnPermissionListener listener) {
+    public static void cameraPermissions(Fragment fragment, OnPermissionListener listener) {
         String[] permissionsNeeded = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-        requestPermissions(fragment, id, permissionsNeeded, listener);
+        requestPermissions(fragment, permissionsNeeded, listener);
     }
 
     /**
      * recordAudioPermissions
      *
      * @param fragment fragment
-     * @param id       id
      * @param listener listener
      */
-    public static void recordAudioPermissions(Fragment fragment, int id, OnPermissionListener listener) {
+    public static void recordAudioPermissions(Fragment fragment, OnPermissionListener listener) {
         String[] permissionsNeeded = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-        requestPermissions(fragment, id, permissionsNeeded, listener);
+        requestPermissions(fragment, permissionsNeeded, listener);
     }
 
     /**
      * filePermissions
      *
      * @param fragment fragment
-     * @param id       id
      * @param listener listener
      */
-    public static void filePermissions(Fragment fragment, int id, OnPermissionListener listener) {
+    public static void filePermissions(Fragment fragment, OnPermissionListener listener) {
         String[] permissionsNeeded = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-        requestPermissions(fragment, id, permissionsNeeded, listener);
+        requestPermissions(fragment, permissionsNeeded, listener);
     }
 
     /**
      * locationPermissions
      *
      * @param fragment fragment
-     * @param id       id
      * @param listener listener
      */
-    public static void locationPermissions(Fragment fragment, int id, OnPermissionListener listener) {
+    public static void locationPermissions(Fragment fragment, OnPermissionListener listener) {
         String[] permissionsNeeded = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-        requestPermissions(fragment, id, permissionsNeeded, listener);
+        requestPermissions(fragment, permissionsNeeded, listener);
+    }
+
+
+    // requestCode
+    private static int requestCode = 1;
+
+    /**
+     * getRequestCode
+     *
+     * @return requestCode
+     */
+    private static int getRequestCode() {
+        requestCode++;
+        if (requestCode > 1000) {
+            requestCode = 1;
+        }
+        return requestCode;
     }
 
     /**
      * request
      *
      * @param fragment           fragment
-     * @param requestId          requestId
      * @param permissionsNeeded  permissionsNeeded
      * @param permissionListener permissionListener
      */
-    public static void requestPermissions(final Fragment fragment, int requestId, String[] permissionsNeeded,
+    public static void requestPermissions(final Fragment fragment, String[] permissionsNeeded,
                                           OnPermissionListener permissionListener) {
-        request(fragment, new Request(fragment, requestId, permissionsNeeded, permissionListener));
+        request(fragment, new Request(fragment, getRequestCode(), permissionsNeeded, permissionListener));
     }
 
     /**
@@ -127,6 +138,7 @@ public final class FragmentPermission {
     public static void handleResult(int requestCode, String[] permissions, int[] grantResults) {
         if (integerRequestMap.containsKey(requestCode)) {
             Request request = integerRequestMap.get(requestCode);
+            integerRequestMap.remove(requestCode);
             if (request.getPermissionListener() != null) {
                 boolean gotPermissions = true;
                 List<String> rejectPermissions = new ArrayList<String>();
@@ -142,7 +154,6 @@ public final class FragmentPermission {
                     request.getPermissionListener().rejectPermissions(rejectPermissions);
                 }
             }
-            integerRequestMap.remove(request);
         }
     }
 
@@ -205,7 +216,7 @@ public final class FragmentPermission {
      *
      * @param fragment          fragment
      * @param permissionsNeeded permissionsNeeded
-     * @param requestId         requestId
+     * @param requestId         requestCode
      */
     @SuppressLint("NewApi")
     private static void requestPermissions(final Fragment fragment, String[] permissionsNeeded, int requestId) {

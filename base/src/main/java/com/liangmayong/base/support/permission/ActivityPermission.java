@@ -48,73 +48,77 @@ public final class ActivityPermission {
      * readPhoneStatePermissions
      *
      * @param activity activity
-     * @param id       id
      * @param listener listener
      */
-    public static void readPhoneStatePermissions(Activity activity, int id, OnPermissionListener listener) {
+    public static void readPhoneStatePermissions(Activity activity, OnPermissionListener listener) {
         String[] permissionsNeeded = {Manifest.permission.READ_PHONE_STATE};
-        requestPermissions(activity, id, permissionsNeeded, listener);
+        requestPermissions(activity, permissionsNeeded, listener);
     }
 
     /**
      * cameraPermissions
      *
      * @param activity activity
-     * @param id       id
      * @param listener listener
      */
-    public static void cameraPermissions(Activity activity, int id, OnPermissionListener listener) {
+    public static void cameraPermissions(Activity activity, OnPermissionListener listener) {
         String[] permissionsNeeded = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-        requestPermissions(activity, id, permissionsNeeded, listener);
+        requestPermissions(activity, permissionsNeeded, listener);
     }
 
     /**
      * recordAudioPermissions
      *
      * @param activity activity
-     * @param id       id
      * @param listener listener
      */
-    public static void recordAudioPermissions(Activity activity, int id, OnPermissionListener listener) {
+    public static void recordAudioPermissions(Activity activity, OnPermissionListener listener) {
         String[] permissionsNeeded = {Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-        requestPermissions(activity, id, permissionsNeeded, listener);
+        requestPermissions(activity, permissionsNeeded, listener);
     }
 
     /**
      * filePermissions
      *
      * @param activity activity
-     * @param id       id
      * @param listener listener
      */
-    public static void filePermissions(Activity activity, int id, OnPermissionListener listener) {
+    public static void filePermissions(Activity activity, OnPermissionListener listener) {
         String[] permissionsNeeded = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-        requestPermissions(activity, id, permissionsNeeded, listener);
+        requestPermissions(activity, permissionsNeeded, listener);
     }
 
     /**
      * locationPermissions
      *
      * @param activity activity
-     * @param id       id
      * @param listener listener
      */
-    public static void locationPermissions(Activity activity, int id, OnPermissionListener listener) {
+    public static void locationPermissions(Activity activity, OnPermissionListener listener) {
         String[] permissionsNeeded = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-        requestPermissions(activity, id, permissionsNeeded, listener);
+        requestPermissions(activity, permissionsNeeded, listener);
+    }
+
+    private static int requestId = 1;
+
+    private static int getRequestId() {
+        requestId++;
+        if (requestId > 1000) {
+            requestId = 1;
+        }
+        return requestId;
     }
 
     /**
      * request
      *
      * @param activity           activity
-     * @param requestId          requestId
      * @param permissionsNeeded  permissionsNeeded
      * @param permissionListener permissionListener
      */
-    public static void requestPermissions(final Activity activity, int requestId, String[] permissionsNeeded,
+    public static void requestPermissions(final Activity activity, String[] permissionsNeeded,
                                           OnPermissionListener permissionListener) {
-        request(activity, new Request(activity, requestId, permissionsNeeded, permissionListener));
+        request(activity, new Request(activity, getRequestId(), permissionsNeeded, permissionListener));
     }
 
     /**
@@ -127,6 +131,7 @@ public final class ActivityPermission {
     public static void handleResult(int requestCode, String[] permissions, int[] grantResults) {
         if (integerRequestMap.containsKey(requestCode)) {
             Request request = integerRequestMap.get(requestCode);
+            integerRequestMap.remove(requestCode);
             if (request.getPermissionListener() != null) {
                 boolean gotPermissions = true;
                 List<String> rejectPermissions = new ArrayList<String>();
@@ -142,7 +147,6 @@ public final class ActivityPermission {
                     request.getPermissionListener().rejectPermissions(rejectPermissions);
                 }
             }
-            integerRequestMap.remove(request);
         }
     }
 

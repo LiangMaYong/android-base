@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -22,6 +23,7 @@ import com.liangmayong.base.binding.mvp.PresenterBinding;
 import com.liangmayong.base.binding.view.ViewBinding;
 import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
 import com.liangmayong.base.support.logger.Logger;
+import com.liangmayong.base.support.permission.ActivityPermission;
 import com.liangmayong.base.support.statusbar.StatusBarCompat;
 import com.liangmayong.base.support.theme.Theme;
 import com.liangmayong.base.support.theme.ThemeManager;
@@ -404,4 +406,9 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
         return presenterBinding.getPresenter(cls);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        ActivityPermission.handleResult(requestCode, permissions, grantResults);
+    }
 }

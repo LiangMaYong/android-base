@@ -3,6 +3,7 @@ package com.liangmayong.base.basic.abstracts;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.liangmayong.base.binding.mvp.PresenterBinding;
 import com.liangmayong.base.binding.view.ViewBinding;
 import com.liangmayong.base.support.fixbug.AndroidBug5497Workaround;
 import com.liangmayong.base.support.logger.Logger;
+import com.liangmayong.base.support.permission.FragmentPermission;
 import com.liangmayong.base.support.theme.Theme;
 import com.liangmayong.base.support.theme.ThemeManager;
 import com.liangmayong.base.support.toolbar.DefaultToolbar;
@@ -282,4 +284,9 @@ public abstract class AbstractBaseFragment extends Fragment implements IBase {
         return presenterBinding.getPresenter(cls);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        FragmentPermission.handleResult(requestCode, permissions, grantResults);
+    }
 }
