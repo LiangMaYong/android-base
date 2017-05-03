@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="_continue">Continue</string>
+    <string name="_cancel">Cancel</string>
+    <string name="_error_ssl_cert_invalid">There is a problem with this website\'s security certificate</string>
+</resources>

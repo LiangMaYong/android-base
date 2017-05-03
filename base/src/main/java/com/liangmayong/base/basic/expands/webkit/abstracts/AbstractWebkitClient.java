@@ -1,12 +1,16 @@
 package com.liangmayong.base.basic.expands.webkit.abstracts;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Build;
+import android.support.v7.app.AlertDialog;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 
+import com.liangmayong.base.R;
 import com.liangmayong.base.basic.expands.webkit.config.WebConfig;
 
 import org.json.JSONObject;
@@ -95,6 +99,24 @@ public class AbstractWebkitClient extends android.webkit.WebViewClient {
 
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-        handler.proceed();
+        showSslErrorDialog(view.getContext(), handler);
+    }
+
+    private void showSslErrorDialog(Context context, final SslErrorHandler handler) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(context.getString(R.string._error_ssl_cert_invalid));
+        builder.setPositiveButton(context.getString(R.string._continue), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                handler.proceed();
+            }
+        });
+        builder.setNegativeButton(context.getString(R.string._cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                handler.cancel();
+            }
+        });
+        builder.show();
     }
 }

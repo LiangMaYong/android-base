@@ -1,3 +1,7 @@
 <resources>
     <string name="base_app_name">AndroidBase</string>
+
+    <string name="_continue">信任</string>
+    <string name="_cancel">取消</string>
+    <string name="_error_ssl_cert_invalid">HTTPS证书不受信任</string>
 </resources>
