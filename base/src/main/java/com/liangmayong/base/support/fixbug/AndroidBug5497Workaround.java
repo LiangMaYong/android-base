@@ -92,7 +92,7 @@ public class AndroidBug5497Workaround {
                         mSoftKeyboardListener.onSoftKeyboardStateChange(mShowSoftKeyboard);
                     }
                 }
-            }, 200);
+            }, 50);
         }
     }
 
