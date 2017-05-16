@@ -10,6 +10,7 @@ import com.liangmayong.android_base.ImageActivity;
 import com.liangmayong.android_base.air.Demo;
 import com.liangmayong.android_base.itemviews.ImageItemView;
 import com.liangmayong.android_base.itemviews.TextItemView;
+import com.liangmayong.android_base.itemviews.WebItemView;
 import com.liangmayong.base.airbus.AirBus;
 import com.liangmayong.base.basic.expands.list.FlowSwipeListFragment;
 import com.liangmayong.base.binding.view.annotations.BindTitle;
@@ -40,10 +41,6 @@ public class ListFragment extends FlowSwipeListFragment {
                     ActivityTransitionLauncher.with(getActivity()).from(view).launch(intent);
                 } else {
                     GoToUtils.goWeb(getActivity(), "", "file:///android_asset/demo.html");
-
-//                    String uriStr = "vanish://?cmd=login&username=ibeam@myhexin.com";
-//                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uriStr));
-//                    startActivity(intent);
                 }
             }
         });
@@ -61,7 +58,7 @@ public class ListFragment extends FlowSwipeListFragment {
         listAdapter.removeAll();
         for (int i = 0; i < 10; i++) {
             if (i % 2 == 1) {
-                listAdapter.add(new TextItemView(i));
+                listAdapter.add(new WebItemView("http://www.baidu.com"));
             } else {
                 listAdapter.add(new ImageItemView(i));
             }

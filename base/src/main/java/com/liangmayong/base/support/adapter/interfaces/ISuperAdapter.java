@@ -96,4 +96,10 @@ public interface ISuperAdapter {
      * @param lastPosition  lastPosition
      */
     void notifyItemChanged(int firstPosition, int lastPosition);
+
+
+    /**
+     * notifyDataSetChanged
+     */
+    void notifyDataSetChanged();
 }

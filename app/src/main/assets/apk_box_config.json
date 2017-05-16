@@ -1,0 +1,4 @@
+{
+  "main":"com.liangmayong.apk.MainActivity",
+  "adapter":"com.liangmayong.android_base.BundleAdapter"
+}
