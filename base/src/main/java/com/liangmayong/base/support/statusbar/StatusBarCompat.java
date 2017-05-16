@@ -82,7 +82,7 @@ public class StatusBarCompat {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && getNavBarHeight(activity) > 0) {
                         View navBarView = activity.findViewById(R.id.base_default_navigation);
                         if (navBarView != null) {
-                            navBarView.setLayoutParams(getStatusBarLayoutParams(activity, contentView));
+                            navBarView.setLayoutParams(getNavBarLayoutParams(activity, contentView));
                             navBarView.setBackgroundColor(statusColor);
                             return;
                         } else {
