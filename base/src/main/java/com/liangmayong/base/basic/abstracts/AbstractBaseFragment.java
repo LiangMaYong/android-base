@@ -183,14 +183,15 @@ public abstract class AbstractBaseFragment extends Fragment implements IBase {
     /**
      * getTemp
      *
-     * @param key key
+     * @param key     key
+     * @param defTemp defTemp
      * @return temp
      */
-    public <T> T getTemp(String key) {
+    public <T> T getTemp(String key, T defTemp) {
         if (getActivity() instanceof IBase) {
-            return ((IBase) getActivity()).getTemp(key);
+            return ((IBase) getActivity()).getTemp(key, defTemp);
         }
-        return null;
+        return defTemp;
     }
 
     /**

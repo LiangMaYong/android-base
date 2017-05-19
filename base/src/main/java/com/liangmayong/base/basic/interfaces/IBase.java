@@ -27,9 +27,10 @@ public interface IBase extends OnThemeListener, AndroidBug5497Workaround.OnSoftK
      * getTemp
      *
      * @param key key
+     * @param defTemp defTemp
      * @return temp
      */
-    <T> T getTemp(String key);
+    <T> T getTemp(String key, T defTemp);
 
     /**
      * setTemp

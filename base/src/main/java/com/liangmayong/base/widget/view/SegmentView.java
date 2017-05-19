@@ -154,6 +154,7 @@ public class SegmentView extends LinearLayout {
     public void setItems(int index, String... text) {
         selectedIndex = -1;
         contentView.removeAllViews();
+        //noinspection CollectionAddedToSelf
         items.removeAll(items);
         for (int i = 0; i < text.length; i++) {
             SegmentItem item = item(text[i]);
