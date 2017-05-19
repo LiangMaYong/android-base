@@ -35,7 +35,9 @@ import com.liangmayong.base.support.utils.GoToUtils;
 import com.liangmayong.base.support.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by LiangMaYong on 2016/12/29.
@@ -50,6 +52,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     private final List<View> mIgnoreTouchHideKeyboard = new ArrayList<View>();
     private Bundle savedInstanceState = null;
     private ExitActivityTransition activityTransition = null;
+    private Map<String, Object> mTemporaryPreferences = new HashMap<>();
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
@@ -108,6 +111,7 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mTemporaryPreferences.clear();
         AirBus.getDefault().unregister(this);
         handler.removeCallbacksAndMessages(null);
         ThemeManager.unregisterThemeListener(this);
@@ -177,6 +181,37 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
 
     protected boolean shouldFixbug5497Workaround() {
         return true;
+    }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////  Temp   ///////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * getTemp
+     *
+     * @param key key
+     * @return temp
+     */
+    public Object getTemp(String key) {
+        if (mTemporaryPreferences.containsKey(key)) {
+            return mTemporaryPreferences.get(key);
+        }
+        return null;
+    }
+
+    /**
+     * setTemp
+     *
+     * @param key       key
+     * @param temporary temporary
+     */
+    public void setTemp(String key, Object temporary) {
+        if (temporary == null) {
+            mTemporaryPreferences.remove(key);
+        }
+        mTemporaryPreferences.put(key, temporary);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
