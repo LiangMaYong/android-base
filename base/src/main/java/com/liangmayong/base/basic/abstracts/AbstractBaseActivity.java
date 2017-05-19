@@ -194,9 +194,9 @@ public abstract class AbstractBaseActivity extends AppCompatActivity implements 
      * @param key key
      * @return temp
      */
-    public Object getTemp(String key) {
+    public <T> T getTemp(String key) {
         if (mTemporaryPreferences.containsKey(key)) {
-            return mTemporaryPreferences.get(key);
+            return (T) mTemporaryPreferences.get(key);
         }
         return null;
     }
